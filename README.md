@@ -1,7 +1,7 @@
 # Advanced Programming Project - Spring 2021
-## Team --
+## Team 49
 
 ### Team Members:
-- Student1 99100000
+- Seyed Mohammad Amin Ahmadzadeh 99105204
 - Saleh Shamloo 98100872
 - Student3 99100000
