@@ -3,5 +3,5 @@
 
 ### Team Members:
 - Student1 99100000
-- Student2 98100872
+- Saleh Shamloo 98100872
 - Student3 99100000
