@@ -1,4 +1,4 @@
-package model.card;
+package model.game;
 
 public enum Location {
     DECK,

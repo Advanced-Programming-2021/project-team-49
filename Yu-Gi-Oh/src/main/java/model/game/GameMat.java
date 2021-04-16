@@ -1,7 +1,5 @@
 package model.game;
 
-import model.card.Location;
-
 import java.util.ArrayList;
 import java.util.Map;
 
