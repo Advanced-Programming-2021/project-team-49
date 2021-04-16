@@ -4,23 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="fixed initial project">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Attribute.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Effect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/EffectType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Location.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Monster.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/MonsterType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Spell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/card/Trap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/game/Field.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/game/GameMat.java" afterDir="false" />
+    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="Model">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Yu-Gi-Oh.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/Deck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/card/CardTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/card/CardTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Field.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +79,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1618313761445</updated>
-      <workItem from="1618581690585" duration="3818000" />
+      <workItem from="1618581690585" duration="5248000" />
     </task>
     <task id="LOCAL-00001" summary="fixed initial project">
       <created>1618314048013</created>
@@ -98,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618314048013</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Model">
+      <created>1618585662584</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618585662584</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +116,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="fixed initial project" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed initial project" />
+    <MESSAGE value="Model" />
+    <option name="LAST_COMMIT_MESSAGE" value="Model" />
   </component>
 </project>

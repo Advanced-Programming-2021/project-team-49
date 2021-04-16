@@ -10,4 +10,16 @@ public abstract class CardTemplate {
         this.number = number;
         this.description = description;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

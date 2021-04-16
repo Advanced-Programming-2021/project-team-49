@@ -18,4 +18,24 @@ public class Monster extends CardTemplate {
         this.baseAttack = baseAttack;
         this.baseDefence = baseDefence;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
+
+    public List<MonsterType> getMonsterTypes() {
+        return monsterTypes;
+    }
+
+    public int getBaseAttack() {
+        return baseAttack;
+    }
+
+    public int getBaseDefence() {
+        return baseDefence;
+    }
 }

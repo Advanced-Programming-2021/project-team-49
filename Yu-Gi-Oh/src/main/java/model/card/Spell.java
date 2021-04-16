@@ -8,4 +8,8 @@ public class Spell extends CardTemplate {
         super(name, number, description);
         this.effectType = effectType;
     }
+
+    public EffectType getEffectType() {
+        return effectType;
+    }
 }

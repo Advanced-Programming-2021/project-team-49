@@ -2,6 +2,7 @@ package model.user;
 
 import model.card.CardTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ public class User {
     private String password;
     private int coins;
     private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
+    private ArrayList<Deck> decks;
+    private Deck activeDeck;
 
     public User(String username, String nickname, String password, int coins) {
         this.username = username;
