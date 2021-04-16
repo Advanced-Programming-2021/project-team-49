@@ -38,6 +38,10 @@ public class User {
         this.password = password;
     }
 
+    public ArrayList<Deck> getDecks() {
+        return decks;
+    }
+
     public int getCoins() {
         return coins;
     }

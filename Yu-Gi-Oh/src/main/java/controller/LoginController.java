@@ -20,4 +20,8 @@ public class LoginController extends AbstractController {
     public void login(String username, String password) {
 
     }
+
+    public void removeUser(String username, String password) {
+
+    }
 }
