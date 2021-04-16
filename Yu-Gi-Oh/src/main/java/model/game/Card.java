@@ -1,4 +1,6 @@
-package model.card;
+package model.game;
+
+import model.card.Location;
 
 public class Card {
 

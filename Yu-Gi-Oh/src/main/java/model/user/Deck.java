@@ -1,6 +1,6 @@
 package model.user;
 
-import model.card.Card;
+import model.game.Card;
 import model.card.CardTemplate;
 
 import java.util.ArrayList;
