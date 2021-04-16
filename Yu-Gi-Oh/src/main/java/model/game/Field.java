@@ -2,8 +2,8 @@ package model.game;
 
 public class Field {
 
-    private GameMat hostMat;
-    private GameMat guestMat;
+    private final GameMat hostMat;
+    private final GameMat guestMat;
     private int hostLifePoint;
     private int guestLifePoint;
 
@@ -12,5 +12,13 @@ public class Field {
         this.guestMat = guestMat;
         this.hostLifePoint = hostLifePoint;
         this.guestLifePoint = guestLifePoint;
+    }
+
+    public GameMat getHostMat() {
+        return hostMat;
+    }
+
+    public GameMat getGuestMat() {
+        return guestMat;
     }
 }

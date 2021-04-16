@@ -15,19 +15,23 @@ public class Deck {
         this.name = name;
     }
 
-    void addCardToMainDeck(CardTemplate card) {
+    public String getName() {
+        return name;
+    }
+
+    public void addCardToMainDeck(CardTemplate card) {
 
     }
 
-    void removeCardFromMainDeck(CardTemplate card) {
+    public void removeCardFromMainDeck(CardTemplate card) {
 
     }
 
-    void addCardToSideDeck(CardTemplate card) {
+    public void addCardToSideDeck(CardTemplate card) {
 
     }
 
-    void removeCardFromSideDeck(CardTemplate card) {
+    public void removeCardFromSideDeck(CardTemplate card) {
 
     }
 }

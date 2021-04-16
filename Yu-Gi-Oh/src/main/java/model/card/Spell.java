@@ -4,8 +4,8 @@ public class Spell extends CardTemplate {
 
     private final EffectType effectType;
 
-    public Spell(String name, String number, String description, EffectType effectType) {
-        super(name, number, description);
+    public Spell(String name, String number, String description, Effect effect, EffectType effectType) {
+        super(name, number, description, effect);
         this.effectType = effectType;
     }
 

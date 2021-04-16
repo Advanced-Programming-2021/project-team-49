@@ -6,11 +6,10 @@ public class Card {
     private boolean faceUp;
     private boolean Attacker;
     private boolean attackPossibility;
-    private Effect effect;
+    private boolean effect;
 
-    public Card(Location location, Effect effect) {
+    public Card(Location location) {
         this.location = location;
-        this.effect = effect;
     }
 
     public void setLocation(Location location) {
@@ -45,7 +44,11 @@ public class Card {
         return attackPossibility;
     }
 
-    public void setEffect(Effect effect) {
+    public void setEffect(boolean effect) {
         this.effect = effect;
+    }
+
+    public boolean hasEffect() {
+        return effect;
     }
 }
