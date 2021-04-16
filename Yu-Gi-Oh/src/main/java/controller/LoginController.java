@@ -16,4 +16,8 @@ public class LoginController extends AbstractController {
     public void registerUser(String username, String nickname, String password) {
 
     }
+
+    public void login(String username, String password) {
+
+    }
 }

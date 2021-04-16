@@ -1,4 +1,4 @@
 package controller;
 
-public abstract class AbstractController implements Controller{
+public abstract class AbstractController implements Controller {
 }
