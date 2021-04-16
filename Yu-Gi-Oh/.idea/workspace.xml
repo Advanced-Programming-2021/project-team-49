@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="move Card class from model.card to model.game">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/game/Phase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/Userbase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/Userbase.java" afterDir="false" />
+    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="Updated controllers and views">
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AbstractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AbstractController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
