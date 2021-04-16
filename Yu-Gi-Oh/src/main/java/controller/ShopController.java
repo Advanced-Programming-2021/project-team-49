@@ -17,6 +17,10 @@ public class ShopController extends AbstractController {
 
     }
 
+    public void buyCard(String cardName) {
+
+    }
+
     public void getCardPricesFromFile() {
 
     }

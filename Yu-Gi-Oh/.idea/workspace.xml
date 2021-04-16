@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="Updated controllers and views">
+    <list default="true" id="270798a0-c2b7-4369-b89f-8ba7ce929f5a" name="Default Changelist" comment="Updated controllers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/DeckBuilderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/DeckBuilderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ShopController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ShopController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618599048250</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Updated controllers">
+      <created>1618599980525</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1618599980525</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +154,7 @@
     <MESSAGE value="some changes in model" />
     <MESSAGE value="move Card class from model.card to model.game" />
     <MESSAGE value="Updated controllers and views" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated controllers and views" />
+    <MESSAGE value="Updated controllers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated controllers" />
   </component>
 </project>

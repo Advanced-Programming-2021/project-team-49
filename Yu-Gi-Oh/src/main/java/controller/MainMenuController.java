@@ -14,4 +14,16 @@ public class MainMenuController extends AbstractController {
     public void run() {
 
     }
+
+    public void openShop() {
+
+    }
+
+    public void openProfile() {
+
+    }
+
+    public void startDuel() {
+
+    }
 }
