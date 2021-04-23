@@ -1,22 +1,19 @@
 package model.card;
 
 public enum MonsterType {
-    NORMAL,
-    EFFECT,
     WARRIOR,
     DRAGON,
     SPELLCASTER,
-    AQUA,
     CYBERSE,
+    AQUA,
     BEAST_WARRIOR,
     FIEND,
     THUNDER,
-    RITUAL,
     MACHINE,
     BEAST,
     PYRO,
     ROCK,
     INSECT,
     FAIRY,
-    SEA_SERPENT
+    SEA_SERPENT1
 }

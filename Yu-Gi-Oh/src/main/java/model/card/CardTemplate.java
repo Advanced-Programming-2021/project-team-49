@@ -3,11 +3,11 @@ package model.card;
 public abstract class CardTemplate {
 
     protected final String name;
-    protected final String number;
+    protected final int number;
     protected final Effect effect;
     protected final String description;
 
-    public CardTemplate(String name, String number, String description, Effect effect) {
+    public CardTemplate(String name, int number, String description, Effect effect) {
         this.name = name;
         this.number = number;
         this.description = description;
@@ -18,7 +18,7 @@ public abstract class CardTemplate {
         return name;
     }
 
-    public String getNumber() {
+    public int getNumber() {
         return number;
     }
 
