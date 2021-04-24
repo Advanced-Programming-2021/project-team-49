@@ -6,11 +6,10 @@ import java.util.Map;
 
 public class ShopController extends AbstractController {
     public static final String TITLE = "Shop Menu";
-    private final MasterController masterController;
     private Map<String, Integer> cardPrices;
 
     public ShopController(MasterController masterController, User user) {
-        this.masterController = masterController;
+        super(masterController, user);
     }
 
     public void run() {

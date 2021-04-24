@@ -5,10 +5,9 @@ import model.user.Userbase;
 
 public class MainMenuController extends AbstractController {
     public static final String TITLE = "Main Menu";
-    private final MasterController masterController;
 
-    public MainMenuController(MasterController masterController, User user, Userbase userbase) {
-        this.masterController = masterController;
+    public MainMenuController(MasterController masterController, User user) {
+        super(masterController, user);
     }
 
     public void run() {
@@ -25,5 +24,11 @@ public class MainMenuController extends AbstractController {
 
     public void startDuel() {
 
+    }
+
+    @Override
+    public void escape() {
+        LoginController loginController = new LoginController(masterController);
+        masterController.setNextController(loginController);
     }
 }

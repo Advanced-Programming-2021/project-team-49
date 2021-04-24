@@ -3,10 +3,8 @@ package controller;
 public class LoginController extends AbstractController {
     public static final String TITLE = "Login Menu";
 
-    private final MasterController masterController;
-
     public LoginController(MasterController masterController) {
-        this.masterController = masterController;
+        super(masterController, null);
     }
 
     public void run() {
@@ -23,5 +21,10 @@ public class LoginController extends AbstractController {
 
     public void removeUser(String username, String password) {
 
+    }
+
+    @Override
+    public void escape() {
+        masterController.setNextController(null);
     }
 }

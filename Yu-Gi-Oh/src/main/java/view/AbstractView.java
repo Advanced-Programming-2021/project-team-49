@@ -5,8 +5,4 @@ public abstract class AbstractView {
         String stringValue = new String();
         return stringValue;
     }
-
-    protected void showCurrentMenu() {
-
-    }
 }

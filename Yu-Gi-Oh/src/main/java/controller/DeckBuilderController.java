@@ -7,10 +7,9 @@ import java.util.Map;
 
 public class DeckBuilderController extends AbstractController {
     public static final String TITLE = "Deck Menu";
-    private final MasterController masterController;
 
     public DeckBuilderController(MasterController masterController, User user) {
-        this.masterController = masterController;
+        super(masterController, user);
     }
 
     public void run() {
