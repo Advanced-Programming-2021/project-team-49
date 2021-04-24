@@ -1,15 +1,17 @@
 package controller;
 
+import model.database.Shop;
 import model.user.User;
 
 import java.util.Map;
 
 public class ShopController extends AbstractController {
     public static final String TITLE = "Shop Menu";
-    private Map<String, Integer> cardPrices;
+    private final Shop shop;
 
-    public ShopController(MasterController masterController, User user) {
+    public ShopController(MasterController masterController, User user, Shop shop) {
         super(masterController, user);
+        this.shop = shop;
     }
 
     public void run() {
@@ -17,10 +19,6 @@ public class ShopController extends AbstractController {
     }
 
     public void buyCard(String cardName) {
-
-    }
-
-    public void getCardPricesFromFile() {
 
     }
 

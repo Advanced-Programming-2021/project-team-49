@@ -13,7 +13,8 @@ public abstract class AbstractController implements Controller {
     }
 
     public void escape() {
-        MainMenuController mainMenuController = new MainMenuController(masterController, user);
+        MainMenuController mainMenuController = new MainMenuController(masterController, user,
+                masterController.getDatabase());
         masterController.setNextController(mainMenuController);
     }
 }

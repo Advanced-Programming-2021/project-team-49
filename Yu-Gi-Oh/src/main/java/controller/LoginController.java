@@ -1,10 +1,14 @@
 package controller;
 
+import model.database.Userbase;
+
 public class LoginController extends AbstractController {
     public static final String TITLE = "Login Menu";
+    public final Userbase userbase;
 
-    public LoginController(MasterController masterController) {
+    public LoginController(MasterController masterController, Userbase userbase) {
         super(masterController, null);
+        this.userbase = userbase;
     }
 
     public void run() {
