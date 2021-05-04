@@ -10,8 +10,8 @@ import java.util.Map;
 public class Deck {
 
     private final String name;
-    private Map<CardTemplate, Integer> mainDeck = new Hashtable<>();
-    private Map<CardTemplate, Integer> sideDeck = new Hashtable<>();
+    private final Map<CardTemplate, Integer> mainDeck = new Hashtable<>();
+    private final Map<CardTemplate, Integer> sideDeck = new Hashtable<>();
 
     Deck(String name) {
         this.name = name;
