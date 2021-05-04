@@ -1,15 +1,26 @@
 package model.game;
 
-public class Card {
+import model.card.CardTemplate;
 
+public class Card {
+    private CardTemplate cardTemplate;
     private Location location;
     private boolean faceUp;
     private boolean Attacker;
     private boolean attackPossibility;
     private boolean effect;
 
-    public Card(Location location) {
+    public Card(CardTemplate cardTemplate, Location location) {
+        this.cardTemplate = cardTemplate;
         this.location = location;
+    }
+
+    public String getName() {
+        return cardTemplate.getName();
+    }
+
+    public String getDescription() {
+        return cardTemplate.getDescription();
     }
 
     public void setLocation(Location location) {

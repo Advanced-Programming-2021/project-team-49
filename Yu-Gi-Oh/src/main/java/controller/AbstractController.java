@@ -1,7 +1,6 @@
 package controller;
 
 import model.user.User;
-import view.AbstractView;
 
 public abstract class AbstractController implements Controller {
     protected final MasterController masterController;

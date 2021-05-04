@@ -5,6 +5,8 @@ import model.card.CardTemplate;
 
 import java.util.ArrayList;
 
+import static java.util.stream.Collectors.summingInt;
+
 public class Deck {
 
     private final String name;
@@ -17,6 +19,17 @@ public class Deck {
 
     public String getName() {
         return name;
+    }
+
+    public int getNumberOfOccurrences(String cardName) {
+        int count = 0;
+        for (Card card : mainDeck)
+            if (card.getName().equals(cardName))
+                count++;
+        for (Card card : sideDeck)
+            if (card.getName().equals(cardName))
+                count++;
+        return count;
     }
 
     public void addCardToMainDeck(CardTemplate card) {

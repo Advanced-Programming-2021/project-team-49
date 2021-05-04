@@ -9,9 +9,9 @@ public class Monster extends CardTemplate {
     private final int baseAttack;
     private final int baseDefence;
 
-    public Monster(String name, int number, String description, Effect effect, int level, Attribute attribute,
+    public Monster(String name, String description, Effect effect, int level, Attribute attribute,
                    CardType cardType, MonsterType monsterType, int baseAttack, int baseDefence) {
-        super(name, number, description, effect);
+        super(name, description, effect);
         this.level = level;
         this.attribute = attribute;
         this.cardType = cardType;
