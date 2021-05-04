@@ -4,14 +4,14 @@ import model.game.Card;
 import model.card.CardTemplate;
 
 import java.util.ArrayList;
-
-import static java.util.stream.Collectors.summingInt;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Deck {
 
     private final String name;
-    private ArrayList<Card> mainDeck;
-    private ArrayList<Card> sideDeck;
+    private Map<CardTemplate, Integer> mainDeck = new Hashtable<>();
+    private Map<CardTemplate, Integer> sideDeck = new Hashtable<>();
 
     Deck(String name) {
         this.name = name;
@@ -21,19 +21,7 @@ public class Deck {
         return name;
     }
 
-    public int getNumberOfOccurrences(String cardName) {
-        int count = 0;
-        for (Card card : mainDeck)
-            if (card.getName().equals(cardName))
-                count++;
-        for (Card card : sideDeck)
-            if (card.getName().equals(cardName))
-                count++;
-        return count;
-    }
-
     public void addCardToMainDeck(CardTemplate card) {
-
     }
 
     public void removeCardFromMainDeck(CardTemplate card) {
