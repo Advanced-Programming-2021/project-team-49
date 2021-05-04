@@ -22,17 +22,24 @@ public class Deck {
     }
 
     public void addCardToMainDeck(CardTemplate card) {
+        mainDeck.putIfAbsent(card, 0);
+        mainDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
     public void removeCardFromMainDeck(CardTemplate card) {
-
+        mainDeck.computeIfPresent(card, (key, count) -> count--);
+        if (mainDeck.get(card) <= 0)
+            mainDeck.remove(card);
     }
 
     public void addCardToSideDeck(CardTemplate card) {
-
+        sideDeck.putIfAbsent(card, 0);
+        sideDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
     public void removeCardFromSideDeck(CardTemplate card) {
-
+        sideDeck.computeIfPresent(card, (key, count) -> count--);
+        if (sideDeck.get(card) <= 0)
+            sideDeck.remove(card);
     }
 }
