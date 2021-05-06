@@ -1,7 +1,17 @@
 package model.card;
 
 public enum CardType {
-    NORMAL,
-    EFFECT,
-    RITUAL
+    NORMAL("Normal"),
+    EFFECT("Effect"),
+    RITUAL("Ritual");
+
+    private final String cardType;
+
+    CardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
 }

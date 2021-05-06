@@ -1,11 +1,21 @@
 package model.card;
 
 public enum EffectType {
-    NORMAL,
-    EQUIP,
-    FIELD,
-    QUICK_PLAY,
-    RITUAL,
-    CONTINUOUS,
-    COUNTER
+    NORMAL("Normal"),
+    EQUIP("Equip"),
+    FIELD("Field"),
+    QUICK_PLAY("Quick-play"),
+    RITUAL("Ritual"),
+    CONTINUOUS("Continuous"),
+    COUNTER("Counter");
+
+    private final String effectType;
+
+    EffectType(String effectType) {
+        this.effectType = effectType;
+    }
+
+    public String getEffectType() {
+        return effectType;
+    }
 }

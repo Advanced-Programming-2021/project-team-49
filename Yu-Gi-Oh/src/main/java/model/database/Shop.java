@@ -14,4 +14,8 @@ public class Shop {
     public void addRevenue(int amount) {
         revenue += amount;
     }
+
+    void addCard(String name, int price) {
+        cardPrices.put(name, price);
+    }
 }
