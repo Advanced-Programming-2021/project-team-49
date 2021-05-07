@@ -13,10 +13,19 @@ public abstract class AbstractView {
         String abbreviatedCommandString = "-" + string.charAt(0);
 
         for (int i = 0; i < command.length - 1; i++)
-            if (commandString.equals(command[i])
-                    || abbreviatedCommandString.equals(command[i]))
+            if (commandString.equals(command[i]) || abbreviatedCommandString.equals(command[i]))
                 return command[i + 1];
         return null;
+    }
+
+    public static boolean isFlagUsedInCommand(String flag, String[] command) {
+        String flagString = "--" + flag;
+        String abbreviatedFlagString = "-" + flag.charAt(0);
+
+        for (String segment : command)
+            if (flagString.equals(segment) || abbreviatedFlagString.equals(segment))
+                return true;
+        return false;
     }
 
     protected static boolean runDefaultCommands(String menuTitle, String input) {

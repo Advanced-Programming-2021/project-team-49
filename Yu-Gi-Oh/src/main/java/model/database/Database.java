@@ -8,13 +8,14 @@ import model.user.User;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 // TODO: implement loading from file
 public class Database {
 
     private final Userbase userbase = new Userbase();
     private final Shop shop = new Shop();
-    private final ArrayList<CardTemplate> cards;
+    private final List<CardTemplate> cards;
 
     public Database() {
         cards = new ArrayList<>();
