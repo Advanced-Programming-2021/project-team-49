@@ -24,20 +24,23 @@ public class MainMenuView extends AbstractView {
                 if (!isFlagUsedInCommand("new", command))
                     throw new RuntimeException(INVALID_COMMAND_MESSAGE);
 
-                String secondPlayerUsername = getStringValueFromCommand("second-player", command);
                 String roundsString = getStringValueFromCommand("rounds", command);
-
-                if (secondPlayerUsername == null || roundsString == null)
+                if (roundsString == null)
                     throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-
                 int rounds = Integer.parseInt(roundsString);
-                controller.startDuel(secondPlayerUsername, rounds);
+
+                if (isFlagUsedInCommand("ai", command))
+                    controller.startAIDuel(rounds);
+                else {
+                    String secondPlayerUsername = getStringValueFromCommand("second-player", command);
+                    controller.startPlayerDuel(secondPlayerUsername, rounds);
+                }
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);
         } catch (RuntimeException exception) {
             System.out.println(exception.getMessage());
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

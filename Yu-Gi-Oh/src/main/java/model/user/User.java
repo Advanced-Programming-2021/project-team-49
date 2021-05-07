@@ -43,6 +43,10 @@ public class User {
         return decks;
     }
 
+    public Deck getActiveDeck() {
+        return activeDeck;
+    }
+
     public int getCoins() {
         return coins;
     }

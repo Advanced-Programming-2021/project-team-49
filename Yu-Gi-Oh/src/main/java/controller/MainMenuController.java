@@ -6,7 +6,7 @@ import view.MainMenuView;
 
 public class MainMenuController extends AbstractController {
     public static final String TITLE = "Main Menu";
-    private Database database;
+    private final Database database;
 
     public MainMenuController(MasterController masterController, User user, Database database) {
         super(masterController, user);
@@ -45,10 +45,26 @@ public class MainMenuController extends AbstractController {
         masterController.setNextController(nextController);
     }
 
-    public void startDuel(String secondPlayerUsername, int rounds) {
+    public void startPlayerDuel(String secondPlayerUsername, int rounds) {
         User secondPlayer = database.getUserbase().getUserByUsername(secondPlayerUsername);
+
         if (secondPlayer == null)
             throw new RuntimeException("there is no player with this username");
+        else if (secondPlayer.getActiveDeck() == null)
+            throw new RuntimeException(secondPlayerUsername + "'s deck is invalid");
+        else if (rounds != 1 && rounds != 3)
+            System.out.println("number of rounds is not supported");
+
+        DuelController duelController = new DuelController(masterController, user, secondPlayer, rounds, false);
+        masterController.setNextController(duelController);
+    }
+
+    public void startAIDuel(int rounds) {
+        if (rounds != 1 && rounds != 3)
+            System.out.println("number of rounds is not supported");
+
+        DuelController duelController = new DuelController(masterController, user, null, rounds, true);
+        masterController.setNextController(duelController);
     }
 
     @Override
