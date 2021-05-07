@@ -1,8 +1,11 @@
 package view;
 
+import java.util.Scanner;
+
 public abstract class AbstractView {
     protected static final String INVALID_COMMAND_MESSAGE = "invalid command";
     protected static final String ESCAPE_COMMAND = "menu exit";
+    protected static final Scanner INPUT_STREAM = new Scanner(System.in);
 
     public static String removeExtraWhitespace(String string) {
         return string.trim().replaceAll("\\s+", " ");

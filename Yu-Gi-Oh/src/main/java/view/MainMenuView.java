@@ -1,18 +1,13 @@
 package view;
 
-import controller.Controller;
-import controller.LoginController;
 import controller.MainMenuController;
-
-import java.util.Scanner;
 
 public class MainMenuView extends AbstractView {
     public MainMenuView(MainMenuController controller) {
-        Scanner inputStream = new Scanner(System.in);
-        String input = removeExtraWhitespace(inputStream.nextLine());
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
 
         while (runCommand(controller, input))
-            input = removeExtraWhitespace(inputStream.nextLine());
+            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
     }
 
     private boolean runCommand(MainMenuController controller, String input) {
@@ -26,7 +21,17 @@ public class MainMenuView extends AbstractView {
             else if (input.equals("user logout"))
                 controller.escape();
             else if (input.startsWith("duel")) {
-                // TODO: implement start game
+                if (!isFlagUsedInCommand("new", command))
+                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
+
+                String secondPlayerUsername = getStringValueFromCommand("second-player", command);
+                String roundsString = getStringValueFromCommand("rounds", command);
+
+                if (secondPlayerUsername == null || roundsString == null)
+                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
+
+                int rounds = Integer.parseInt(roundsString);
+                controller.startDuel(secondPlayerUsername, rounds);
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);
         } catch (RuntimeException exception) {

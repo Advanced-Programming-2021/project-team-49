@@ -1,17 +1,13 @@
 package view;
 
-import controller.Controller;
 import controller.LoginController;
-
-import java.util.Scanner;
 
 public class LoginView extends AbstractView {
     public LoginView(LoginController controller) {
-        Scanner inputStream = new Scanner(System.in);
-        String input = removeExtraWhitespace(inputStream.nextLine());
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
 
         while (runCommand(controller, input))
-            input = removeExtraWhitespace(inputStream.nextLine());
+            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
     }
 
     private static boolean runCommand(LoginController controller, String input) {

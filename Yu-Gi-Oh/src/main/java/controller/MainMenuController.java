@@ -45,8 +45,10 @@ public class MainMenuController extends AbstractController {
         masterController.setNextController(nextController);
     }
 
-    public void startDuel(String secondPlayer) {
-
+    public void startDuel(String secondPlayerUsername, int rounds) {
+        User secondPlayer = database.getUserbase().getUserByUsername(secondPlayerUsername);
+        if (secondPlayer == null)
+            throw new RuntimeException("there is no player with this username");
     }
 
     @Override
