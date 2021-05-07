@@ -11,6 +11,7 @@ public class User {
     private String nickname;
     private String password;
     private int coins;
+    private int score = 0;
     private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
     private ArrayList<Deck> decks;
     private Deck activeDeck;
@@ -46,11 +47,27 @@ public class User {
         return coins;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isPasswordCorrect(String password) {
+        return password.equals(this.password);
+    }
+
     public void addCoins(int coins) {
         this.coins += coins;
     }
 
     public void decreaseCoins(int coins) {
         this.coins -= coins;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public void decreaseScore(int score) {
+        this.score -= score;
     }
 }

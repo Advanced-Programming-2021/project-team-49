@@ -1,6 +1,8 @@
 package controller;
 
 import model.database.Userbase;
+import model.user.User;
+import view.LoginView;
 
 public class LoginController extends AbstractController {
     public static final String TITLE = "Login Menu";
@@ -12,19 +14,26 @@ public class LoginController extends AbstractController {
     }
 
     public void run() {
-
+        new LoginView(this);
     }
 
-    public void registerUser(String username, String nickname, String password) {
+    public void createUser(String username, String nickname, String password) {
+        if (userbase.getUserByUsername(username) != null)
+            throw new RuntimeException("user with username " + username + " already exists");
+        else if (userbase.getUserByNickname(username) != null)
+            throw new RuntimeException("user with nickname " + nickname + " already exists");
 
+        userbase.addUser(username, nickname, password);
     }
 
     public void login(String username, String password) {
+        User user = userbase.getUserByUsername(username);
+        if (user == null || !user.isPasswordCorrect(password))
+            throw new RuntimeException("Username and password didn't match!");
 
-    }
-
-    public void removeUser(String username, String password) {
-
+        MainMenuController mainMenuController = new MainMenuController(
+                masterController, user, masterController.getDatabase());
+        masterController.setNextController(mainMenuController);
     }
 
     @Override
