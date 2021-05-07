@@ -1,21 +1,14 @@
 package model.database;
 
+import model.card.CardTemplate;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Shop {
-    private final Map<String, Integer> cardPrices = new HashMap<>();
-    private int revenue = 0;
+    private final Map<CardTemplate, Integer> cardPrices = new HashMap<>();
 
-    public int getRevenue() {
-        return revenue;
-    }
-
-    public void addRevenue(int amount) {
-        revenue += amount;
-    }
-
-    void addCard(String name, int price) {
-        cardPrices.put(name, price);
+    void addCard(CardTemplate card, int price) {
+        cardPrices.put(card, price);
     }
 }

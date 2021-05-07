@@ -33,8 +33,7 @@ public class LoginView extends AbstractView {
                 controller.createUser(username, nickname, password);
 
                 System.out.println("user created successfully!");
-            }
-            else if (input.startsWith("user login")) {
+            } else if (input.startsWith("user login")) {
                 String username = getStringValueFromCommand("username", command);
                 String password = getStringValueFromCommand("password", command);
 
@@ -44,8 +43,7 @@ public class LoginView extends AbstractView {
                 isMenuOpen = false;
 
                 System.out.println("user logged in successfully!");
-            }
-            else
+            } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);
         } catch (RuntimeException exception) {
             System.out.println(exception.getMessage());

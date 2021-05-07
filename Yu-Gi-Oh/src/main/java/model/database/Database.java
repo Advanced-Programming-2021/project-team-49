@@ -27,16 +27,18 @@ public class Database {
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
         while ((info = csvReader.readNext()) != null) {
-            cards.add(createMonsterCard(info));
-            // TODO add cards to shop
+            CardTemplate card = createMonsterCard(info);
+            cards.add(card);
+            shop.addCard(card, Integer.parseInt(info[8]));
         }
     }
 
     private void loadSpellTrapCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
         while ((info = csvReader.readNext()) != null) {
-            cards.add(createSpellTrapCard(info));
-            // TODO add cards to shop
+            CardTemplate card = createSpellTrapCard(info);
+            cards.add(card);
+            shop.addCard(card, Integer.parseInt(info[5]));
         }
     }
 
