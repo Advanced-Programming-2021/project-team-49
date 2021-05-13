@@ -2,23 +2,19 @@ package model.game;
 
 public class Field {
 
-    private final GameMat hostMat;
-    private final GameMat guestMat;
-    private int hostLifePoint;
-    private int guestLifePoint;
+    private GameMat attackerMat;
+    private GameMat defenderMat;
 
-    Field(GameMat hostMat, GameMat guestMat, int hostLifePoint, int guestLifePoint) {
-        this.hostMat = hostMat;
-        this.guestMat = guestMat;
-        this.hostLifePoint = hostLifePoint;
-        this.guestLifePoint = guestLifePoint;
+    public Field(GameMat attackerMat, GameMat defenderMat) {
+        this.attackerMat = attackerMat;
+        this.defenderMat = defenderMat;
     }
 
-    public GameMat getHostMat() {
-        return hostMat;
+    public GameMat getAttackerMat() {
+        return attackerMat;
     }
 
-    public GameMat getGuestMat() {
-        return guestMat;
+    public GameMat getDefenderMat() {
+        return defenderMat;
     }
 }

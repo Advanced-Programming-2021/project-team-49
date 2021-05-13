@@ -3,7 +3,6 @@ package model.game;
 public enum Location {
     DECK,
     HAND,
-    FIELD,
-    DESTROYED,
-    GRAVEYARD
+    GRAVEYARD,
+    FIELD_ZONE
 }
