@@ -2,6 +2,7 @@ package model.game;
 
 import model.user.User;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 public class GameMat {
@@ -120,5 +121,56 @@ public class GameMat {
 
     public void decreaseLifePoints(int amount) {
         lifePoints -= amount;
+    }
+
+    public String getCardStringView(Card card) {
+        if (card == null)
+            return "E ";
+        else if (!card.isAttackPossible())
+            return "O ";
+        else if (card.isAttacker())
+            return "OO";
+        else if (card.isFaceUp())
+            return "DO";
+        else
+            return "DH";
+    }
+
+    public String getStringView(boolean isFlipped) {
+        StringBuilder handString = new StringBuilder();
+        StringBuilder offsetString = new StringBuilder("\t");
+
+        for (int i = 0; i < hand.size(); i++)
+            handString.append("c \t");
+        for (int i = 0; i < 5; i++)
+            offsetString.append("  \t");
+
+        if (isFlipped)
+            return player.getNickname() + ":" + lifePoints
+                    + "\n  \t" + handString
+                    + "\n" + MessageFormat.format("{:02d}",deck.size())
+                    + "\n  \t" + getCardStringView(spellAndTrapZone.get(4))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(2))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(1))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(3))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(5))
+                    + "\n  \t" + getCardStringView(monsterZone.get(4)) + "\t" + getCardStringView(monsterZone.get(2))
+                        + "\t" + getCardStringView(monsterZone.get(1)) + "\t" + getCardStringView(monsterZone.get(3))
+                        + "\t" + getCardStringView(monsterZone.get(5))
+                    + "\n" + MessageFormat.format("{:02d}",deck.size())
+                    + offsetString + getCardStringView(fieldZoneCard);
+        else
+            return getCardStringView(fieldZoneCard) + offsetString + MessageFormat.format("{:02d}",deck.size())
+                    + "\n  \t" + getCardStringView(monsterZone.get(5)) + "\t" + getCardStringView(monsterZone.get(3))
+                        + "\t" + getCardStringView(monsterZone.get(1)) + "\t" + getCardStringView(monsterZone.get(2))
+                        + "\t" + getCardStringView(monsterZone.get(4))
+                    + "\n  \t" + getCardStringView(spellAndTrapZone.get(5))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(3))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(1))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(2))
+                        + "\t" + getCardStringView(spellAndTrapZone.get(4))
+                    + "\n" + "  " + offsetString + MessageFormat.format("{:02d}",deck.size())
+                    + "\n  \t" + handString
+                    + "\n" + player.getNickname() + ":" + lifePoints;
     }
 }

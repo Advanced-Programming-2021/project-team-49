@@ -1,18 +1,17 @@
 package model.game;
 
 import model.card.CardTemplate;
+import model.card.Monster;
 
 public class Card {
-    private CardTemplate cardTemplate;
-    private Location location;
+    private final CardTemplate cardTemplate;
     private boolean faceUp;
-    private boolean Attacker;
+    private boolean attacker;
     private boolean attackPossibility;
     private boolean effect;
 
-    public Card(CardTemplate cardTemplate, Location location) {
+    public Card(CardTemplate cardTemplate) {
         this.cardTemplate = cardTemplate;
-        this.location = location;
     }
 
     public String getName() {
@@ -21,14 +20,6 @@ public class Card {
 
     public String getDescription() {
         return cardTemplate.getDescription();
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     public void setFaceUp(boolean faceUp) {
@@ -40,11 +31,11 @@ public class Card {
     }
 
     public void setAttacker(boolean attacker) {
-        Attacker = attacker;
+        this.attacker = attacker;
     }
 
     public boolean isAttacker() {
-        return Attacker;
+        return attacker;
     }
 
     public void setAttackPossibility(boolean attackPossibility) {
