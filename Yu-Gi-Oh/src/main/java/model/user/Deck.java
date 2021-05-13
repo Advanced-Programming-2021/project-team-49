@@ -1,17 +1,15 @@
 package model.user;
 
-import model.game.Card;
 import model.card.CardTemplate;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Deck {
 
     private final String name;
-    private final Map<CardTemplate, Integer> mainDeck = new Hashtable<>();
-    private final Map<CardTemplate, Integer> sideDeck = new Hashtable<>();
+    private final Map<CardTemplate, Integer> mainDeck = new HashMap<>();
+    private final Map<CardTemplate, Integer> sideDeck = new HashMap<>();
 
     Deck(String name) {
         this.name = name;
@@ -41,5 +39,16 @@ public class Deck {
         sideDeck.computeIfPresent(card, (key, count) -> count--);
         if (sideDeck.get(card) <= 0)
             sideDeck.remove(card);
+    }
+
+    public boolean isDeckValid() {
+        for (CardTemplate cardTemplate : mainDeck.keySet()) {
+            if (mainDeck.get(cardTemplate) > 3)
+                return false;
+            if (sideDeck.containsKey(cardTemplate))
+                if (mainDeck.get(cardTemplate) + sideDeck.get(cardTemplate) > 3)
+                    return false;
+        }
+        return true;
     }
 }

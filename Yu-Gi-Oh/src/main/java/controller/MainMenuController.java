@@ -51,6 +51,8 @@ public class MainMenuController extends AbstractController {
         if (secondPlayer == null)
             throw new RuntimeException("there is no player with this username");
         else if (secondPlayer.getActiveDeck() == null)
+            throw new RuntimeException(secondPlayerUsername + " has no active deck");
+        else if (!secondPlayer.getActiveDeck().isDeckValid())
             throw new RuntimeException(secondPlayerUsername + "'s deck is invalid");
         else if (rounds != 1 && rounds != 3)
             System.out.println("number of rounds is not supported");
