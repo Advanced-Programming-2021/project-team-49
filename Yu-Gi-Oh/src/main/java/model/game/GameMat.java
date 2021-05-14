@@ -44,6 +44,10 @@ public class GameMat {
         return lifePoints;
     }
 
+    public int getCardCount(Location location) {
+        return locationMap.get(location).size();
+    }
+
     public Card getCard(Location location) {
         if (location == Location.FIELD_ZONE)
             return fieldZoneCard;
@@ -53,9 +57,9 @@ public class GameMat {
     }
 
     public Card getCard(Zone zone, int position) {
-        if (zone == Zone.MONSTER_ZONE)
+        if (zone == Zone.MONSTER)
             return monsterZone.get(position);
-        else if (zone == Zone.SPELL_AND_TRAP_ZONE)
+        else if (zone == Zone.SPELL_AND_TRAP)
             return spellAndTrapZone.get(position);
         return null;
     }
@@ -70,9 +74,9 @@ public class GameMat {
     }
 
     public void addCard(Card card, Zone zone, int position) {
-        if (zone == Zone.MONSTER_ZONE)
+        if (zone == Zone.MONSTER)
             monsterZone.put(position, card);
-        else if (zone == Zone.SPELL_AND_TRAP_ZONE)
+        else if (zone == Zone.SPELL_AND_TRAP)
             spellAndTrapZone.put(position, card);
     }
 
@@ -85,9 +89,9 @@ public class GameMat {
     }
 
     public void removeCard(Zone zone, int position) {
-        if (zone == Zone.MONSTER_ZONE)
+        if (zone == Zone.MONSTER)
             monsterZone.remove(position);
-        else if (zone == Zone.SPELL_AND_TRAP_ZONE)
+        else if (zone == Zone.SPELL_AND_TRAP)
             spellAndTrapZone.remove(position);
     }
 
@@ -121,56 +125,5 @@ public class GameMat {
 
     public void decreaseLifePoints(int amount) {
         lifePoints -= amount;
-    }
-
-    public String getCardStringView(Card card) {
-        if (card == null)
-            return "E ";
-        else if (!card.isAttackPossible())
-            return "O ";
-        else if (card.isAttacker())
-            return "OO";
-        else if (card.isFaceUp())
-            return "DO";
-        else
-            return "DH";
-    }
-
-    public String getStringView(boolean isFlipped) {
-        StringBuilder handString = new StringBuilder();
-        StringBuilder offsetString = new StringBuilder("\t");
-
-        for (int i = 0; i < hand.size(); i++)
-            handString.append("c \t");
-        for (int i = 0; i < 5; i++)
-            offsetString.append("  \t");
-
-        if (isFlipped)
-            return player.getNickname() + ":" + lifePoints
-                    + "\n  \t" + handString
-                    + "\n" + MessageFormat.format("{:02d}",deck.size())
-                    + "\n  \t" + getCardStringView(spellAndTrapZone.get(4))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(2))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(1))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(3))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(5))
-                    + "\n  \t" + getCardStringView(monsterZone.get(4)) + "\t" + getCardStringView(monsterZone.get(2))
-                        + "\t" + getCardStringView(monsterZone.get(1)) + "\t" + getCardStringView(monsterZone.get(3))
-                        + "\t" + getCardStringView(monsterZone.get(5))
-                    + "\n" + MessageFormat.format("{:02d}",deck.size())
-                    + offsetString + getCardStringView(fieldZoneCard);
-        else
-            return getCardStringView(fieldZoneCard) + offsetString + MessageFormat.format("{:02d}",deck.size())
-                    + "\n  \t" + getCardStringView(monsterZone.get(5)) + "\t" + getCardStringView(monsterZone.get(3))
-                        + "\t" + getCardStringView(monsterZone.get(1)) + "\t" + getCardStringView(monsterZone.get(2))
-                        + "\t" + getCardStringView(monsterZone.get(4))
-                    + "\n  \t" + getCardStringView(spellAndTrapZone.get(5))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(3))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(1))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(2))
-                        + "\t" + getCardStringView(spellAndTrapZone.get(4))
-                    + "\n" + "  " + offsetString + MessageFormat.format("{:02d}",deck.size())
-                    + "\n  \t" + handString
-                    + "\n" + player.getNickname() + ":" + lifePoints;
     }
 }
