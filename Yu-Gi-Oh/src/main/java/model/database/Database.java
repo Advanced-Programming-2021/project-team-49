@@ -10,15 +10,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: implement loading from file
 public class Database {
 
     private final Userbase userbase = new Userbase();
     private final Shop shop = new Shop();
-    private final List<CardTemplate> cards;
+    private final List<CardTemplate> cards = new ArrayList<>();
 
     public Database() {
-        cards = new ArrayList<>();
+
+    }
+
+    public Userbase getUserbase() {
+        return userbase;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public CardTemplate getCardByName(String name) {
+        for (CardTemplate card : cards) {
+            if (card.getName().equals(name))
+                return card;
+        }
+        return null;
+    }
+
+    public void saveUserbase(Userbase userbase) {
+
+    }
+
+    public void saveUser(User user) {
+
     }
 
     private CSVReader readFile(String address) throws IOException {
@@ -41,22 +64,6 @@ public class Database {
             cards.add(card);
             shop.addCard(card, Integer.parseInt(info[5]));
         }
-    }
-
-    public Userbase getUserbase() {
-        return userbase;
-    }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void saveUserbase(Userbase userbase) {
-
-    }
-
-    public void saveUser(User user) {
-
     }
 
     private CardTemplate createMonsterCard(String[] info) {

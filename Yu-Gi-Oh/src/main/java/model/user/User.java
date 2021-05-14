@@ -2,9 +2,7 @@ package model.user;
 
 import model.card.CardTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class User {
     private final String username;
@@ -13,8 +11,8 @@ public class User {
     private int coins;
     private int score = 0;
     private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
-    private ArrayList<Deck> decks;
-    private Deck activeDeck;
+    private ArrayList<Deck> decks = new ArrayList<>();
+    private Deck activeDeck = null;
 
     public User(String username, String nickname, String password, int coins) {
         this.username = username;
@@ -39,12 +37,44 @@ public class User {
         this.password = password;
     }
 
+    public Deck getActiveDeck() {
+        return activeDeck;
+    }
+
+    public void setActiveDeck(String name) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(name)) {
+                this.activeDeck = deck;
+                break;
+            }
+        }
+    }
+
+    public Deck getDeckByName(String name) {
+        for (Deck deck : decks) {
+            if (deck.getName().equals(name))
+                return deck;
+        }
+        return null;
+    }
+
     public ArrayList<Deck> getDecks() {
+        decks.sort(Comparator.comparing(Deck::getName));
         return decks;
     }
 
-    public Deck getActiveDeck() {
-        return activeDeck;
+    public ArrayList<CardTemplate> getOwnedCards() {
+        ArrayList<CardTemplate> cards = new ArrayList<>(ownedCards.keySet());
+        cards.sort(Comparator.comparing(CardTemplate::getName));
+        return cards;
+    }
+
+    public void addDeck(Deck deck) {
+        decks.add(deck);
+    }
+
+    public void deleteDeck(String name) {
+        decks.removeIf(deck -> deck.getName().equals(name));
     }
 
     public int getCoins() {

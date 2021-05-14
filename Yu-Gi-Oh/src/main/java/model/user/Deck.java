@@ -1,7 +1,6 @@
 package model.user;
 
 import model.card.CardTemplate;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ public class Deck {
     private final Map<CardTemplate, Integer> mainDeck = new HashMap<>();
     private final Map<CardTemplate, Integer> sideDeck = new HashMap<>();
 
-    Deck(String name) {
+    public Deck(String name) {
         this.name = name;
     }
 
@@ -19,15 +18,27 @@ public class Deck {
         return name;
     }
 
+    public Map<CardTemplate, Integer> getMainDeck() {
+        return mainDeck;
+    }
+
     public void addCardToMainDeck(CardTemplate card) {
         mainDeck.putIfAbsent(card, 0);
         mainDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
-    public void removeCardFromMainDeck(CardTemplate card) {
-        mainDeck.computeIfPresent(card, (key, count) -> count--);
-        if (mainDeck.get(card) <= 0)
-            mainDeck.remove(card);
+    public boolean removeCardFromMainDeck(CardTemplate card) {
+        if (mainDeck.containsKey(card)) {
+            mainDeck.computeIfPresent(card, (key, count) -> count--);
+            if (mainDeck.get(card) <= 0)
+                mainDeck.remove(card);
+            return true;
+        }
+        return false;
+    }
+
+    public Map<CardTemplate, Integer> getSideDeck() {
+        return sideDeck;
     }
 
     public void addCardToSideDeck(CardTemplate card) {
@@ -35,20 +46,53 @@ public class Deck {
         sideDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
-    public void removeCardFromSideDeck(CardTemplate card) {
-        sideDeck.computeIfPresent(card, (key, count) -> count--);
-        if (sideDeck.get(card) <= 0)
-            sideDeck.remove(card);
+    public boolean removeCardFromSideDeck(CardTemplate card) {
+        if (sideDeck.containsKey(card)) {
+            sideDeck.computeIfPresent(card, (key, count) -> count--);
+            if (sideDeck.get(card) <= 0)
+                sideDeck.remove(card);
+            return true;
+        }
+        return false;
     }
 
     public boolean isDeckValid() {
-        for (CardTemplate cardTemplate : mainDeck.keySet()) {
-            if (mainDeck.get(cardTemplate) > 3)
+        if (getMainDeckSize() < 40)
+            return false;
+        for (CardTemplate card : mainDeck.keySet()) {
+            if (mainDeck.get(card) > 3)
                 return false;
-            if (sideDeck.containsKey(cardTemplate))
-                if (mainDeck.get(cardTemplate) + sideDeck.get(cardTemplate) > 3)
+            if (sideDeck.containsKey(card))
+                if (sideDeck.get(card) > 3)
+                    return false;
+                if (getCardCount(card) > 3)
                     return false;
         }
         return true;
+    }
+
+    public int getCardCount(CardTemplate card) {
+        int cardCount = 0;
+        if (mainDeck.containsKey(card))
+            cardCount += mainDeck.get(card);
+        if (sideDeck.containsKey(card))
+            cardCount += sideDeck.get(card);
+        return cardCount;
+    }
+
+    public int getMainDeckSize() {
+        int deckSize = 0;
+        for (CardTemplate card : mainDeck.keySet()) {
+            deckSize += mainDeck.get(card);
+        }
+        return deckSize;
+    }
+
+    public int getSideDeckSize() {
+        int deckSize = 0;
+        for (CardTemplate card : sideDeck.keySet()) {
+            deckSize += sideDeck.get(card);
+        }
+        return deckSize;
     }
 }

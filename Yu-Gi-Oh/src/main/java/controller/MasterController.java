@@ -4,7 +4,7 @@ import model.database.Database;
 
 public class MasterController implements Controller {
     private Controller nextController;
-    private Database database;
+    private final Database database;
 
     public MasterController() {
         database = new Database();

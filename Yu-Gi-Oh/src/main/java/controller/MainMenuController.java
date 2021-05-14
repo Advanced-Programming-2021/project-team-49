@@ -21,7 +21,7 @@ public class MainMenuController extends AbstractController {
         Controller nextController;
         switch (menuTitle) {
             case "Deck":
-                nextController = new DeckBuilderController(masterController, user);
+                nextController = new DeckBuilderController(masterController, user, database);
                 break;
             case "Scoreboard":
                 nextController = new ScoreboardController(masterController, user, database.getUserbase());
