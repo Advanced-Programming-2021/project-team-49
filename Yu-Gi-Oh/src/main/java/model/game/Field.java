@@ -33,11 +33,4 @@ public class Field {
         attackerMat = defenderMat;
         defenderMat = tempMat;
     }
-
-    @Override
-    public String toString() {
-        return defenderMat.getStringView(true)
-                + "\n\n--------------------------\n\n"
-                + attackerMat.getStringView(false);
-    }
 }
