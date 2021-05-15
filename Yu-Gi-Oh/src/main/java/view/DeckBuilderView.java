@@ -19,12 +19,6 @@ public class DeckBuilderView extends AbstractView {
     }
 
     private static boolean runCommand(DeckBuilderController controller, String input) {
-        boolean isMenuOpen = runDefaultCommands(DeckBuilderController.TITLE, input);
-        if (!isMenuOpen) {
-            controller.escape();
-            return false;
-        }
-
         try {
             if (input.startsWith("deck create ")) {
                 String deckName = input.substring(12);
@@ -73,7 +67,7 @@ public class DeckBuilderView extends AbstractView {
                             controller.getTraps(arguments[0], isFlagFound[2])));
                 }
             } else
-                throw new YugiohException(INVALID_COMMAND_MESSAGE);
+                return runDefaultCommands(input, controller);
         } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
         }

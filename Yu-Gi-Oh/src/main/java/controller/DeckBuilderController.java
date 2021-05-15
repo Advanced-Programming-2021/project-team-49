@@ -8,12 +8,13 @@ import model.card.Trap;
 import model.database.Database;
 import model.user.Deck;
 import model.user.User;
+import view.DeckBuilderView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class DeckBuilderController extends AbstractController {
-    public static final String TITLE = "Deck Menu";
+    private static final String TITLE = "Deck Menu";
     private final Database database;
 
     public DeckBuilderController(MasterController masterController, User user, Database database) {
@@ -22,7 +23,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void run() {
-
+        new DeckBuilderView(this);
     }
 
     public void createDeck(String name) {

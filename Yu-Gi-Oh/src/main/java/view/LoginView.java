@@ -12,12 +12,6 @@ public class LoginView extends AbstractView {
     }
 
     private static boolean runCommand(LoginController controller, String input) {
-        boolean isMenuOpen = runDefaultCommands(LoginController.TITLE, input);
-        if (!isMenuOpen) {
-            controller.escape();
-            return false;
-        }
-
         try {
             if (input.startsWith("user create")) {
                 String[] argumentNames = {"username", "nickname", "password"};
@@ -30,13 +24,13 @@ public class LoginView extends AbstractView {
                 String[] arguments = getArguments(argumentNames, null, input, "user login");
 
                 controller.login(arguments[0], arguments[1]);
-                isMenuOpen = false;
                 System.out.println("user logged in successfully!");
+                return false;
             } else
-                throw new YugiohException(INVALID_COMMAND_MESSAGE);
+                return runDefaultCommands(input, controller);
         } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
         }
-        return isMenuOpen;
+        return true;
     }
 }

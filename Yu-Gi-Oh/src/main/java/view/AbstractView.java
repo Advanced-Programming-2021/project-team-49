@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import exception.YugiohException;
 
 import java.util.ArrayList;
@@ -89,11 +90,17 @@ public abstract class AbstractView {
         return false;
     }
 
-    protected static boolean runDefaultCommands(String menuTitle, String input) {
-        if (input.startsWith("menu enter"))
+    protected static boolean runDefaultCommands(String input, Controller controller) {
+        if (input.startsWith("menu enter")) {
             System.out.println("menu navigation is not possible");
-        else if (input.equals("menu show-current"))
-            System.out.println(menuTitle);
-        return !input.equals(ESCAPE_COMMAND);
+            return true;
+        } else if (input.equals("menu show-current")) {
+            System.out.println(controller.getTitle());
+            return true;
+        } else if (input.equals(ESCAPE_COMMAND)) {
+            controller.escape();
+            return false;
+        } else
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
     }
 }

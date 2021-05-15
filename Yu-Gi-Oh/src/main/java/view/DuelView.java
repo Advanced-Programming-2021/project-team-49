@@ -7,7 +7,14 @@ import java.text.MessageFormat;
 
 public class DuelView extends AbstractView {
     public DuelView(DuelController controller) {
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
 
+        while (runCommand(controller, input))
+            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+    }
+
+    private static boolean runCommand(DuelController controller, String input) {
+        return true;
     }
 
     private String fieldStringView(Field field) {
