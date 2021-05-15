@@ -62,16 +62,6 @@ public abstract class AbstractView {
         return arguments;
     }
 
-    public static String getArgumentsFromCommand(String argumentNames, String[] command) {
-        String commandString = "--" + argumentNames;
-        String abbreviatedCommandString = "-" + argumentNames.charAt(0);
-
-        for (int i = 0; i < command.length - 1; i++)
-            if (commandString.equals(command[i]) || abbreviatedCommandString.equals(command[i]))
-                return command[i + 1];
-        return null;
-    }
-
     public static boolean[] findFlags(String[] flags, String input) {
         String[] command = input.split(" ");
         boolean[] isFlagFound = new boolean[flags.length];
