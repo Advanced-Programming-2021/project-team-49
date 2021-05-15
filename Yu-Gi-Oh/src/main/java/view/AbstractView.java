@@ -59,7 +59,7 @@ public abstract class AbstractView {
                         || abbreviatedCommandString.equals(command.get(j))) {
                     arguments[i] = command.get(j + 1);
                     command.remove(j);
-                    command.remove(j + 1);
+                    command.remove(j);
                     break;
                 }
         }
