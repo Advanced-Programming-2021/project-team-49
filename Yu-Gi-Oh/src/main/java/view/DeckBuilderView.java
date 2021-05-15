@@ -45,14 +45,14 @@ public class DeckBuilderView extends AbstractView {
                 String[] flags = {"side"};
                 String[] arguments = getArguments(argumentNames, flags, input, "deck add-card");
 
-                controller.addCardToDeck(arguments[0], arguments[1], !isFlagUsedInCommand("side", input));
+                controller.addCardToDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card added to deck successfully!");
             } else if (input.startsWith("deck rm-card")) {
                 String[] argumentNames = {"card", "deck"};
                 String[] flags = {"side"};
                 String[] arguments = getArguments(argumentNames, flags, input, "deck rm-card");
 
-                controller.removeCardFromDeck(arguments[0], arguments[1], !isFlagUsedInCommand("side", input));
+                controller.removeCardFromDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card removed from deck successfully!");
             } else if (input.startsWith("deck show")) {
                 String[] argumentNames = {"deck"};
@@ -67,9 +67,9 @@ public class DeckBuilderView extends AbstractView {
                     String[] arguments = getArguments(argumentNames, flags, input, "deck show");
 
                     System.out.print(showDeck(arguments[0], !isFlagFound[2],
-                            controller.getMonsters(arguments[0], !isFlagFound[2]),
-                            controller.getSpells(arguments[0], !isFlagFound[2]),
-                            controller.getTraps(arguments[0], !isFlagFound[2])));
+                            controller.getMonsters(arguments[0], isFlagFound[2]),
+                            controller.getSpells(arguments[0], isFlagFound[2]),
+                            controller.getTraps(arguments[0], isFlagFound[2])));
                 }
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);

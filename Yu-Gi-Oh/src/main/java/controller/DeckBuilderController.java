@@ -45,7 +45,7 @@ public class DeckBuilderController extends AbstractController {
         user.setActiveDeck(name);
     }
 
-    public void addCardToDeck(String cardName, String deckName, boolean mainDeck) {
+    public void addCardToDeck(String cardName, String deckName, boolean sideDeck) {
         CardTemplate card = database.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
@@ -54,25 +54,25 @@ public class DeckBuilderController extends AbstractController {
         if (deck == null)
             throw new RuntimeException("deck with name " + deckName + " does not exist");
 
-        if (mainDeck) {
-            if (deck.getMainDeckSize() > 60)
-                throw new RuntimeException("main deck is full");
-        } else {
+        if (sideDeck) {
             if (deck.getSideDeckSize() > 15)
                 throw new RuntimeException("side deck is full");
+        } else {
+            if (deck.getMainDeckSize() > 60)
+                throw new RuntimeException("main deck is full");
         }
 
         if (deck.getCardCount(card) > 3)
             throw new RuntimeException("there are already three cards with name " + cardName
                     + " in deck " + deckName);
 
-        if (mainDeck)
-            deck.addCardToMainDeck(card);
-        else
+        if (sideDeck)
             deck.addCardToSideDeck(card);
+        else
+            deck.addCardToMainDeck(card);
     }
 
-    public void removeCardFromDeck(String cardName, String deckName, boolean mainDeck) {
+    public void removeCardFromDeck(String cardName, String deckName, boolean sideDeck) {
         CardTemplate card = database.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
@@ -81,12 +81,12 @@ public class DeckBuilderController extends AbstractController {
         if (deck == null)
             throw new RuntimeException("deck with name " + deckName + " does not exist");
 
-        if (mainDeck) {
-            if (!deck.removeCardFromMainDeck(card))
-                throw new RuntimeException("card with name " + cardName + " does not exist in main deck");
-        } else {
+        if (sideDeck) {
             if (!deck.removeCardFromSideDeck(card))
                 throw new RuntimeException("card with name " + cardName + " does not exist in side deck");
+        } else {
+            if (!deck.removeCardFromMainDeck(card))
+                throw new RuntimeException("card with name " + cardName + " does not exist in main deck");
         }
     }
 
@@ -102,19 +102,19 @@ public class DeckBuilderController extends AbstractController {
         return user.getOwnedCards();
     }
 
-    public ArrayList<Monster> getMonsters(String deckName, boolean mainDeck) {
+    public ArrayList<Monster> getMonsters(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new RuntimeException("deck with name " + deckName + " does not exist");
 
         ArrayList<Monster> monsters = new ArrayList<>();
-        if (mainDeck) {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+        if (sideDeck) {
+            for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof Monster)
                     monsters.add((Monster) card);
             }
         } else {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (CardTemplate card : deck.getMainDeck().keySet()) {
                 if (card instanceof Monster)
                     monsters.add((Monster) card);
             }
@@ -124,19 +124,19 @@ public class DeckBuilderController extends AbstractController {
         return monsters;
     }
 
-    public ArrayList<Spell> getSpells(String deckName, boolean mainDeck) {
+    public ArrayList<Spell> getSpells(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new RuntimeException("deck with name " + deckName + " does not exist");
 
         ArrayList<Spell> spells = new ArrayList<>();
-        if (mainDeck) {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+        if (sideDeck) {
+            for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof Spell)
                     spells.add((Spell) card);
             }
         } else {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (CardTemplate card : deck.getMainDeck().keySet()) {
                 if (card instanceof Spell)
                     spells.add((Spell) card);
             }
@@ -146,19 +146,19 @@ public class DeckBuilderController extends AbstractController {
         return spells;
     }
 
-    public ArrayList<Trap> getTraps(String deckName, boolean mainDeck) {
+    public ArrayList<Trap> getTraps(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new RuntimeException("deck with name " + deckName + " does not exist");
 
         ArrayList<Trap> traps = new ArrayList<>();
-        if (mainDeck) {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+        if (sideDeck) {
+            for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof Trap)
                     traps.add((Trap) card);
             }
         } else {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (CardTemplate card : deck.getMainDeck().keySet()) {
                 if (card instanceof Trap)
                     traps.add((Trap) card);
             }
