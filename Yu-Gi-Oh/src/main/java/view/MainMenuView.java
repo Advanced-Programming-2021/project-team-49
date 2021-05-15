@@ -11,29 +11,32 @@ public class MainMenuView extends AbstractView {
     }
 
     private boolean runCommand(MainMenuController controller, String input) {
-        String[] command = input.split(" ");
         try {
             if (input.equals("menu show-current")) {
                 System.out.println(MainMenuController.TITLE);
                 return false;
-            } else if (input.startsWith("menu enter"))
+            } else if (input.startsWith("menu enter "))
                 controller.enterMenu(input.substring(11));
             else if (input.equals("user logout"))
                 controller.escape();
             else if (input.startsWith("duel")) {
-                if (!isFlagUsedInCommand("new", command))
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
+                String[] flags = {"new", "ai"};
+                boolean[] isFlagFound = findFlags(flags, input);
 
-                String roundsString = getStringValueFromCommand("rounds", command);
-                if (roundsString == null)
+                if (!isFlagFound[0])
                     throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-                int rounds = Integer.parseInt(roundsString);
+                else if (isFlagFound[1]) {
+                    String[] argumentNames = {"rounds"};
+                    String[] arguments = getArguments(argumentNames, flags, input, "duel");
 
-                if (isFlagUsedInCommand("ai", command))
+                    int rounds = Integer.parseInt(arguments[0]);
                     controller.startAIDuel(rounds);
-                else {
-                    String secondPlayerUsername = getStringValueFromCommand("second-player", command);
-                    controller.startPlayerDuel(secondPlayerUsername, rounds);
+                } else {
+                    String[] argumentNames = {"second-player", "rounds"};
+                    String[] arguments = getArguments(argumentNames, flags, input, "duel");
+
+                    int rounds = Integer.parseInt(arguments[1]);
+                    controller.startPlayerDuel(arguments[0], rounds);
                 }
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);

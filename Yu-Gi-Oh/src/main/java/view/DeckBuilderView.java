@@ -24,65 +24,59 @@ public class DeckBuilderView extends AbstractView {
             return false;
         }
 
-        String[] command = input.split(" ");
         try {
-            if (input.startsWith("deck create")) {
-                if (input.length() < 13)
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-
+            if (input.startsWith("deck create ")) {
                 String deckName = input.substring(12);
+
                 controller.createDeck(deckName);
-
                 System.out.println("deck created successfully!");
-            } else if (input.startsWith("deck delete")) {
-                if (input.length() < 13)
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-
+            } else if (input.startsWith("deck delete ")) {
                 String deckName = input.substring(12);
+
                 controller.deleteDeck(deckName);
-
                 System.out.println("deck deleted successfully!");
-            } else if (input.startsWith("deck activate")) {
-                if (input.length() < 15)
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-
+            } else if (input.startsWith("deck activate ")) {
                 String deckName = input.substring(14);
-                controller.activateDeck(deckName);
 
+                controller.activateDeck(deckName);
                 System.out.println("deck activated successfully!");
             } else if (input.startsWith("deck add-card")) {
-                String cardName = getStringValueFromCommand("card", command);
-                String deckName = getStringValueFromCommand("deck", command);
+                String[] argumentNames = {"card", "deck"};
+                String[] flags = {"side"};
+                String[] arguments = getArguments(argumentNames, flags, input, "deck add-card");
 
-                controller.addCardToDeck(cardName, deckName, !isFlagUsedInCommand("side", command));
-
+                controller.addCardToDeck(arguments[0], arguments[1], !isFlagUsedInCommand("side", input));
                 System.out.println("card added to deck successfully!");
             } else if (input.startsWith("deck rm-card")) {
-                String cardName = getStringValueFromCommand("card", command);
-                String deckName = getStringValueFromCommand("deck", command);
+                String[] argumentNames = {"card", "deck"};
+                String[] flags = {"side"};
+                String[] arguments = getArguments(argumentNames, flags, input, "deck rm-card");
 
-                controller.removeCardFromDeck(cardName, deckName, !isFlagUsedInCommand("side", command));
-
+                controller.removeCardFromDeck(arguments[0], arguments[1], !isFlagUsedInCommand("side", input));
                 System.out.println("card removed from deck successfully!");
             } else if (input.startsWith("deck show")) {
-                if (input.equals("deck show --all")) {
-                    System.out.println(showAllDecks(controller.getUserActiveDeck(),
-                            controller.getUserDecks()));
-                } else if (input.equals("deck show --cards")) {
-                    System.out.println(showAllCards(controller.getOwnedCards()));
-                } else {
-                    String deckName = getStringValueFromCommand("deck", command);
-                    boolean mainDeck = !isFlagUsedInCommand("side", command);
+                String[] argumentNames = {"deck"};
+                String[] flags = {"all", "cards", "side"};
+                boolean[] isFlagFound = findFlags(flags, input);
 
-                    System.out.print(showDeck(deckName, mainDeck, controller.getMonsters(deckName, mainDeck),
-                            controller.getSpells(deckName, mainDeck), controller.getTraps(deckName, mainDeck)));
+                if (isFlagFound[0])
+                    System.out.println(showAllDecks(controller.getUserActiveDeck(), controller.getUserDecks()));
+                else if (isFlagFound[1])
+                    System.out.println(showAllCards(controller.getOwnedCards()));
+                else {
+                    String[] arguments = getArguments(argumentNames, flags, input, "deck show");
+
+                    System.out.print(showDeck(arguments[0], !isFlagFound[2],
+                            controller.getMonsters(arguments[0], !isFlagFound[2]),
+                            controller.getSpells(arguments[0], !isFlagFound[2]),
+                            controller.getTraps(arguments[0], !isFlagFound[2])));
                 }
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);
         } catch (RuntimeException exception) {
             System.out.println(exception.getMessage());
         }
-        return isMenuOpen;
+        return true;
     }
 
     private static String showAllDecks(Deck activeDeck, ArrayList<Deck> decks) {

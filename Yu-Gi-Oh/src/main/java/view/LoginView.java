@@ -17,27 +17,19 @@ public class LoginView extends AbstractView {
             return false;
         }
 
-        String[] command = input.split(" ");
         try {
             if (input.startsWith("user create")) {
-                String username = getStringValueFromCommand("username", command);
-                String nickname = getStringValueFromCommand("nickname", command);
-                String password = getStringValueFromCommand("password", command);
+                String[] argumentNames = {"username", "nickname", "password"};
+                String[] arguments = getArguments(argumentNames, null, input, "user create");
 
-                if (username == null || nickname == null || password == null)
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-                controller.createUser(username, nickname, password);
-
+                controller.createUser(arguments[0], arguments[1], arguments[2]);
                 System.out.println("user created successfully!");
             } else if (input.startsWith("user login")) {
-                String username = getStringValueFromCommand("username", command);
-                String password = getStringValueFromCommand("password", command);
+                String[] argumentNames = {"username", "password"};
+                String[] arguments = getArguments(argumentNames, null, input, "user login");
 
-                if (username == null || password == null)
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-                controller.login(username, password);
+                controller.login(arguments[0], arguments[1]);
                 isMenuOpen = false;
-
                 System.out.println("user logged in successfully!");
             } else
                 throw new RuntimeException(INVALID_COMMAND_MESSAGE);
