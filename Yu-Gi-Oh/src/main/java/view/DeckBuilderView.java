@@ -1,6 +1,7 @@
 package view;
 
 import controller.DeckBuilderController;
+import exception.YugiohException;
 import model.card.CardTemplate;
 import model.card.Monster;
 import model.card.Spell;
@@ -72,8 +73,8 @@ public class DeckBuilderView extends AbstractView {
                             controller.getTraps(arguments[0], isFlagFound[2])));
                 }
             } else
-                throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-        } catch (RuntimeException exception) {
+                throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
         }
         return true;

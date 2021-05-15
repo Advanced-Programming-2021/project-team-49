@@ -1,6 +1,7 @@
 package view;
 
 import controller.LoginController;
+import exception.YugiohException;
 
 public class LoginView extends AbstractView {
     public LoginView(LoginController controller) {
@@ -32,8 +33,8 @@ public class LoginView extends AbstractView {
                 isMenuOpen = false;
                 System.out.println("user logged in successfully!");
             } else
-                throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-        } catch (RuntimeException exception) {
+                throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
         }
         return isMenuOpen;

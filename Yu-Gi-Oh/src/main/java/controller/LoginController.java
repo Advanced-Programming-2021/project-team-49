@@ -1,5 +1,6 @@
 package controller;
 
+import exception.YugiohException;
 import model.database.Userbase;
 import model.user.User;
 import view.LoginView;
@@ -19,9 +20,9 @@ public class LoginController extends AbstractController {
 
     public void createUser(String username, String nickname, String password) {
         if (userbase.getUserByUsername(username) != null)
-            throw new RuntimeException("user with username " + username + " already exists");
+            throw new YugiohException("user with username " + username + " already exists");
         else if (userbase.getUserByNickname(username) != null)
-            throw new RuntimeException("user with nickname " + nickname + " already exists");
+            throw new YugiohException("user with nickname " + nickname + " already exists");
 
         userbase.addUser(username, nickname, password);
     }
@@ -29,7 +30,7 @@ public class LoginController extends AbstractController {
     public void login(String username, String password) {
         User user = userbase.getUserByUsername(username);
         if (user == null || !user.isPasswordCorrect(password))
-            throw new RuntimeException("Username and password didn't match!");
+            throw new YugiohException("Username and password didn't match!");
 
         MainMenuController mainMenuController = new MainMenuController(
                 masterController, user, masterController.getDatabase());

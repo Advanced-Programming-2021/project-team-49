@@ -1,5 +1,7 @@
 package view;
 
+import exception.YugiohException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +23,7 @@ public abstract class AbstractView {
             removeFlagsFromCommand(flags, command);
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         if (command.size() > 0)
-            throw new RuntimeException(INVALID_COMMAND_MESSAGE);
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
 
         return arguments;
     }

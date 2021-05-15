@@ -1,5 +1,6 @@
 package controller;
 
+import exception.YugiohException;
 import model.database.Database;
 import model.user.User;
 import view.MainMenuView;
@@ -36,11 +37,11 @@ public class MainMenuController extends AbstractController {
                 nextController = new ImportExportController(masterController, user, database);
                 break;
             case "Login":
-                throw new RuntimeException("can't enter menu: you must logout");
+                throw new YugiohException("can't enter menu: you must logout");
             case "Duel":
-                throw new RuntimeException("can't enter menu: you must start a new game");
+                throw new YugiohException("can't enter menu: you must start a new game");
             default:
-                throw new RuntimeException("invalid menu");
+                throw new YugiohException("invalid menu");
         }
         masterController.setNextController(nextController);
     }
@@ -49,11 +50,11 @@ public class MainMenuController extends AbstractController {
         User secondPlayer = database.getUserbase().getUserByUsername(secondPlayerUsername);
 
         if (secondPlayer == null)
-            throw new RuntimeException("there is no player with this username");
+            throw new YugiohException("there is no player with this username");
         else if (secondPlayer.getActiveDeck() == null)
-            throw new RuntimeException(secondPlayerUsername + " has no active deck");
+            throw new YugiohException(secondPlayerUsername + " has no active deck");
         else if (!secondPlayer.getActiveDeck().isDeckValid())
-            throw new RuntimeException(secondPlayerUsername + "'s deck is invalid");
+            throw new YugiohException(secondPlayerUsername + "'s deck is invalid");
         else if (rounds != 1 && rounds != 3)
             System.out.println("number of rounds is not supported");
 

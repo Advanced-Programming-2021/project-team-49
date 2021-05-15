@@ -1,6 +1,7 @@
 package view;
 
 import controller.MainMenuController;
+import exception.YugiohException;
 
 public class MainMenuView extends AbstractView {
     public MainMenuView(MainMenuController controller) {
@@ -24,7 +25,7 @@ public class MainMenuView extends AbstractView {
                 boolean[] isFlagFound = findFlags(flags, input);
 
                 if (!isFlagFound[0])
-                    throw new RuntimeException(INVALID_COMMAND_MESSAGE);
+                    throw new YugiohException(INVALID_COMMAND_MESSAGE);
                 else if (isFlagFound[1]) {
                     String[] argumentNames = {"rounds"};
                     String[] arguments = getArguments(argumentNames, flags, input, "duel");
@@ -39,8 +40,8 @@ public class MainMenuView extends AbstractView {
                     controller.startPlayerDuel(arguments[0], rounds);
                 }
             } else
-                throw new RuntimeException(INVALID_COMMAND_MESSAGE);
-        } catch (RuntimeException exception) {
+                throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
             return true;
         }
