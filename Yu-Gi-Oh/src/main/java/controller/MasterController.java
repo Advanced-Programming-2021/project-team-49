@@ -2,7 +2,7 @@ package controller;
 
 import model.database.Database;
 
-public class MasterController implements Controller {
+public class MasterController {
     private Controller nextController;
     private final Database database;
 
