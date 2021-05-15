@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public abstract class AbstractView {
     }
 
     private static List<String> getCommandList(String input, String prefix) {
-        return Arrays.asList(input.substring(prefix.length() + 1).split(" "));
+        return new ArrayList<>(Arrays.asList(input.substring(prefix.length() + 1).split(" ")));
     }
 
     private static void removeFlagsFromCommand(String[] flags, List<String> command) {
@@ -34,10 +35,10 @@ public abstract class AbstractView {
             String flagString = "--" + flag;
             String abbreviatedFlagString = "-" + flag.charAt(0);
 
-            for (int j = 0; j < command.size(); j++)
-                if (flagString.equals(command.get(j))
-                        || abbreviatedFlagString.equals(command.get(j))) {
-                    command.remove(j);
+            for (int i = 0; i < command.size(); i++)
+                if (flagString.equals(command.get(i))
+                        || abbreviatedFlagString.equals(command.get(i))) {
+                    command.remove(i);
                     break;
                 }
         }
