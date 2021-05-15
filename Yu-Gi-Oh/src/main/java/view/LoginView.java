@@ -14,14 +14,13 @@ public class LoginView extends AbstractView {
     private static boolean runCommand(LoginController controller, String input) {
         try {
             if (input.startsWith("user create")) {
-                String[] argumentNames = {"username", "nickname", "password"};
-                String[] arguments = getArguments(argumentNames, null, input, "user create");
+                String[] arguments = getArguments(new String[] {"username", "nickname", "password"}, null,
+                        input, "user create");
 
                 controller.createUser(arguments[0], arguments[1], arguments[2]);
                 System.out.println("user created successfully!");
             } else if (input.startsWith("user login")) {
-                String[] argumentNames = {"username", "password"};
-                String[] arguments = getArguments(argumentNames, null, input, "user login");
+                String[] arguments = getArguments(new String[] {"username", "password"}, null, input, "user login");
 
                 controller.login(arguments[0], arguments[1]);
                 System.out.println("user logged in successfully!");

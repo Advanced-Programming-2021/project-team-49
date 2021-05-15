@@ -27,16 +27,15 @@ public class MainMenuView extends AbstractView {
                 if (!isFlagFound[0])
                     throw new YugiohException(INVALID_COMMAND_MESSAGE);
                 else if (isFlagFound[1]) {
-                    String[] argumentNames = {"rounds"};
-                    String[] arguments = getArguments(argumentNames, flags, input, "duel");
-
+                    String[] arguments = getArguments(new String[] {"rounds"}, flags, input, "duel");
                     int rounds = Integer.parseInt(arguments[0]);
+
                     controller.startAIDuel(rounds);
                 } else {
-                    String[] argumentNames = {"second-player", "rounds"};
-                    String[] arguments = getArguments(argumentNames, flags, input, "duel");
-
+                    String[] arguments = getArguments(new String[] {"second-player", "rounds"},
+                            flags, input, "duel");
                     int rounds = Integer.parseInt(arguments[1]);
+
                     controller.startPlayerDuel(arguments[0], rounds);
                 }
             } else
