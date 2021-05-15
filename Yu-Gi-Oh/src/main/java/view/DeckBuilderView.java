@@ -49,23 +49,19 @@ public class DeckBuilderView extends AbstractView {
 
                 controller.removeCardFromDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card removed from deck successfully!");
+            } else if (input.equals("deck show --all") || input.startsWith("deck show -a")) {
+                System.out.println(showAllDecks(controller.getUserActiveDeck(), controller.getUserDecks()));
+            } else if (input.equals("deck show --cards") || input.startsWith("deck show -c")) {
+                System.out.println(showAllCards(controller.getOwnedCards()));
             } else if (input.startsWith("deck show")) {
                 String[] argumentNames = {"deck"};
-                String[] flags = {"all", "cards", "side"};
-                boolean[] isFlagFound = findFlags(flags, input);
+                String[] flags = {"side"};
+                String[] arguments = getArguments(argumentNames, flags, input, "deck show");
 
-                if (isFlagFound[0])
-                    System.out.println(showAllDecks(controller.getUserActiveDeck(), controller.getUserDecks()));
-                else if (isFlagFound[1])
-                    System.out.println(showAllCards(controller.getOwnedCards()));
-                else {
-                    String[] arguments = getArguments(argumentNames, flags, input, "deck show");
-
-                    System.out.print(showDeck(arguments[0], !isFlagFound[2],
-                            controller.getMonsters(arguments[0], isFlagFound[2]),
-                            controller.getSpells(arguments[0], isFlagFound[2]),
-                            controller.getTraps(arguments[0], isFlagFound[2])));
-                }
+                System.out.print(showDeck(arguments[0], isFlagUsedInCommand( "side", input),
+                        controller.getMonsters(arguments[0], isFlagUsedInCommand( "side", input)),
+                        controller.getSpells(arguments[0], isFlagUsedInCommand( "side", input)),
+                        controller.getTraps(arguments[0], isFlagUsedInCommand( "side", input))));
             } else
                 return runDefaultCommands(input, controller);
         } catch (YugiohException exception) {
@@ -110,14 +106,14 @@ public class DeckBuilderView extends AbstractView {
         return allCards.toString();
     }
 
-    private static String showDeck(String deckName, boolean mainDeck, ArrayList<Monster> monsters,
+    private static String showDeck(String deckName, boolean sideDeck, ArrayList<Monster> monsters,
                                    ArrayList<Spell> spells, ArrayList<Trap> traps) {
         StringBuilder deck = new StringBuilder("Deck: " + deckName + "\n");
 
-        if (mainDeck)
-            deck.append("Main deck:\n");
-        else
+        if (!sideDeck)
             deck.append("Side deck:\n");
+        else
+            deck.append("Main deck:\n");
 
         deck.append("Monsters:\n");
         for (Monster monster : monsters)
