@@ -21,6 +21,7 @@ public class GameMat {
         this.deck = deck;
         this.lifePoints = lifePoints;
 
+        Collections.shuffle(deck);
         locationMap = buildLocationMap();
     }
 
