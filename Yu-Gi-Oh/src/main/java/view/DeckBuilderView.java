@@ -2,11 +2,8 @@ package view;
 
 import controller.DeckBuilderController;
 import exception.GameErrorException;
-import model.card.CardTemplate;
-import model.card.Monster;
-import model.card.Spell;
-import model.card.Trap;
 import model.user.Deck;
+import model.card.*;
 
 import java.util.*;
 

@@ -1,9 +1,7 @@
 package controller;
 
 import exception.GameErrorException;
-import model.game.Field;
-import model.game.GameMat;
-import model.game.Location;
+import model.game.*;
 import model.user.User;
 import view.DuelView;
 

@@ -3,8 +3,6 @@ package controller;
 import model.database.Shop;
 import model.user.User;
 
-import java.util.Map;
-
 public class ShopController extends AbstractController {
     public static final String TITLE = "Shop Menu";
     private final Shop shop;
