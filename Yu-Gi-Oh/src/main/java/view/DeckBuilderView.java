@@ -36,13 +36,13 @@ public class DeckBuilderView extends AbstractView {
                 controller.activateDeck(deckName);
                 System.out.println("deck activated successfully!");
             } else if (input.startsWith("deck add-card")) {
-                String[] arguments = getArguments(new String[] {"card", "deck"}, new String[] {"side"},
+                String[] arguments = getArguments(new String[] {"card", "deck"}, "side",
                         input, "deck add-card");
 
                 controller.addCardToDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card added to deck successfully!");
             } else if (input.startsWith("deck rm-card")) {
-                String[] arguments = getArguments(new String[] {"card", "deck"}, new String[] {"side"},
+                String[] arguments = getArguments(new String[] {"card", "deck"}, "side",
                         input, "deck rm-card");
 
                 controller.removeCardFromDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
@@ -52,12 +52,12 @@ public class DeckBuilderView extends AbstractView {
             } else if (input.equals("deck show --cards") || input.equals("deck show -c")) {
                 System.out.println(showAllCards(controller.getOwnedCards()));
             } else if (input.startsWith("deck show")) {
-                String[] arguments = getArguments(new String[] {"deck"}, new String[] {"side"}, input, "deck show");
+                String deckName = getArgument("deck", "side", input, "deck show");
 
-                System.out.print(showDeck(arguments[0], isFlagUsedInCommand( "side", input),
-                        controller.getMonsters(arguments[0], isFlagUsedInCommand( "side", input)),
-                        controller.getSpells(arguments[0], isFlagUsedInCommand( "side", input)),
-                        controller.getTraps(arguments[0], isFlagUsedInCommand( "side", input))));
+                System.out.print(showDeck(deckName, isFlagUsedInCommand( "side", input),
+                        controller.getMonsters(deckName, isFlagUsedInCommand( "side", input)),
+                        controller.getSpells(deckName, isFlagUsedInCommand( "side", input)),
+                        controller.getTraps(deckName, isFlagUsedInCommand( "side", input))));
             } else
                 return runDefaultCommands(input, controller);
         } catch (YugiohException exception) {

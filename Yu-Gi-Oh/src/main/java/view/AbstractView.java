@@ -20,13 +20,58 @@ public abstract class AbstractView {
     public static String[] getArguments(String[] argumentNames, String[] flags, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
 
-        if (flags != null && flags.length > 0)
+        if (flags.length > 0)
             removeFlagsFromCommand(flags, command);
+
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
-
         return arguments;
+    }
+
+    public static String[] getArguments(String[] argumentNames, String flag, String input, String prefix) {
+        List<String> command = getCommandList(input, prefix);
+
+        if (flag != null)
+            removeFlagFromCommand(flag, command);
+
+        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
+        if (command.size() > 0)
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        return arguments;
+    }
+
+    public static String[] getArguments(String[] argumentNames, String input, String prefix) {
+        List<String> command = getCommandList(input, prefix);
+
+        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
+        if (command.size() > 0)
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        return arguments;
+    }
+
+    public static String getArgument(String argumentName, String[] flags, String input, String prefix) {
+        List<String> command = getCommandList(input, prefix);
+
+        if (flags != null && flags.length > 0)
+            removeFlagsFromCommand(flags, command);
+
+        String argument = extractArgumentFromCommand(argumentName, command);
+        if (command.size() > 0)
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        return argument;
+    }
+
+    public static String getArgument(String argumentName, String flag, String input, String prefix) {
+        List<String> command = getCommandList(input, prefix);
+
+        if (flag != null)
+            removeFlagFromCommand(flag, command);
+
+        String argument = extractArgumentFromCommand(argumentName, command);
+        if (command.size() > 0)
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        return argument;
     }
 
     private static List<String> getCommandList(String input, String prefix) {
@@ -34,36 +79,43 @@ public abstract class AbstractView {
     }
 
     private static void removeFlagsFromCommand(String[] flags, List<String> command) {
-        for (String flag : flags) {
-            String flagString = "--" + flag;
-            String abbreviatedFlagString = "-" + flag.charAt(0);
+        for (String flag : flags)
+            removeFlagFromCommand(flag, command);
+    }
 
-            for (int i = 0; i < command.size(); i++)
-                if (flagString.equals(command.get(i))
-                        || abbreviatedFlagString.equals(command.get(i))) {
-                    command.remove(i);
-                    break;
-                }
-        }
+    private static void removeFlagFromCommand(String flag, List<String> command) {
+        String flagString = "--" + flag;
+        String abbreviatedFlagString = "-" + flag.charAt(0);
+
+        for (int i = 0; i < command.size(); i++)
+            if (flagString.equals(command.get(i))
+                    || abbreviatedFlagString.equals(command.get(i))) {
+                command.remove(i);
+                return;
+            }
     }
 
     private static String[] extractArgumentsFromCommand(String[] argumentNames, List<String> command) {
         String[] arguments = new String[argumentNames.length];
 
-        for (int i = 0; i < argumentNames.length; i++) {
-            String commandString = "--" + argumentNames[i];
-            String abbreviatedCommandString = "-" + argumentNames[i].charAt(0);
-
-            for (int j = 0; j < command.size() - 1; j++)
-                if (commandString.equals(command.get(j))
-                        || abbreviatedCommandString.equals(command.get(j))) {
-                    arguments[i] = command.get(j + 1);
-                    command.remove(j);
-                    command.remove(j);
-                    break;
-                }
-        }
+        for (int i = 0; i < argumentNames.length; i++)
+            arguments[i] = extractArgumentFromCommand(argumentNames[i], command);
         return arguments;
+    }
+
+    private static String extractArgumentFromCommand(String argumentName, List<String> command) {
+        String commandString = "--" + argumentName;
+        String abbreviatedCommandString = "-" + argumentName.charAt(0);
+
+        for (int j = 0; j < command.size() - 1; j++)
+            if (commandString.equals(command.get(j))
+                    || abbreviatedCommandString.equals(command.get(j))) {
+                String argument = command.get(j + 1);
+                command.remove(j);
+                command.remove(j);
+                return argument;
+            }
+        return null;
     }
 
     public static boolean[] findFlags(String[] flags, String input) {

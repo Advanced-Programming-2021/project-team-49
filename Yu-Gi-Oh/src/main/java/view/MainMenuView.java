@@ -27,8 +27,8 @@ public class MainMenuView extends AbstractView {
                 if (!isFlagFound[0])
                     throw new YugiohException(INVALID_COMMAND_MESSAGE);
                 else if (isFlagFound[1]) {
-                    String[] arguments = getArguments(new String[] {"rounds"}, flags, input, "duel");
-                    int rounds = Integer.parseInt(arguments[0]);
+                    String roundString = getArgument("rounds", flags, input, "duel");
+                    int rounds = Integer.parseInt(roundString);
 
                     controller.startAIDuel(rounds);
                 } else {
@@ -42,6 +42,9 @@ public class MainMenuView extends AbstractView {
                 throw new YugiohException(INVALID_COMMAND_MESSAGE);
         } catch (YugiohException exception) {
             System.out.println(exception.getMessage());
+            return true;
+        } catch (NumberFormatException exception) {
+            System.out.println("invalid number entered");
             return true;
         }
         return false;
