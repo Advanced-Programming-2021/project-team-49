@@ -39,9 +39,11 @@ public class DuelController extends AbstractController {
 
     public void selectCard(Location location, int position, boolean opponent) {
         GameMat gameMat;
-        if (opponent)
+        if (opponent) {
+            if (location == Location.HAND)
+                throw new YugiohException("invalid selection");
             gameMat = field.getDefenderMat();
-        else
+        } else
             gameMat = field.getAttackerMat();
 
         try {
