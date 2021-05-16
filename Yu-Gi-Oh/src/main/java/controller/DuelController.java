@@ -1,21 +1,30 @@
 package controller;
 
+import exception.YugiohException;
 import model.game.Field;
-import model.game.Phase;
+import model.game.GameMat;
+import model.game.Location;
 import model.user.User;
+import view.DuelView;
 
 public class DuelController extends AbstractController {
 
-    public static final String TITLE = "Duel Menu";
+    private static final String TITLE = "Duel Menu";
+    private static final String[] phaseNames = {"draw phase", "standby phase", "main phase 1", "battle phase",
+            "main phase 2", "end phase"};
 
     private final User guest;
-    private final int rounds;
     private final boolean hasAI;
-    private int player1WinCount;
-    private int player2WinCount;
+    private final int rounds;
+    private int currentRound = 1;
+    private int phase = 0;
+    private int player1WinCount = 0;
+    private int player2WinCount = 0;
     private int drawCount;
     private Field field;
-    private Phase currentPhase;
+
+    private Location selectedCardLocation = null;
+    private int selectedCardPosition;
 
     public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
         super(masterController, host);
@@ -25,6 +34,30 @@ public class DuelController extends AbstractController {
     }
 
     public void run() {
+        new DuelView(this);
+    }
 
+    public void selectCard(Location location, int position, boolean opponent) {
+        GameMat gameMat;
+        if (opponent)
+            gameMat = field.getDefenderMat();
+        else
+            gameMat = field.getAttackerMat();
+
+        try {
+            if (gameMat.getCard(location, position) == null)
+                throw new YugiohException("no card found in the given position");
+        } catch (IndexOutOfBoundsException exception) {
+            throw new YugiohException("invalid selection");
+        }
+
+        selectedCardLocation = location;
+        selectedCardPosition = position;
+    }
+
+    public void deselectCard() {
+        if (selectedCardLocation == null)
+            throw new YugiohException("no card is selected yet");
+        selectedCardLocation = null;
     }
 }
