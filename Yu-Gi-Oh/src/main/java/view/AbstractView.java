@@ -19,11 +19,10 @@ public abstract class AbstractView {
 
     public static String[] getArguments(String[] argumentNames, String[] flags, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
+        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
 
         if (flags.length > 0)
             removeFlagsFromCommand(flags, command);
-
-        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
         return arguments;
@@ -31,20 +30,20 @@ public abstract class AbstractView {
 
     public static String[] getArguments(String[] argumentNames, String flag, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
+        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
 
         if (flag != null)
             removeFlagFromCommand(flag, command);
-
-        String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
+
         return arguments;
     }
 
     public static String[] getArguments(String[] argumentNames, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
-
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
+
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
         return arguments;
@@ -52,11 +51,10 @@ public abstract class AbstractView {
 
     public static String getArgument(String argumentName, String[] flags, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
-
-        if (flags != null && flags.length > 0)
-            removeFlagsFromCommand(flags, command);
-
         String argument = extractArgumentFromCommand(argumentName, command);
+
+        if (flags.length > 0)
+            removeFlagsFromCommand(flags, command);
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
         return argument;
@@ -64,11 +62,10 @@ public abstract class AbstractView {
 
     public static String getArgument(String argumentName, String flag, String input, String prefix) {
         List<String> command = getCommandList(input, prefix);
+        String argument = extractArgumentFromCommand(argumentName, command);
 
         if (flag != null)
             removeFlagFromCommand(flag, command);
-
-        String argument = extractArgumentFromCommand(argumentName, command);
         if (command.size() > 0)
             throw new YugiohException(INVALID_COMMAND_MESSAGE);
         return argument;
