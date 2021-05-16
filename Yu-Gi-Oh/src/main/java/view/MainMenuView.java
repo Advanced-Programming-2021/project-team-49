@@ -14,7 +14,7 @@ public class MainMenuView extends AbstractView {
     private boolean runCommand(MainMenuController controller, String input) {
         try {
             if (input.equals("menu show-current")) {
-                System.out.println(MainMenuController.TITLE);
+                System.out.println(controller.getTitle());
                 return false;
             } else if (input.startsWith("menu enter "))
                 controller.enterMenu(input.substring(11));
