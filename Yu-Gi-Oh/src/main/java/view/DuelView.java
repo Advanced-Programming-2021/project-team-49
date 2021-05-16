@@ -1,7 +1,7 @@
 package view;
 
 import controller.DuelController;
-import exception.YugiohException;
+import exception.GameErrorException;
 import model.game.*;
 
 import java.text.MessageFormat;
@@ -36,7 +36,7 @@ public class DuelView extends AbstractView {
                 selectCard(controller, input);
             } else
                 return runDefaultCommands(input, controller);
-        } catch (YugiohException exception) {
+        } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         } catch (NumberFormatException exception) {
             System.out.println("invalid number entered");
@@ -55,12 +55,11 @@ public class DuelView extends AbstractView {
         if (locationFlags[locationFlagIndex].equals("field")) {
             if ((opponent && input.split(" ").length > 3)
                     || input.split(" ").length > 2)
-                throw new YugiohException("invalid selection");
+                throw new GameErrorException("invalid selection");
         } else {
             String positionString;
             if (opponent)
-                positionString = getArgument("opponent",
-                        locationFlags[locationFlagIndex], input, "select");
+                positionString = getArgument("opponent", locationFlags[locationFlagIndex], input, "select");
             else
                 positionString = getArgument(locationFlags[locationFlagIndex], input, "select");
             position = Integer.parseInt(positionString);
@@ -81,10 +80,10 @@ public class DuelView extends AbstractView {
         }
 
         if (locationFlagIndex == isFlagFound.length)
-            throw new YugiohException("invalid selection");
+            throw new GameErrorException("invalid selection");
         for (int i = locationFlagIndex + 1; i < isFlagFound.length; i++)
             if (isFlagFound[i])
-                throw new YugiohException("invalid selection");
+                throw new GameErrorException("invalid selection");
 
         return locationFlagIndex;
     }
