@@ -1,7 +1,7 @@
 package view;
 
 import controller.Controller;
-import exception.YugiohException;
+import exception.GameErrorException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public abstract class AbstractView {
         if (flags.length > 0)
             removeFlagsFromCommand(flags, command);
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         return arguments;
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractView {
         if (flag != null)
             removeFlagFromCommand(flag, command);
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
 
         return arguments;
     }
@@ -45,7 +45,7 @@ public abstract class AbstractView {
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
 
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         return arguments;
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractView {
         if (flags.length > 0)
             removeFlagsFromCommand(flags, command);
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         return argument;
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractView {
         if (flag != null)
             removeFlagFromCommand(flag, command);
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         return argument;
     }
 
@@ -76,7 +76,7 @@ public abstract class AbstractView {
         String argument = extractArgumentFromCommand(argumentName, command);
 
         if (command.size() > 0)
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         return argument;
     }
 
@@ -159,6 +159,6 @@ public abstract class AbstractView {
             controller.escape();
             return false;
         } else
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
     }
 }

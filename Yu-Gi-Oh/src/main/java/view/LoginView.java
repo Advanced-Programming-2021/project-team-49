@@ -1,7 +1,7 @@
 package view;
 
 import controller.LoginController;
-import exception.YugiohException;
+import exception.GameErrorException;
 
 public class LoginView extends AbstractView {
     public LoginView(LoginController controller) {
@@ -27,7 +27,7 @@ public class LoginView extends AbstractView {
                 return false;
             } else
                 return runDefaultCommands(input, controller);
-        } catch (YugiohException exception) {
+        } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         }
         return true;

@@ -1,7 +1,7 @@
 package view;
 
 import controller.DeckBuilderController;
-import exception.YugiohException;
+import exception.GameErrorException;
 import model.card.CardTemplate;
 import model.card.Monster;
 import model.card.Spell;
@@ -60,7 +60,7 @@ public class DeckBuilderView extends AbstractView {
                         controller.getTraps(deckName, isFlagUsedInCommand( "side", input))));
             } else
                 return runDefaultCommands(input, controller);
-        } catch (YugiohException exception) {
+        } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         }
         return true;

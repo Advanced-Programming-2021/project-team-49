@@ -1,7 +1,7 @@
 package view;
 
 import controller.MainMenuController;
-import exception.YugiohException;
+import exception.GameErrorException;
 
 public class MainMenuView extends AbstractView {
     public MainMenuView(MainMenuController controller) {
@@ -23,8 +23,8 @@ public class MainMenuView extends AbstractView {
             else if (input.startsWith("duel")) {
                 startDuel(controller, input);
             } else
-                throw new YugiohException(INVALID_COMMAND_MESSAGE);
-        } catch (YugiohException exception) {
+                throw new GameErrorException(INVALID_COMMAND_MESSAGE);
+        } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
             return true;
         } catch (NumberFormatException exception) {
@@ -39,7 +39,7 @@ public class MainMenuView extends AbstractView {
         boolean[] isFlagFound = findFlags(flags, input);
 
         if (!isFlagFound[0])
-            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         else if (isFlagFound[1]) {
             String roundString = getArgument("rounds", flags, input, "duel");
             int rounds = Integer.parseInt(roundString);
