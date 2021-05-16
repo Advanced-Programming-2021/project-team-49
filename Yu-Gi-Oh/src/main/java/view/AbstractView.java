@@ -71,6 +71,15 @@ public abstract class AbstractView {
         return argument;
     }
 
+    public static String getArgument(String argumentName, String input, String prefix) {
+        List<String> command = getCommandList(input, prefix);
+        String argument = extractArgumentFromCommand(argumentName, command);
+
+        if (command.size() > 0)
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        return argument;
+    }
+
     private static List<String> getCommandList(String input, String prefix) {
         return new ArrayList<>(Arrays.asList(input.substring(prefix.length() + 1).split(" ")));
     }
