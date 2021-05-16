@@ -2,16 +2,14 @@ package model.game;
 
 import model.user.User;
 
-import java.text.MessageFormat;
 import java.util.*;
 
 public class GameMat {
 
-    private final Map<Location, List<Card>> locationMap;
-
     private final User player;
-    private final Map<Integer, Card> monsterZone = new HashMap<>();
-    private final Map<Integer, Card> spellAndTrapZone = new HashMap<>();
+    private final Map<Location, List<Card>> locationMap;
+    private final List<Card> monsterZone = Collections.nCopies(5, null);
+    private final List<Card> spellAndTrapZone = Collections.nCopies(5, null);
     private final List<Card> graveyard = new ArrayList<>();
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
@@ -32,6 +30,8 @@ public class GameMat {
         locationMap.put(Location.DECK, deck);
         locationMap.put(Location.HAND, hand);
         locationMap.put(Location.GRAVEYARD, graveyard);
+        locationMap.put(Location.MONSTER_ZONE, monsterZone);
+        locationMap.put(Location.SPELL_AND_TRAP_ZONE, spellAndTrapZone);
 
         return locationMap;
     }
@@ -48,20 +48,21 @@ public class GameMat {
         return locationMap.get(location).size();
     }
 
+    public Card getCard(Location location, int position) {
+        List<Card> cardList = locationMap.get(location);
+        return cardList.get(position - 1);
+    }
+
     public Card getCard(Location location) {
         if (location == Location.FIELD_ZONE)
             return fieldZoneCard;
 
-        List<Card> cardList = locationMap.get(location);
-        return cardList.get(cardList.size() - 1);
+        return getCard(location, getCardCount(location));
     }
 
-    public Card getCard(Zone zone, int position) {
-        if (zone == Zone.MONSTER)
-            return monsterZone.get(position);
-        else if (zone == Zone.SPELL_AND_TRAP)
-            return spellAndTrapZone.get(position);
-        return null;
+    public void addCard(Card card, Location location, int position) {
+        List<Card> cardList = locationMap.get(location);
+        cardList.add(position - 1, card);
     }
 
     public void addCard(Card card, Location location) {
@@ -69,30 +70,25 @@ public class GameMat {
             fieldZoneCard = card;
         }
 
-        List<Card> cardList = locationMap.get(location);
-        cardList.add(card);
+        addCard(card, location, getCardCount(location));
     }
 
-    public void addCard(Card card, Zone zone, int position) {
-        if (zone == Zone.MONSTER)
-            monsterZone.put(position, card);
-        else if (zone == Zone.SPELL_AND_TRAP)
-            spellAndTrapZone.put(position, card);
+    public void removeCard(Location location, int position) {
+        List<Card> cardList = locationMap.get(location);
+        cardList.remove(position - 1);
     }
 
     public void removeCard(Location location) {
         if (location == Location.FIELD_ZONE)
             fieldZoneCard = null;
 
-        List<Card> cardList = locationMap.get(location);
-        cardList.remove(cardList.size() - 1);
+        removeCard(location, getCardCount(location));
     }
 
-    public void removeCard(Zone zone, int position) {
-        if (zone == Zone.MONSTER)
-            monsterZone.remove(position);
-        else if (zone == Zone.SPELL_AND_TRAP)
-            spellAndTrapZone.remove(position);
+    public void moveCard(Location oldLocation, int oldPosition, Location newLocation, int newPosition) {
+        Card card = getCard(oldLocation, oldPosition);
+        removeCard(oldLocation, oldPosition);
+        addCard(card, newLocation, newPosition);
     }
 
     public void moveCard(Location oldLocation, Location newLocation) {
@@ -101,22 +97,16 @@ public class GameMat {
         addCard(card, newLocation);
     }
 
-    public void moveCard(Zone oldZone, Zone newZone, int oldPosition, int newPosition) {
-        Card card = getCard(oldZone, oldPosition);
-        removeCard(oldZone, oldPosition);
-        addCard(card, newZone, newPosition);
-    }
-
-    public void moveCard(Zone oldZone, Location newLocation, int oldPosition) {
-        Card card = getCard(oldZone, oldPosition);
-        removeCard(oldZone, oldPosition);
-        addCard(card, newLocation);
-    }
-
-    public void moveCard(Location oldLocation, Zone newZone, int newPosition) {
+    public void moveCard(Location oldLocation, Location newLocation, int newPosition) {
         Card card = getCard(oldLocation);
         removeCard(oldLocation);
-        addCard(card, newZone, newPosition);
+        addCard(card, newLocation, newPosition);
+    }
+
+    public void moveCard(Location oldLocation, int oldPosition, Location newLocation) {
+        Card card = getCard(oldLocation, oldPosition);
+        removeCard(oldLocation, oldPosition);
+        addCard(card, newLocation);
     }
 
     public void addLifePoints(int amount) {
