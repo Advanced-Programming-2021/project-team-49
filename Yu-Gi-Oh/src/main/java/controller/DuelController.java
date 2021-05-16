@@ -1,6 +1,6 @@
 package controller;
 
-import exception.YugiohException;
+import exception.GameErrorException;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;
@@ -33,6 +33,14 @@ public class DuelController extends AbstractController {
         this.hasAI = hasAI;
     }
 
+    public static String getPhaseName(int phase) {
+        return phaseNames[phase];
+    }
+
+    public int getPhaseNumber() {
+        return phase;
+    }
+
     public void run() {
         new DuelView(this);
     }
@@ -41,16 +49,16 @@ public class DuelController extends AbstractController {
         GameMat gameMat;
         if (opponent) {
             if (location == Location.HAND)
-                throw new YugiohException("invalid selection");
+                throw new GameErrorException("invalid selection");
             gameMat = field.getDefenderMat();
         } else
             gameMat = field.getAttackerMat();
 
         try {
             if (gameMat.getCard(location, position) == null)
-                throw new YugiohException("no card found in the given position");
+                throw new GameErrorException("no card found in the given position");
         } catch (IndexOutOfBoundsException exception) {
-            throw new YugiohException("invalid selection");
+            throw new GameErrorException("invalid selection");
         }
 
         selectedCardLocation = location;
@@ -59,7 +67,15 @@ public class DuelController extends AbstractController {
 
     public void deselectCard() {
         if (selectedCardLocation == null)
-            throw new YugiohException("no card is selected yet");
+            throw new GameErrorException("no card is selected yet");
         selectedCardLocation = null;
+    }
+
+    public void changePhase() {
+        phase++;
+        if (phase > 5) {
+            phase = 0;
+            field.switchTurn();
+        }
     }
 }
