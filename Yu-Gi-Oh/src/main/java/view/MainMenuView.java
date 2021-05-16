@@ -21,23 +21,7 @@ public class MainMenuView extends AbstractView {
             else if (input.equals("user logout"))
                 controller.escape();
             else if (input.startsWith("duel")) {
-                String[] flags = {"new", "ai"};
-                boolean[] isFlagFound = findFlags(flags, input);
-
-                if (!isFlagFound[0])
-                    throw new YugiohException(INVALID_COMMAND_MESSAGE);
-                else if (isFlagFound[1]) {
-                    String roundString = getArgument("rounds", flags, input, "duel");
-                    int rounds = Integer.parseInt(roundString);
-
-                    controller.startAIDuel(rounds);
-                } else {
-                    String[] arguments = getArguments(new String[] {"second-player", "rounds"},
-                            flags, input, "duel");
-                    int rounds = Integer.parseInt(arguments[1]);
-
-                    controller.startPlayerDuel(arguments[0], rounds);
-                }
+                startDuel(controller, input);
             } else
                 throw new YugiohException(INVALID_COMMAND_MESSAGE);
         } catch (YugiohException exception) {
@@ -48,5 +32,25 @@ public class MainMenuView extends AbstractView {
             return true;
         }
         return false;
+    }
+
+    private void startDuel(MainMenuController controller, String input) {
+        String[] flags = {"new", "ai"};
+        boolean[] isFlagFound = findFlags(flags, input);
+
+        if (!isFlagFound[0])
+            throw new YugiohException(INVALID_COMMAND_MESSAGE);
+        else if (isFlagFound[1]) {
+            String roundString = getArgument("rounds", flags, input, "duel");
+            int rounds = Integer.parseInt(roundString);
+
+            controller.startAIDuel(rounds);
+        } else {
+            String[] arguments = getArguments(new String[] {"second-player", "rounds"},
+                    flags, input, "duel");
+            int rounds = Integer.parseInt(arguments[1]);
+
+            controller.startPlayerDuel(arguments[0], rounds);
+        }
     }
 }
