@@ -14,10 +14,9 @@ public class Field {
         this.defenderMat = defenderMat;
     }
 
-    public Field(User playerOne, User playerTwo, List<Card> playerOneDeck, List<Card> playerTwoDeck,
-            int playerOneLifePoints, int playerTwoLifePoints) {
-        attackerMat = new GameMat(playerOne, playerOneDeck, playerOneLifePoints);
-        defenderMat = new GameMat(playerTwo, playerTwoDeck, playerTwoLifePoints);
+    public Field(User playerOne, User playerTwo, int playerOneLifePoints, int playerTwoLifePoints) {
+        attackerMat = new GameMat(playerOne, playerOne.getActiveDeck().getGameDeck(), playerOneLifePoints);
+        defenderMat = new GameMat(playerTwo, playerTwo.getActiveDeck().getGameDeck(), playerTwoLifePoints);
     }
 
     public GameMat getAttackerMat() {

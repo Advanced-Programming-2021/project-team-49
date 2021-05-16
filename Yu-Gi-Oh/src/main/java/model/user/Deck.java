@@ -1,8 +1,9 @@
 package model.user;
 
 import model.card.CardTemplate;
-import java.util.HashMap;
-import java.util.Map;
+import model.game.Card;
+
+import java.util.*;
 
 public class Deck {
 
@@ -82,17 +83,26 @@ public class Deck {
 
     public int getMainDeckSize() {
         int deckSize = 0;
-        for (CardTemplate card : mainDeck.keySet()) {
+        for (CardTemplate card : mainDeck.keySet())
             deckSize += mainDeck.get(card);
-        }
         return deckSize;
     }
 
     public int getSideDeckSize() {
         int deckSize = 0;
-        for (CardTemplate card : sideDeck.keySet()) {
+        for (CardTemplate card : sideDeck.keySet())
             deckSize += sideDeck.get(card);
-        }
         return deckSize;
+    }
+
+    public List<Card> getGameDeck() {
+        List<Card> gameDeck = new ArrayList<>();
+
+        for (CardTemplate card : mainDeck.keySet())
+            for (int i = 0; i < mainDeck.get(card); i++)
+                gameDeck.add(new Card(card));
+
+        gameDeck.sort(Comparator.comparing(Card::getName));
+        return gameDeck;
     }
 }
