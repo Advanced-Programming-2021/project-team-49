@@ -1,5 +1,6 @@
 package controller;
 
+import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.game.*;
@@ -14,10 +15,10 @@ public class DuelController extends AbstractController {
     private final User guest;
     private final boolean hasAI;
     private final int rounds;
-    private int currentRound = 1;
-    private int phase = 0;
-    private int player1WinCount = 0;
-    private int player2WinCount = 0;
+    private final int currentRound = 1;
+    private int phase = -1;
+    private int playerOneWinCount = 0;
+    private int playerTwoWinCount = 0;
     private int drawCount;
     private Field field;
 
@@ -32,7 +33,7 @@ public class DuelController extends AbstractController {
         title = "Duel Menu";
     }
 
-    public static String getPhaseName(int phase) {
+    public String getPhaseName() {
         return phaseNames[phase];
     }
 
@@ -40,8 +41,39 @@ public class DuelController extends AbstractController {
         return phase;
     }
 
+    public User getCurrentPlayer() {
+        return field.getAttackerMat().getPlayer();
+    }
+
     public void run() {
         new DuelView(this);
+    }
+
+    public void endRound(EndOfRoundException exception) throws EndOfMatchException {
+        addWinCount(exception.getWinner());
+        setExceptionScores(exception);
+
+        if (isMatchEnded())
+            throw new EndOfMatchException(exception);
+    }
+
+    private void addWinCount(User winner) {
+        if (winner == guest)
+            playerTwoWinCount++;
+        else
+            playerOneWinCount++;
+    }
+
+    private void setExceptionScores(EndOfRoundException exception) {
+        if (exception.getWinner() == guest)
+            exception.setScores(playerTwoWinCount, playerOneWinCount);
+        else
+            exception.setScores(playerOneWinCount, playerTwoWinCount);
+    }
+
+    public boolean isMatchEnded() {
+        return playerOneWinCount > rounds / 2
+                || playerTwoWinCount > rounds / 2;
     }
 
     public void selectCard(Location location, int position, boolean opponent) {
@@ -75,6 +107,15 @@ public class DuelController extends AbstractController {
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
+        }
+    }
+
+    public void drawCard() throws EndOfRoundException {
+        try {
+            field.drawCard();
+        } catch (EndOfRoundException exception) {
+            endRound(exception);
+            throw exception;
         }
     }
 }

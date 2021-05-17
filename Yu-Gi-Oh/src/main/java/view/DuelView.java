@@ -1,6 +1,8 @@
 package view;
 
 import controller.DuelController;
+import exception.EndOfMatchException;
+import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.game.*;
 
@@ -8,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 public class DuelView extends AbstractView {
+
     private static final Map<String, Location> LOCATION_MAP;
     static {
         LOCATION_MAP = new HashMap<>();
@@ -20,6 +23,8 @@ public class DuelView extends AbstractView {
     }
 
     public DuelView(DuelController controller) {
+        runCommand(controller, "next phase");
+
         String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
 
         while (runCommand(controller, input))
@@ -28,19 +33,36 @@ public class DuelView extends AbstractView {
 
     private static boolean runCommand(DuelController controller, String input) {
         try {
-            if (input.equals("select -d")) {
+            if (input.equals("next phase"))
+                beginNextPhase(controller);
+            else if (input.equals("select -d")) {
                 controller.deselectCard();
                 System.out.println("card deselected");
-            } else if (input.startsWith("select")) {
+            } else if (input.startsWith("select"))
                 selectCard(controller, input);
-            } else
+            else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         } catch (NumberFormatException exception) {
             System.out.println("invalid number entered");
+        } catch (EndOfMatchException exception) {
+            System.out.println(exception.getWinner().getUsername() + " won the whole match with score: "
+                    + exception.getWinner() + "-" + exception.getLoserScore());
+        } catch (EndOfRoundException exception) {
+            System.out.println(exception.getWinner().getUsername() + " won the game and the score is: "
+                    + exception.getWinner() + "-" + exception.getLoserScore());
         }
         return true;
+    }
+
+    private static void beginNextPhase(DuelController controller) throws EndOfRoundException {
+        controller.changePhase();
+        if (controller.getPhaseNumber() == 0) {
+            System.out.println("it's " + controller.getCurrentPlayer().getNickname() + "'s turn");
+            controller.drawCard();
+        }
+        System.out.println("phase: " + controller.getPhaseName());
     }
 
     private static void selectCard(DuelController controller, String input) {

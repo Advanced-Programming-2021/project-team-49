@@ -1,8 +1,7 @@
 package model.game;
 
+import exception.EndOfRoundException;
 import model.user.User;
-
-import java.util.List;
 
 public class Field {
 
@@ -31,5 +30,10 @@ public class Field {
         GameMat tempMat = attackerMat;
         attackerMat = defenderMat;
         defenderMat = tempMat;
+    }
+
+    public void drawCard() throws EndOfRoundException {
+        if (attackerMat.getCardCount(Location.DECK) == 0)
+            throw new EndOfRoundException(defenderMat.getPlayer());
     }
 }
