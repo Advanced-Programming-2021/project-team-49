@@ -11,14 +11,12 @@ public class DuelController extends AbstractController {
 
     private static final String[] phaseNames = {"draw phase", "standby phase", "main phase 1", "battle phase",
             "main phase 2", "end phase"};
+    private static final int INIT_LIFE_POINTS = 8000;
 
-    private final User guest;
     private final boolean hasAI;
     private final int rounds;
     private final int currentRound = 1;
     private int phase = -1;
-    private int playerOneWinCount = 0;
-    private int playerTwoWinCount = 0;
     private int drawCount;
     private Field field;
 
@@ -27,10 +25,13 @@ public class DuelController extends AbstractController {
 
     public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
         super(masterController, host);
-        this.guest = guest;
         this.rounds = rounds;
         this.hasAI = hasAI;
         title = "Duel Menu";
+
+        Player playerOne = new Player(host, INIT_LIFE_POINTS);
+        Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
+        field = new Field(playerOne, playerTwo);
     }
 
     public String getPhaseName() {
@@ -41,7 +42,7 @@ public class DuelController extends AbstractController {
         return phase;
     }
 
-    public User getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return field.getAttackerMat().getPlayer();
     }
 
@@ -49,31 +50,25 @@ public class DuelController extends AbstractController {
         new DuelView(this);
     }
 
-    public void endRound(EndOfRoundException exception) throws EndOfMatchException {
-        addWinCount(exception.getWinner());
-        setExceptionScores(exception);
+    public void endRound(Player winner, Player loser) throws EndOfMatchException {
+        winner.incrementWinCount();
 
-        if (isMatchEnded())
-            throw new EndOfMatchException(exception);
+        if (isMatchEnded()) {
+            endMatch(winner, loser);
+            throw new EndOfMatchException(winner, loser);
+        }
     }
 
-    private void addWinCount(User winner) {
-        if (winner == guest)
-            playerTwoWinCount++;
-        else
-            playerOneWinCount++;
-    }
+    public void endMatch(Player winner, Player loser) {
+        winner.getUser().addCoins(rounds * (1000 + winner.getMaxLifePoints()));
+        loser.getUser().addCoins(rounds * 100);
 
-    private void setExceptionScores(EndOfRoundException exception) {
-        if (exception.getWinner() == guest)
-            exception.setScores(playerTwoWinCount, playerOneWinCount);
-        else
-            exception.setScores(playerOneWinCount, playerTwoWinCount);
+        winner.getUser().addScore(rounds * 1000);
     }
 
     public boolean isMatchEnded() {
-        return playerOneWinCount > rounds / 2
-                || playerTwoWinCount > rounds / 2;
+        return field.getAttackerMat().getPlayer().getWinCount() > rounds / 2
+                || field.getDefenderMat().getPlayer().getWinCount() > rounds / 2;
     }
 
     public void selectCard(Location location, int position, boolean opponent) {
@@ -114,7 +109,7 @@ public class DuelController extends AbstractController {
         try {
             return field.drawCard();
         } catch (EndOfRoundException exception) {
-            endRound(exception);
+            endRound(exception.getWinner(), exception.getLoser());
             throw exception;
         }
     }

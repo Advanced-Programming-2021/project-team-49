@@ -1,9 +1,7 @@
 package view;
 
 import controller.DuelController;
-import exception.EndOfMatchException;
-import exception.EndOfRoundException;
-import exception.GameErrorException;
+import exception.*;
 import model.game.*;
 
 import java.text.MessageFormat;
@@ -47,11 +45,12 @@ public class DuelView extends AbstractView {
         } catch (NumberFormatException exception) {
             System.out.println("invalid number entered");
         } catch (EndOfMatchException exception) {
-            System.out.println(exception.getWinner().getUsername() + " won the whole match with score: "
-                    + exception.getWinner() + "-" + exception.getLoserScore());
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+            return false;
         } catch (EndOfRoundException exception) {
-            System.out.println(exception.getWinner().getUsername() + " won the game and the score is: "
-                    + exception.getWinner() + "-" + exception.getLoserScore());
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
         }
         return true;
     }
@@ -59,7 +58,7 @@ public class DuelView extends AbstractView {
     private static void beginNextPhase(DuelController controller) throws EndOfRoundException {
         controller.changePhase();
         if (controller.getPhaseNumber() == 0) {
-            System.out.println("it's " + controller.getCurrentPlayer().getNickname() + "'s turn");
+            System.out.println("it's " + controller.getCurrentPlayer().getUser().getNickname() + "'s turn");
             System.out.println("phase: " + controller.getPhaseName());
             drawCard(controller);
             return;
@@ -133,7 +132,7 @@ public class DuelView extends AbstractView {
 
         if (isFlipped) {
             int[] flippedZoneViewOrder = {4, 2, 1, 3, 5};
-            return gameMat.getPlayer().getNickname() + ":" + gameMat.getLifePoints()
+            return gameMat.getPlayer().getUser().getNickname() + ":" + gameMat.getPlayer().getLifePoints()
                     + "\n  \t" + handString
                     + "\n" + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.DECK))
                     + "\n  " + getZoneStringView(gameMat, Location.SPELL_AND_TRAP_ZONE, flippedZoneViewOrder)
@@ -148,7 +147,7 @@ public class DuelView extends AbstractView {
                     + "\n  " + getZoneStringView(gameMat, Location.SPELL_AND_TRAP_ZONE, zoneViewOrder)
                     + "\n" + "  " + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.DECK))
                     + "\n" + handString
-                    + "\n" + gameMat.getPlayer().getNickname() + ":" + gameMat.getLifePoints();
+                    + "\n" + gameMat.getPlayer().getUser().getNickname() + ":" + gameMat.getPlayer().getLifePoints();
         }
     }
 

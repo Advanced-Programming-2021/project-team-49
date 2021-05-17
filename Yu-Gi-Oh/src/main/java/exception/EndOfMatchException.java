@@ -1,9 +1,10 @@
 package exception;
 
+import model.game.Player;
+
 public class EndOfMatchException extends EndOfRoundException {
 
-    public EndOfMatchException(EndOfRoundException cause) {
-        super(cause, cause.getWinner());
-        super.setScores(cause.getWinnerScore(), cause.getLoserScore());
+    public EndOfMatchException(Player winner, Player loser) {
+        super(winner, loser);
     }
 }

@@ -1,7 +1,6 @@
 package model.game;
 
 import exception.EndOfRoundException;
-import model.user.User;
 
 public class Field {
 
@@ -13,9 +12,9 @@ public class Field {
         this.defenderMat = defenderMat;
     }
 
-    public Field(User playerOne, User playerTwo, int playerOneLifePoints, int playerTwoLifePoints) {
-        attackerMat = new GameMat(playerOne, playerOne.getActiveDeck().getGameDeck(), playerOneLifePoints);
-        defenderMat = new GameMat(playerTwo, playerTwo.getActiveDeck().getGameDeck(), playerTwoLifePoints);
+    public Field(Player playerOne, Player playerTwo) {
+        attackerMat = new GameMat(playerOne, playerOne.getUser().getActiveDeck().getGameDeck());
+        defenderMat = new GameMat(playerTwo, playerTwo.getUser().getActiveDeck().getGameDeck());
     }
 
     public GameMat getAttackerMat() {
@@ -34,7 +33,7 @@ public class Field {
 
     public Card drawCard() throws EndOfRoundException {
         if (attackerMat.getCardCount(Location.DECK) == 0)
-            throw new EndOfRoundException(defenderMat.getPlayer());
+            throw new EndOfRoundException(defenderMat.getPlayer(), attackerMat.getPlayer());
         else {
             attackerMat.moveCard(Location.DECK, Location.HAND);
             return attackerMat.getCard(Location.HAND);

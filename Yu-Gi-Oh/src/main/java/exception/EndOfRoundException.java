@@ -1,37 +1,23 @@
 package exception;
 
-import model.user.User;
+import model.game.Player;
 
 public class EndOfRoundException extends Exception {
 
-    private final User winner;
-    private int winnerScore;
-    private int loserScore;
+    private final Player winner;
+    private final Player loser;
 
-    public EndOfRoundException(User winner) {
+    public EndOfRoundException(Player winner, Player loser) {
         super();
         this.winner = winner;
+        this.loser = loser;
     }
 
-    public EndOfRoundException(Throwable cause, User winner) {
-        super(cause);
-        this.winner = winner;
-    }
-
-    public User getWinner() {
+    public Player getWinner() {
         return winner;
     }
 
-    public int getWinnerScore() {
-        return winnerScore;
-    }
-
-    public int getLoserScore() {
-        return loserScore;
-    }
-
-    public void setScores(int winnerScore, int loserScore) {
-        this.winnerScore = winnerScore;
-        this.loserScore = loserScore;
+    public Player getLoser() {
+        return loser;
     }
 }

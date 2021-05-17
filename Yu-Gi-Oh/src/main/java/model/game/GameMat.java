@@ -6,7 +6,7 @@ import java.util.*;
 
 public class GameMat {
 
-    private final User player;
+    private final Player player;
     private final Map<Location, List<Card>> locationMap;
     private final List<Card> monsterZone = Collections.nCopies(5, null);
     private final List<Card> spellAndTrapZone = Collections.nCopies(5, null);
@@ -14,12 +14,10 @@ public class GameMat {
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
     private Card fieldZoneCard = null;
-    private int lifePoints;
 
-    GameMat(User player, List<Card> deck, int lifePoints) {
+    GameMat(Player player, List<Card> deck) {
         this.player = player;
         this.deck = deck;
-        this.lifePoints = lifePoints;
 
         Collections.shuffle(deck);
         locationMap = buildLocationMap();
@@ -37,12 +35,8 @@ public class GameMat {
         return locationMap;
     }
 
-    public User getPlayer() {
+    public Player getPlayer() {
         return player;
-    }
-
-    public int getLifePoints() {
-        return lifePoints;
     }
 
     public int getCardCount(Location location) {
@@ -108,13 +102,5 @@ public class GameMat {
         Card card = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
         addCard(card, newLocation);
-    }
-
-    public void addLifePoints(int amount) {
-        lifePoints += amount;
-    }
-
-    public void decreaseLifePoints(int amount) {
-        lifePoints -= amount;
     }
 }
