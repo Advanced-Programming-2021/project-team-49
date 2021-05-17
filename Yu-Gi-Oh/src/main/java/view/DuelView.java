@@ -60,9 +60,16 @@ public class DuelView extends AbstractView {
         controller.changePhase();
         if (controller.getPhaseNumber() == 0) {
             System.out.println("it's " + controller.getCurrentPlayer().getNickname() + "'s turn");
-            controller.drawCard();
+            System.out.println("phase: " + controller.getPhaseName());
+            drawCard(controller);
+            return;
         }
         System.out.println("phase: " + controller.getPhaseName());
+    }
+
+    private static void drawCard(DuelController controller) throws EndOfRoundException {
+        Card drawnCard = controller.drawCard();
+        System.out.println("new card added to hand: " + drawnCard.getName());
     }
 
     private static void selectCard(DuelController controller, String input) {

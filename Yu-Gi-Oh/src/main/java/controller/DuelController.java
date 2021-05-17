@@ -110,9 +110,9 @@ public class DuelController extends AbstractController {
         }
     }
 
-    public void drawCard() throws EndOfRoundException {
+    public Card drawCard() throws EndOfRoundException {
         try {
-            field.drawCard();
+            return field.drawCard();
         } catch (EndOfRoundException exception) {
             endRound(exception);
             throw exception;
