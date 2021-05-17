@@ -1,4 +1,3 @@
-import controller.Controller;
 import controller.MasterController;
 
 public class Main {

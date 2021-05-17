@@ -3,10 +3,7 @@ package view;
 import controller.Controller;
 import exception.GameErrorException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public abstract class AbstractView {
     protected static final String INVALID_COMMAND_MESSAGE = "invalid command";

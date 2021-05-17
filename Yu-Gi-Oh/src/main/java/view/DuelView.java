@@ -5,8 +5,7 @@ import exception.GameErrorException;
 import model.game.*;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DuelView extends AbstractView {
     private static final Map<String, Location> LOCATION_MAP;

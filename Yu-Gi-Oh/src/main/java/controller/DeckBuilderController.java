@@ -1,14 +1,10 @@
 package controller;
 
 import exception.GameErrorException;
-import model.card.CardTemplate;
-import model.card.Monster;
-import model.card.Spell;
-import model.card.Trap;
 import model.database.Database;
-import model.user.Deck;
-import model.user.User;
 import view.DeckBuilderView;
+import model.card.*;
+import model.user.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
