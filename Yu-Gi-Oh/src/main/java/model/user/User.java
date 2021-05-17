@@ -93,7 +93,7 @@ public class User {
         this.coins += coins;
     }
 
-    public void decreaseCoins(int coins) {
+    public void removeCoins(int coins) {
         this.coins -= coins;
     }
 
@@ -101,7 +101,7 @@ public class User {
         this.score += score;
     }
 
-    public void decreaseScore(int score) {
+    public void removeScore(int score) {
         this.score -= score;
     }
 }
