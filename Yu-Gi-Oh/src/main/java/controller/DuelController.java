@@ -22,6 +22,7 @@ public class DuelController extends AbstractController {
 
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
+    private boolean isOpponentCardSelected;
 
     public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
         super(masterController, host);
@@ -52,6 +53,11 @@ public class DuelController extends AbstractController {
 
     public void endRound(Player winner, Player loser) throws EndOfMatchException {
         winner.incrementWinCount();
+        winner.setCurrentMaxLifePoints();
+
+        winner.setLifePoints(INIT_LIFE_POINTS);
+        loser.setLifePoints(INIT_LIFE_POINTS);
+        field = new Field(winner, loser);
 
         if (isMatchEnded()) {
             endMatch(winner, loser);
@@ -89,6 +95,7 @@ public class DuelController extends AbstractController {
 
         selectedCardLocation = location;
         selectedCardPosition = position;
+        isOpponentCardSelected = opponent;
     }
 
     public void deselectCard() {
