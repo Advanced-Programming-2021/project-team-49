@@ -3,17 +3,17 @@ package controller;
 import model.user.User;
 
 public abstract class AbstractController implements Controller {
-    private static final String TITLE = "Menu";
+    protected static String title;
     protected final MasterController masterController;
     protected final User user;
-
-    public String getTitle() {
-        return TITLE;
-    }
 
     protected AbstractController(MasterController masterController, User user) {
         this.masterController = masterController;
         this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void escape() {

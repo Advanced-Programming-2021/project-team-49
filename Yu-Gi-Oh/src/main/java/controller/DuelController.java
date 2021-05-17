@@ -1,5 +1,6 @@
 package controller;
 
+import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.game.*;
 import model.user.User;
@@ -7,7 +8,6 @@ import view.DuelView;
 
 public class DuelController extends AbstractController {
 
-    private static final String TITLE = "Duel Menu";
     private static final String[] phaseNames = {"draw phase", "standby phase", "main phase 1", "battle phase",
             "main phase 2", "end phase"};
 
@@ -29,6 +29,7 @@ public class DuelController extends AbstractController {
         this.guest = guest;
         this.rounds = rounds;
         this.hasAI = hasAI;
+        title = "Duel Menu";
     }
 
     public static String getPhaseName(int phase) {
@@ -56,7 +57,7 @@ public class DuelController extends AbstractController {
             if (gameMat.getCard(location, position) == null)
                 throw new GameErrorException("no card found in the given position");
         } catch (IndexOutOfBoundsException exception) {
-            throw new GameErrorException("invalid selection");
+            throw new GameErrorException("invalid selection", exception);
         }
 
         selectedCardLocation = location;

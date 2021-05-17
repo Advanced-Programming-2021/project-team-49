@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class DeckBuilderController extends AbstractController {
-    private static final String TITLE = "Deck Menu";
+
     private final Database database;
 
     public DeckBuilderController(MasterController masterController, User user, Database database) {
         super(masterController, user);
         this.database = database;
+        title = "Deck Menu";
     }
 
     public void run() {

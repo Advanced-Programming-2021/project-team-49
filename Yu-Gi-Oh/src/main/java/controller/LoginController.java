@@ -6,12 +6,13 @@ import model.user.User;
 import view.LoginView;
 
 public class LoginController extends AbstractController {
-    private static final String TITLE = "Login Menu";
+
     public final Userbase userbase;
 
     public LoginController(MasterController masterController, Userbase userbase) {
         super(masterController, null);
         this.userbase = userbase;
+        title = "Login Menu";
     }
 
     public void run() {

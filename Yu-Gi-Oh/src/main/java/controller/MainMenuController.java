@@ -6,12 +6,13 @@ import model.user.User;
 import view.MainMenuView;
 
 public class MainMenuController extends AbstractController {
-    private static final String TITLE = "Main Menu";
+
     private final Database database;
 
     public MainMenuController(MasterController masterController, User user, Database database) {
         super(masterController, user);
         this.database = database;
+        title = "Main Menu";
     }
 
     public void run() {
