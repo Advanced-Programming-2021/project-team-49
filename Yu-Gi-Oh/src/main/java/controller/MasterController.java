@@ -7,10 +7,15 @@ import java.io.IOException;
 
 public class MasterController {
     private Controller nextController;
-    private final Database database;
+    private Database database;
 
-    public MasterController() throws IOException, CsvValidationException {
-        database = new Database();
+    public MasterController() {
+        try {
+            database = new Database();
+        } catch (IOException|CsvValidationException exception) {
+            System.err.println("failed to load data");
+            System.exit(-1);
+        }
     }
 
     public void run() {
