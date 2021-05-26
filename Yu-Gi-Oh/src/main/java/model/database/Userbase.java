@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Userbase {
-    private final List<User> users = new ArrayList<>();
     private static final int INIT_COINS = 10;
+    private final List<User> users = new ArrayList<>();
 
     public void addUser(String username, String nickname, String password) {
         User user = new User(username, nickname, password, INIT_COINS);
