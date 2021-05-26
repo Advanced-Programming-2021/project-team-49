@@ -16,8 +16,7 @@ public class Database {
     private final Shop shop = new Shop();
     private final List<CardTemplate> cards = new ArrayList<>();
 
-    public Database() {
-
+    public Database() throws IOException, CsvValidationException {
     }
 
     public Userbase getUserbase() {
