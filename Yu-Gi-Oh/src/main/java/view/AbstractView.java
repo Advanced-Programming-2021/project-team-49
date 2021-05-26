@@ -120,4 +120,13 @@ public abstract class AbstractView {
         } else
             throw new GameErrorException(INVALID_COMMAND_MESSAGE);
     }
+
+    public void run() {
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+
+        while (runCommand(input))
+            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+    }
+
+    abstract protected boolean runCommand(String input);
 }

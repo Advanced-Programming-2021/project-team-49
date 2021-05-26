@@ -1,9 +1,17 @@
 package view;
 
-import controller.Controller;
+import controller.ScoreboardController;
 
 public class ScoreboardView extends AbstractView {
-    public ScoreboardView(Controller controller) {
 
+    private final ScoreboardController controller;
+
+    public ScoreboardView(ScoreboardController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    protected boolean runCommand(String input) {
+        return true;
     }
 }

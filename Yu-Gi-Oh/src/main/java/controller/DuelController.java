@@ -48,7 +48,7 @@ public class DuelController extends AbstractController {
     }
 
     public void run() {
-        new DuelView(this);
+        new DuelView(this).run();
     }
 
     public void endRound(Player winner, Player loser) throws EndOfMatchException {

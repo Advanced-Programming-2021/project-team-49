@@ -1,15 +1,22 @@
 package view;
 
 import controller.DuelController;
-import exception.*;
-import model.game.*;
+import exception.EndOfMatchException;
+import exception.EndOfRoundException;
+import exception.GameErrorException;
+import model.game.Card;
+import model.game.Field;
+import model.game.GameMat;
+import model.game.Location;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DuelView extends AbstractView {
 
     private static final Map<String, Location> LOCATION_MAP;
+
     static {
         LOCATION_MAP = new HashMap<>();
 
@@ -20,39 +27,10 @@ public class DuelView extends AbstractView {
         LOCATION_MAP.put("field", Location.FIELD_ZONE);
     }
 
+    private final DuelController controller;
+
     public DuelView(DuelController controller) {
-        runCommand(controller, "next phase");
-
-        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
-
-        while (runCommand(controller, input))
-            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
-    }
-
-    private static boolean runCommand(DuelController controller, String input) {
-        try {
-            if (input.equals("next phase"))
-                beginNextPhase(controller);
-            else if (input.equals("select -d")) {
-                controller.deselectCard();
-                System.out.println("card deselected");
-            } else if (input.startsWith("select"))
-                selectCard(controller, input);
-            else
-                return runDefaultCommands(input, controller);
-        } catch (GameErrorException exception) {
-            System.out.println(exception.getMessage());
-        } catch (NumberFormatException exception) {
-            System.out.println("invalid number entered");
-        } catch (EndOfMatchException exception) {
-            System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
-                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
-            return false;
-        } catch (EndOfRoundException exception) {
-            System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
-                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
-        }
-        return true;
+        this.controller = controller;
     }
 
     private static void beginNextPhase(DuelController controller) throws EndOfRoundException {
@@ -115,13 +93,13 @@ public class DuelView extends AbstractView {
         return locationFlagIndex;
     }
 
-    private String getFieldStringView(Field field) {
+    private static String getFieldStringView(Field field) {
         return getGameMatStringView(field.getDefenderMat(), true)
                 + "\n\n--------------------------\n\n"
                 + getGameMatStringView(field.getAttackerMat(), false);
     }
 
-    private String getGameMatStringView(GameMat gameMat, boolean isFlipped) {
+    private static String getGameMatStringView(GameMat gameMat, boolean isFlipped) {
         StringBuilder handString = new StringBuilder();
         StringBuilder offsetString = new StringBuilder("\t");
 
@@ -151,7 +129,7 @@ public class DuelView extends AbstractView {
         }
     }
 
-    private String getCardStringView(Card card) {
+    private static String getCardStringView(Card card) {
         if (card == null)
             return "E ";
         else if (!card.isAttackPossible())
@@ -164,10 +142,43 @@ public class DuelView extends AbstractView {
             return "DH";
     }
 
-    private String getZoneStringView(GameMat gameMat, Location zone, int[] viewOrder) {
+    private static String getZoneStringView(GameMat gameMat, Location zone, int[] viewOrder) {
         StringBuilder stringViewBuilder = new StringBuilder();
         for (int position : viewOrder)
             stringViewBuilder.append("\t").append(getCardStringView(gameMat.getCard(zone, position)));
         return stringViewBuilder.toString();
+    }
+
+    @Override
+    public void run() {
+        runCommand("next phase");
+        super.run();
+    }
+
+    @Override
+    protected boolean runCommand(String input) {
+        try {
+            if (input.equals("next phase"))
+                beginNextPhase(controller);
+            else if (input.equals("select -d")) {
+                controller.deselectCard();
+                System.out.println("card deselected");
+            } else if (input.startsWith("select"))
+                selectCard(controller, input);
+            else
+                return runDefaultCommands(input, controller);
+        } catch (GameErrorException exception) {
+            System.out.println(exception.getMessage());
+        } catch (NumberFormatException exception) {
+            System.out.println("invalid number entered");
+        } catch (EndOfMatchException exception) {
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+            return false;
+        } catch (EndOfRoundException exception) {
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+        }
+        return true;
     }
 }

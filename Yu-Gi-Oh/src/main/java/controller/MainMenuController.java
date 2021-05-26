@@ -16,7 +16,7 @@ public class MainMenuController extends AbstractController {
     }
 
     public void run() {
-        new MainMenuView(this);
+        new MainMenuView(this).run();
     }
 
     public void enterMenu(String menuTitle) {

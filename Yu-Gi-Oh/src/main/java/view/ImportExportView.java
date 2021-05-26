@@ -1,9 +1,17 @@
 package view;
 
-import controller.Controller;
+import controller.ImportExportController;
 
 public class ImportExportView extends AbstractView {
-    public ImportExportView(Controller controller) {
 
+    private final ImportExportController controller;
+
+    public ImportExportView(ImportExportController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    protected boolean runCommand(String input) {
+        return true;
     }
 }

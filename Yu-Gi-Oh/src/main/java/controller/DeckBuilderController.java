@@ -20,7 +20,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void run() {
-        new DeckBuilderView(this);
+        new DeckBuilderView(this).run();
     }
 
     public void createDeck(String name) {

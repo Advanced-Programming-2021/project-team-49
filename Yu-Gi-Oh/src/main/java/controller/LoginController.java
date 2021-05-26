@@ -16,7 +16,7 @@ public class LoginController extends AbstractController {
     }
 
     public void run() {
-        new LoginView(this);
+        new LoginView(this).run();
     }
 
     public void createUser(String username, String nickname, String password) {

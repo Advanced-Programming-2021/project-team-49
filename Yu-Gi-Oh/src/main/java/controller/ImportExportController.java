@@ -2,6 +2,7 @@ package controller;
 
 import model.database.Database;
 import model.user.User;
+import view.ImportExportView;
 
 public class ImportExportController extends AbstractController {
     private final Database database;
@@ -13,6 +14,6 @@ public class ImportExportController extends AbstractController {
     }
 
     public void run() {
-
+        new ImportExportView(this).run();
     }
 }

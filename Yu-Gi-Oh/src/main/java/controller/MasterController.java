@@ -1,12 +1,15 @@
 package controller;
 
+import com.opencsv.exceptions.CsvValidationException;
 import model.database.Database;
+
+import java.io.IOException;
 
 public class MasterController {
     private Controller nextController;
     private final Database database;
 
-    public MasterController() {
+    public MasterController() throws IOException, CsvValidationException {
         database = new Database();
     }
 

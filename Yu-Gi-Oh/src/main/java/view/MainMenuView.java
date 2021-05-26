@@ -4,14 +4,15 @@ import controller.MainMenuController;
 import exception.GameErrorException;
 
 public class MainMenuView extends AbstractView {
-    public MainMenuView(MainMenuController controller) {
-        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
 
-        while (runCommand(controller, input))
-            input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+    private final MainMenuController controller;
+
+    public MainMenuView(MainMenuController controller) {
+        this.controller = controller;
     }
 
-    private boolean runCommand(MainMenuController controller, String input) {
+    @Override
+    protected boolean runCommand(String input) {
         try {
             if (input.equals("menu show-current")) {
                 System.out.println(controller.getTitle());
@@ -21,7 +22,7 @@ public class MainMenuView extends AbstractView {
             else if (input.equals("user logout"))
                 controller.escape();
             else if (input.startsWith("duel")) {
-                startDuel(controller, input);
+                startDuel(input);
             } else
                 throw new GameErrorException(INVALID_COMMAND_MESSAGE);
         } catch (GameErrorException exception) {
@@ -34,7 +35,7 @@ public class MainMenuView extends AbstractView {
         return false;
     }
 
-    private void startDuel(MainMenuController controller, String input) {
+    private void startDuel(String input) {
         String[] flags = {"new", "ai"};
         boolean[] isFlagFound = findFlags(flags, input);
 
