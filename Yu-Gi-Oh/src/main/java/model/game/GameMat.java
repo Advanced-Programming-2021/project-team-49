@@ -1,7 +1,5 @@
 package model.game;
 
-import model.user.User;
-
 import java.util.*;
 
 public class GameMat {
@@ -44,6 +42,9 @@ public class GameMat {
     }
 
     public Card getCard(Location location, int position) {
+        if (location == Location.FIELD_ZONE)
+            return fieldZoneCard;
+
         List<Card> cardList = locationMap.get(location);
         return cardList.get(position - 1);
     }
@@ -66,6 +67,11 @@ public class GameMat {
         }
 
         addCard(card, location, getCardCount(location));
+    }
+
+    public void removeCard(Card card, Location location) {
+        List<Card> cardList = locationMap.get(location);
+        cardList.remove(card);
     }
 
     public void removeCard(Location location, int position) {
@@ -102,5 +108,9 @@ public class GameMat {
         Card card = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
         addCard(card, newLocation);
+    }
+
+    public List<Card> getGraveyard() {
+        return graveyard;
     }
 }

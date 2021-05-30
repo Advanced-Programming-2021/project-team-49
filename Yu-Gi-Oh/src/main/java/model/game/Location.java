@@ -6,4 +6,5 @@ public enum Location {
     GRAVEYARD,
     MONSTER_ZONE,
     SPELL_AND_TRAP_ZONE,
-    FIELD_ZONE}
+    FIELD_ZONE
+}

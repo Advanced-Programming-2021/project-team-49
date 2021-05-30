@@ -19,4 +19,8 @@ public abstract class CardTemplate {
     public String getDescription() {
         return description;
     }
+
+    public Effect getEffect() {
+        return effect;
+    }
 }

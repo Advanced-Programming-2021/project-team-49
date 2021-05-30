@@ -1,21 +1,27 @@
 package view;
 
 import controller.DuelController;
+import controller.EffectController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
+import model.card.Effect;
+import model.card.EffectType;
+import model.card.Spell;
 import model.game.Card;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DuelView extends AbstractView {
 
     private static final Map<String, Location> LOCATION_MAP;
+    private final DuelController controller;
 
     static {
         LOCATION_MAP = new HashMap<>();
@@ -26,8 +32,6 @@ public class DuelView extends AbstractView {
         LOCATION_MAP.put("spell", Location.SPELL_AND_TRAP_ZONE);
         LOCATION_MAP.put("field", Location.FIELD_ZONE);
     }
-
-    private final DuelController controller;
 
     public DuelView(DuelController controller) {
         this.controller = controller;
@@ -149,10 +153,57 @@ public class DuelView extends AbstractView {
         return stringViewBuilder.toString();
     }
 
+    private static String getCardListStringView(ArrayList<Card> list) {
+        StringBuilder cards = new StringBuilder();
+        for (int i = 1; i <= list.size(); i++)
+            cards.append(i).append(". ").append(list.get(i - 1).getName()).append(": ")
+                    .append(list.get(i - 1).getDescription()).append("\n");
+
+        return cards.toString();
+    }
+
     @Override
     public void run() {
         runCommand("next phase");
         super.run();
+    }
+
+    private static void callEffect(DuelController controller) {
+        Effect effect = controller.getSelectedCard().getCardTemplate().getEffect();
+        try {
+            switch (effect) {
+                case MONSTER_REBORN:
+                    monsterReborn(controller);
+                    break;
+
+                case YAMI:
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void activateSpell(DuelController controller) {
+
+        Card card = controller.getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (!(card.getCardTemplate() instanceof Spell))
+            throw new GameErrorException("activate effect is only for spell cards");
+        else if (controller.getPhaseNumber() != 2 || controller.getPhaseNumber() != 4)
+            throw new GameErrorException("you can't activate an effect on this turn");
+        else if (card.isFaceUp())
+            throw new GameErrorException("you have already activated this card");
+        else if (controller.getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
+                ((Spell) card.getCardTemplate()).getEffectType() != EffectType.FIELD)
+            throw new GameErrorException("spell card zone is full");
+        else
+            try {
+                callEffect(controller);
+            } catch (Exception e) {
+                System.out.println("preparation of this spell are not done yet");
+            }
     }
 
     @Override
@@ -165,6 +216,8 @@ public class DuelView extends AbstractView {
                 System.out.println("card deselected");
             } else if (input.startsWith("select"))
                 selectCard(controller, input);
+            else if (input.equals("activate spell"))
+                activateSpell(controller);
             else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
@@ -180,5 +233,39 @@ public class DuelView extends AbstractView {
                     + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
         }
         return true;
+    }
+
+    private static int selectNumber(int begin, int end) {
+        int choice;
+        try {
+            choice = Integer.parseInt(getInputNextLine());
+
+            if (choice < begin || choice > end)
+                throw new GameErrorException();
+        } catch (Exception e) {
+            System.out.println("Enter a number from " + begin + " to " + end);
+            return -1;
+        }
+        return choice;
+    }
+
+    public static void monsterReborn(DuelController controller) {
+        EffectController effectController = controller.getEffectController();
+        ArrayList<Card> bothGraveyards = effectController.getBothGraveyards();
+
+        if (bothGraveyards.size() == 0)
+            throw new GameErrorException("Both graveyards are empty");
+        else
+            System.out.println("select a card to special summon:\n" +
+                    getCardListStringView(bothGraveyards));
+
+        while (true) {
+            int selected = selectNumber(1, bothGraveyards.size());
+            if (selected != -1) {
+                Card card = bothGraveyards.get(selected - 1);
+                effectController.monsterReborn(card);
+                return;
+            }
+        }
     }
 }

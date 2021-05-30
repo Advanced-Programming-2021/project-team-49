@@ -1,7 +1,6 @@
 package model.game;
 
 import model.card.CardTemplate;
-import model.card.Monster;
 
 public class Card {
     private final CardTemplate cardTemplate;
@@ -20,6 +19,10 @@ public class Card {
 
     public String getDescription() {
         return cardTemplate.getDescription();
+    }
+
+    public CardTemplate getCardTemplate() {
+        return cardTemplate;
     }
 
     public void setFaceUp(boolean faceUp) {

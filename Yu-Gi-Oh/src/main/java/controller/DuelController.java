@@ -19,7 +19,7 @@ public class DuelController extends AbstractController {
     private int phase = -1;
     private int drawCount;
     private Field field;
-
+    private final EffectController effectController;
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
     private boolean isOpponentCardSelected;
@@ -33,6 +33,7 @@ public class DuelController extends AbstractController {
         Player playerOne = new Player(host, INIT_LIFE_POINTS);
         Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
         field = new Field(playerOne, playerTwo);
+        effectController = new EffectController(field);
     }
 
     public String getPhaseName() {
@@ -45,6 +46,14 @@ public class DuelController extends AbstractController {
 
     public Player getCurrentPlayer() {
         return field.getAttackerMat().getPlayer();
+    }
+
+    public EffectController getEffectController() {
+        return effectController;
+    }
+
+    public int getCardCount(Location location) {
+        return field.getAttackerMat().getCardCount(location);
     }
 
     public void run() {
@@ -102,6 +111,13 @@ public class DuelController extends AbstractController {
         if (selectedCardLocation == null)
             throw new GameErrorException("no card is selected yet");
         selectedCardLocation = null;
+    }
+
+    public Card getSelectedCard() {
+        if (isOpponentCardSelected)
+            throw new GameErrorException("invalid selection");
+
+        return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
     }
 
     public void changePhase() {

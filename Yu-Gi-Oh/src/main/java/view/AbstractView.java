@@ -14,6 +14,11 @@ public abstract class AbstractView {
         return string.trim().replaceAll("\\s+", " ");
     }
 
+    public static String getInputNextLine() {
+        return removeExtraWhitespace(INPUT_STREAM.nextLine());
+        // TODO: might throw exception, handle with hasNext if needed
+    }
+
     public static String[] getArguments(String[] argumentNames, String[] flags, String input, String prefix) {
         String[] command = getCommand(input, prefix);
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
