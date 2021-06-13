@@ -1,13 +1,10 @@
 package view;
 
 import controller.DuelController;
-import controller.EffectController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.card.Effect;
-import model.card.EffectType;
-import model.card.Spell;
+import model.card.Monster;
 import model.game.Card;
 import model.game.Field;
 import model.game.GameMat;
@@ -167,12 +164,6 @@ public class DuelView extends AbstractView {
         super.run();
     }
 
-    private static void setPosition(DuelController controller) {
-        Card card = controller.getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-    }
-
     @Override
     protected boolean runCommand(String input) {
         try {
@@ -185,7 +176,17 @@ public class DuelView extends AbstractView {
                 selectCard(controller, input);
             else if (input.equals("activate spell"))
                 controller.activateSpell();
-            else
+            else if (input.startsWith("set")) {
+                if (isFlagUsedInCommand("position", input)) {
+                    String position = getArgument("position", input, "set");
+                    controller.setPosition(position);
+                    System.out.println("monster card position changed successfully");
+                } else if (controller.getSelectedCard().getCardTemplate() instanceof Monster)
+                    controller.setMonster();
+                else
+                    controller.setSpellOrTrap();
+                System.out.println("set successfully");
+            } else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
@@ -206,7 +207,7 @@ public class DuelView extends AbstractView {
         System.out.println("select a card:");
         int choice;
         try {
-            choice = Integer.parseInt(getInputNextLine());
+            choice = Integer.parseInt(removeExtraWhitespace(INPUT_STREAM.nextLine()));
 
             if (choice < begin || choice > end)
                 throw new GameErrorException();

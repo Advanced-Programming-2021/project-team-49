@@ -8,6 +8,7 @@ public class Card {
     private boolean attacker;
     private boolean attackPossibility;
     private boolean effect;
+    private boolean PositionChanged;
 
     public Card(CardTemplate cardTemplate) {
         this.cardTemplate = cardTemplate;
@@ -55,5 +56,13 @@ public class Card {
 
     public boolean hasEffect() {
         return effect;
+    }
+
+    public void setPositionChanged(boolean positionChanged) {
+        PositionChanged = positionChanged;
+    }
+
+    public boolean isPositionChanged() {
+        return PositionChanged;
     }
 }

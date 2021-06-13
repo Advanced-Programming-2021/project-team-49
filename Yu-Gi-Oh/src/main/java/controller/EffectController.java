@@ -19,8 +19,8 @@ public class EffectController {
     public void monsterReborn() {
         Card card;
         ArrayList<Card> bothGraveyards = new ArrayList<>();
-        bothGraveyards.addAll(field.getAttackerMat().getGraveyard());
-        bothGraveyards.addAll(field.getDefenderMat().getGraveyard());
+        bothGraveyards.addAll(field.getAttackerMat().getLocationList(Location.GRAVEYARD));
+        bothGraveyards.addAll(field.getDefenderMat().getLocationList(Location.GRAVEYARD));
 
         if (bothGraveyards.size() == 0)
             throw new GameErrorException("Both graveyards are empty");
@@ -34,7 +34,7 @@ public class EffectController {
             card = bothGraveyards.get(selected - 1);
         }
 
-        if (field.getAttackerMat().getGraveyard().contains(card))
+        if (field.getAttackerMat().getLocationList(Location.GRAVEYARD).contains(card))
             field.getAttackerMat().removeCard(card, Location.GRAVEYARD);
         else
             field.getDefenderMat().removeCard(card, Location.GRAVEYARD);

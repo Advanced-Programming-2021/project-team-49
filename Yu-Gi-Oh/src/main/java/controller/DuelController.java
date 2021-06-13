@@ -51,10 +51,6 @@ public class DuelController extends AbstractController {
         return field.getAttackerMat().getPlayer();
     }
 
-    public EffectController getEffectController() {
-        return effectController;
-    }
-
     public int getCardCount(Location location) {
         return field.getAttackerMat().getCardCount(location);
     }
@@ -128,6 +124,8 @@ public class DuelController extends AbstractController {
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
+            for (Card card : field.getAttackerMat().getLocationList(Location.MONSTER_ZONE))
+                card.setPositionChanged(false);
         }
     }
 
@@ -175,5 +173,33 @@ public class DuelController extends AbstractController {
             } catch (Exception e) {
                 throw new GameErrorException("preparation of this spell are not done yet");
             }
+    }
+
+    public void setPosition(String position) {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (selectedCardLocation != Location.MONSTER_ZONE)
+            throw new GameErrorException("you can't change this card position");
+        else if (phase != 2 || phase != 4)
+            throw new GameErrorException("you can't do this action in this phase");
+        else if (!position.equalsIgnoreCase("attack") || !position.equalsIgnoreCase("defense"))
+            throw new GameErrorException("invalid position");
+        else if (position.equalsIgnoreCase("attack") && card.isAttacker()
+                || position.equalsIgnoreCase("defense") && !card.isAttacker())
+            throw new GameErrorException("this card is already in the wanted position");
+        else if (card.isPositionChanged())
+            throw new GameErrorException("you already changed this card position in this turn");
+
+        card.setAttacker(position.equalsIgnoreCase("attack"));
+        card.setPositionChanged(true);
+    }
+
+    public void setMonster() {
+
+    }
+
+    public void setSpellOrTrap() {
+
     }
 }
