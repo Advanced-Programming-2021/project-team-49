@@ -62,8 +62,7 @@ public class DuelView extends AbstractView {
         boolean opponent = isFlagUsedInCommand("opponent", input);
 
         if (locationFlags[locationFlagIndex].equals("field")) {
-            if ((opponent && input.split(" ").length > 3)
-                    || input.split(" ").length > 2)
+            if ((opponent && input.split(" ").length > 3) || input.split(" ").length > 2)
                 throw new GameErrorException("invalid selection");
         } else {
             String positionString;
@@ -153,13 +152,13 @@ public class DuelView extends AbstractView {
         return stringViewBuilder.toString();
     }
 
-    private static String getCardListStringView(ArrayList<Card> list) {
+    public static void showCardListStringView(ArrayList<Card> list) {
         StringBuilder cards = new StringBuilder();
         for (int i = 1; i <= list.size(); i++)
             cards.append(i).append(". ").append(list.get(i - 1).getName()).append(": ")
                     .append(list.get(i - 1).getDescription()).append("\n");
 
-        return cards.toString();
+        System.out.println(cards);
     }
 
     @Override
@@ -168,42 +167,10 @@ public class DuelView extends AbstractView {
         super.run();
     }
 
-    private static void callEffect(DuelController controller) {
-        Effect effect = controller.getSelectedCard().getCardTemplate().getEffect();
-        try {
-            switch (effect) {
-                case MONSTER_REBORN:
-                    monsterReborn(controller);
-                    break;
-
-                case YAMI:
-                    break;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void activateSpell(DuelController controller) {
-
+    private static void setPosition(DuelController controller) {
         Card card = controller.getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
-        else if (!(card.getCardTemplate() instanceof Spell))
-            throw new GameErrorException("activate effect is only for spell cards");
-        else if (controller.getPhaseNumber() != 2 || controller.getPhaseNumber() != 4)
-            throw new GameErrorException("you can't activate an effect on this turn");
-        else if (card.isFaceUp())
-            throw new GameErrorException("you have already activated this card");
-        else if (controller.getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
-                ((Spell) card.getCardTemplate()).getEffectType() != EffectType.FIELD)
-            throw new GameErrorException("spell card zone is full");
-        else
-            try {
-                callEffect(controller);
-            } catch (Exception e) {
-                System.out.println("preparation of this spell are not done yet");
-            }
     }
 
     @Override
@@ -217,7 +184,7 @@ public class DuelView extends AbstractView {
             } else if (input.startsWith("select"))
                 selectCard(controller, input);
             else if (input.equals("activate spell"))
-                activateSpell(controller);
+                controller.activateSpell();
             else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
@@ -235,7 +202,8 @@ public class DuelView extends AbstractView {
         return true;
     }
 
-    private static int selectNumber(int begin, int end) {
+    public static int selectNumber(int begin, int end) {
+        System.out.println("select a card:");
         int choice;
         try {
             choice = Integer.parseInt(getInputNextLine());
@@ -247,25 +215,5 @@ public class DuelView extends AbstractView {
             return -1;
         }
         return choice;
-    }
-
-    public static void monsterReborn(DuelController controller) {
-        EffectController effectController = controller.getEffectController();
-        ArrayList<Card> bothGraveyards = effectController.getBothGraveyards();
-
-        if (bothGraveyards.size() == 0)
-            throw new GameErrorException("Both graveyards are empty");
-        else
-            System.out.println("select a card to special summon:\n" +
-                    getCardListStringView(bothGraveyards));
-
-        while (true) {
-            int selected = selectNumber(1, bothGraveyards.size());
-            if (selected != -1) {
-                Card card = bothGraveyards.get(selected - 1);
-                effectController.monsterReborn(card);
-                return;
-            }
-        }
     }
 }

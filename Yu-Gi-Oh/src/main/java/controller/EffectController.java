@@ -1,8 +1,10 @@
 package controller;
 
+import exception.GameErrorException;
 import model.game.Card;
 import model.game.Field;
 import model.game.Location;
+import view.DuelView;
 
 import java.util.ArrayList;
 
@@ -14,20 +16,29 @@ public class EffectController {
         this.field = field;
     }
 
-    public void monsterReborn(Card card) {
+    public void monsterReborn() {
+        Card card;
+        ArrayList<Card> bothGraveyards = new ArrayList<>();
+        bothGraveyards.addAll(field.getAttackerMat().getGraveyard());
+        bothGraveyards.addAll(field.getDefenderMat().getGraveyard());
+
+        if (bothGraveyards.size() == 0)
+            throw new GameErrorException("Both graveyards are empty");
+        else {
+            DuelView.showCardListStringView(bothGraveyards);
+
+            int selected;
+            do {
+                selected = DuelView.selectNumber(1, bothGraveyards.size());
+            } while (selected == -1);
+            card = bothGraveyards.get(selected - 1);
+        }
+
         if (field.getAttackerMat().getGraveyard().contains(card))
             field.getAttackerMat().removeCard(card, Location.GRAVEYARD);
         else
             field.getDefenderMat().removeCard(card, Location.GRAVEYARD);
 
         field.getAttackerMat().addCard(card, Location.SPELL_AND_TRAP_ZONE);
-    }
-
-    public ArrayList<Card> getBothGraveyards() {
-        ArrayList<Card> bothGraveyards = new ArrayList<>();
-        bothGraveyards.addAll(field.getAttackerMat().getGraveyard());
-        bothGraveyards.addAll(field.getDefenderMat().getGraveyard());
-
-        return bothGraveyards;
     }
 }

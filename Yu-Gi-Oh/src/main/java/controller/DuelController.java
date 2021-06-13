@@ -3,6 +3,9 @@ package controller;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
+import model.card.Effect;
+import model.card.EffectType;
+import model.card.Spell;
 import model.game.*;
 import model.user.User;
 import view.DuelView;
@@ -135,5 +138,42 @@ public class DuelController extends AbstractController {
             endRound(exception.getWinner(), exception.getLoser());
             throw exception;
         }
+    }
+
+    private void callEffect() {
+        Effect effect = getSelectedCard().getCardTemplate().getEffect();
+        try {
+            switch (effect) {
+                case MONSTER_REBORN:
+                    effectController.monsterReborn();
+                    break;
+
+                case YAMI:
+                    break;
+            }
+        } catch (Exception e) {
+            throw new GameErrorException(e.getMessage());
+        }
+    }
+
+    public void activateSpell() {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (!(card.getCardTemplate() instanceof Spell))
+            throw new GameErrorException("activate effect is only for spell cards");
+        else if (phase != 2 || phase != 4)
+            throw new GameErrorException("you can't activate an effect on this turn");
+        else if (card.isFaceUp())
+            throw new GameErrorException("you have already activated this card");
+        else if (getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
+                ((Spell) card.getCardTemplate()).getEffectType() != EffectType.FIELD)
+            throw new GameErrorException("spell card zone is full");
+        else
+            try {
+                callEffect();
+            } catch (Exception e) {
+                throw new GameErrorException("preparation of this spell are not done yet");
+            }
     }
 }
