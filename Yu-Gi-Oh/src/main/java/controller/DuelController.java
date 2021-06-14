@@ -16,13 +16,13 @@ public class DuelController extends AbstractController {
             "main phase 2", "end phase"};
     private static final int INIT_LIFE_POINTS = 8000;
 
+    private final EffectController effectController;
     private final boolean hasAI;
     private final int rounds;
     private final int currentRound = 1;
-    private int phase = -1;
+    private int phase = 0;
     private int drawCount;
     private Field field;
-    private final EffectController effectController;
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
     private boolean isOpponentCardSelected;

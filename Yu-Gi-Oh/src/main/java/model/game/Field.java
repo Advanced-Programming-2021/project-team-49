@@ -15,6 +15,7 @@ public class Field {
     public Field(Player playerOne, Player playerTwo) {
         attackerMat = new GameMat(playerOne, playerOne.getUser().getActiveDeck().getGameDeck());
         defenderMat = new GameMat(playerTwo, playerTwo.getUser().getActiveDeck().getGameDeck());
+        drawStartingHands();
     }
 
     public GameMat getAttackerMat() {
@@ -37,6 +38,13 @@ public class Field {
         else {
             attackerMat.moveCard(Location.DECK, Location.HAND);
             return attackerMat.getCard(Location.HAND);
+        }
+    }
+
+    private void drawStartingHands() {
+        for (int i = 0; i < 5; i++) {
+            attackerMat.moveCard(Location.DECK, Location.HAND);
+            defenderMat.moveCard(Location.DECK, Location.HAND);
         }
     }
 }
