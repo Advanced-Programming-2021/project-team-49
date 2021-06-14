@@ -3,10 +3,7 @@ package controller;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.card.Effect;
-import model.card.EffectType;
-import model.card.Monster;
-import model.card.Spell;
+import model.card.*;
 import model.game.*;
 import model.user.User;
 import view.DuelView;
@@ -180,6 +177,81 @@ public class DuelController extends AbstractController {
             }
     }
 
+    private boolean isRitualSummonPossible() {
+        int sumOfLevels = 0;
+        for (Card card : field.getAttackerMat().getLocationList(Location.MONSTER_ZONE))
+            sumOfLevels += ((Monster) card.getCardTemplate()).getLevel();
+
+        ArrayList<Card> ritualCards = new ArrayList<>();
+        for (Card card : field.getAttackerMat().getLocationList(Location.HAND))
+            if (card.getCardTemplate() instanceof Monster)
+                if (((Monster) card.getCardTemplate()).getCardType() == CardType.RITUAL)
+                    ritualCards.add(card);
+
+        if (ritualCards.isEmpty())
+            return false;
+        for (Card ritualCard : ritualCards)
+            if (((Monster) ritualCard.getCardTemplate()).getLevel() > sumOfLevels)
+                return false;
+
+        return true;
+    }
+
+    private boolean tributeSummonOrSet(boolean summon) {
+        int level = ((Monster) getSelectedCard().getCardTemplate()).getLevel();
+        int monsterCardCount = field.getAttackerMat().getCardCount(Location.MONSTER_ZONE);
+        if (level < 5)
+            return false;
+        else if (level == 5 || level == 6) {
+            if (monsterCardCount < 2)
+                throw new GameErrorException("there are not enough cards for tribute");
+
+            int selected = DuelView.selectNumber(1, monsterCardCount);
+            if (selected == -1)
+                throw new GameErrorException("there is no monster on this address");
+
+            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected);
+
+        } else if (level == 7 || level == 8) {
+            if (monsterCardCount < 2)
+                throw new GameErrorException("there are not enough cards for tribute");
+
+            int selected1 = DuelView.selectNumber(1, monsterCardCount);
+            int selected2 = DuelView.selectNumber(1, monsterCardCount);
+            if (selected1 == -1 || selected2 == -1 || selected1 == selected2)
+                throw new GameErrorException("there is no monster on one of these addresses");
+
+            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected1);
+            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected2);
+        }
+        field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        isMonsterAddedToFiled = true;
+        if (summon)
+            getSelectedCard().setFaceUp(true);
+
+        return true;
+    }
+
+    public void summon() {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (selectedCardLocation != Location.HAND || !(card.getCardTemplate() instanceof Monster))
+            throw new GameErrorException("you can't summon this card");
+        else if (phase != 2 || phase != 4)
+            throw new GameErrorException("action not allowed in this phase");
+        else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
+            throw new GameErrorException("monster card zone is full");
+        else if (isMonsterAddedToFiled)
+            throw new GameErrorException("you already summoned/set on this turn");
+        else if (tributeSummonOrSet(true))
+            return;
+
+        field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        card.setFaceUp(true);
+        isMonsterAddedToFiled = true;
+    }
+
     public void setPosition(String position) {
         Card card = getSelectedCard();
         if (card == null)
@@ -212,7 +284,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("monster card zone is full");
         else if (isMonsterAddedToFiled)
             throw new GameErrorException("you already summoned/set on this turn");
-        // TODO use isMonsterAddedToField in summon method
+        else if (tributeSummonOrSet(false))
+            return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToFiled = true;
@@ -226,11 +299,13 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't set this card");
         else if (phase != 2 || phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
+        else if (card.getCardTemplate() instanceof Spell
+                && ((Spell) card.getCardTemplate()).getEffectType() == EffectType.FIELD) {
+            field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.FIELD_ZONE);
+            return;
+        } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
-        // TODO Field spells have their own place and the condition above is not for them
 
-        // TODO check if cards are already face down or call setFaceUp(false)
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
     }
 

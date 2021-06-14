@@ -205,6 +205,10 @@ public class DuelView extends AbstractView {
                 selectCard(controller, input);
             else if (input.equals("activate spell"))
                 controller.activateSpell();
+            else if (input.startsWith("summon")) {
+                controller.summon();
+                System.out.println("summoned successfully");
+            }
             else if (input.startsWith("set")) {
                 if (isFlagUsedInCommand("position", input)) {
                     String position = getArgument("position", input, "set");
