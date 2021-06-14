@@ -26,6 +26,7 @@ public class DuelController extends AbstractController {
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
     private boolean isOpponentCardSelected;
+    private boolean isMonsterAddedToFiled = false;
 
     public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
         super(masterController, host);
@@ -126,6 +127,7 @@ public class DuelController extends AbstractController {
             field.switchTurn();
             for (Card card : field.getAttackerMat().getLocationList(Location.MONSTER_ZONE))
                 card.setPositionChanged(false);
+            isMonsterAddedToFiled = false;
         }
     }
 
@@ -196,10 +198,36 @@ public class DuelController extends AbstractController {
     }
 
     public void setMonster() {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (selectedCardLocation != Location.HAND)
+            throw new GameErrorException("you can't set this card");
+        else if (phase != 2 || phase != 4)
+            throw new GameErrorException("you can't do this action in this phase");
+        else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
+            throw new GameErrorException("monster card zone is full");
+        else if (isMonsterAddedToFiled)
+            throw new GameErrorException("you already summoned/set on this turn");
+        // TODO use isMonsterAddedToField in summon method
 
+        field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        isMonsterAddedToFiled = true;
     }
 
     public void setSpellOrTrap() {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (selectedCardLocation != Location.HAND)
+            throw new GameErrorException("you can't set this card");
+        else if (phase != 2 || phase != 4)
+            throw new GameErrorException("you can't do this action in this phase");
+        else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
+            throw new GameErrorException("spell card zone is full");
+        // TODO Field spells have their own place and the condition above is not for them
 
+        // TODO check if cards are already face down or call setFaceUp(false)
+        field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
     }
 }
