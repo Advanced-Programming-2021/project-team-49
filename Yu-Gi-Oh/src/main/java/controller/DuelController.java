@@ -145,17 +145,14 @@ public class DuelController extends AbstractController {
 
     private void callEffect() {
         Effect effect = getSelectedCard().getCardTemplate().getEffect();
-        try {
-            switch (effect) {
-                case MONSTER_REBORN:
-                    effectController.monsterReborn();
-                    break;
 
-                case YAMI:
-                    break;
-            }
-        } catch (Exception e) {
-            throw new GameErrorException(e.getMessage());
+        switch (effect) {
+            case MONSTER_REBORN:
+                effectController.monsterReborn();
+                break;
+
+            case YAMI:
+                break;
         }
     }
 
@@ -165,7 +162,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("no card is selected yet");
         else if (!(card.getCardTemplate() instanceof Spell))
             throw new GameErrorException("activate effect is only for spell cards");
-        else if (phase != 2 || phase != 4)
+        else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't activate an effect on this turn");
         else if (card.isFaceUp())
             throw new GameErrorException("you have already activated this card");
@@ -186,9 +183,9 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("no card is selected yet");
         else if (selectedCardLocation != Location.MONSTER_ZONE)
             throw new GameErrorException("you can't change this card position");
-        else if (phase != 2 || phase != 4)
+        else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (!position.equalsIgnoreCase("attack") || !position.equalsIgnoreCase("defense"))
+        else if (!position.equalsIgnoreCase("attack") && !position.equalsIgnoreCase("defense"))
             throw new GameErrorException("invalid position");
         else if (position.equalsIgnoreCase("attack") && card.isAttacker()
                 || position.equalsIgnoreCase("defense") && !card.isAttacker())
@@ -206,7 +203,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("no card is selected yet");
         else if (selectedCardLocation != Location.HAND)
             throw new GameErrorException("you can't set this card");
-        else if (phase != 2 || phase != 4)
+        else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
             throw new GameErrorException("monster card zone is full");
@@ -224,7 +221,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("no card is selected yet");
         else if (selectedCardLocation != Location.HAND)
             throw new GameErrorException("you can't set this card");
-        else if (phase != 2 || phase != 4)
+        else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
         else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
