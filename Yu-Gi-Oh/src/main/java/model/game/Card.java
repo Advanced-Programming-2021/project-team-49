@@ -12,6 +12,9 @@ public class Card {
 
     public Card(CardTemplate cardTemplate) {
         this.cardTemplate = cardTemplate;
+        setFaceUp(false);
+        setAttacker(true);
+        setAttackPossibility(false);
     }
 
     public String getName() {
