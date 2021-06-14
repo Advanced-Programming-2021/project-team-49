@@ -13,8 +13,8 @@ import model.game.GameMat;
 import model.game.Location;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DuelView extends AbstractView {
@@ -178,7 +178,7 @@ public class DuelView extends AbstractView {
         System.out.println(cardInfo);
     }
 
-    public static void showCardListStringView(ArrayList<Card> list) {
+    public static void showCardListStringView(List<Card> list) {
         StringBuilder cards = new StringBuilder();
         for (int i = 0; i < list.size(); i++)
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")

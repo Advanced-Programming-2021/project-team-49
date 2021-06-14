@@ -7,6 +7,7 @@ import model.game.Location;
 import view.DuelView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EffectController {
 
@@ -18,7 +19,7 @@ public class EffectController {
 
     public void monsterReborn() {
         Card card;
-        ArrayList<Card> bothGraveyards = new ArrayList<>();
+        List<Card> bothGraveyards = new ArrayList<>();
         bothGraveyards.addAll(field.getAttackerMat().getLocationList(Location.GRAVEYARD));
         bothGraveyards.addAll(field.getDefenderMat().getLocationList(Location.GRAVEYARD));
 
