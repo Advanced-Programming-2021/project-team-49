@@ -22,7 +22,7 @@ public class EffectController {
         bothGraveyards.addAll(field.getAttackerMat().getLocationList(Location.GRAVEYARD));
         bothGraveyards.addAll(field.getDefenderMat().getLocationList(Location.GRAVEYARD));
 
-        if (bothGraveyards.size() == 0)
+        if (bothGraveyards.isEmpty())
             throw new GameErrorException("Both graveyards are empty");
         else {
             DuelView.showCardListStringView(bothGraveyards);

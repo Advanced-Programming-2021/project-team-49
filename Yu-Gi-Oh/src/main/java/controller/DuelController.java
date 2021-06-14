@@ -5,10 +5,13 @@ import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.card.Effect;
 import model.card.EffectType;
+import model.card.Monster;
 import model.card.Spell;
 import model.game.*;
 import model.user.User;
 import view.DuelView;
+
+import java.util.ArrayList;
 
 public class DuelController extends AbstractController {
 
@@ -229,5 +232,29 @@ public class DuelController extends AbstractController {
 
         // TODO check if cards are already face down or call setFaceUp(false)
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
+    }
+
+    public void showGraveyard(boolean opponent) {
+        ArrayList<Card> graveyard;
+        if (opponent)
+            graveyard = (ArrayList<Card>) field.getDefenderMat().getLocationList(Location.GRAVEYARD);
+        else
+            graveyard = (ArrayList<Card>) field.getAttackerMat().getLocationList(Location.GRAVEYARD);
+
+        if (graveyard.isEmpty())
+            throw new GameErrorException("graveyard is empty");
+        else
+            DuelView.showCardListStringView(graveyard);
+    }
+
+    public void showSelectedCard() {
+        // TODO check phase 1 doc, page 11 (card show <card name>)
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (isOpponentCardSelected && !card.isFaceUp())
+            throw new GameErrorException("card is not visible");
+
+        DuelView.showCardInfoStringView(card);
     }
 }
