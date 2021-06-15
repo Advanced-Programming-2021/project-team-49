@@ -1,19 +1,21 @@
 package model.game;
 
+import model.cardtemplate.CardTemplate;
+
 import java.util.*;
 
 public class GameMat {
 
     private final Player player;
-    private final Map<Location, List<Card>> locationMap;
-    private final List<Card> monsterZone = Collections.nCopies(5, null);
-    private final List<Card> spellAndTrapZone = Collections.nCopies(5, null);
-    private final List<Card> graveyard = new ArrayList<>();
-    private final List<Card> hand = new ArrayList<>();
-    private final List<Card> deck;
-    private Card fieldZoneCard = null;
+    private final Map<Location, List<CardTemplate>> locationMap;
+    private final List<CardTemplate> monsterZone = Collections.nCopies(5, null);
+    private final List<CardTemplate> spellAndTrapZone = Collections.nCopies(5, null);
+    private final List<CardTemplate> graveyard = new ArrayList<>();
+    private final List<CardTemplate> hand = new ArrayList<>();
+    private final List<CardTemplate> deck;
+    private CardTemplate fieldZoneCardTemplate = null;
 
-    GameMat(Player player, List<Card> deck) {
+    public GameMat(Player player, List<CardTemplate> deck) {
         this.player = player;
         this.deck = deck;
 
@@ -21,9 +23,8 @@ public class GameMat {
         locationMap = buildLocationMap();
     }
 
-    private Map<Location, List<Card>> buildLocationMap() {
-        Map<Location, List<Card>> locationMap = new HashMap<>();
-
+    private Map<Location, List<CardTemplate>> buildLocationMap() {
+        Map<Location, List<CardTemplate>> locationMap = new HashMap<>();
         locationMap.put(Location.DECK, deck);
         locationMap.put(Location.HAND, hand);
         locationMap.put(Location.GRAVEYARD, graveyard);
@@ -41,76 +42,76 @@ public class GameMat {
         return locationMap.get(location).size();
     }
 
-    public Card getCard(Location location, int position) {
+    public CardTemplate getCard(Location location, int position) {
         if (location == Location.FIELD_ZONE)
-            return fieldZoneCard;
+            return fieldZoneCardTemplate;
 
-        List<Card> cardList = locationMap.get(location);
-        return cardList.get(position - 1);
+        List<CardTemplate> cardTemplateList = locationMap.get(location);
+        return cardTemplateList.get(position - 1);
     }
 
-    public Card getCard(Location location) {
+    public CardTemplate getCard(Location location) {
         if (location == Location.FIELD_ZONE)
-            return fieldZoneCard;
+            return fieldZoneCardTemplate;
 
         return getCard(location, getCardCount(location));
     }
 
-    public void addCard(Card card, Location location, int position) {
-        List<Card> cardList = locationMap.get(location);
-        cardList.add(position - 1, card);
+    public void addCard(CardTemplate cardTemplate, Location location, int position) {
+        List<CardTemplate> cardTemplateList = locationMap.get(location);
+        cardTemplateList.add(position - 1, cardTemplate);
     }
 
-    public void addCard(Card card, Location location) {
+    public void addCard(CardTemplate cardTemplate, Location location) {
         if (location == Location.FIELD_ZONE) {
-            fieldZoneCard = card;
+            fieldZoneCardTemplate = cardTemplate;
         }
 
-        addCard(card, location, getCardCount(location));
+        addCard(cardTemplate, location, getCardCount(location));
     }
 
-    public void removeCard(Card card, Location location) {
-        List<Card> cardList = locationMap.get(location);
-        cardList.remove(card);
+    public void removeCard(CardTemplate cardTemplate, Location location) {
+        List<CardTemplate> cardTemplateList = locationMap.get(location);
+        cardTemplateList.remove(cardTemplate);
     }
 
     public void removeCard(Location location, int position) {
-        List<Card> cardList = locationMap.get(location);
-        cardList.remove(position - 1);
+        List<CardTemplate> cardTemplateList = locationMap.get(location);
+        cardTemplateList.remove(position - 1);
     }
 
     public void removeCard(Location location) {
         if (location == Location.FIELD_ZONE)
-            fieldZoneCard = null;
+            fieldZoneCardTemplate = null;
 
         removeCard(location, getCardCount(location));
     }
 
     public void moveCard(Location oldLocation, int oldPosition, Location newLocation, int newPosition) {
-        Card card = getCard(oldLocation, oldPosition);
+        CardTemplate cardTemplate = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
-        addCard(card, newLocation, newPosition);
+        addCard(cardTemplate, newLocation, newPosition);
     }
 
     public void moveCard(Location oldLocation, Location newLocation) {
-        Card card = getCard(oldLocation);
+        CardTemplate cardTemplate = getCard(oldLocation);
         removeCard(oldLocation);
-        addCard(card, newLocation);
+        addCard(cardTemplate, newLocation);
     }
 
     public void moveCard(Location oldLocation, Location newLocation, int newPosition) {
-        Card card = getCard(oldLocation);
+        CardTemplate cardTemplate = getCard(oldLocation);
         removeCard(oldLocation);
-        addCard(card, newLocation, newPosition);
+        addCard(cardTemplate, newLocation, newPosition);
     }
 
     public void moveCard(Location oldLocation, int oldPosition, Location newLocation) {
-        Card card = getCard(oldLocation, oldPosition);
+        CardTemplate cardTemplate = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
-        addCard(card, newLocation);
+        addCard(cardTemplate, newLocation);
     }
 
-    public List<Card> getCardList(Location location) {
+    public List<CardTemplate> getCardList(Location location) {
         return locationMap.get(location);
     }
 }

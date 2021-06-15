@@ -1,6 +1,6 @@
 package model.user;
 
-import model.card.CardTemplate;
+import model.cardtemplate.CardTemplate;
 
 import java.util.*;
 

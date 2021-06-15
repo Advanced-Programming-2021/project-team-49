@@ -1,7 +1,7 @@
 package controller;
 
 import exception.GameErrorException;
-import model.game.Card;
+import model.cardtemplate.CardTemplate;
 import model.game.Field;
 import model.game.Location;
 import view.DuelView;
@@ -18,8 +18,8 @@ public class EffectController {
     }
 
     public void monsterReborn() {
-        Card card;
-        List<Card> bothGraveyards = new ArrayList<>();
+        CardTemplate cardTemplate;
+        List<CardTemplate> bothGraveyards = new ArrayList<>();
         bothGraveyards.addAll(field.getAttackerMat().getCardList(Location.GRAVEYARD));
         bothGraveyards.addAll(field.getDefenderMat().getCardList(Location.GRAVEYARD));
 
@@ -32,14 +32,14 @@ public class EffectController {
             do {
                 selected = DuelView.selectNumber(1, bothGraveyards.size());
             } while (selected == -1);
-            card = bothGraveyards.get(selected - 1);
+            cardTemplate = bothGraveyards.get(selected - 1);
         }
 
-        if (field.getAttackerMat().getCardList(Location.GRAVEYARD).contains(card))
-            field.getAttackerMat().removeCard(card, Location.GRAVEYARD);
+        if (field.getAttackerMat().getCardList(Location.GRAVEYARD).contains(cardTemplate))
+            field.getAttackerMat().removeCard(cardTemplate, Location.GRAVEYARD);
         else
-            field.getDefenderMat().removeCard(card, Location.GRAVEYARD);
+            field.getDefenderMat().removeCard(cardTemplate, Location.GRAVEYARD);
 
-        field.getAttackerMat().addCard(card, Location.SPELL_AND_TRAP_ZONE);
+        field.getAttackerMat().addCard(cardTemplate, Location.SPELL_AND_TRAP_ZONE);
     }
 }

@@ -3,12 +3,15 @@ package controller;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.card.*;
+import model.cardtemplate.*;
 import model.game.*;
+import model.game.card.Castable;
+import model.game.card.Monster;
 import model.user.User;
 import view.DuelView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DuelController extends AbstractController {
 
@@ -118,7 +121,7 @@ public class DuelController extends AbstractController {
         selectedCardLocation = null;
     }
 
-    public Card getSelectedCard() {
+    public CardTemplate getSelectedCard() {
         return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
     }
 
@@ -127,13 +130,13 @@ public class DuelController extends AbstractController {
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
-            for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
-                card.setPositionChanged(false);
+            for (CardTemplate cardTemplate : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
+                ((Monster) cardTemplate).setPositionChanged(false);
             isMonsterAddedToField = false;
         }
     }
 
-    public Card drawCard() throws EndOfRoundException {
+    public CardTemplate drawCard() throws EndOfRoundException {
         try {
             return field.drawCard();
         } catch (EndOfRoundException exception) {
@@ -143,7 +146,7 @@ public class DuelController extends AbstractController {
     }
 
     private void callEffect() {
-        Effect effect = getSelectedCard().getCardTemplate().getEffect();
+        Effect effect = getSelectedCard().getEffect();
 
         switch (effect) {
             case MONSTER_REBORN:
@@ -158,37 +161,38 @@ public class DuelController extends AbstractController {
     }
 
     public void activateSpell() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-        else if (!(card.getCardTemplate() instanceof Spell))
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
+        else if (!(cardTemplate instanceof SpellTrapCard)
+                || ((SpellTrapCard) cardTemplate).getType() == Type.TRAP)
             throw new GameErrorException("activate effect is only for spell cards");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't activate an effect on this turn");
-        else if (card.isFaceUp())
-            throw new GameErrorException("you have already activated this card");
+        else if (((Castable) cardTemplate).isFaceUp())
+            throw new GameErrorException("you have already activated this cardTemplate");
         else if (getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
-                ((Spell) card.getCardTemplate()).getEffectType() != EffectType.FIELD)
-            throw new GameErrorException("spell card zone is full");
+                ((SpellTrapCard) cardTemplate).getEffectType() != EffectType.FIELD)
+            throw new GameErrorException("spell cardTemplate zone is full");
         else
             callEffect();
     }
 
     private boolean isRitualSummonPossible() {
         int sumOfLevels = 0;
-        for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
-            sumOfLevels += ((Monster) card.getCardTemplate()).getLevel();
+        for (CardTemplate cardTemplate : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
+            sumOfLevels += ((MonsterCard) cardTemplate).getLevel();
 
-        ArrayList<Card> ritualCards = new ArrayList<>();
-        for (Card card : field.getAttackerMat().getCardList(Location.HAND))
-            if (card.getCardTemplate() instanceof Monster)
-                if (((Monster) card.getCardTemplate()).getCardType() == CardType.RITUAL)
-                    ritualCards.add(card);
+        ArrayList<CardTemplate> ritualCardTemplates = new ArrayList<>();
+        for (CardTemplate cardTemplate : field.getAttackerMat().getCardList(Location.HAND))
+            if (cardTemplate instanceof MonsterCard)
+                if (((MonsterCard) cardTemplate).getCardType() == CardType.RITUAL)
+                    ritualCardTemplates.add(cardTemplate);
 
-        if (ritualCards.isEmpty())
+        if (ritualCardTemplates.isEmpty())
             return false;
-        for (Card ritualCard : ritualCards)
-            if (((Monster) ritualCard.getCardTemplate()).getLevel() > sumOfLevels)
+        for (CardTemplate ritualCardTemplate : ritualCardTemplates)
+            if (((MonsterCard) ritualCardTemplate).getLevel() > sumOfLevels)
                 return false;
 
         return true;
@@ -199,7 +203,7 @@ public class DuelController extends AbstractController {
     }
 
     private boolean tributeSummonOrSet(boolean summon) {
-        int level = ((Monster) getSelectedCard().getCardTemplate()).getLevel();
+        int level = ((MonsterCard) getSelectedCard()).getLevel();
         int monsterCardCount = field.getAttackerMat().getCardCount(Location.MONSTER_ZONE);
         if (level < 5)
             return false;
@@ -228,61 +232,63 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
         if (summon)
-            getSelectedCard().setFaceUp(true);
+            ((Monster) getSelectedCard()).setFaceUp(true);
 
         return true;
     }
 
     public void summon() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-        else if (selectedCardLocation != Location.HAND || !(card.getCardTemplate() instanceof Monster))
-            throw new GameErrorException("you can't summon this card");
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
+        else if (selectedCardLocation != Location.HAND || !(cardTemplate instanceof MonsterCard))
+            throw new GameErrorException("you can't summon this cardTemplate");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("action not allowed in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
-            throw new GameErrorException("monster card zone is full");
+            throw new GameErrorException("monster cardTemplate zone is full");
         else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
         else if (tributeSummonOrSet(true))
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        card.setFaceUp(true);
+        ((Monster) cardTemplate).setFaceUp(true);
         isMonsterAddedToField = true;
     }
 
     public void setPosition(String position) {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
         else if (selectedCardLocation != Location.MONSTER_ZONE)
-            throw new GameErrorException("you can't change this card position");
+            throw new GameErrorException("you can't change this cardTemplate position");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
         else if (!position.equalsIgnoreCase("attack") && !position.equalsIgnoreCase("defense"))
             throw new GameErrorException("invalid position");
-        else if (position.equalsIgnoreCase("attack") && card.isAttacker()
-                || position.equalsIgnoreCase("defense") && !card.isAttacker())
-            throw new GameErrorException("this card is already in the wanted position");
-        else if (card.isPositionChanged())
-            throw new GameErrorException("you already changed this card position in this turn");
 
-        card.setAttacker(position.equalsIgnoreCase("attack"));
-        card.setPositionChanged(true);
+        Monster monster = (Monster) cardTemplate;
+        if (position.equalsIgnoreCase("attack") && monster.isAttacker()
+                || position.equalsIgnoreCase("defense") && !monster.isAttacker())
+            throw new GameErrorException("this cardTemplate is already in the wanted position");
+        else if (monster.isPositionChanged())
+            throw new GameErrorException("you already changed this cardTemplate position in this turn");
+
+        monster.setAttacker(position.equalsIgnoreCase("attack"));
+        monster.setPositionChanged(true);
     }
 
     public void setMonster() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
         else if (selectedCardLocation != Location.HAND)
-            throw new GameErrorException("you can't set this card");
+            throw new GameErrorException("you can't set this cardTemplate");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
-            throw new GameErrorException("monster card zone is full");
+            throw new GameErrorException("monster cardTemplate zone is full");
         else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
         else if (tributeSummonOrSet(false))
@@ -293,29 +299,29 @@ public class DuelController extends AbstractController {
     }
 
     public void setSpellOrTrap() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
         else if (selectedCardLocation != Location.HAND)
-            throw new GameErrorException("you can't set this card");
+            throw new GameErrorException("you can't set this cardTemplate");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (card.getCardTemplate() instanceof Spell
-                && ((Spell) card.getCardTemplate()).getEffectType() == EffectType.FIELD) {
+        else if (cardTemplate instanceof SpellTrapCard
+                && ((SpellTrapCard) cardTemplate).getEffectType() == EffectType.FIELD) {
             field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.FIELD_ZONE);
             return;
         } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
-            throw new GameErrorException("spell card zone is full");
+            throw new GameErrorException("spell cardTemplate zone is full");
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
     }
 
     public void showGraveyard(boolean opponent) {
-        ArrayList<Card> graveyard;
+        ArrayList<CardTemplate> graveyard;
         if (opponent)
-            graveyard = (ArrayList<Card>) field.getDefenderMat().getCardList(Location.GRAVEYARD);
+            graveyard = (ArrayList<CardTemplate>) field.getDefenderMat().getCardList(Location.GRAVEYARD);
         else
-            graveyard = (ArrayList<Card>) field.getAttackerMat().getCardList(Location.GRAVEYARD);
+            graveyard = (ArrayList<CardTemplate>) field.getAttackerMat().getCardList(Location.GRAVEYARD);
 
         if (graveyard.isEmpty())
             throw new GameErrorException("graveyard is empty");
@@ -324,13 +330,13 @@ public class DuelController extends AbstractController {
     }
 
     public void showSelectedCard() {
-        // TODO check phase 1 doc, page 11 (card show <card name>)
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-        else if (isOpponentCardSelected && !card.isFaceUp())
-            throw new GameErrorException("card is not visible");
+        // TODO check phase 1 doc, page 11 (cardTemplate show <cardTemplate name>)
+        CardTemplate cardTemplate = getSelectedCard();
+        if (cardTemplate == null)
+            throw new GameErrorException("no cardTemplate is selected yet");
+        else if (isOpponentCardSelected && !((Castable) cardTemplate).isFaceUp())
+            throw new GameErrorException("cardTemplate is not visible");
 
-        DuelView.showCardInfoStringView(card);
+        DuelView.showCardInfoStringView(cardTemplate);
     }
 }

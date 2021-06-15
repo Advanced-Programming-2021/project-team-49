@@ -1,4 +1,4 @@
-package model.card;
+package model.cardtemplate;
 
 public enum EffectType {
     NORMAL("Normal"),

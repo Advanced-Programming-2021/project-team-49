@@ -2,12 +2,13 @@ package view;
 
 import controller.DeckBuilderController;
 import exception.GameErrorException;
-import model.card.CardTemplate;
-import model.card.Monster;
-import model.card.Spell;
-import model.card.Trap;
+import model.cardtemplate.CardTemplate;
+import model.cardtemplate.MonsterCard;
+import model.cardtemplate.SpellTrapCard;
+
 import model.user.Deck;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeckBuilderView extends AbstractView {
@@ -54,8 +55,8 @@ public class DeckBuilderView extends AbstractView {
         return allCards.toString();
     }
 
-    private static String showDeck(String deckName, boolean sideDeck, List<Monster> monsters,
-            List<Spell> spells, List<Trap> traps) {
+    private static String showDeck(String deckName, boolean sideDeck, List<MonsterCard> monsterCards,
+                                   List<SpellTrapCard> spellTrapCards) {
         StringBuilder deck = new StringBuilder("Deck: " + deckName + "\n");
 
         if (!sideDeck)
@@ -64,16 +65,12 @@ public class DeckBuilderView extends AbstractView {
             deck.append("Main deck:\n");
 
         deck.append("Monsters:\n");
-        for (Monster monster : monsters)
-            deck.append(monster.getName()).append(": ").append(monster.getDescription()).append("\n");
+        for (MonsterCard card : monsterCards)
+            deck.append(card.getName()).append(": ").append(card.getDescription()).append("\n");
 
-        deck.append("Spells:\n");
-        for (Spell spell : spells)
-            deck.append(spell.getName()).append(": ").append(spell.getDescription()).append("\n");
-
-        deck.append("Traps:\n");
-        for (Trap trap : traps)
-            deck.append(trap.getName()).append(": ").append(trap.getDescription()).append("\n");
+        deck.append("Spells and Traps:\n");
+        for (SpellTrapCard card : spellTrapCards)
+            deck.append(card.getName()).append(": ").append(card.getDescription()).append("\n");
 
         return deck.toString();
     }
@@ -115,10 +112,13 @@ public class DeckBuilderView extends AbstractView {
             } else if (input.startsWith("deck show")) {
                 String deckName = getArgument("deck", "side", input, "deck show");
 
+                ArrayList<SpellTrapCard> spellTrapCards = new ArrayList<>();
+                spellTrapCards.addAll(controller.getSpells(deckName, isFlagUsedInCommand("side", input)));
+                spellTrapCards.addAll(controller.getTraps(deckName, isFlagUsedInCommand("side", input)));
+
                 System.out.print(showDeck(deckName, isFlagUsedInCommand("side", input),
                         controller.getMonsters(deckName, isFlagUsedInCommand("side", input)),
-                        controller.getSpells(deckName, isFlagUsedInCommand("side", input)),
-                        controller.getTraps(deckName, isFlagUsedInCommand("side", input))));
+                        spellTrapCards));
             } else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {

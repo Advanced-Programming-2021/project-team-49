@@ -4,13 +4,16 @@ import controller.DuelController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.card.Monster;
-import model.card.Spell;
-import model.card.Trap;
-import model.game.Card;
+import model.cardtemplate.CardTemplate;
+import model.cardtemplate.MonsterCard;
+import model.cardtemplate.SpellTrapCard;
+import model.cardtemplate.Type;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;
+import model.game.card.Castable;
+import model.game.card.Monster;
+import model.game.card.SpellTrap;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -48,8 +51,8 @@ public class DuelView extends AbstractView {
     }
 
     private static void drawCard(DuelController controller) throws EndOfRoundException {
-        Card drawnCard = controller.drawCard();
-        System.out.println("new card added to hand: " + drawnCard.getName());
+        CardTemplate drawnCardTemplate = controller.drawCard();
+        System.out.println("new card added to hand: " + drawnCardTemplate.getName());
     }
 
     private static void selectCard(DuelController controller, String input) {
@@ -131,17 +134,20 @@ public class DuelView extends AbstractView {
         }
     }
 
-    private static String getCardStringView(Card card) {
-        if (card == null)
+    private static String getCardStringView(CardTemplate cardTemplate) {
+        if (cardTemplate == null) {
             return "E ";
-        else if (!card.isAttackPossible())
+        } else if (cardTemplate instanceof MonsterCard) {
+            if (((Monster) cardTemplate).isAttacker())
+                return "OO";
+            else if (((Monster) cardTemplate).isFaceUp())
+                return "DO";
+            else
+                return "DH";
+        } else if (((Castable) cardTemplate).isFaceUp()) {
             return "O ";
-        else if (card.isAttacker())
-            return "OO";
-        else if (card.isFaceUp())
-            return "DO";
-        else
-            return "DH";
+        } else
+            return "H ";
     }
 
     private static String getZoneStringView(GameMat gameMat, Location zone, int[] viewOrder) {
@@ -151,34 +157,33 @@ public class DuelView extends AbstractView {
         return stringViewBuilder.toString();
     }
 
-    public static void showCardInfoStringView(Card card) {
+    public static void showCardInfoStringView(CardTemplate cardTemplate) {
         StringBuilder cardInfo = new StringBuilder();
-        if (card.getCardTemplate() instanceof Monster) {
-            Monster monster = (Monster) card.getCardTemplate();
-            cardInfo.append("Name: ").append(monster.getName()).append("\n")
-                    .append("Level: ").append(monster.getLevel()).append("\n")
-                    .append("Type: ").append(monster.getMonsterType()).append("\n")
-                    .append("ATK: ").append(monster.getBaseAttack()).append("\n")
-                    .append("DEF: ").append(monster.getBaseDefence()).append("\n")
-                    .append("Description: ").append(monster.getDescription());
-        } else if (card.getCardTemplate() instanceof Spell) {
-            Spell spell = (Spell) card.getCardTemplate();
-            cardInfo.append("Name: ").append(spell.getName()).append("\n")
-                    .append("Spell\n")
-                    .append("Type: ").append(spell.getEffectType()).append("\n")
-                    .append("Description: ").append(spell.getDescription());
-
-        } else if (card.getCardTemplate() instanceof Trap) {
-            Trap trap = (Trap) card.getCardTemplate();
-            cardInfo.append("Name: ").append(trap.getName()).append("\n")
-                    .append("Trap\n")
-                    .append("Type: ").append(trap.getEffectType()).append("\n")
-                    .append("Description: ").append(trap.getDescription());
+        if (cardTemplate instanceof MonsterCard) {
+            MonsterCard monsterCard = (MonsterCard) cardTemplate;
+            cardInfo.append("Name: ").append(monsterCard.getName()).append("\n")
+                    .append("Level: ").append(monsterCard.getLevel()).append("\n")
+                    .append("Type: ").append(monsterCard.getMonsterType()).append("\n")
+                    .append("ATK: ").append(monsterCard.getBaseAttack()).append("\n")
+                    .append("DEF: ").append(monsterCard.getBaseDefence()).append("\n")
+                    .append("Description: ").append(monsterCard.getDescription());
+        } else if (((SpellTrapCard) cardTemplate).getType() == Type.SPELL) {
+            SpellTrapCard spellCard = (SpellTrapCard) cardTemplate;
+            cardInfo.append("Name: ").append(spellCard.getName()).append("\n")
+                    .append("SpellTrapCard\n")
+                    .append("Type: ").append(spellCard.getEffectType()).append("\n")
+                    .append("Description: ").append(spellCard.getDescription());
+        } else {
+            SpellTrapCard trapCard = (SpellTrapCard) cardTemplate;
+            cardInfo.append("Name: ").append(trapCard.getName()).append("\n")
+                    .append("TrapCard\n")
+                    .append("Type: ").append(trapCard.getEffectType()).append("\n")
+                    .append("Description: ").append(trapCard.getDescription());
         }
         System.out.println(cardInfo);
     }
 
-    public static void showCardListStringView(List<Card> list) {
+    public static void showCardListStringView(List<CardTemplate> list) {
         StringBuilder cards = new StringBuilder();
         for (int i = 0; i < list.size(); i++)
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")
@@ -215,7 +220,7 @@ public class DuelView extends AbstractView {
                     String position = getArgument("position", input, "set");
                     controller.setPosition(position);
                     System.out.println("monster card position changed successfully");
-                } else if (controller.getSelectedCard().getCardTemplate() instanceof Monster)
+                } else if (controller.getSelectedCard() instanceof MonsterCard)
                     controller.setMonster();
                 else
                     controller.setSpellOrTrap();

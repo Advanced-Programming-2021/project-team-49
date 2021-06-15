@@ -2,7 +2,7 @@ package model.database;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import model.card.*;
+import model.cardtemplate.*;
 import model.user.User;
 
 import java.io.FileReader;
@@ -106,7 +106,7 @@ public class Database {
         } else
             effect = Effect.NONE;
 
-        return new Monster(info[0], info[7], effect, Integer.parseInt(info[1]), attribute,
+        return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]), attribute,
                 cardType, monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]));
     }
 
@@ -140,11 +140,11 @@ public class Database {
         // TODO if effect was null, throw exception
 
         switch (info[1]) {
-            case "Trap":
-                return new Trap(info[0], info[3], effect, effectType, status);
+            case "TrapCard":
+                return new SpellTrapCard(info[0], info[3], effect, effectType, status, Type.TRAP);
 
-            case "Spell":
-                return new Spell(info[0], info[3], effect, effectType, status);
+            case "SpellCard":
+                return new SpellTrapCard(info[0], info[3], effect, effectType, status, Type.SPELL);
 
             default:
                 // TODO throw exception

@@ -1,6 +1,6 @@
-package model.card;
+package model.cardtemplate;
 
-public class Monster extends CardTemplate {
+public class MonsterCard extends CardTemplate {
 
     private final int level;
     private final Attribute attribute;
@@ -9,8 +9,8 @@ public class Monster extends CardTemplate {
     private final int baseAttack;
     private final int baseDefence;
 
-    public Monster(String name, String description, Effect effect, int level, Attribute attribute,
-                   CardType cardType, MonsterType monsterType, int baseAttack, int baseDefence) {
+    public MonsterCard(String name, String description, Effect effect, int level, Attribute attribute,
+                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefence) {
         super(name, description, effect);
         this.level = level;
         this.attribute = attribute;

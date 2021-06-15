@@ -1,6 +1,7 @@
 package model.game;
 
 import exception.EndOfRoundException;
+import model.cardtemplate.CardTemplate;
 
 public class Field {
 
@@ -32,7 +33,7 @@ public class Field {
         defenderMat = tempMat;
     }
 
-    public Card drawCard() throws EndOfRoundException {
+    public CardTemplate drawCard() throws EndOfRoundException {
         if (attackerMat.getCardCount(Location.DECK) <= 0)
             throw new EndOfRoundException(defenderMat.getPlayer(), attackerMat.getPlayer());
         else {

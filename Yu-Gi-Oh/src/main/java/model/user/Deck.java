@@ -1,7 +1,10 @@
 package model.user;
 
-import model.card.CardTemplate;
-import model.game.Card;
+import model.cardtemplate.CardTemplate;
+import model.cardtemplate.MonsterCard;
+import model.cardtemplate.SpellTrapCard;
+import model.game.card.Monster;
+import model.game.card.SpellTrap;
 
 import java.util.*;
 
@@ -95,14 +98,17 @@ public class Deck {
         return deckSize;
     }
 
-    public List<Card> getGameDeck() {
-        List<Card> gameDeck = new ArrayList<>();
+    public List<CardTemplate> getGameDeck() {
+        List<CardTemplate> gameDeck = new ArrayList<>();
 
         for (CardTemplate card : mainDeck.keySet())
             for (int i = 0; i < mainDeck.get(card); i++)
-                gameDeck.add(new Card(card));
+                if (card instanceof MonsterCard)
+                    gameDeck.add(new Monster((MonsterCard) card));
+                else
+                    gameDeck.add(new SpellTrap((SpellTrapCard) card));
 
-        gameDeck.sort(Comparator.comparing(Card::getName));
+        gameDeck.sort(Comparator.comparing(CardTemplate::getName));
         return gameDeck;
     }
 }

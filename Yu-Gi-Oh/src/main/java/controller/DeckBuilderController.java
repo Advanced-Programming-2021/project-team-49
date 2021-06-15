@@ -3,7 +3,7 @@ package controller;
 import exception.GameErrorException;
 import model.database.Database;
 import view.DeckBuilderView;
-import model.card.*;
+import model.cardtemplate.*;
 import model.user.*;
 
 import java.util.ArrayList;
@@ -101,69 +101,69 @@ public class DeckBuilderController extends AbstractController {
         return user.getOwnedCards();
     }
 
-    public ArrayList<Monster> getMonsters(String deckName, boolean sideDeck) {
+    public ArrayList<MonsterCard> getMonsters(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<Monster> monsters = new ArrayList<>();
+        ArrayList<MonsterCard> monsterCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
-                if (card instanceof Monster)
-                    monsters.add((Monster) card);
+                if (card instanceof MonsterCard)
+                    monsterCards.add((MonsterCard) card);
             }
         } else {
             for (CardTemplate card : deck.getMainDeck().keySet()) {
-                if (card instanceof Monster)
-                    monsters.add((Monster) card);
+                if (card instanceof MonsterCard)
+                    monsterCards.add((MonsterCard) card);
             }
         }
 
-        monsters.sort(Comparator.comparing(Monster::getName));
-        return monsters;
+        monsterCards.sort(Comparator.comparing(MonsterCard::getName));
+        return monsterCards;
     }
 
-    public ArrayList<Spell> getSpells(String deckName, boolean sideDeck) {
+    public ArrayList<SpellTrapCard> getSpells(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<Spell> spells = new ArrayList<>();
+        ArrayList<SpellTrapCard> spellCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
-                if (card instanceof Spell)
-                    spells.add((Spell) card);
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
+                    spellCards.add((SpellTrapCard) card);
             }
         } else {
             for (CardTemplate card : deck.getMainDeck().keySet()) {
-                if (card instanceof Spell)
-                    spells.add((Spell) card);
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
+                    spellCards.add((SpellTrapCard) card);
             }
         }
 
-        spells.sort(Comparator.comparing(Spell::getName));
-        return spells;
+        spellCards.sort(Comparator.comparing(SpellTrapCard::getName));
+        return spellCards;
     }
 
-    public ArrayList<Trap> getTraps(String deckName, boolean sideDeck) {
+    public ArrayList<SpellTrapCard> getTraps(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<Trap> traps = new ArrayList<>();
+        ArrayList<SpellTrapCard> trapCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
-                if (card instanceof Trap)
-                    traps.add((Trap) card);
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
+                    trapCards.add((SpellTrapCard) card);
             }
         } else {
             for (CardTemplate card : deck.getMainDeck().keySet()) {
-                if (card instanceof Trap)
-                    traps.add((Trap) card);
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
+                    trapCards.add((SpellTrapCard) card);
             }
         }
 
-        traps.sort(Comparator.comparing(Trap::getName));
-        return traps;
+        trapCards.sort(Comparator.comparing(SpellTrapCard::getName));
+        return trapCards;
     }
 }

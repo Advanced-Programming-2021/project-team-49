@@ -1,9 +1,9 @@
-package model.card;
+package model.cardtemplate;
 
 public enum Effect {
     NONE("None"),
 
-    // Monster
+    // MonsterCard
     YOMI_SHIP("Yomi Ship"),
     SUIJIN("Suijin"),
     MAN_EATER_BUG("Man-Eater Bug"),
@@ -20,8 +20,8 @@ public enum Effect {
     THE_TRICKY("The Tricky"),
     COMMAND_KNIGHT("Command Knight"),
 
-    // Trap
-    TRAP_HOLE("Trap Hole"),
+    // TrapCard
+    TRAP_HOLE("TrapCard Hole"),
     MIRROR_FORCE("Mirror Force"),
     MAGIC_CYLINDER("Magic Cylinder"),
     MIND_CRUSH("Mind Crush"),
@@ -34,8 +34,8 @@ public enum Effect {
     VANITYS_EMPTINESS("Vanity's Emptiness"),
     WALL_OF_REVEALING_LIGHT("Wall of Revealing Light"),
 
-    // Spell
-    MONSTER_REBORN("Monster Reborn"),
+    // SpellTrapCard
+    MONSTER_REBORN("MonsterCard Reborn"),
     TERRAFORMING("Terraforming"),
     POT_OF_GREED("Pot of Greed"),
     RAIGEKI("Raigeki"),
@@ -44,7 +44,7 @@ public enum Effect {
     HARPIES_FEATHER_DUSTER("Harpie's Feather Duster"),
     DARK_HOLE("Dark Hole"),
     SUPPLY_SQUAD("Supply Squad"),
-    SPELL_ABSORPTION("Spell Absorption"),
+    SPELL_ABSORPTION("SpellTrapCard Absorption"),
     MESSENGER_OF_PEACE("Messenger of peace"),
     TWIN_TWISTERS("Twin Twisters"),
     MYSTICAL_SPACE_TYPHOON("Mystical space typhoon"),
