@@ -110,7 +110,7 @@ public class GameMat {
         addCard(card, newLocation);
     }
 
-    public List<Card> getLocationList(Location location) {
+    public List<Card> getCardList(Location location) {
         return locationMap.get(location);
     }
 }
