@@ -2,37 +2,37 @@ Name,Type ,Icon (Property),Description,Status,Price
 Trap Hole,Trap,Normal,When your opponent Normal or Flip Summons 1 monsterCard with 1000 or more ATK: Target that monsterCard; destroy that target.,Unlimited,2000
 Mirror Force,Trap,Normal,When an opponent's monsterCard declares an attack: Destroy all your opponent's Attack Position monsterCards.,Unlimited,2000
 Magic Cylinder,Trap,Normal,"When an opponent's monsterCard declares an attack: Target the attacking monsterCard; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",Unlimited,2000
-Mind Crush,Trap,Normal,"Declare 1 cardTemplate name; if that cardTemplate is in your opponent's hand, they must discard all copies of it, otherwise you discard 1 random cardTemplate.",Unlimited,2000
+Mind Crush,Trap,Normal,"Declare 1 card name; if that card is in your opponent's hand, they must discard all copies of it, otherwise you discard 1 random card.",Unlimited,2000
 Torrential Tribute,Trap,Normal,When a monsterCard(s) is Summoned: Destroy all monsterCards on the field.,Unlimited,2000
 Time Seal,Trap,Normal,Skip the Draw Phase of your opponent's next turn.,Limited,2000
 Negate Attack,Trap,Counter,"When an opponent's monsterCard declares an attack: Target the attacking monsterCard; negate the attack, then end the Battle Phase.",Unlimited,3000
 Solemn Warning,Trap,Counter,"When a monsterCard(s) would be Summoned, OR when a Spell/Trap Card, or monsterCard effect, is activated that includes an effect that Special Summons a monsterCard(s): Pay 2000 LP; negate the Summon or activation, and if you do, destroy it.",Unlimited,3000
-Magic Jammer,Trap,Counter,"When a Spell Card is activated: Discard 1 cardTemplate; negate the activation, and if you do, destroy it.",Unlimited,3000
-Call of The Haunted,Trap,Continuous,"Activate this cardTemplate by targeting 1 monsterCard in your GY; Special Summon that target in Attack Position. When this cardTemplate leaves the field, destroy that monsterCard. When that monsterCard is destroyed, destroy this cardTemplate.",Unlimited,3500
-Vanity's Emptiness,Trap,Continuous,Neither player can Special Summon monsterCards. If a cardTemplate is sent from the Deck or the field to your Graveyard: Destroy this cardTemplate.,Limited,3500
+Magic Jammer,Trap,Counter,"When a Spell Card is activated: Discard 1 card; negate the activation, and if you do, destroy it.",Unlimited,3000
+Call of The Haunted,Trap,Continuous,"Activate this card by targeting 1 monsterCard in your GY; Special Summon that target in Attack Position. When this card leaves the field, destroy that monsterCard. When that monsterCard is destroyed, destroy this card.",Unlimited,3500
+Vanity's Emptiness,Trap,Continuous,Neither player can Special Summon monsterCards. If a card is sent from the Deck or the field to your Graveyard: Destroy this card.,Limited,3500
 Wall of Revealing Light,Trap,Continuous,Activate by paying any multiple of 1000 Life Points. Monsters your opponent controls cannot attack if their ATK is less than or equal to the amount you paid.,Limited,3500
 Monster Reborn,Spell,Normal,Target 1 monsterCard in either GY; Special Summon it.,Limited,2500
 Terraforming,Spell,Normal,Add 1 Field Spell from your Deck to your hand.,Limited,2500
 Pot of Greed,Spell,Normal,Draw 2 cards.,Limited,2500
 Raigeki,Spell,Normal,Destroy all monsterCards your opponent controls.,Limited,2500
 Change of Heart,Spell,Normal,Target 1 monsterCard your opponent controls; take control of it until the End Phase.,Limited,2500
-Swords of Revealing Light,Spell,Normal,"After this cardTemplate's activation, it remains on the field, but destroy it during the End Phase of your opponent's 3rd turn. When this cardTemplate is activated: If your opponent controls a face-down monsterCard, flip all monsterCards they control face-up. While this cardTemplate is face-up on the field, your opponent's monsterCards cannot declare an attack.",Unlimited,2500
+Swords of Revealing Light,Spell,Normal,"After this card's activation, it remains on the field, but destroy it during the End Phase of your opponent's 3rd turn. When this card is activated: If your opponent controls a face-down monsterCard, flip all monsterCards they control face-up. While this card is face-up on the field, your opponent's monsterCards cannot declare an attack.",Unlimited,2500
 Harpie's Feather Duster,Spell,Normal,Destroy all Spells and Traps your opponent controls.,Limited,2500
 Dark Hole,Spell,Normal,Destroy all monsterCards on the field.,Unlimited,2500
-Supply Squad,Spell,Continuous,"Once per turn, if a monsterCard(s) you control is destroyed by battle or cardTemplate effect: Draw 1 cardTemplate.",Unlimited,4000
+Supply Squad,Spell,Continuous,"Once per turn, if a monsterCard(s) you control is destroyed by battle or card effect: Draw 1 card.",Unlimited,4000
 Spell Absorption,Spell,Continuous,"Each time a Spell Card is activated, gain 500 Life Points immediately after it resolves.",Unlimited,4000
-Messenger of peace,Spell,Continuous,"Monsters with 1500 or more ATK cannot declare an attack. Once per turn, during your Standby Phase, pay 100 LP or destroy this cardTemplate.",Unlimited,4000
-Twin Twisters,Spell,Quick-play,"Discard 1 cardTemplate, then target up to 2 Spells/Traps on the field; destroy them.",Unlimited,3500
+Messenger of peace,Spell,Continuous,"Monsters with 1500 or more ATK cannot declare an attack. Once per turn, during your Standby Phase, pay 100 LP or destroy this card.",Unlimited,4000
+Twin Twisters,Spell,Quick-play,"Discard 1 card, then target up to 2 Spells/Traps on the field; destroy them.",Unlimited,3500
 Mystical space typhoon,Spell,Quick-play,Target 1 Spell/Trap on the field; destroy that target.,Unlimited,3500
 Ring of defense,Spell,Quick-play,When a Trap effect that inflicts damage is activated: Make that effect damage 0.,Unlimited,3500
 Yami,Spell,Field,"All Fiend and Spellcaster monsterCards on the field gain 200 ATK/DEF, also all Fairy monsterCards on the field lose 200 ATK/DEF.",Unlimited,4300
 Forest,Spell,Field,"All Insect, Beast, Plant, and Beast-Warrior monsterCards on the field gain 200 ATK/DEF.",Unlimited,4300
-Closed Forest,Spell,Field,All Beast-Type monsterCards you control gain 100 ATK for each monsterCard in your Graveyard. Field Spell Cards cannot be activated. Field Spell Cards cannot be activated during the turn this cardTemplate is destroyed.,Unlimited,4300
+Closed Forest,Spell,Field,All Beast-Type monsterCards you control gain 100 ATK for each monsterCard in your Graveyard. Field Spell Cards cannot be activated. Field Spell Cards cannot be activated during the turn this card is destroyed.,Unlimited,4300
 Umiiruka,Spell,Field,Increase the ATK of all WATER monsterCards by 500 points and decrease their DEF by 400 points.,Unlimited,4300
-Sword of dark destruction,Spell,Equip,A DARK monsterCard equipped with this cardTemplate increases its ATK by 400 points and decreases its DEF by 200 points.,Unlimited,4300
-Black Pendant,Spell,Equip,The equipped monsterCard gains 500 ATK. When this cardTemplate is sent from the field to the Graveyard: Inflict 500 damage to your opponent.,Unlimited,4300
+Sword of dark destruction,Spell,Equip,A DARK monsterCard equipped with this card increases its ATK by 400 points and decreases its DEF by 200 points.,Unlimited,4300
+Black Pendant,Spell,Equip,The equipped monsterCard gains 500 ATK. When this card is sent from the field to the Graveyard: Inflict 500 damage to your opponent.,Unlimited,4300
 United We Stand,Spell,Equip,The equipped monsterCard gains 800 ATK/DEF for each face-up monsterCard you control.,Unlimited,4300
 Magnum Shield,Spell,Equip,"Equip only to a Warrior-Type monsterCard. Apply this effect, depending on its battle position.
 ● Attack Position: It gains ATK equal to its original DEF.
 ● Defense Position: It gains DEF equal to its original ATK.",Unlimited,4300
-Advanced Ritual Art,Spell,Ritual,This cardTemplate can be used to Ritual Summon any 1 Ritual Monster. You must also send Normal Monsters from your Deck to the Graveyard whose total Levels equal the Level of that Ritual Monster.,Unlimited,3000
+Advanced Ritual Art,Spell,Ritual,This card can be used to Ritual Summon any 1 Ritual Monster. You must also send Normal Monsters from your Deck to the Graveyard whose total Levels equal the Level of that Ritual Monster.,Unlimited,3000

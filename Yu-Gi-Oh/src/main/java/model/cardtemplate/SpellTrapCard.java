@@ -1,6 +1,6 @@
 package model.cardtemplate;
 
-public class SpellTrapCard extends CardTemplate {
+public class SpellTrapCard extends Card {
 
     private final EffectType effectType;
     private final Status status;

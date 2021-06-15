@@ -1,12 +1,12 @@
 package model.cardtemplate;
 
-public abstract class CardTemplate {
+public abstract class Card {
 
     protected final String name;
     protected final Effect effect;
     protected final String description;
 
-    public CardTemplate(String name, String description, Effect effect) {
+    public Card(String name, String description, Effect effect) {
         this.name = name;
         this.description = description;
         this.effect = effect;

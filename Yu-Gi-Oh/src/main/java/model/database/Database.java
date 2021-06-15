@@ -14,7 +14,7 @@ public class Database {
 
     private final Userbase userbase = new Userbase();
     private final Shop shop = new Shop();
-    private final List<CardTemplate> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
     }
@@ -27,8 +27,8 @@ public class Database {
         return shop;
     }
 
-    public CardTemplate getCardByName(String name) {
-        for (CardTemplate card : cards) {
+    public Card getCardByName(String name) {
+        for (Card card : cards) {
             if (card.getName().equals(name))
                 return card;
         }
@@ -50,7 +50,7 @@ public class Database {
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
         while ((info = csvReader.readNext()) != null) {
-            CardTemplate card = createMonsterCard(info);
+            Card card = createMonsterCard(info);
             cards.add(card);
             shop.addCard(card, Integer.parseInt(info[8]));
         }
@@ -59,13 +59,13 @@ public class Database {
     private void loadSpellTrapCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
         while ((info = csvReader.readNext()) != null) {
-            CardTemplate card = createSpellTrapCard(info);
+            Card card = createSpellTrapCard(info);
             cards.add(card);
             shop.addCard(card, Integer.parseInt(info[5]));
         }
     }
 
-    private CardTemplate createMonsterCard(String[] info) {
+    private Card createMonsterCard(String[] info) {
         MonsterType monsterType = null;
         Attribute attribute = null;
         CardType cardType = null;
@@ -110,7 +110,7 @@ public class Database {
                 cardType, monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]));
     }
 
-    private CardTemplate createSpellTrapCard(String[] info) {
+    private Card createSpellTrapCard(String[] info) {
         EffectType effectType = null;
         Status status = null;
         Effect effect = null;

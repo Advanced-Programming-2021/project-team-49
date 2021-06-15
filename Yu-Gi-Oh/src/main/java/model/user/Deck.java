@@ -1,6 +1,6 @@
 package model.user;
 
-import model.cardtemplate.CardTemplate;
+import model.cardtemplate.Card;
 import model.cardtemplate.MonsterCard;
 import model.cardtemplate.SpellTrapCard;
 import model.game.card.Monster;
@@ -11,8 +11,8 @@ import java.util.*;
 public class Deck {
 
     private final String name;
-    private final Map<CardTemplate, Integer> mainDeck = new HashMap<>();
-    private final Map<CardTemplate, Integer> sideDeck = new HashMap<>();
+    private final Map<Card, Integer> mainDeck = new HashMap<>();
+    private final Map<Card, Integer> sideDeck = new HashMap<>();
 
     public Deck(String name) {
         this.name = name;
@@ -22,16 +22,16 @@ public class Deck {
         return name;
     }
 
-    public Map<CardTemplate, Integer> getMainDeck() {
+    public Map<Card, Integer> getMainDeck() {
         return mainDeck;
     }
 
-    public void addCardToMainDeck(CardTemplate card) {
+    public void addCardToMainDeck(Card card) {
         mainDeck.putIfAbsent(card, 0);
         mainDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
-    public boolean removeCardFromMainDeck(CardTemplate card) {
+    public boolean removeCardFromMainDeck(Card card) {
         if (mainDeck.containsKey(card)) {
             mainDeck.computeIfPresent(card, (key, count) -> count--);
             if (mainDeck.get(card) <= 0)
@@ -41,16 +41,16 @@ public class Deck {
         return false;
     }
 
-    public Map<CardTemplate, Integer> getSideDeck() {
+    public Map<Card, Integer> getSideDeck() {
         return sideDeck;
     }
 
-    public void addCardToSideDeck(CardTemplate card) {
+    public void addCardToSideDeck(Card card) {
         sideDeck.putIfAbsent(card, 0);
         sideDeck.computeIfPresent(card, (key, count) -> count++);
     }
 
-    public boolean removeCardFromSideDeck(CardTemplate card) {
+    public boolean removeCardFromSideDeck(Card card) {
         if (sideDeck.containsKey(card)) {
             sideDeck.computeIfPresent(card, (key, count) -> count--);
             if (sideDeck.get(card) <= 0)
@@ -63,7 +63,7 @@ public class Deck {
     public boolean isDeckValid() {
         if (getMainDeckSize() < 40)
             return false;
-        for (CardTemplate card : mainDeck.keySet()) {
+        for (Card card : mainDeck.keySet()) {
             if (mainDeck.get(card) > 3)
                 return false;
             if (sideDeck.containsKey(card))
@@ -75,7 +75,7 @@ public class Deck {
         return true;
     }
 
-    public int getCardCount(CardTemplate card) {
+    public int getCardCount(Card card) {
         int cardCount = 0;
         if (mainDeck.containsKey(card))
             cardCount += mainDeck.get(card);
@@ -86,29 +86,29 @@ public class Deck {
 
     public int getMainDeckSize() {
         int deckSize = 0;
-        for (CardTemplate card : mainDeck.keySet())
+        for (Card card : mainDeck.keySet())
             deckSize += mainDeck.get(card);
         return deckSize;
     }
 
     public int getSideDeckSize() {
         int deckSize = 0;
-        for (CardTemplate card : sideDeck.keySet())
+        for (Card card : sideDeck.keySet())
             deckSize += sideDeck.get(card);
         return deckSize;
     }
 
-    public List<CardTemplate> getGameDeck() {
-        List<CardTemplate> gameDeck = new ArrayList<>();
+    public List<Card> getGameDeck() {
+        List<Card> gameDeck = new ArrayList<>();
 
-        for (CardTemplate card : mainDeck.keySet())
+        for (Card card : mainDeck.keySet())
             for (int i = 0; i < mainDeck.get(card); i++)
                 if (card instanceof MonsterCard)
                     gameDeck.add(new Monster((MonsterCard) card));
                 else
                     gameDeck.add(new SpellTrap((SpellTrapCard) card));
 
-        gameDeck.sort(Comparator.comparing(CardTemplate::getName));
+        gameDeck.sort(Comparator.comparing(Card::getName));
         return gameDeck;
     }
 }

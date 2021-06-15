@@ -45,7 +45,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void addCardToDeck(String cardName, String deckName, boolean sideDeck) {
-        CardTemplate card = database.getCardByName(cardName);
+        Card card = database.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
         if (card == null)
@@ -72,7 +72,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void removeCardFromDeck(String cardName, String deckName, boolean sideDeck) {
-        CardTemplate card = database.getCardByName(cardName);
+        Card card = database.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
         if (card == null)
@@ -97,7 +97,7 @@ public class DeckBuilderController extends AbstractController {
         return user.getDecks();
     }
 
-    public ArrayList<CardTemplate> getOwnedCards() {
+    public ArrayList<Card> getOwnedCards() {
         return user.getOwnedCards();
     }
 
@@ -108,12 +108,12 @@ public class DeckBuilderController extends AbstractController {
 
         ArrayList<MonsterCard> monsterCards = new ArrayList<>();
         if (sideDeck) {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (Card card : deck.getSideDeck().keySet()) {
                 if (card instanceof MonsterCard)
                     monsterCards.add((MonsterCard) card);
             }
         } else {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+            for (Card card : deck.getMainDeck().keySet()) {
                 if (card instanceof MonsterCard)
                     monsterCards.add((MonsterCard) card);
             }
@@ -130,12 +130,12 @@ public class DeckBuilderController extends AbstractController {
 
         ArrayList<SpellTrapCard> spellCards = new ArrayList<>();
         if (sideDeck) {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (Card card : deck.getSideDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
                     spellCards.add((SpellTrapCard) card);
             }
         } else {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+            for (Card card : deck.getMainDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
                     spellCards.add((SpellTrapCard) card);
             }
@@ -152,12 +152,12 @@ public class DeckBuilderController extends AbstractController {
 
         ArrayList<SpellTrapCard> trapCards = new ArrayList<>();
         if (sideDeck) {
-            for (CardTemplate card : deck.getSideDeck().keySet()) {
+            for (Card card : deck.getSideDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
                     trapCards.add((SpellTrapCard) card);
             }
         } else {
-            for (CardTemplate card : deck.getMainDeck().keySet()) {
+            for (Card card : deck.getMainDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
                     trapCards.add((SpellTrapCard) card);
             }

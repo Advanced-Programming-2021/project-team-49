@@ -4,7 +4,7 @@ import controller.DuelController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.cardtemplate.CardTemplate;
+import model.cardtemplate.Card;
 import model.cardtemplate.MonsterCard;
 import model.cardtemplate.SpellTrapCard;
 import model.cardtemplate.Type;
@@ -13,7 +13,6 @@ import model.game.GameMat;
 import model.game.Location;
 import model.game.card.Castable;
 import model.game.card.Monster;
-import model.game.card.SpellTrap;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -51,8 +50,8 @@ public class DuelView extends AbstractView {
     }
 
     private static void drawCard(DuelController controller) throws EndOfRoundException {
-        CardTemplate drawnCardTemplate = controller.drawCard();
-        System.out.println("new card added to hand: " + drawnCardTemplate.getName());
+        Card drawnCard = controller.drawCard();
+        System.out.println("new card added to hand: " + drawnCard.getName());
     }
 
     private static void selectCard(DuelController controller, String input) {
@@ -134,17 +133,17 @@ public class DuelView extends AbstractView {
         }
     }
 
-    private static String getCardStringView(CardTemplate cardTemplate) {
-        if (cardTemplate == null) {
+    private static String getCardStringView(Card card) {
+        if (card == null) {
             return "E ";
-        } else if (cardTemplate instanceof MonsterCard) {
-            if (((Monster) cardTemplate).isAttacker())
+        } else if (card instanceof MonsterCard) {
+            if (((Monster) card).isAttacker())
                 return "OO";
-            else if (((Monster) cardTemplate).isFaceUp())
+            else if (((Monster) card).isFaceUp())
                 return "DO";
             else
                 return "DH";
-        } else if (((Castable) cardTemplate).isFaceUp()) {
+        } else if (((Castable) card).isFaceUp()) {
             return "O ";
         } else
             return "H ";
@@ -157,24 +156,24 @@ public class DuelView extends AbstractView {
         return stringViewBuilder.toString();
     }
 
-    public static void showCardInfoStringView(CardTemplate cardTemplate) {
+    public static void showCardInfoStringView(Card card) {
         StringBuilder cardInfo = new StringBuilder();
-        if (cardTemplate instanceof MonsterCard) {
-            MonsterCard monsterCard = (MonsterCard) cardTemplate;
+        if (card instanceof MonsterCard) {
+            MonsterCard monsterCard = (MonsterCard) card;
             cardInfo.append("Name: ").append(monsterCard.getName()).append("\n")
                     .append("Level: ").append(monsterCard.getLevel()).append("\n")
                     .append("Type: ").append(monsterCard.getMonsterType()).append("\n")
                     .append("ATK: ").append(monsterCard.getBaseAttack()).append("\n")
                     .append("DEF: ").append(monsterCard.getBaseDefence()).append("\n")
                     .append("Description: ").append(monsterCard.getDescription());
-        } else if (((SpellTrapCard) cardTemplate).getType() == Type.SPELL) {
-            SpellTrapCard spellCard = (SpellTrapCard) cardTemplate;
+        } else if (((SpellTrapCard) card).getType() == Type.SPELL) {
+            SpellTrapCard spellCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(spellCard.getName()).append("\n")
                     .append("SpellTrapCard\n")
                     .append("Type: ").append(spellCard.getEffectType()).append("\n")
                     .append("Description: ").append(spellCard.getDescription());
         } else {
-            SpellTrapCard trapCard = (SpellTrapCard) cardTemplate;
+            SpellTrapCard trapCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(trapCard.getName()).append("\n")
                     .append("TrapCard\n")
                     .append("Type: ").append(trapCard.getEffectType()).append("\n")
@@ -183,7 +182,7 @@ public class DuelView extends AbstractView {
         System.out.println(cardInfo);
     }
 
-    public static void showCardListStringView(List<CardTemplate> list) {
+    public static void showCardListStringView(List<Card> list) {
         StringBuilder cards = new StringBuilder();
         for (int i = 0; i < list.size(); i++)
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")
