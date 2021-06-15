@@ -196,7 +196,9 @@ public class DuelView extends AbstractView {
     @Override
     protected boolean runCommand(String input) {
         try {
-            if (input.equals("next phase"))
+            if (input.equals("surrender"))
+                controller.surrender();
+            else if (input.equals("next phase"))
                 beginNextPhase(controller);
             else if (input.equals("select -d")) {
                 controller.deselectCard();

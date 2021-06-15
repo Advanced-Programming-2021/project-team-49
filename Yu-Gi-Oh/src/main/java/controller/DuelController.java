@@ -60,6 +60,11 @@ public class DuelController extends AbstractController {
         new DuelView(this).run();
     }
 
+    public void surrender() throws EndOfRoundException {
+        endRound(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
+        throw new EndOfMatchException(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
+    }
+
     public void endRound(Player winner, Player loser) throws EndOfMatchException {
         winner.incrementWinCount();
         winner.setCurrentMaxLifePoints();
@@ -114,9 +119,6 @@ public class DuelController extends AbstractController {
     }
 
     public Card getSelectedCard() {
-        if (isOpponentCardSelected)
-            throw new GameErrorException("invalid selection");
-
         return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
     }
 
