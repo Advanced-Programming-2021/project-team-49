@@ -139,16 +139,12 @@ public class Database {
         }
         // TODO if effect was null, throw exception
 
-        switch (info[1]) {
-            case "TrapCard":
-                return new SpellTrapCard(info[0], info[3], effect, effectType, status, Type.TRAP);
-
-            case "SpellCard":
-                return new SpellTrapCard(info[0], info[3], effect, effectType, status, Type.SPELL);
-
-            default:
-                // TODO throw exception
-                return null; // delete after adding throw exception
+        for (Type value : Type.values()) {
+            if (value.getType().equals(info[1]))
+                return new SpellTrapCard(info[0], info[3], effect, effectType, status, value);
         }
+
+        // TODO throw exception
+        return null; // delete after adding exception
     }
 }
