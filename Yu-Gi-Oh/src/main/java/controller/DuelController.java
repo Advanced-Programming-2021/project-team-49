@@ -152,10 +152,14 @@ public class DuelController extends AbstractController {
                 effectController.monsterReborn();
                 break;
 
+            case TERRAFORMING:
+                effectController.terraforming();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (isRitualSummonPossible())
 
-                break;
+                    break;
         }
     }
 

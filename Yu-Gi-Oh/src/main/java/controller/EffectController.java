@@ -4,6 +4,7 @@ import exception.GameErrorException;
 import model.cardtemplate.Card;
 import model.game.Field;
 import model.game.Location;
+import model.user.Deck;
 import view.DuelView;
 
 import java.util.ArrayList;
@@ -42,4 +43,11 @@ public class EffectController {
 
         field.getAttackerMat().addCard(card, Location.SPELL_AND_TRAP_ZONE);
     }
+
+    public void terraforming() {
+        Deck deck;
+        
+
+    }
+
 }
