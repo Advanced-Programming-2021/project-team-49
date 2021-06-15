@@ -210,8 +210,7 @@ public class DuelView extends AbstractView {
             else if (input.startsWith("summon")) {
                 controller.summon();
                 System.out.println("summoned successfully");
-            }
-            else if (input.startsWith("set")) {
+            } else if (input.startsWith("set")) {
                 if (isFlagUsedInCommand("position", input)) {
                     String position = getArgument("position", input, "set");
                     controller.setPosition(position);

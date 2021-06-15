@@ -26,7 +26,7 @@ public class DuelController extends AbstractController {
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
     private boolean isOpponentCardSelected;
-    private boolean isMonsterAddedToFiled = false;
+    private boolean isMonsterAddedToField = false;
 
     public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
         super(masterController, host);
@@ -129,7 +129,7 @@ public class DuelController extends AbstractController {
             field.switchTurn();
             for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
                 card.setPositionChanged(false);
-            isMonsterAddedToFiled = false;
+            isMonsterAddedToField = false;
         }
     }
 
@@ -150,7 +150,9 @@ public class DuelController extends AbstractController {
                 effectController.monsterReborn();
                 break;
 
-            case YAMI:
+            case ADVANCED_RITUAL_ART:
+                if (isRitualSummonPossible())
+
                 break;
         }
     }
@@ -192,6 +194,10 @@ public class DuelController extends AbstractController {
         return true;
     }
 
+    private void ritualSummon() {
+
+    }
+
     private boolean tributeSummonOrSet(boolean summon) {
         int level = ((Monster) getSelectedCard().getCardTemplate()).getLevel();
         int monsterCardCount = field.getAttackerMat().getCardCount(Location.MONSTER_ZONE);
@@ -207,7 +213,7 @@ public class DuelController extends AbstractController {
 
             field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected);
 
-        } else if (level == 7 || level == 8) {
+        } else {
             if (monsterCardCount < 2)
                 throw new GameErrorException("there are not enough cards for tribute");
 
@@ -220,7 +226,7 @@ public class DuelController extends AbstractController {
             field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected2);
         }
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        isMonsterAddedToFiled = true;
+        isMonsterAddedToField = true;
         if (summon)
             getSelectedCard().setFaceUp(true);
 
@@ -237,14 +243,14 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("action not allowed in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
             throw new GameErrorException("monster card zone is full");
-        else if (isMonsterAddedToFiled)
+        else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
         else if (tributeSummonOrSet(true))
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         card.setFaceUp(true);
-        isMonsterAddedToFiled = true;
+        isMonsterAddedToField = true;
     }
 
     public void setPosition(String position) {
@@ -277,13 +283,13 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't do this action in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
             throw new GameErrorException("monster card zone is full");
-        else if (isMonsterAddedToFiled)
+        else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
         else if (tributeSummonOrSet(false))
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        isMonsterAddedToFiled = true;
+        isMonsterAddedToField = true;
     }
 
     public void setSpellOrTrap() {
