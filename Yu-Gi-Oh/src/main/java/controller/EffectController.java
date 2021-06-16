@@ -2,6 +2,7 @@ package controller;
 
 import exception.GameErrorException;
 import model.cardtemplate.Card;
+import model.cardtemplate.MonsterCard;
 import model.game.Field;
 import model.game.Location;
 import model.user.Deck;
@@ -19,11 +20,17 @@ public class EffectController {
     }
 
     public void monsterReborn() {
-        Card card;
         List<Card> bothGraveyards = new ArrayList<>();
-        bothGraveyards.addAll(field.getAttackerMat().getCardList(Location.GRAVEYARD));
-        bothGraveyards.addAll(field.getDefenderMat().getCardList(Location.GRAVEYARD));
+        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof MonsterCard)
+                bothGraveyards.add(card);
+        }
+        for (Card card : field.getDefenderMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof MonsterCard)
+                bothGraveyards.add(card);
+        }
 
+        Card card;
         if (bothGraveyards.isEmpty())
             throw new GameErrorException("Both graveyards are empty");
         else {
@@ -32,6 +39,8 @@ public class EffectController {
             int selected;
             do {
                 selected = DuelView.selectNumber(1, bothGraveyards.size());
+                if (selected == 0)
+                    throw new GameErrorException("cancelled");
             } while (selected == -1);
             card = bothGraveyards.get(selected - 1);
         }

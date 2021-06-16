@@ -7,6 +7,7 @@ import model.cardtemplate.*;
 import model.game.*;
 import model.game.card.Castable;
 import model.game.card.Monster;
+import model.game.card.SpellTrap;
 import model.user.User;
 import view.DuelView;
 
@@ -157,9 +158,11 @@ public class DuelController extends AbstractController {
                 break;
 
             case ADVANCED_RITUAL_ART:
-                if (isRitualSummonPossible())
-
-                    break;
+                if (!isRitualSummonPossible())
+                    throw new GameErrorException("there is no way you could ritual summon a monster");
+                field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
+                ((SpellTrap) getSelectedCard()).setFaceUp(true);
+                break;
         }
     }
 
@@ -185,6 +188,10 @@ public class DuelController extends AbstractController {
         int sumOfLevels = 0;
         for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
             sumOfLevels += ((MonsterCard) card).getLevel();
+        for (Card card : field.getAttackerMat().getCardList(Location.HAND)) {
+            if (card instanceof MonsterCard)
+                sumOfLevels += ((MonsterCard) card).getLevel();
+        }
 
         ArrayList<Card> ritualCards = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.HAND))
@@ -201,8 +208,60 @@ public class DuelController extends AbstractController {
         return true;
     }
 
-    private void ritualSummon() {
+    private boolean ritualSummon() {
+        if (((MonsterCard) getSelectedCard()).getCardType() != CardType.RITUAL)
+            return false;
 
+        boolean isRitualSpellActivated = false;
+        for (Card card : field.getAttackerMat().getCardList(Location.SPELL_AND_TRAP_ZONE)) {
+           if (card.getEffect() == Effect.ADVANCED_RITUAL_ART && ((SpellTrap) card).isFaceUp()) {
+               isRitualSpellActivated = true;
+               break;
+           }
+        }
+        if (!isRitualSpellActivated)
+            throw new GameErrorException("\"Advanced Ritual Art\" must be activated first");
+
+        ArrayList<Card> monsterCards = new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE));
+        for (Card card : field.getAttackerMat().getCardList(Location.HAND)) {
+            if (card instanceof MonsterCard)
+                monsterCards.add(card);
+        }
+
+        ArrayList<Card> nominatedCardsToTribute = new ArrayList<>();
+        int selected;
+        int sumOfLevels = 0;
+        int ritualCardLevel = ((MonsterCard) getSelectedCard()).getLevel();
+        do {
+            DuelView.showCardListStringView(monsterCards);
+            do {
+                selected = DuelView.selectNumber(1, monsterCards.size());
+                if (selected == 0)
+                    throw new GameErrorException("cancelled");
+            } while (selected == -1);
+            sumOfLevels += ((MonsterCard) monsterCards.get(selected - 1)).getLevel();
+            nominatedCardsToTribute.add(monsterCards.get(selected - 1));
+            monsterCards.remove(selected - 1);
+        } while (sumOfLevels < ritualCardLevel);
+
+        for (Card card : nominatedCardsToTribute) {
+            field.getAttackerMat().addCard(card, Location.GRAVEYARD);
+            if (field.getAttackerMat().getCardList(Location.MONSTER_ZONE).contains(card))
+                field.getAttackerMat().removeCard(card, Location.MONSTER_ZONE);
+            else
+                field.getAttackerMat().removeCard(card, Location.HAND);
+        }
+
+        do {
+            selected = DuelView.selectPosition();
+            if (selected == 0)
+                throw new GameErrorException("cancelled");
+        } while (selected == -1);
+
+        field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        ((Monster) getSelectedCard()).setFaceUp(selected == 1);
+
+        return true;
     }
 
     private boolean tributeSummonOrSet(boolean summon) {
@@ -252,6 +311,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("monster card zone is full");
         else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
+        else if (ritualSummon())
+            return;
         else if (tributeSummonOrSet(true))
             return;
 

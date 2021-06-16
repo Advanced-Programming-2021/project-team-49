@@ -184,9 +184,12 @@ public class DuelView extends AbstractView {
 
     public static void showCardListStringView(List<Card> list) {
         StringBuilder cards = new StringBuilder();
-        for (int i = 0; i < list.size(); i++)
+        for (int i = 0; i < list.size(); i++) {
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")
-                    .append(list.get(i).getDescription()).append("\n");
+                    .append(list.get(i).getDescription());
+            if (list.get(i) instanceof MonsterCard)
+                cards.append("\nLevel: ").append(((MonsterCard) list.get(i)).getLevel());
+        }
 
         System.out.println(cards);
     }
@@ -247,14 +250,31 @@ public class DuelView extends AbstractView {
 
     public static int selectNumber(int begin, int end) {
         System.out.println("select a card:");
-        int choice;
-        try {
-            choice = Integer.parseInt(removeExtraWhitespace(INPUT_STREAM.nextLine()));
 
-            if (choice < begin || choice > end)
-                throw new GameErrorException();
-        } catch (Exception e) {
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+        if (input.equalsIgnoreCase("cancel"))
+            return 0;
+
+        int choice = Integer.parseInt(input);
+        if (choice < begin || choice > end) {
             System.out.println("Enter a number from " + begin + " to " + end);
+            return -1;
+        }
+        return choice;
+    }
+
+    public static int selectPosition() {
+        System.out.println("select position:\n" +
+                "1. Attacking\n" +
+                "2. Defensive");
+
+        String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
+        if (input.equalsIgnoreCase("cancel"))
+            return 0;
+
+        int choice = Integer.parseInt(input);
+        if (choice < 1 || choice > 2) {
+            System.out.println("Choose between Attacking or Defensive");
             return -1;
         }
         return choice;
