@@ -40,7 +40,7 @@ public class DuelController extends AbstractController {
         Player playerOne = new Player(host, INIT_LIFE_POINTS);
         Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
         field = new Field(playerOne, playerTwo);
-        effectController = new EffectController(field);
+        effectController = new EffectController(field, this);
     }
 
     public String getPhaseName() {
@@ -156,6 +156,9 @@ public class DuelController extends AbstractController {
             case TERRAFORMING:
                 effectController.terraforming();
                 break;
+
+            case POT_OF_GREED:
+                effectController.potOfGreed();
 
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())

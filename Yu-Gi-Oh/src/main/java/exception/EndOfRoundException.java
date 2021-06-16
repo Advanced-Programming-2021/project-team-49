@@ -2,7 +2,7 @@ package exception;
 
 import model.game.Player;
 
-public class EndOfRoundException extends Exception {
+public class EndOfRoundException extends RuntimeException {
 
     private final Player winner;
     private final Player loser;

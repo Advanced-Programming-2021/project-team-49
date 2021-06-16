@@ -190,7 +190,6 @@ public class DuelView extends AbstractView {
             if (list.get(i) instanceof MonsterCard)
                 cards.append("\nLevel: ").append(((MonsterCard) list.get(i)).getLevel());
         }
-
         System.out.println(cards);
     }
 
