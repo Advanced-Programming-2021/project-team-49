@@ -70,20 +70,28 @@ public class EffectController {
             DuelView.showCardListStringView(spellsOfDeck);
             int selected;
             do {
-                selected = DuelView.selectNumber(1,spellsOfDeck.size());
+                selected = DuelView.selectNumber(1, spellsOfDeck.size());
                 if (selected == 0)
                     throw new GameErrorException("cancelled");
             } while (selected == -1);
             selectedSpell = spellsOfDeck.get(selected - 1);
-            field.getAttackerMat().addCard(selectedSpell , Location.HAND);
-            field.getAttackerMat().removeCard(selectedSpell , Location.DECK);
+            field.getAttackerMat().addCard(selectedSpell, Location.HAND);
+            field.getAttackerMat().removeCard(selectedSpell, Location.DECK);
         }
     }
 
     public void potOfGreed() {
         controller.drawCard();
         controller.drawCard();
+
     }
+
+    public void raigeki() {
+        for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE)) {
+            field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
+        }
+    }
+
 
 
 }

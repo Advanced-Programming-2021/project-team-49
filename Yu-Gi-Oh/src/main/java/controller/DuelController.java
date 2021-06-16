@@ -12,6 +12,7 @@ import model.user.User;
 import view.DuelView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DuelController extends AbstractController {
 
@@ -133,6 +134,7 @@ public class DuelController extends AbstractController {
             for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
                 ((Monster) card).setPositionChanged(false);
             isMonsterAddedToField = false;
+
         }
     }
 
@@ -151,14 +153,26 @@ public class DuelController extends AbstractController {
         switch (effect) {
             case MONSTER_REBORN:
                 effectController.monsterReborn();
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
                 break;
 
             case TERRAFORMING:
                 effectController.terraforming();
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
                 break;
 
             case POT_OF_GREED:
                 effectController.potOfGreed();
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                break;
+
+            case RAIGEKI:
+                effectController.raigeki();
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                break;
+
+            case CHANGE_OF_HEART:
+
 
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
