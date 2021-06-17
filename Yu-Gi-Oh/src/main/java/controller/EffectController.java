@@ -81,9 +81,12 @@ public class EffectController {
     }
 
     public void potOfGreed() {
-        controller.drawCard();
-        controller.drawCard();
-
+        if (field.getAttackerMat().getCardCount(Location.DECK) < 2)
+            throw new GameErrorException("No enough card in deck");
+        else {
+            controller.drawCard();
+            controller.drawCard();
+        }
     }
 
     public void raigeki() {
@@ -93,5 +96,15 @@ public class EffectController {
     }
 
 
-
+    public void harpiesFeatherDuster() {
+        List<Card> spellsAndTraps;
+        spellsAndTraps = field.getDefenderMat().getCardList(Location.SPELL_AND_TRAP_ZONE);
+        if (spellsAndTraps.size() == 0)
+            throw new GameErrorException("The enemy has no spells");
+        else{
+            for (Card spellOrTrap: spellsAndTraps) {
+                field.getDefenderMat().removeCard(spellOrTrap, Location.SPELL_AND_TRAP_ZONE);
+            }
+        }
+    }
 }

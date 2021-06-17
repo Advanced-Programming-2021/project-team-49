@@ -156,26 +156,34 @@ public class DuelController extends AbstractController {
         switch (effect) {
             case MONSTER_REBORN:
                 effectController.monsterReborn();
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case TERRAFORMING:
                 effectController.terraforming();
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case POT_OF_GREED:
                 effectController.potOfGreed();
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case RAIGEKI:
                 effectController.raigeki();
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case CHANGE_OF_HEART:
 
+            case HARPIES_FEATHER_DUSTER:
+                effectController.harpiesFeatherDuster();
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
 
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
