@@ -1,7 +1,6 @@
 package model.database;
 
 import model.cardtemplate.Card;
-
 import java.util.HashMap;
 import java.util.Map;
 
