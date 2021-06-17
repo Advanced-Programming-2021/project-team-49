@@ -70,6 +70,8 @@ public class DuelController extends AbstractController {
     }
 
     public void endRound(Player winner, Player loser) throws EndOfMatchException {
+        selectedCardLocation = null;
+
         winner.incrementWinCount();
         winner.setCurrentMaxLifePoints();
 
@@ -127,6 +129,7 @@ public class DuelController extends AbstractController {
     }
 
     public void changePhase() {
+        selectedCardLocation = null;
         phase++;
         if (phase > 5) {
             phase = 0;
@@ -419,5 +422,79 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("card is not visible");
 
         DuelView.showCardInfoStringView(card);
+    }
+
+    public void attack(int targetPosition) throws EndOfRoundException {
+        if (targetPosition < 1 || targetPosition > 5)
+            throw new GameErrorException("card position number must be between 1 and 5");
+        else if (selectedCardLocation == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (isOpponentCardSelected
+                || selectedCardLocation != Location.MONSTER_ZONE)
+            throw new GameErrorException("you can't attack with this card");
+        else if (phase != 3)
+            throw new GameErrorException("you can't do this action in this phase");
+        else {
+            Monster attacker = (Monster) getSelectedCard();
+            Monster target = (Monster) field.getDefenderMat().getCard(Location.MONSTER_ZONE, targetPosition);
+
+            if (attacker.isUsedInAttack())
+                throw new GameErrorException("this card already attacked");
+            else if (target == null)
+                throw new GameErrorException("there is no card to attack here");
+
+            attackMonster(attacker, target, selectedCardPosition, targetPosition);
+        }
+    }
+
+    public void attackMonster(Monster attacker, Monster target, int attackerPosition, int targetPosition)
+            throws EndOfRoundException {
+        int damage;
+
+        if (target.isAttacker()) {
+            damage = attacker.getAttack() - target.getAttack();
+
+            if (damage > 0) {
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
+                field.getDefenderMat().getPlayer().removeLifePoints(damage);
+            } else if (damage == 0) {
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attackerPosition, Location.GRAVEYARD);
+            } else {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attackerPosition, Location.GRAVEYARD);
+                field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+            }
+        } else {
+            damage = attacker.getAttack() - target.getDefense();
+
+            if (damage > 0)
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
+            else if (damage < 0)
+                field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+        }
+
+        if (!target.isAttacker() && !target.isFaceUp()) {
+            DuelView.showAttackOutcome(target.getName(), damage);
+            target.setFaceUp(true);
+        } else
+            DuelView.showAttackOutcome(!target.isAttacker(), damage);
+
+        checkEndOfRoundWithLifePoints();
+    }
+
+    public void checkEndOfRoundWithLifePoints() throws EndOfRoundException {
+        if (field.getDefenderMat().getPlayer().getLifePoints() <= 0) {
+            Player winner = field.getAttackerMat().getPlayer();
+            Player loser = field.getDefenderMat().getPlayer();
+
+            endRound(winner, loser);
+            throw new EndOfRoundException(winner, loser);
+        } else if (field.getAttackerMat().getPlayer().getLifePoints() <= 0) {
+            Player winner = field.getDefenderMat().getPlayer();
+            Player loser = field.getAttackerMat().getPlayer();
+
+            endRound(winner, loser);
+            throw new EndOfRoundException(winner, loser);
+        }
     }
 }

@@ -164,7 +164,7 @@ public class DuelView extends AbstractView {
                     .append("Level: ").append(monsterCard.getLevel()).append("\n")
                     .append("Type: ").append(monsterCard.getMonsterType()).append("\n")
                     .append("ATK: ").append(monsterCard.getBaseAttack()).append("\n")
-                    .append("DEF: ").append(monsterCard.getBaseDefence()).append("\n")
+                    .append("DEF: ").append(monsterCard.getBaseDefense()).append("\n")
                     .append("Description: ").append(monsterCard.getDescription());
         } else if (((SpellTrapCard) card).getType() == Type.SPELL) {
             SpellTrapCard spellCard = (SpellTrapCard) card;
@@ -199,54 +199,6 @@ public class DuelView extends AbstractView {
         super.run();
     }
 
-    @Override
-    protected boolean runCommand(String input) {
-        try {
-            if (input.equals("surrender"))
-                controller.surrender();
-            else if (input.equals("next phase"))
-                beginNextPhase(controller);
-            else if (input.equals("select -d")) {
-                controller.deselectCard();
-                System.out.println("card deselected");
-            } else if (input.startsWith("select"))
-                selectCard(controller, input);
-            else if (input.equals("activate spell"))
-                controller.activateSpell();
-            else if (input.startsWith("summon")) {
-                controller.summon();
-                System.out.println("summoned successfully");
-            } else if (input.startsWith("set")) {
-                if (isFlagUsedInCommand("position", input)) {
-                    String position = getArgument("position", input, "set");
-                    controller.setPosition(position);
-                    System.out.println("monster card position changed successfully");
-                } else if (controller.getSelectedCard() instanceof MonsterCard)
-                    controller.setMonster();
-                else
-                    controller.setSpellOrTrap();
-                System.out.println("set successfully");
-            } else if (input.startsWith("show graveyard"))
-                controller.showGraveyard(isFlagUsedInCommand("opponent", input));
-            else if (input.equals("card show --selected")) {
-                controller.showSelectedCard();
-            } else
-                return runDefaultCommands(input, controller);
-        } catch (GameErrorException exception) {
-            System.out.println(exception.getMessage());
-        } catch (NumberFormatException exception) {
-            System.out.println("invalid number entered");
-        } catch (EndOfMatchException exception) {
-            System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
-                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
-            return false;
-        } catch (EndOfRoundException exception) {
-            System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
-                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
-        }
-        return true;
-    }
-
     public static int selectNumber(int begin, int end) {
         System.out.println("select a card:");
 
@@ -277,5 +229,82 @@ public class DuelView extends AbstractView {
             return -1;
         }
         return choice;
+    }
+
+    public static void showAttackOutcome(boolean attackedDefendingCard, int damage) {
+        if (attackedDefendingCard) {
+            if (damage > 0)
+                System.out.println("your opponent’s monster is destroyed and your opponent receives "
+                        + damage + " battle damage");
+            else if (damage == 0)
+                System.out.println("both you and your opponent monster cards are destroyed and no "
+                        + "one receives damage");
+            else
+                System.out.println("Your monster card is destroyed and you received "
+                        + (-damage) + " battle damage");
+        } else {
+            if (damage > 0)
+                System.out.println("the defense position monster is destroyed");
+            else if (damage == 0)
+                System.out.println("no card is destroyed");
+            else
+                System.out.println("no card is destroyed and you received "
+                        + (-damage) + " battle damage");
+        }
+    }
+
+    public static void showAttackOutcome(String defendingCardName,  int damage) {
+        System.out.print("opponent’s monster card was " + defendingCardName + " and ");
+        showAttackOutcome(true, damage);
+    }
+
+    @Override
+    protected boolean runCommand(String input) {
+        try {
+            if (input.equals("surrender"))
+                controller.surrender();
+            else if (input.equals("next phase"))
+                beginNextPhase(controller);
+            else if (input.equals("select -d")) {
+                controller.deselectCard();
+                System.out.println("card deselected");
+            } else if (input.startsWith("select"))
+                selectCard(controller, input);
+            else if (input.equals("activate spell"))
+                controller.activateSpell();
+            else if (input.startsWith("summon")) {
+                controller.summon();
+                System.out.println("summoned successfully");
+            } else if (input.startsWith("set")) {
+                if (isFlagUsedInCommand("position", input)) {
+                    String position = getArgument("position", input, "set");
+                    controller.setPosition(position);
+                    System.out.println("monster card position changed successfully");
+                } else if (controller.getSelectedCard() instanceof MonsterCard)
+                    controller.setMonster();
+                else
+                    controller.setSpellOrTrap();
+                System.out.println("set successfully");
+            } else if (input.startsWith("show graveyard"))
+                controller.showGraveyard(isFlagUsedInCommand("opponent", input));
+            else if (input.equals("card show --selected"))
+                controller.showSelectedCard();
+            else if (input.startsWith("attack "))
+                controller.attack(Integer.parseInt(input.substring("attack ".length())));
+            else
+                return runDefaultCommands(input, controller);
+        } catch (GameErrorException exception) {
+            System.out.println(exception.getMessage());
+        } catch (NumberFormatException exception) {
+            System.out.println("invalid value entered as a number");
+        } catch (EndOfMatchException exception) {
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+            return false;
+        } catch (EndOfRoundException exception) {
+            System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
+                    + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+        }
+        return true;
     }
 }

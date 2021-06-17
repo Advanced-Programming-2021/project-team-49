@@ -7,17 +7,17 @@ public class MonsterCard extends Card {
     private final CardType cardType;
     private final MonsterType monsterType;
     private final int baseAttack;
-    private final int baseDefence;
+    private final int baseDefense;
 
     public MonsterCard(String name, String description, Effect effect, int level, Attribute attribute,
-                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefence) {
+                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefense) {
         super(name, description, effect);
         this.level = level;
         this.attribute = attribute;
         this.cardType = cardType;
         this.monsterType = monsterType;
         this.baseAttack = baseAttack;
-        this.baseDefence = baseDefence;
+        this.baseDefense = baseDefense;
     }
 
     public int getLevel() {
@@ -40,7 +40,7 @@ public class MonsterCard extends Card {
         return baseAttack;
     }
 
-    public int getBaseDefence() {
-        return baseDefence;
+    public int getBaseDefense() {
+        return baseDefense;
     }
 }
