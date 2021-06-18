@@ -2,6 +2,7 @@ package model.database;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.user.User;
 
@@ -14,7 +15,7 @@ public class Database {
 
     private final Userbase userbase = new Userbase();
     private final Shop shop = new Shop();
-    private final List<Card> cards = new ArrayList<>();
+    private static final List<Card> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
     }
@@ -27,12 +28,12 @@ public class Database {
         return shop;
     }
 
-    public Card getCardByName(String name) {
+    public static Card getCardByName(String name) {
         for (Card card : cards) {
             if (card.getName().equals(name))
                 return card;
         }
-        return null;
+        throw new GameErrorException("Card not found");
     }
 
     public void saveUserbase(Userbase userbase) {

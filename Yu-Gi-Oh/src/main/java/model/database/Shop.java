@@ -10,4 +10,8 @@ public class Shop {
     void addCard(Card card, int price) {
         cardPrices.put(card, price);
     }
+
+    public int getPriceByCard(Card card) {
+        return cardPrices.get(card);
+    }
 }

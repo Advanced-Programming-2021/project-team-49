@@ -1,5 +1,8 @@
 package controller;
 
+import exception.GameErrorException;
+import model.cardtemplate.Card;
+import model.database.Database;
 import model.database.Shop;
 import model.user.User;
 import view.ShopView;
@@ -19,7 +22,11 @@ public class ShopController extends AbstractController {
     }
 
     public void buyCard(String cardName) {
-
+        Card card = Database.getCardByName(cardName);
+        if (user.getCoins() >= shop.getPriceByCard(card)) {
+            user.getActiveDeck().addCardToMainDeck(card);
+            user.removeCoins(shop.getPriceByCard(card));
+        } else throw new GameErrorException("You don't have enough money to buy this card");
     }
 
     @Override
