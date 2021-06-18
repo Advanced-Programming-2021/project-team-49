@@ -1,14 +1,15 @@
 package view;
 
 import controller.ShopController;
-
+import model.cardtemplate.Card;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ShopView extends AbstractView {
 
     private final ShopController controller;
-    private final String BUY_CARD_STYLE = "shop buy (?<cardName>\\.+)";
 
     public ShopView(ShopController controller) {
         this.controller = controller;
@@ -16,8 +17,9 @@ public class ShopView extends AbstractView {
 
     @Override
     protected boolean runCommand(String input) {
-        if(input.matches(BUY_CARD_STYLE)) {
-            controller.buyCard(getCommandMatcher(input, BUY_CARD_STYLE));
+        String buyCardStyle = "shop buy (?<cardName>\\.+)";
+        if(input.matches(buyCardStyle)) {
+            controller.buyCard(getCommandMatcher(input, buyCardStyle));
         }
         else if (input.equals("shop show --all"))
             showAllCards();
@@ -31,6 +33,11 @@ public class ShopView extends AbstractView {
     }
 
     private void showAllCards() {
-
+        ArrayList<Card> allCards;
+        allCards = Card.getAllCards();
+        Collections.sort(allCards);
+        for (Card card : Card.getAllCards()) {
+            System.out.println(card);
+        }
     }
 }

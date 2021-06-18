@@ -33,7 +33,7 @@ public class Database {
             if (card.getName().equals(name))
                 return card;
         }
-        throw new GameErrorException("Card not found");
+        throw new GameErrorException("there is no card with this name");
     }
 
     public void saveUserbase(Userbase userbase) {

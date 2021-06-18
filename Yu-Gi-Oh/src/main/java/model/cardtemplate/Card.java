@@ -2,7 +2,7 @@ package model.cardtemplate;
 
 import java.util.ArrayList;
 
-public abstract class Card {
+public abstract class Card implements Comparable {
 
     protected final String name;
     protected final Effect effect;
@@ -30,5 +30,14 @@ public abstract class Card {
 
     public Effect getEffect() {
         return effect;
+    }
+
+    public static ArrayList<Card> getAllCards() {
+        return allCards;
+    }
+
+    @Override
+    public String toString() {
+        return getName() + ":" + getDescription();
     }
 }

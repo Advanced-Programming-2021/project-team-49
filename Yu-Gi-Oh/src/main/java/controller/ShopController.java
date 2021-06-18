@@ -26,7 +26,7 @@ public class ShopController extends AbstractController {
         if (user.getCoins() >= shop.getPriceByCard(card)) {
             user.getActiveDeck().addCardToMainDeck(card);
             user.removeCoins(shop.getPriceByCard(card));
-        } else throw new GameErrorException("You don't have enough money to buy this card");
+        } else throw new GameErrorException("not enough money");
     }
 
     @Override
