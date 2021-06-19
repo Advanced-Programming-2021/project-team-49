@@ -38,22 +38,6 @@ public class DuelView extends AbstractView {
         this.controller = controller;
     }
 
-    private static void beginNextPhase(DuelController controller) throws EndOfRoundException {
-        controller.changePhase();
-        if (controller.getPhaseNumber() == 0) {
-            System.out.println("it's " + controller.getCurrentPlayer().getUser().getNickname() + "'s turn");
-            System.out.println("phase: " + controller.getPhaseName());
-            drawCard(controller);
-            return;
-        }
-        System.out.println("phase: " + controller.getPhaseName());
-    }
-
-    private static void drawCard(DuelController controller) throws EndOfRoundException {
-        Card drawnCard = controller.drawCard();
-        System.out.println("new card added to hand: " + drawnCard.getName());
-    }
-
     private static void selectCard(DuelController controller, String input) {
         String[] locationFlags = {"hand", "monster", "spell", "field"};
         boolean[] isFlagFound = findFlags(locationFlags, input);
@@ -258,13 +242,30 @@ public class DuelView extends AbstractView {
         showAttackOutcome(true, damage);
     }
 
+    private void drawCard() throws EndOfRoundException {
+        Card drawnCard = controller.drawCard();
+        if (drawnCard != null)
+            System.out.println("new card added to hand: " + drawnCard.getName());
+    }
+
+    private void beginNextPhase() throws EndOfRoundException {
+        controller.changePhase();
+        if (controller.getPhaseNumber() == 0) {
+            System.out.println("it's " + controller.getCurrentPlayer().getUser().getNickname() + "'s turn");
+            System.out.println("phase: " + controller.getPhaseName());
+            drawCard();
+            return;
+        }
+        System.out.println("phase: " + controller.getPhaseName());
+    }
+
     @Override
     protected boolean runCommand(String input) {
         try {
             if (input.equals("surrender"))
                 controller.surrender();
             else if (input.equals("next phase"))
-                beginNextPhase(controller);
+                beginNextPhase();
             else if (input.equals("select -d")) {
                 controller.deselectCard();
                 System.out.println("card deselected");

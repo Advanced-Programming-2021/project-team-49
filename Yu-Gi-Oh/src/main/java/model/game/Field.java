@@ -41,6 +41,8 @@ public class Field {
     }
 
     public Card drawCard() throws EndOfRoundException {
+        if (attackerMat.getCardCount(Location.HAND) >= 6)
+            return null;
         if (attackerMat.getCardCount(Location.DECK) <= 0)
             throw new EndOfRoundException(defenderMat.getPlayer(), attackerMat.getPlayer());
         else {
