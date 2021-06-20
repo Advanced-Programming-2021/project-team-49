@@ -1,4 +1,4 @@
-package controller.effects;
+package controller.effects.spells;
 
 import controller.DuelController;
 import controller.EffectController;
@@ -28,11 +28,10 @@ public class MonsterReborn extends EffectController {
                 bothGraveyards.add(card);
         }
 
-        Card card;
         if (bothGraveyards.isEmpty())
             throw new GameErrorException("Both graveyards are empty");
-        else
-            card = selectCardFromList(bothGraveyards);
+
+        Card card = selectCardFromList(bothGraveyards);
 
         if (field.getAttackerMat().getCardList(Location.GRAVEYARD).contains(card))
             field.getAttackerMat().removeCard(card, Location.GRAVEYARD);

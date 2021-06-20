@@ -1,4 +1,4 @@
-package controller.effects;
+package controller.effects.spells;
 
 import controller.DuelController;
 import controller.EffectController;

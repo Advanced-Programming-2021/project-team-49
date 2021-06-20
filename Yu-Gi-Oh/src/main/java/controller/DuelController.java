@@ -1,6 +1,7 @@
 package controller;
 
-import controller.effects.*;
+import controller.effects.Event;
+import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
@@ -24,9 +25,7 @@ public class DuelController extends AbstractController {
     private final EffectController effectController;
     private final boolean hasAI;
     private final int rounds;
-    private final int currentRound = 1;
     private int phase = 0;
-    private int drawCount;
     private Field field;
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
@@ -133,6 +132,7 @@ public class DuelController extends AbstractController {
         selectedCardLocation = null;
         phase++;
         if (phase > 5) {
+            effectController.notifyEffects(Event.END_TURN);
             phase = 0;
             field.switchTurn();
             for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
@@ -179,11 +179,19 @@ public class DuelController extends AbstractController {
                 break;
 
             case CHANGE_OF_HEART:
-
+                new ChangeOfHeart(field, this).action();
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case HARPIES_FEATHER_DUSTER:
                 new HarpiesFeatherDuster(field, this).action();
+                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
+                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                break;
+
+            case DARK_HOLE:
+                new DarkHole(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
