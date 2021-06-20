@@ -28,7 +28,7 @@ public class ProfileView extends AbstractView {
                     System.out.println("nickname changed successfully!");
                 }
             } else
-                runDefaultCommands(input, controller);
+                return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         }
