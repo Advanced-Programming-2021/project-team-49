@@ -3,6 +3,7 @@ package model.database;
 import model.user.User;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Userbase {
@@ -22,5 +23,10 @@ public class Userbase {
     public User getUserByNickname(String nickname) {
         return users.stream().filter(user -> nickname.equals(user.getNickname()))
                 .findFirst().orElse(null);
+    }
+
+    public List<User> getUsersSortedByScore() {
+        users.sort(Comparator.comparing(User::getScore).thenComparing(User::getNickname));
+        return users;
     }
 }
