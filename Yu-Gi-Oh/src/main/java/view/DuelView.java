@@ -7,7 +7,7 @@ import exception.GameErrorException;
 import model.cardtemplate.Card;
 import model.cardtemplate.MonsterCard;
 import model.cardtemplate.SpellTrapCard;
-import model.cardtemplate.Type;
+import model.cardtemplate.SpellTrapType;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;
@@ -146,21 +146,21 @@ public class DuelView extends AbstractView {
             MonsterCard monsterCard = (MonsterCard) card;
             cardInfo.append("Name: ").append(monsterCard.getName()).append("\n")
                     .append("Level: ").append(monsterCard.getLevel()).append("\n")
-                    .append("Type: ").append(monsterCard.getMonsterType()).append("\n")
+                    .append("SpellTrapType: ").append(monsterCard.getMonsterType()).append("\n")
                     .append("ATK: ").append(monsterCard.getBaseAttack()).append("\n")
                     .append("DEF: ").append(monsterCard.getBaseDefense()).append("\n")
                     .append("Description: ").append(monsterCard.getDescription());
-        } else if (((SpellTrapCard) card).getType() == Type.SPELL) {
+        } else if (((SpellTrapCard) card).getType() == SpellTrapType.SPELL) {
             SpellTrapCard spellCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(spellCard.getName()).append("\n")
                     .append("Spell\n")
-                    .append("Type: ").append(spellCard.getEffectType()).append("\n")
+                    .append("SpellTrapType: ").append(spellCard.getEffectType()).append("\n")
                     .append("Description: ").append(spellCard.getDescription());
         } else {
             SpellTrapCard trapCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(trapCard.getName()).append("\n")
                     .append("Trap\n")
-                    .append("Type: ").append(trapCard.getEffectType()).append("\n")
+                    .append("SpellTrapType: ").append(trapCard.getEffectType()).append("\n")
                     .append("Description: ").append(trapCard.getDescription());
         }
         System.out.println(cardInfo);

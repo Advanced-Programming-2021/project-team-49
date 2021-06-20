@@ -4,10 +4,10 @@ public class SpellTrapCard extends Card {
 
     private final EffectType effectType;
     private final Status status;
-    private final Type type;
+    private final SpellTrapType type;
 
     public SpellTrapCard(String name, String description, Effect effect, EffectType effectType,
-                         Status status, Type type, int price) {
+                         Status status, SpellTrapType type, int price) {
         super(name, description, effect, price);
         this.effectType = effectType;
         this.status = status;
@@ -22,7 +22,7 @@ public class SpellTrapCard extends Card {
         return status;
     }
 
-    public Type getType() {
+    public SpellTrapType getType() {
         return type;
     }
 }

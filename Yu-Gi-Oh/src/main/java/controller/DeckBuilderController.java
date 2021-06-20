@@ -131,12 +131,12 @@ public class DeckBuilderController extends AbstractController {
         ArrayList<SpellTrapCard> spellCards = new ArrayList<>();
         if (sideDeck) {
             for (Card card : deck.getSideDeck().keySet()) {
-                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.SPELL)
                     spellCards.add((SpellTrapCard) card);
             }
         } else {
             for (Card card : deck.getMainDeck().keySet()) {
-                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.SPELL)
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.SPELL)
                     spellCards.add((SpellTrapCard) card);
             }
         }
@@ -153,12 +153,12 @@ public class DeckBuilderController extends AbstractController {
         ArrayList<SpellTrapCard> trapCards = new ArrayList<>();
         if (sideDeck) {
             for (Card card : deck.getSideDeck().keySet()) {
-                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.TRAP)
                     trapCards.add((SpellTrapCard) card);
             }
         } else {
             for (Card card : deck.getMainDeck().keySet()) {
-                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == Type.TRAP)
+                if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.TRAP)
                     trapCards.add((SpellTrapCard) card);
             }
         }

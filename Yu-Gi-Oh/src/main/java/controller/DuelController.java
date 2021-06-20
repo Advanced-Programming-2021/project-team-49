@@ -199,7 +199,7 @@ public class DuelController extends AbstractController {
         if (card == null)
             throw new GameErrorException("no card is selected yet");
         else if (!(card instanceof SpellTrapCard)
-                || ((SpellTrapCard) card).getType() == Type.TRAP)
+                || ((SpellTrapCard) card).getType() == SpellTrapType.TRAP)
             throw new GameErrorException("activate effect is only for spell cards");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't activate an effect on this turn");

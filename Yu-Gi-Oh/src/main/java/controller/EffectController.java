@@ -59,7 +59,7 @@ public class EffectController {
         cardsOfDeck = field.getAttackerMat().getCardList(Location.DECK);
         for (Card card : cardsOfDeck) {
             if (card instanceof SpellTrapCard) {
-                if (((SpellTrapCard) card).getType().equals(Type.SPELL) &&
+                if (((SpellTrapCard) card).getType().equals(SpellTrapType.SPELL) &&
                         ((SpellTrapCard) card).getEffectType().equals(EffectType.FIELD)) spellsOfDeck.add(card);
             }
         }
