@@ -1,6 +1,6 @@
 package model.cardtemplate;
 
-public class MonsterCard extends Card {
+public class MonsterCard extends CardTemplate {
 
     private final int level;
     private final Attribute attribute;

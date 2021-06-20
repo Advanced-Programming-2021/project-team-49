@@ -1,6 +1,6 @@
 package model.user;
 
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
 
 import java.util.*;
 
@@ -10,7 +10,7 @@ public class User {
     private String password;
     private int coins;
     private int score = 0;
-    private final Map<Card, Integer> ownedCards = new HashMap<>();
+    private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
     private final ArrayList<Deck> decks = new ArrayList<>();
     private Deck activeDeck = null;
 
@@ -63,13 +63,13 @@ public class User {
         return decks;
     }
 
-    public ArrayList<Card> getOwnedCards() {
-        ArrayList<Card> cards = new ArrayList<>(ownedCards.keySet());
-        cards.sort(Comparator.comparing(Card::getName));
+    public ArrayList<CardTemplate> getOwnedCards() {
+        ArrayList<CardTemplate> cards = new ArrayList<>(ownedCards.keySet());
+        cards.sort(Comparator.comparing(CardTemplate::getName));
         return cards;
     }
 
-    public void addCard(Card card) {
+    public void addCard(CardTemplate card) {
         if (ownedCards.containsKey(card))
             ownedCards.replace(card, ownedCards.get(card) + 1);
         else

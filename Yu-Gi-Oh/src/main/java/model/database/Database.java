@@ -22,7 +22,7 @@ public class Database {
         GSON = builder.create();
     }
     private final Userbase userbase;
-    private  final List<Card> cards = new ArrayList<>();
+    private  final List<CardTemplate> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
         Userbase userbase;
@@ -44,8 +44,8 @@ public class Database {
         return userbase;
     }
 
-    public Card getCardByName(String name) {
-        for (Card card : cards) {
+    public CardTemplate getCardByName(String name) {
+        for (CardTemplate card : cards) {
             if (card.getName().equals(name))
                 return card;
         }
@@ -63,7 +63,7 @@ public class Database {
         writer.close();
     }
 
-    public List<Card> getCards() {
+    public List<CardTemplate> getCards() {
         return cards;
     }
 
@@ -92,7 +92,7 @@ public class Database {
             }
     }
 
-    private Card createMonsterCard(String[] info) {
+    private CardTemplate createMonsterCard(String[] info) {
         MonsterType monsterType = null;
         Attribute attribute = null;
         CardType cardType = null;
@@ -137,7 +137,7 @@ public class Database {
                 monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]), Integer.parseInt(info[8]));
     }
 
-    private Card createSpellTrapCard(String[] info) {
+    private CardTemplate createSpellTrapCard(String[] info) {
         EffectType effectType = null;
         Status status = null;
         Effect effect = null;

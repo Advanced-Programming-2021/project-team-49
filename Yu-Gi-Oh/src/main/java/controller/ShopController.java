@@ -1,7 +1,7 @@
 package controller;
 
 import exception.GameErrorException;
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
 import model.database.Database;
 import model.user.User;
 import view.ShopView;
@@ -24,7 +24,7 @@ public class ShopController extends AbstractController {
     }
 
     public void buyCard(String cardName) {
-        Card card = database.getCardByName(cardName);
+        CardTemplate card = database.getCardByName(cardName);
         if (user.getCoins() < card.getPrice())
             throw new GameErrorException("not enough money");
 
@@ -32,15 +32,15 @@ public class ShopController extends AbstractController {
         user.addCard(card);
     }
 
-    public Card getCard(String cardName) {
-        Card card = database.getCardByName(cardName);
+    public CardTemplate getCard(String cardName) {
+        CardTemplate card = database.getCardByName(cardName);
         if (card == null)
             throw new GameErrorException("there is no card with this name");
         return card;
     }
 
-    public List<Card> getSortedCards() {
-        database.getCards().sort(Comparator.comparing(Card::getName));
+    public List<CardTemplate> getSortedCards() {
+        database.getCards().sort(Comparator.comparing(CardTemplate::getName));
         return database.getCards();
     }
 }

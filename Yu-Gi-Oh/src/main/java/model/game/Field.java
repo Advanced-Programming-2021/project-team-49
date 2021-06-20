@@ -1,7 +1,8 @@
 package model.game;
 
 import exception.EndOfRoundException;
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
+import model.game.card.Card;
 import model.game.card.Monster;
 
 public class Field {
@@ -29,8 +30,8 @@ public class Field {
     }
 
     public void switchTurn() {
-        for (Card monsterCard : attackerMat.getCardList(Location.MONSTER_ZONE)) {
-            Monster monster = (Monster) monsterCard;
+        for (Card card : attackerMat.getCardList(Location.MONSTER_ZONE)) {
+            Monster monster = (Monster) card;
             monster.setPositionChanged(false);
             monster.setUsedInAttack(false);
         }

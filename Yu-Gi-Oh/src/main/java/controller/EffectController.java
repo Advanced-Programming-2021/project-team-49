@@ -4,6 +4,9 @@ import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.game.Field;
 import model.game.Location;
+import model.game.card.Card;
+import model.game.card.Monster;
+import model.game.card.SpellTrap;
 import view.DuelView;
 
 import java.util.ArrayList;
@@ -22,11 +25,11 @@ public class EffectController {
     public void monsterReborn() {
         List<Card> bothGraveyards = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
-            if (card instanceof MonsterCard)
+            if (card instanceof Monster)
                 bothGraveyards.add(card);
         }
         for (Card card : field.getDefenderMat().getCardList(Location.GRAVEYARD)) {
-            if (card instanceof MonsterCard)
+            if (card instanceof Monster)
                 bothGraveyards.add(card);
         }
 
@@ -58,9 +61,10 @@ public class EffectController {
         List<Card> spellsOfDeck = new ArrayList<>();
         cardsOfDeck = field.getAttackerMat().getCardList(Location.DECK);
         for (Card card : cardsOfDeck) {
-            if (card instanceof SpellTrapCard) {
-                if (((SpellTrapCard) card).getType().equals(SpellTrapType.SPELL) &&
-                        ((SpellTrapCard) card).getEffectType().equals(EffectType.FIELD)) spellsOfDeck.add(card);
+            if (card instanceof SpellTrap) {
+                if (((SpellTrap) card).getType().equals(SpellTrapType.SPELL)
+                        && ((SpellTrap) card).getEffectType().equals(EffectType.FIELD))
+                    spellsOfDeck.add(card);
             }
         }
         if (spellsOfDeck.isEmpty())

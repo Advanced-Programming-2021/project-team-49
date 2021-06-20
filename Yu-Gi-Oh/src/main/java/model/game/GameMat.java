@@ -1,6 +1,7 @@
 package model.game;
 
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
+import model.game.card.Card;
 
 import java.util.*;
 

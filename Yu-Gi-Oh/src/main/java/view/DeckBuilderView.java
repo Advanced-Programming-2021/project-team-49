@@ -2,7 +2,7 @@ package view;
 
 import controller.DeckBuilderController;
 import exception.GameErrorException;
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
 import model.cardtemplate.SpellTrapCard;
 
@@ -46,10 +46,10 @@ public class DeckBuilderView extends AbstractView {
         return deckInfo.toString();
     }
 
-    private static String showAllCards(List<Card> cards) {
+    private static String showAllCards(List<CardTemplate> cards) {
         StringBuilder allCards = new StringBuilder();
 
-        for (Card card : cards)
+        for (CardTemplate card : cards)
             allCards.append(card.getName()).append(": ").append(card.getDescription()).append("\n");
 
         return allCards.toString();

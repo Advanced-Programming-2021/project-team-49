@@ -2,22 +2,45 @@ package model.game.card;
 
 import model.cardtemplate.*;
 
-public class Monster extends MonsterCard implements Castable {
+public class Monster extends Card {
 
     private int attack;
     private int defense;
-    private boolean faceUp;
     private boolean attacker;
     private boolean effect;
     private boolean positionChanged;
     private boolean usedInAttack;
+    private final MonsterCard monsterCard;
 
     public Monster(MonsterCard card) {
-        super(card.getName(), card.getDescription(), card.getEffect(), card.getLevel(), card.getAttribute(),
-                card.getCardType(), card.getMonsterType(), card.getBaseAttack(), card.getBaseDefense(),
-                card.getPrice());
+        super(card);
+        this.monsterCard = card;
         attack = card.getBaseAttack();
         defense = card.getBaseDefense();
+    }
+
+    public int getLevel() {
+        return monsterCard.getLevel();
+    }
+
+    public Attribute getAttribute() {
+        return monsterCard.getAttribute();
+    }
+
+    public CardType getCardType() {
+        return monsterCard.getCardType();
+    }
+
+    public MonsterType getMonsterType() {
+        return monsterCard.getMonsterType();
+    }
+
+    public int getBaseAttack() {
+        return monsterCard.getBaseAttack();
+    }
+
+    public int getBaseDefense() {
+        return monsterCard.getBaseDefense();
     }
 
     public int getAttack() {
@@ -34,14 +57,6 @@ public class Monster extends MonsterCard implements Castable {
 
     public void setDefense(int defense) {
         this.defense = defense;
-    }
-
-    public boolean isFaceUp() {
-        return faceUp;
-    }
-
-    public void setFaceUp(boolean faceUp) {
-        this.faceUp = faceUp;
     }
 
     public boolean isAttacker() {

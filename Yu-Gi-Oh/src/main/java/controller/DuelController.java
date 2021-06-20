@@ -5,7 +5,7 @@ import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.game.*;
-import model.game.card.Castable;
+import model.game.card.Card;
 import model.game.card.Monster;
 import model.game.card.SpellTrap;
 import model.user.User;
@@ -137,7 +137,6 @@ public class DuelController extends AbstractController {
             for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
                 ((Monster) card).setPositionChanged(false);
             isMonsterAddedToField = false;
-
         }
     }
 
@@ -189,7 +188,7 @@ public class DuelController extends AbstractController {
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");
                 field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
-                ((SpellTrap) getSelectedCard()).setFaceUp(true);
+                getSelectedCard().setFaceUp(true);
                 break;
         }
     }
@@ -198,15 +197,15 @@ public class DuelController extends AbstractController {
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
-        else if (!(card instanceof SpellTrapCard)
-                || ((SpellTrapCard) card).getType() == SpellTrapType.TRAP)
+        else if (!(card instanceof SpellTrap)
+                || ((SpellTrap) card).getType() == SpellTrapType.TRAP)
             throw new GameErrorException("activate effect is only for spell cards");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't activate an effect on this turn");
-        else if (((Castable) card).isFaceUp())
+        else if (card.isFaceUp())
             throw new GameErrorException("you have already activated this card");
         else if (getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
-                ((SpellTrapCard) card).getEffectType() != EffectType.FIELD)
+                ((SpellTrap) card).getEffectType() != EffectType.FIELD)
             throw new GameErrorException("spell card zone is full");
         else
             callEffect();
@@ -215,34 +214,34 @@ public class DuelController extends AbstractController {
     private boolean isRitualSummonPossible() {
         int sumOfLevels = 0;
         for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
-            sumOfLevels += ((MonsterCard) card).getLevel();
+            sumOfLevels += ((Monster) card).getLevel();
         for (Card card : field.getAttackerMat().getCardList(Location.HAND)) {
-            if (card instanceof MonsterCard)
-                sumOfLevels += ((MonsterCard) card).getLevel();
+            if (card instanceof Monster)
+                sumOfLevels += ((Monster) card).getLevel();
         }
 
         List<Card> ritualCards = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.HAND))
-            if (card instanceof MonsterCard)
-                if (((MonsterCard) card).getCardType() == CardType.RITUAL)
+            if (card instanceof Monster)
+                if (((Monster) card).getCardType() == CardType.RITUAL)
                     ritualCards.add(card);
 
         if (ritualCards.isEmpty())
             return false;
         for (Card ritualCard : ritualCards)
-            if (((MonsterCard) ritualCard).getLevel() > sumOfLevels)
+            if (((Monster) ritualCard).getLevel() > sumOfLevels)
                 return false;
 
         return true;
     }
 
     private boolean ritualSummon() {
-        if (((MonsterCard) getSelectedCard()).getCardType() != CardType.RITUAL)
+        if (((Monster) getSelectedCard()).getCardType() != CardType.RITUAL)
             return false;
 
         boolean isRitualSpellActivated = false;
         for (Card card : field.getAttackerMat().getCardList(Location.SPELL_AND_TRAP_ZONE)) {
-            if (card.getEffect() == Effect.ADVANCED_RITUAL_ART && ((SpellTrap) card).isFaceUp()) {
+            if (card.getEffect() == Effect.ADVANCED_RITUAL_ART && card.isFaceUp()) {
                 isRitualSpellActivated = true;
                 break;
             }
@@ -252,14 +251,14 @@ public class DuelController extends AbstractController {
 
         List<Card> monsterCards = new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE));
         for (Card card : field.getAttackerMat().getCardList(Location.HAND)) {
-            if (card instanceof MonsterCard)
+            if (card instanceof Monster)
                 monsterCards.add(card);
         }
 
         List<Card> nominatedCardsToTribute = new ArrayList<>();
         int selected;
         int sumOfLevels = 0;
-        int ritualCardLevel = ((MonsterCard) getSelectedCard()).getLevel();
+        int ritualCardLevel = ((Monster) getSelectedCard()).getLevel();
         do {
             DuelView.showCardListStringView(monsterCards);
             do {
@@ -267,7 +266,7 @@ public class DuelController extends AbstractController {
                 if (selected == 0)
                     throw new GameErrorException("cancelled");
             } while (selected == -1);
-            sumOfLevels += ((MonsterCard) monsterCards.get(selected - 1)).getLevel();
+            sumOfLevels += ((Monster) monsterCards.get(selected - 1)).getLevel();
             nominatedCardsToTribute.add(monsterCards.get(selected - 1));
             monsterCards.remove(selected - 1);
         } while (sumOfLevels < ritualCardLevel);
@@ -287,13 +286,13 @@ public class DuelController extends AbstractController {
         } while (selected == -1);
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        ((Monster) getSelectedCard()).setFaceUp(selected == 1);
+        getSelectedCard().setFaceUp(selected == 1);
 
         return true;
     }
 
     private boolean tributeSummonOrSet(boolean summon) {
-        int level = ((MonsterCard) getSelectedCard()).getLevel();
+        int level = ((Monster) getSelectedCard()).getLevel();
         int monsterCardCount = field.getAttackerMat().getCardCount(Location.MONSTER_ZONE);
         if (level < 5)
             return false;
@@ -322,7 +321,7 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
         if (summon)
-            ((Monster) getSelectedCard()).setFaceUp(true);
+            getSelectedCard().setFaceUp(true);
 
         return true;
     }
@@ -331,7 +330,7 @@ public class DuelController extends AbstractController {
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
-        else if (selectedCardLocation != Location.HAND || !(card instanceof MonsterCard))
+        else if (selectedCardLocation != Location.HAND || !(card instanceof Monster))
             throw new GameErrorException("you can't summon this card");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("action not allowed in this phase");
@@ -345,7 +344,7 @@ public class DuelController extends AbstractController {
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        ((Monster) card).setFaceUp(true);
+        card.setFaceUp(true);
         isMonsterAddedToField = true;
     }
 
@@ -398,8 +397,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't set this card");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (card instanceof SpellTrapCard
-                && ((SpellTrapCard) card).getEffectType() == EffectType.FIELD) {
+        else if (card instanceof SpellTrap && ((SpellTrap) card).getEffectType() == EffectType.FIELD) {
             field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.FIELD_ZONE);
             return;
         } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
@@ -426,7 +424,7 @@ public class DuelController extends AbstractController {
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
-        else if (isOpponentCardSelected && !((Castable) card).isFaceUp())
+        else if (isOpponentCardSelected && !card.isFaceUp())
             throw new GameErrorException("card is not visible");
 
         DuelView.showCardInfoStringView(card);

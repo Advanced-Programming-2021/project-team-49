@@ -1,18 +1,29 @@
 package model.game.card;
 
+import model.cardtemplate.EffectType;
 import model.cardtemplate.SpellTrapCard;
+import model.cardtemplate.SpellTrapType;
+import model.cardtemplate.Status;
 
-public class SpellTrap extends SpellTrapCard implements Castable {
+public class SpellTrap extends Card {
 
-    private boolean faceUp;
+    private final SpellTrapCard spellTrapCard;
 
     public SpellTrap(SpellTrapCard card) {
-        super(card.getName(), card.getDescription(), card.getEffect(), card.getEffectType(), card.getStatus(),
-                card.getType(), card.getPrice());
+        super(card);
+        this.spellTrapCard = card;
     }
 
-    public boolean isFaceUp() {
-        return faceUp;
+    public EffectType getEffectType() {
+        return spellTrapCard.getEffectType();
+    }
+
+    public Status getStatus() {
+        return spellTrapCard.getStatus();
+    }
+
+    public SpellTrapType getType() {
+        return spellTrapCard.getType();
     }
 
     public void setFaceUp(boolean faceUp) {

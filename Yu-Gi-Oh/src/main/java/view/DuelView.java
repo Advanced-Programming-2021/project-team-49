@@ -4,15 +4,14 @@ import controller.DuelController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import model.cardtemplate.Card;
+import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
-import model.cardtemplate.SpellTrapCard;
-import model.cardtemplate.SpellTrapType;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;
-import model.game.card.Castable;
+import model.game.card.Card;
 import model.game.card.Monster;
+import model.game.card.SpellTrap;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -120,14 +119,14 @@ public class DuelView extends AbstractView {
     private static String getCardStringView(Card card) {
         if (card == null) {
             return "E ";
-        } else if (card instanceof MonsterCard) {
+        } else if (card instanceof Monster) {
             if (((Monster) card).isAttacker())
                 return "OO";
-            else if (((Monster) card).isFaceUp())
+            else if (card.isFaceUp())
                 return "DO";
             else
                 return "DH";
-        } else if (((Castable) card).isFaceUp()) {
+        } else if (card.isFaceUp()) {
             return "O ";
         } else
             return "H ";
@@ -142,26 +141,20 @@ public class DuelView extends AbstractView {
 
     public static void showCardInfoStringView(Card card) {
         StringBuilder cardInfo = new StringBuilder();
-        if (card instanceof MonsterCard) {
-            MonsterCard monsterCard = (MonsterCard) card;
-            cardInfo.append("Name: ").append(monsterCard.getName()).append("\n")
-                    .append("Level: ").append(monsterCard.getLevel()).append("\n")
-                    .append("SpellTrapType: ").append(monsterCard.getMonsterType()).append("\n")
-                    .append("ATK: ").append(monsterCard.getBaseAttack()).append("\n")
-                    .append("DEF: ").append(monsterCard.getBaseDefense()).append("\n")
-                    .append("Description: ").append(monsterCard.getDescription());
-        } else if (((SpellTrapCard) card).getType() == SpellTrapType.SPELL) {
-            SpellTrapCard spellCard = (SpellTrapCard) card;
-            cardInfo.append("Name: ").append(spellCard.getName()).append("\n")
-                    .append("Spell\n")
-                    .append("SpellTrapType: ").append(spellCard.getEffectType()).append("\n")
-                    .append("Description: ").append(spellCard.getDescription());
+        if (card instanceof Monster) {
+            Monster monster = (Monster) card;
+            cardInfo.append("Name: ").append(monster.getName()).append("\n")
+                    .append("Level: ").append(monster.getLevel()).append("\n")
+                    .append("Type: ").append(monster.getMonsterType()).append("\n")
+                    .append("ATK: ").append(monster.getBaseAttack()).append("\n")
+                    .append("DEF: ").append(monster.getBaseDefense()).append("\n")
+                    .append("Description: ").append(monster.getDescription());
         } else {
-            SpellTrapCard trapCard = (SpellTrapCard) card;
-            cardInfo.append("Name: ").append(trapCard.getName()).append("\n")
-                    .append("Trap\n")
-                    .append("SpellTrapType: ").append(trapCard.getEffectType()).append("\n")
-                    .append("Description: ").append(trapCard.getDescription());
+            SpellTrap spellTrap = (SpellTrap) card;
+            cardInfo.append("Name: ").append(spellTrap.getName()).append("\n")
+                    .append(spellTrap.getType().getType())
+                    .append("Type: ").append(spellTrap.getEffectType()).append("\n")
+                    .append("Description: ").append(spellTrap.getDescription());
         }
         System.out.println(cardInfo);
     }
@@ -171,8 +164,8 @@ public class DuelView extends AbstractView {
         for (int i = 0; i < list.size(); i++) {
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")
                     .append(list.get(i).getDescription());
-            if (list.get(i) instanceof MonsterCard)
-                cards.append("\nLevel: ").append(((MonsterCard) list.get(i)).getLevel());
+            if (list.get(i) instanceof Monster)
+                cards.append("\nLevel: ").append(((Monster) list.get(i)).getLevel());
         }
         System.out.println(cards);
     }
@@ -281,7 +274,7 @@ public class DuelView extends AbstractView {
                     String position = getArgument("position", input, "set");
                     controller.setPosition(position);
                     System.out.println("monster card position changed successfully");
-                } else if (controller.getSelectedCard() instanceof MonsterCard)
+                } else if (controller.getSelectedCard() instanceof Monster)
                     controller.setMonster();
                 else
                     controller.setSpellOrTrap();
