@@ -112,7 +112,7 @@ public class DeckBuilderView extends AbstractView {
             } else if (input.startsWith("deck show")) {
                 String deckName = getArgument("deck", "side", input, "deck show");
 
-                ArrayList<SpellTrapCard> spellTrapCards = new ArrayList<>();
+                List<SpellTrapCard> spellTrapCards = new ArrayList<>();
                 spellTrapCards.addAll(controller.getSpells(deckName, isFlagUsedInCommand("side", input)));
                 spellTrapCards.addAll(controller.getTraps(deckName, isFlagUsedInCommand("side", input)));
 

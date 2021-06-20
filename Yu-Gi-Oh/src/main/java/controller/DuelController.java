@@ -12,6 +12,7 @@ import model.user.User;
 import view.DuelView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DuelController extends AbstractController {
 
@@ -220,7 +221,7 @@ public class DuelController extends AbstractController {
                 sumOfLevels += ((MonsterCard) card).getLevel();
         }
 
-        ArrayList<Card> ritualCards = new ArrayList<>();
+        List<Card> ritualCards = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.HAND))
             if (card instanceof MonsterCard)
                 if (((MonsterCard) card).getCardType() == CardType.RITUAL)
@@ -249,13 +250,13 @@ public class DuelController extends AbstractController {
         if (!isRitualSpellActivated)
             throw new GameErrorException("\"Advanced Ritual Art\" must be activated first");
 
-        ArrayList<Card> monsterCards = new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE));
+        List<Card> monsterCards = new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE));
         for (Card card : field.getAttackerMat().getCardList(Location.HAND)) {
             if (card instanceof MonsterCard)
                 monsterCards.add(card);
         }
 
-        ArrayList<Card> nominatedCardsToTribute = new ArrayList<>();
+        List<Card> nominatedCardsToTribute = new ArrayList<>();
         int selected;
         int sumOfLevels = 0;
         int ritualCardLevel = ((MonsterCard) getSelectedCard()).getLevel();
@@ -408,11 +409,11 @@ public class DuelController extends AbstractController {
     }
 
     public void showGraveyard(boolean opponent) {
-        ArrayList<Card> graveyard;
+        List<Card> graveyard;
         if (opponent)
-            graveyard = (ArrayList<Card>) field.getDefenderMat().getCardList(Location.GRAVEYARD);
+            graveyard = field.getDefenderMat().getCardList(Location.GRAVEYARD);
         else
-            graveyard = (ArrayList<Card>) field.getAttackerMat().getCardList(Location.GRAVEYARD);
+            graveyard = field.getAttackerMat().getCardList(Location.GRAVEYARD);
 
         if (graveyard.isEmpty())
             throw new GameErrorException("graveyard is empty");
