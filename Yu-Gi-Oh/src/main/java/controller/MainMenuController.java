@@ -29,7 +29,7 @@ public class MainMenuController extends AbstractController {
                 nextController = new ScoreboardController(masterController, user, database.getUserbase());
                 break;
             case "Profile":
-                nextController = new ProfileController(masterController, user);
+                nextController = new ProfileController(masterController, user, database.getUserbase());
                 break;
             case "Shop":
                 nextController = new ShopController(masterController, user, database);
