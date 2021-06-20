@@ -1,11 +1,9 @@
 package view;
 
 import controller.ShopController;
+import exception.GameErrorException;
 import model.cardtemplate.Card;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import model.database.Database;
 
 public class ShopView extends AbstractView {
 
@@ -17,27 +15,25 @@ public class ShopView extends AbstractView {
 
     @Override
     protected boolean runCommand(String input) {
-        String buyCardStyle = "shop buy (?<cardName>\\.+)";
-        if(input.matches(buyCardStyle)) {
-            controller.buyCard(getCommandMatcher(input, buyCardStyle));
+        try {
+            if (input.startsWith("shop buy"))
+                controller.buyCard(input.substring(9));
+            else if (input.equals("shop show --all"))
+                showAllCards(controller);
+            else if (input.startsWith("card show"))
+                showCard(controller, input.substring(10));
+        } catch (GameErrorException exception) {
+            System.out.println(exception.getMessage());
         }
-        else if (input.equals("shop show --all"))
-            showAllCards();
         return true;
     }
 
-    private String getCommandMatcher(String input, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        return matcher.group("cardName");
+    private static void showAllCards(ShopController controller) {
+        for (Card card : controller.getSortedCards())
+            System.out.println(card.getName() + ": " + card.getPrice());
     }
 
-    private void showAllCards() {
-        ArrayList<Card> allCards;
-        allCards = Card.getAllCards();
-        Collections.sort(allCards);
-        for (Card card : Card.getAllCards()) {
-            System.out.println(card);
-        }
+    private static void showCard(ShopController controller, String cardName) {
+        DuelView.showCardInfoStringView(controller.getCard(cardName));
     }
 }

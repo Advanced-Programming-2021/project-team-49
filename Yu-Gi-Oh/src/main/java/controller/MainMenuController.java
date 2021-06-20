@@ -32,7 +32,7 @@ public class MainMenuController extends AbstractController {
                 nextController = new ProfileController(masterController, user);
                 break;
             case "Shop":
-                nextController = new ShopController(masterController, user, database.getShop());
+                nextController = new ShopController(masterController, user, database);
                 break;
             case "Import/Export":
                 nextController = new ImportExportController(masterController, user, database);

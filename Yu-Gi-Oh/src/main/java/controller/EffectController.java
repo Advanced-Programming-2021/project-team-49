@@ -1,6 +1,5 @@
 package controller;
 
-import exception.EndOfRoundException;
 import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.game.Field;
@@ -94,7 +93,6 @@ public class EffectController {
             field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
         }
     }
-
 
     public void harpiesFeatherDuster() {
         List<Card> spellsAndTraps;

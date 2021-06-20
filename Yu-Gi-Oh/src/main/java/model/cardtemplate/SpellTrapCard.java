@@ -6,8 +6,9 @@ public class SpellTrapCard extends Card {
     private final Status status;
     private final Type type;
 
-    public SpellTrapCard(String name, String description, Effect effect, EffectType effectType, Status status, Type type) {
-        super(name, description, effect);
+    public SpellTrapCard(String name, String description, Effect effect, EffectType effectType,
+                         Status status, Type type, int price) {
+        super(name, description, effect, price);
         this.effectType = effectType;
         this.status = status;
         this.type = type;

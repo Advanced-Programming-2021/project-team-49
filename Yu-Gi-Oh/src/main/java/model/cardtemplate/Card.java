@@ -5,11 +5,13 @@ public abstract class Card {
     protected final String name;
     protected final Effect effect;
     protected final String description;
+    protected final int price;
 
-    public Card(String name, String description, Effect effect) {
+    public Card(String name, String description, Effect effect, int price) {
         this.name = name;
         this.description = description;
         this.effect = effect;
+        this.price = price;
     }
 
     public String getName() {
@@ -24,8 +26,7 @@ public abstract class Card {
         return effect;
     }
 
-    @Override
-    public String toString() {
-        return getName() + ":" + getDescription();
+    public int getPrice() {
+        return price;
     }
 }

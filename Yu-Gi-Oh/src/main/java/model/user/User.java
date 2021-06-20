@@ -11,7 +11,7 @@ public class User {
     private int coins;
     private int score = 0;
     private final Map<Card, Integer> ownedCards = new HashMap<>();
-    private ArrayList<Deck> decks = new ArrayList<>();
+    private final ArrayList<Deck> decks = new ArrayList<>();
     private Deck activeDeck = null;
 
     public User(String username, String nickname, String password, int coins) {
@@ -67,6 +67,13 @@ public class User {
         ArrayList<Card> cards = new ArrayList<>(ownedCards.keySet());
         cards.sort(Comparator.comparing(Card::getName));
         return cards;
+    }
+
+    public void addCard(Card card) {
+        if (ownedCards.containsKey(card))
+            ownedCards.replace(card, ownedCards.get(card) + 1);
+        else
+            ownedCards.put(card, 1);
     }
 
     public void addDeck(Deck deck) {

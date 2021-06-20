@@ -12,7 +12,6 @@ import model.user.User;
 import view.DuelView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DuelController extends AbstractController {
 
@@ -242,10 +241,10 @@ public class DuelController extends AbstractController {
 
         boolean isRitualSpellActivated = false;
         for (Card card : field.getAttackerMat().getCardList(Location.SPELL_AND_TRAP_ZONE)) {
-           if (card.getEffect() == Effect.ADVANCED_RITUAL_ART && ((SpellTrap) card).isFaceUp()) {
-               isRitualSpellActivated = true;
-               break;
-           }
+            if (card.getEffect() == Effect.ADVANCED_RITUAL_ART && ((SpellTrap) card).isFaceUp()) {
+                isRitualSpellActivated = true;
+                break;
+            }
         }
         if (!isRitualSpellActivated)
             throw new GameErrorException("\"Advanced Ritual Art\" must be activated first");

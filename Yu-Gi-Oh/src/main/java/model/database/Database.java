@@ -2,7 +2,6 @@ package model.database;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.user.User;
 
@@ -14,8 +13,7 @@ import java.util.List;
 public class Database {
 
     private final Userbase userbase = new Userbase();
-    private final Shop shop = new Shop();
-    private static final List<Card> cards = new ArrayList<>();
+    private  final List<Card> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
     }
@@ -24,16 +22,13 @@ public class Database {
         return userbase;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public static Card getCardByName(String name) {
+    public Card getCardByName(String name) {
         for (Card card : cards) {
             if (card.getName().equals(name))
                 return card;
         }
-        throw new GameErrorException("there is no card with this name");
+        return null;
+
     }
 
     public void saveUserbase(Userbase userbase) {
@@ -44,26 +39,33 @@ public class Database {
 
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     private CSVReader readFile(String address) throws IOException {
+        // TODO remove first line of csv files
         return new CSVReader(new FileReader(address));
     }
 
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
-        while ((info = csvReader.readNext()) != null) {
-            Card card = createMonsterCard(info);
-            cards.add(card);
-            shop.addCard(card, Integer.parseInt(info[8]));
-        }
+        while ((info = csvReader.readNext()) != null)
+            try {
+                cards.add(createMonsterCard(info));
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
     }
 
     private void loadSpellTrapCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
-        while ((info = csvReader.readNext()) != null) {
-            Card card = createSpellTrapCard(info);
-            cards.add(card);
-            shop.addCard(card, Integer.parseInt(info[5]));
-        }
+        while ((info = csvReader.readNext()) != null)
+            try {
+                cards.add(createSpellTrapCard(info));
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
     }
 
     private Card createMonsterCard(String[] info) {
@@ -107,8 +109,8 @@ public class Database {
         } else
             effect = Effect.NONE;
 
-        return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]), attribute,
-                cardType, monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]));
+        return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]), attribute, cardType,
+                monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]), Integer.parseInt(info[8]));
     }
 
     private Card createSpellTrapCard(String[] info) {
@@ -140,12 +142,11 @@ public class Database {
         }
         // TODO if effect was null, throw exception
 
-        for (Type value : Type.values()) {
-            if (value.getType().equals(info[1]))
-                return new SpellTrapCard(info[0], info[3], effect, effectType, status, value);
-        }
-
-        // TODO throw exception
-        return null; // delete after adding exception
+        if (info[1].equals(Type.TRAP.getType()))
+            return new SpellTrapCard(info[0], info[3], effect, effectType,
+                    status, Type.TRAP, Integer.parseInt(info[5]));
+        else
+            return new SpellTrapCard(info[0], info[3], effect, effectType,
+                    status, Type.SPELL, Integer.parseInt(info[5]));
     }
 }

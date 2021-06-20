@@ -3,17 +3,19 @@ package controller;
 import exception.GameErrorException;
 import model.cardtemplate.Card;
 import model.database.Database;
-import model.database.Shop;
 import model.user.User;
 import view.ShopView;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class ShopController extends AbstractController {
 
-    private final Shop shop;
+    private final Database database;
 
-    public ShopController(MasterController masterController, User user, Shop shop) {
+    public ShopController(MasterController masterController, User user, Database database) {
         super(masterController, user);
-        this.shop = shop;
+        this.database = database;
         title = "Shop Menu";
     }
 
@@ -22,15 +24,23 @@ public class ShopController extends AbstractController {
     }
 
     public void buyCard(String cardName) {
-        Card card = Database.getCardByName(cardName);
-        if (user.getCoins() >= shop.getPriceByCard(card)) {
-            user.getActiveDeck().addCardToMainDeck(card);
-            user.removeCoins(shop.getPriceByCard(card));
-        } else throw new GameErrorException("not enough money");
+        Card card = database.getCardByName(cardName);
+        if (user.getCoins() < card.getPrice())
+            throw new GameErrorException("not enough money");
+
+        user.removeCoins(card.getPrice());
+        user.addCard(card);
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public Card getCard(String cardName) {
+        Card card = database.getCardByName(cardName);
+        if (card == null)
+            throw new GameErrorException("there is no card with this name");
+        return card;
+    }
+
+    public List<Card> getSortedCards() {
+        database.getCards().sort(Comparator.comparing(Card::getName));
+        return database.getCards();
     }
 }

@@ -10,8 +10,8 @@ public class MonsterCard extends Card {
     private final int baseDefense;
 
     public MonsterCard(String name, String description, Effect effect, int level, Attribute attribute,
-                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefense) {
-        super(name, description, effect);
+                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefense, int price) {
+        super(name, description, effect, price);
         this.level = level;
         this.attribute = attribute;
         this.cardType = cardType;

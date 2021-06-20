@@ -153,13 +153,13 @@ public class DuelView extends AbstractView {
         } else if (((SpellTrapCard) card).getType() == Type.SPELL) {
             SpellTrapCard spellCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(spellCard.getName()).append("\n")
-                    .append("SpellTrapCard\n")
+                    .append("Spell\n")
                     .append("Type: ").append(spellCard.getEffectType()).append("\n")
                     .append("Description: ").append(spellCard.getDescription());
         } else {
             SpellTrapCard trapCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(trapCard.getName()).append("\n")
-                    .append("TrapCard\n")
+                    .append("Trap\n")
                     .append("Type: ").append(trapCard.getEffectType()).append("\n")
                     .append("Description: ").append(trapCard.getDescription());
         }
@@ -271,7 +271,7 @@ public class DuelView extends AbstractView {
                 System.out.println("card deselected");
             } else if (input.startsWith("select"))
                 selectCard(controller, input);
-            else if (input.equals("activate spell"))
+            else if (input.equals("activate effect"))
                 controller.activateSpell();
             else if (input.startsWith("summon")) {
                 controller.summon();
@@ -291,7 +291,7 @@ public class DuelView extends AbstractView {
             else if (input.equals("card show --selected"))
                 controller.showSelectedCard();
             else if (input.startsWith("attack "))
-                controller.attack(Integer.parseInt(input.substring("attack ".length())));
+                controller.attack(Integer.parseInt(input.substring(7)));
             else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
