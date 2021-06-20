@@ -14,7 +14,8 @@ public class Monster extends MonsterCard implements Castable {
 
     public Monster(MonsterCard card) {
         super(card.getName(), card.getDescription(), card.getEffect(), card.getLevel(), card.getAttribute(),
-                card.getCardType(), card.getMonsterType(), card.getBaseAttack(), card.getBaseDefense());
+                card.getCardType(), card.getMonsterType(), card.getBaseAttack(), card.getBaseDefense(),
+                card.getPrice());
         attack = card.getBaseAttack();
         defense = card.getBaseDefense();
     }
