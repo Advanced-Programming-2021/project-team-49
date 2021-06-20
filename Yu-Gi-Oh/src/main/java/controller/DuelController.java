@@ -1,5 +1,6 @@
 package controller;
 
+import controller.effects.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
@@ -154,35 +155,38 @@ public class DuelController extends AbstractController {
 
         switch (effect) {
             case MONSTER_REBORN:
-                effectController.monsterReborn();
+                new MonsterReborn(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case TERRAFORMING:
-                effectController.terraforming();
+                new Terraforming(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case POT_OF_GREED:
-                effectController.potOfGreed();
+                new PotOfGreed(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case RAIGEKI:
-                effectController.raigeki();
+                new Raigeki(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
                 break;
 
             case CHANGE_OF_HEART:
 
+                break;
+
             case HARPIES_FEATHER_DUSTER:
-                effectController.harpiesFeatherDuster();
+                new HarpiesFeatherDuster(field, this).action();
                 field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
                 field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                break;
 
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
