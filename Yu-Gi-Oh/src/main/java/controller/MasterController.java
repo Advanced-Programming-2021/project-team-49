@@ -22,6 +22,13 @@ public class MasterController {
         nextController = new LoginController(this, database.getUserbase());
         while (nextController != null)
             nextController.run();
+
+        try {
+            database.saveUserbase();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            System.out.println("Couldn't save database");
+        }
     }
 
     public void setNextController(Controller nextController) {

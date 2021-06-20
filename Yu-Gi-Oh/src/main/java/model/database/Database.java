@@ -1,21 +1,43 @@
 package model.database;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import model.cardtemplate.*;
-import model.user.User;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
 
-    private final Userbase userbase = new Userbase();
+    private static final Gson GSON;
+    static {
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        GSON = builder.create();
+    }
+    private final Userbase userbase;
     private  final List<Card> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
+        Userbase userbase;
+        try {
+            Type USERBASE_TYPE = new TypeToken<Userbase>() {}.getType();
+            JsonReader reader = new JsonReader(new FileReader("userbase.json"));
+
+            if (!reader.hasNext())
+                userbase = new Userbase();
+            else
+                userbase = GSON.fromJson(reader, USERBASE_TYPE);
+        } catch (IOException exception) {
+            userbase = new Userbase();
+        }
+        this.userbase = userbase;
     }
 
     public Userbase getUserbase() {
@@ -31,12 +53,14 @@ public class Database {
 
     }
 
-    public void saveUserbase(Userbase userbase) {
+    public void saveUserbase() throws IOException {
+        new File("savedfiles").mkdirs();
+        File file = new File("savedfiles/userbase.json");
+        file.createNewFile();
 
-    }
-
-    public void saveUser(User user) {
-
+        FileWriter writer = new FileWriter("savedfiles/userbase.json");
+        writer.write(GSON.toJson(userbase));
+        writer.close();
     }
 
     public List<Card> getCards() {
@@ -142,11 +166,11 @@ public class Database {
         }
         // TODO if effect was null, throw exception
 
-        if (info[1].equals(Type.TRAP.getType()))
+        if (info[1].equals(SpellTrapType.TRAP.getType()))
             return new SpellTrapCard(info[0], info[3], effect, effectType,
-                    status, Type.TRAP, Integer.parseInt(info[5]));
+                    status, SpellTrapType.TRAP, Integer.parseInt(info[5]));
         else
             return new SpellTrapCard(info[0], info[3], effect, effectType,
-                    status, Type.SPELL, Integer.parseInt(info[5]));
+                    status, SpellTrapType.SPELL, Integer.parseInt(info[5]));
     }
 }
