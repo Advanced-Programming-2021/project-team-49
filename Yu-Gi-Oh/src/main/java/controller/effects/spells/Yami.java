@@ -20,6 +20,7 @@ public class Yami extends EffectController {
         EffectController effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
             effect.deActive();
+        field.getAttackerMat().setFieldZoneEffect(this);
 
         List<Card> cards = getBothMonsterZones();
 

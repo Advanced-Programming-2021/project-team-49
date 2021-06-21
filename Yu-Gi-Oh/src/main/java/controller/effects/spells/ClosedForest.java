@@ -2,16 +2,18 @@ package controller.effects.spells;
 
 import controller.DuelController;
 import controller.EffectController;
+import controller.effects.Limit;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
 import java.util.List;
 
-public class Forest extends EffectController {
+public class ClosedForest extends EffectController {
 
-    public Forest(Card card, Field field, DuelController controller) {
+    public ClosedForest(Card card, Field field, DuelController controller) {
         super(card, field, controller);
     }
 
@@ -22,17 +24,21 @@ public class Forest extends EffectController {
             effect.deActive();
         field.getAttackerMat().setFieldZoneEffect(this);
 
+        int monstersInGraveyard = 0;
+        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof Monster)
+                monstersInGraveyard++;
+        }
+
         List<Card> cards = getBothMonsterZones();
 
         for (Card card : cards) {
             Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.INSECT
-                    || monster.getMonsterType() == MonsterType.BEAST
-                    || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
-                monster.setAttack(200);
-                monster.setDefense(200);
-            }
+            if (monster.getMonsterType() == MonsterType.BEAST)
+                monster.setAttack(monstersInGraveyard * 100);
         }
+
+        field.getDefenderMat().addLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);
     }
 
     @Override
@@ -41,12 +47,10 @@ public class Forest extends EffectController {
 
         for (Card card : cards) {
             Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.INSECT
-                    || monster.getMonsterType() == MonsterType.BEAST
-                    || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
+            if (monster.getMonsterType() == MonsterType.BEAST)
                 monster.setAttack(0);
-                monster.setDefense(0);
-            }
         }
+
+        field.getDefenderMat().removeLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);
     }
 }
