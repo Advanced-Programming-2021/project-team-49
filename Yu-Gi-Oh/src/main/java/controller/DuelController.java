@@ -195,6 +195,10 @@ public class DuelController extends AbstractController {
                 new SpellAbsorption(getSelectedCard(), field, this).action();
                 break;
 
+            case MESSENGER_OF_PEACE:
+                new MessengerOfPeace(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");
@@ -291,7 +295,7 @@ public class DuelController extends AbstractController {
         }
 
         do {
-            selected = DuelView.selectPosition();
+            selected = DuelView.selectAnOption(new String[]{"Attacking", "Defensive"});
             if (selected == 0)
                 throw new GameErrorException("cancelled");
         } while (selected == -1);

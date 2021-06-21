@@ -191,18 +191,18 @@ public class DuelView extends AbstractView {
         return choice;
     }
 
-    public static int selectPosition() {
-        System.out.println("select position:\n" +
-                "1. Attacking\n" +
-                "2. Defensive");
+    public static int selectAnOption(String[] options) {
+        System.out.println("select:");
+        for (int i = 1; i <= options.length; i++)
+            System.out.println(i + ". " + options[i - 1]);
 
         String input = removeExtraWhitespace(INPUT_STREAM.nextLine());
         if (input.equalsIgnoreCase("cancel"))
             return 0;
 
         int choice = Integer.parseInt(input);
-        if (choice < 1 || choice > 2) {
-            System.out.println("Choose between Attacking or Defensive");
+        if (choice < 1 || choice > options.length) {
+            System.out.println("Enter a number from 1 to " + options.length);
             return -1;
         }
         return choice;
