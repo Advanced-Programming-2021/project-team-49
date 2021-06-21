@@ -13,11 +13,15 @@ import java.util.List;
 
 public class MonsterReborn extends EffectController {
 
-    public MonsterReborn(Field field, DuelController controller) {
-        super(field, controller);
+    public MonsterReborn(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
+        if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
+            throw new GameErrorException("monster card zone is full");
+
         List<Card> bothGraveyards = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
             if (card instanceof Monster)
@@ -38,6 +42,8 @@ public class MonsterReborn extends EffectController {
         else
             field.getDefenderMat().removeCard(card, Location.GRAVEYARD);
 
-        field.getAttackerMat().addCard(card, Location.SPELL_AND_TRAP_ZONE);
+        field.getAttackerMat().addCard(card, Location.MONSTER_ZONE);
+
+        moveCardToGraveyard();
     }
 }

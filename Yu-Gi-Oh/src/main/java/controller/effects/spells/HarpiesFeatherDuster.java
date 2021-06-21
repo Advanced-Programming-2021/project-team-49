@@ -11,10 +11,11 @@ import java.util.List;
 
 public class HarpiesFeatherDuster extends EffectController {
 
-    public HarpiesFeatherDuster(Field field, DuelController controller) {
-        super(field, controller);
+    public HarpiesFeatherDuster(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
         List<Card> spellsAndTraps = field.getDefenderMat().getCardList(Location.SPELL_AND_TRAP_ZONE);
         if (spellsAndTraps.isEmpty())
@@ -22,5 +23,7 @@ public class HarpiesFeatherDuster extends EffectController {
 
         for (Card card : spellsAndTraps)
             field.getDefenderMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
+
+        moveCardToGraveyard();
     }
 }

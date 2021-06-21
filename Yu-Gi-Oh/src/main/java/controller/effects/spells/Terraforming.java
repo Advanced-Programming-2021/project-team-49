@@ -16,10 +16,11 @@ import java.util.Random;
 
 public class Terraforming extends EffectController {
 
-    public Terraforming(Field field, DuelController controller) {
-        super(field, controller);
+    public Terraforming(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
         List<Card> fieldSpells = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.DECK)) {
@@ -35,5 +36,7 @@ public class Terraforming extends EffectController {
         int random = new Random().nextInt(fieldSpells.size() - 1);
         field.getAttackerMat().addCard(fieldSpells.get(random), Location.HAND);
         field.getAttackerMat().removeCard(fieldSpells.get(random), Location.DECK);
+
+        moveCardToGraveyard();
     }
 }

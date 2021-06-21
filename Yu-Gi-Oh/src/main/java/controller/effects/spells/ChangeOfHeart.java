@@ -14,10 +14,11 @@ public class ChangeOfHeart extends EffectController {
 
     private Card enemyCard;
 
-    public ChangeOfHeart(Field field, DuelController controller) {
-        super(field, controller);
+    public ChangeOfHeart(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
         List<Card> enemyMonsters = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
 
@@ -30,8 +31,11 @@ public class ChangeOfHeart extends EffectController {
 
         field.getDefenderMat().removeCard(enemyCard, Location.MONSTER_ZONE);
         field.getAttackerMat().addCard(enemyCard, Location.MONSTER_ZONE);
+
+        moveCardToGraveyard();
     }
 
+    @Override
     public void notifier(Event event) {
         if (event != Event.END_TURN)
             return;

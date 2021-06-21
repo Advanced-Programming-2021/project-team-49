@@ -41,7 +41,7 @@ public class DuelController extends AbstractController {
         Player playerOne = new Player(host, INIT_LIFE_POINTS);
         Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
         field = new Field(playerOne, playerTwo);
-        effectController = new EffectController(field, this);
+        effectController = new EffectController(null, field, this);
     }
 
     public String getPhaseName() {
@@ -155,45 +155,36 @@ public class DuelController extends AbstractController {
 
         switch (effect) {
             case MONSTER_REBORN:
-                new MonsterReborn(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new MonsterReborn(getSelectedCard(), field, this).action();
                 break;
 
             case TERRAFORMING:
-                new Terraforming(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new Terraforming(getSelectedCard(), field, this).action();
                 break;
 
             case POT_OF_GREED:
-                new PotOfGreed(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new PotOfGreed(getSelectedCard(), field, this).action();
                 break;
 
             case RAIGEKI:
-                new Raigeki(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new Raigeki(getSelectedCard(), field, this).action();
                 break;
 
             case CHANGE_OF_HEART:
-                new ChangeOfHeart(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new ChangeOfHeart(getSelectedCard(), field, this).action();
                 break;
 
             case HARPIES_FEATHER_DUSTER:
-                new HarpiesFeatherDuster(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new HarpiesFeatherDuster(getSelectedCard(), field, this).action();
+                break;
+
+
+            case SWORDS_OF_REVEALING_LIGHT:
+                new SwordsOfRevealingLight(getSelectedCard(), field, this).action();
                 break;
 
             case DARK_HOLE:
-                new DarkHole(field, this).action();
-                field.getAttackerMat().addCard(getSelectedCard(), Location.GRAVEYARD);
-                field.getAttackerMat().removeCard(getSelectedCard(), Location.SPELL_AND_TRAP_ZONE);
+                new DarkHole(getSelectedCard(), field, this).action();
                 break;
 
             case ADVANCED_RITUAL_ART:

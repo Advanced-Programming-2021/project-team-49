@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.EffectController;
+import controller.effects.Limit;
 import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 
@@ -15,6 +17,8 @@ public class GameMat {
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
     private Card fieldZoneCard = null;
+    private final List<EffectController> activatedEffects = new ArrayList<>();
+    private final List<Limit> limits = new ArrayList<>();
 
     public GameMat(Player player, List<Card> deck) {
         this.player = player;
@@ -114,5 +118,29 @@ public class GameMat {
 
     public List<Card> getCardList(Location location) {
         return locationMap.get(location);
+    }
+
+    public List<EffectController> getActivatedEffects() {
+        return activatedEffects;
+    }
+
+    public List<Limit> getLimits() {
+        return limits;
+    }
+
+    public void addActivatedEffect(EffectController effect) {
+        activatedEffects.add(effect);
+    }
+
+    public void removeActivatedEffect(EffectController effect) {
+        activatedEffects.remove(effect);
+    }
+
+    public void addLimit(Limit limit) {
+        limits.add(limit);
+    }
+
+    public void removeLimit(Limit limit) {
+        limits.remove(limit);
     }
 }

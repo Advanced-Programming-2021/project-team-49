@@ -11,10 +11,11 @@ import java.util.List;
 
 public class DarkHole extends EffectController {
 
-    public DarkHole(Field field, DuelController controller) {
-        super(field, controller);
+    public DarkHole(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
         List<Card> monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
         List<Card> enemyMonsterZone = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
@@ -27,5 +28,7 @@ public class DarkHole extends EffectController {
         for (Card card : enemyMonsterZone) {
             field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
         }
+
+        moveCardToGraveyard();
     }
 }

@@ -3,19 +3,21 @@ package controller;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
 import view.DuelView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EffectController {
 
+    protected final Card card;
     protected final Field field;
     protected final DuelController controller;
-    private List<EffectController> activatedEffects = new ArrayList<>();
+
     
-    public EffectController(Field field, DuelController controller) {
+    public EffectController(Card card, Field field, DuelController controller) {
+        this.card = card;
         this.field = field;
         this.controller = controller;
     }
@@ -32,11 +34,18 @@ public class EffectController {
     }
     
     public void notifyEffects(Event event) {
-        for (EffectController effect : activatedEffects)
+        for (EffectController effect : field.getAttackerMat().getActivatedEffects())
+            effect.notifier(event);
+        for (EffectController effect : field.getDefenderMat().getActivatedEffects())
             effect.notifier(event);
     }
 
-    protected void action() {}
+    public void moveCardToGraveyard() {
+        field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
+        field.getAttackerMat().addCard(card, Location.GRAVEYARD);
+    }
 
-    protected void notifier(Event event) {}
+    public void action() {}
+
+    public void notifier(Event event) {}
 }

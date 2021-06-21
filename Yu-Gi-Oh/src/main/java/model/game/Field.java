@@ -1,7 +1,6 @@
 package model.game;
 
 import exception.EndOfRoundException;
-import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 import model.game.card.Monster;
 

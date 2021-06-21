@@ -8,12 +8,15 @@ import model.game.card.Card;
 
 public class Raigeki extends EffectController {
 
-    public Raigeki(Field field, DuelController controller) {
-        super(field, controller);
+    public Raigeki(Card card, Field field, DuelController controller) {
+        super(card, field, controller);
     }
 
+    @Override
     public void action() {
         for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE))
             field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
+
+        moveCardToGraveyard();
     }
 }
