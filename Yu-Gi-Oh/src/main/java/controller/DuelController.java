@@ -211,6 +211,10 @@ public class DuelController extends AbstractController {
                 new ClosedForest(getSelectedCard(), field, this).action();
                 break;
 
+            case UMIIRUKA:
+                new Umiiruka(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");
