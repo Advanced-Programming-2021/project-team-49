@@ -7,6 +7,7 @@ import model.game.Location;
 import model.game.card.Card;
 import view.DuelView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EffectController {
@@ -43,6 +44,13 @@ public class EffectController {
     public void moveCardToGraveyard() {
         field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
         field.getAttackerMat().addCard(card, Location.GRAVEYARD);
+    }
+
+    public List<Card> getBothMonsterZones() {
+        List<Card> cards = new ArrayList<>();
+        cards.addAll(field.getAttackerMat().getCardList(Location.MONSTER_ZONE));
+        cards.addAll(field.getDefenderMat().getCardList(Location.MONSTER_ZONE));
+        return cards;
     }
 
     public void action() {}

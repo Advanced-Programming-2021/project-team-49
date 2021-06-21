@@ -9,9 +9,9 @@ import model.game.card.Monster;
 
 import java.util.List;
 
-public class Yami extends EffectController {
+public class Forest extends EffectController {
 
-    public Yami(Card card, Field field, DuelController controller) {
+    public Forest(Card card, Field field, DuelController controller) {
         super(card, field, controller);
     }
 
@@ -25,13 +25,11 @@ public class Yami extends EffectController {
 
         for (Card card : cards) {
             Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.SPELLCASTER
-                    || monster.getMonsterType() == MonsterType.FIEND) {
+            if (monster.getMonsterType() == MonsterType.INSECT
+                    || monster.getMonsterType() == MonsterType.BEAST
+                    || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
                 monster.setAttack(200);
                 monster.setDefense(200);
-            } else if (monster.getMonsterType() == MonsterType.FAIRY) {
-                monster.setAttack(-200);
-                monster.setDefense(-200);
             }
         }
     }
@@ -42,11 +40,9 @@ public class Yami extends EffectController {
 
         for (Card card : cards) {
             Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.SPELLCASTER
-                    || monster.getMonsterType() == MonsterType.FIEND) {
-                monster.setAttack(0);
-                monster.setDefense(0);
-            } else if (monster.getMonsterType() == MonsterType.FAIRY) {
+            if (monster.getMonsterType() == MonsterType.INSECT
+                    || monster.getMonsterType() == MonsterType.BEAST
+                    || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
                 monster.setAttack(0);
                 monster.setDefense(0);
             }

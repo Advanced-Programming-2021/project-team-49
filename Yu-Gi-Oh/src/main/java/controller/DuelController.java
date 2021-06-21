@@ -203,6 +203,10 @@ public class DuelController extends AbstractController {
                 new Yami(getSelectedCard(), field, this).action();
                 break;
 
+            case FOREST:
+                new Forest(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");
