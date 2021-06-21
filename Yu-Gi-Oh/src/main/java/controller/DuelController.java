@@ -191,6 +191,10 @@ public class DuelController extends AbstractController {
                 new SupplySquad(getSelectedCard(), field, this).action();
                 break;
 
+            case SPELL_ABSORPTION:
+                new SpellAbsorption(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");

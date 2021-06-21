@@ -2,7 +2,6 @@ package model.game;
 
 import controller.EffectController;
 import controller.effects.Limit;
-import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 
 import java.util.*;
