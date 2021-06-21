@@ -338,6 +338,21 @@ public class DuelController extends AbstractController {
         return true;
     }
 
+    public void flipSummon() {
+        Card card = getSelectedCard();
+        if (card == null)
+            throw new GameErrorException("no card is selected yet");
+        else if (selectedCardLocation != Location.MONSTER_ZONE)
+            throw new GameErrorException("you can't change this card position");
+        else if (phase != 2 && phase != 4)
+            throw new GameErrorException("you can't do this action in this phase");
+        else if (card.isFaceUp() || ((Monster) card).isAttacker())
+            throw new GameErrorException("you can't flip summon this card");
+
+        card.setFaceUp(true);
+        ((Monster) card).setAttacker(true);
+    }
+
     public void summon() {
         Card card = getSelectedCard();
         if (card == null)

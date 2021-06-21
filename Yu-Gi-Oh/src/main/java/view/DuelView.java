@@ -264,11 +264,15 @@ public class DuelView extends AbstractView {
                 System.out.println("card deselected");
             } else if (input.startsWith("select"))
                 selectCard(controller, input);
-            else if (input.equals("activate effect"))
+            else if (input.equals("activate effect")) {
                 controller.activateSpell();
-            else if (input.startsWith("summon")) {
+                System.out.println("spell activated");
+            } else if (input.startsWith("summon")) {
                 controller.summon();
                 System.out.println("summoned successfully");
+            } else if (input.equals("flip-summon")) {
+                controller.flipSummon();
+                System.out.println("flip summoned successfully");
             } else if (input.startsWith("set")) {
                 if (isFlagUsedInCommand("position", input)) {
                     String position = getArgument("position", input, "set");
