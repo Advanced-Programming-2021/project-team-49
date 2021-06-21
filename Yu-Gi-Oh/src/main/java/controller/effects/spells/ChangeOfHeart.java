@@ -32,6 +32,8 @@ public class ChangeOfHeart extends EffectController {
         field.getDefenderMat().removeCard(enemyCard, Location.MONSTER_ZONE);
         field.getAttackerMat().addCard(enemyCard, Location.MONSTER_ZONE);
 
+        field.getAttackerMat().addActivatedEffect(this);
+
         moveCardToGraveyard();
     }
 

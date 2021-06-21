@@ -22,6 +22,8 @@ public class SwordsOfRevealingLight extends EffectController {
             if (!card.isFaceUp())
                 card.setFaceUp(true);
         }
+
+        field.getAttackerMat().addActivatedEffect(this);
         field.getDefenderMat().addLimit(Limit.ALL_MONSTERS_CANT_ATTACK);
     }
 
