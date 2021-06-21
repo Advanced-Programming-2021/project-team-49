@@ -16,6 +16,7 @@ public class GameMat {
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
     private Card fieldZoneCard = null;
+    private EffectController fieldZoneEffect = null;
     private final List<EffectController> activatedEffects = new ArrayList<>();
     private final List<Limit> limits = new ArrayList<>();
 
@@ -113,6 +114,14 @@ public class GameMat {
         Card card = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
         addCard(card, newLocation);
+    }
+
+    public void setFieldZoneEffect(EffectController fieldZoneEffect) {
+        this.fieldZoneEffect = fieldZoneEffect;
+    }
+
+    public EffectController getFieldZoneEffect() {
+        return fieldZoneEffect;
     }
 
     public List<Card> getCardList(Location location) {

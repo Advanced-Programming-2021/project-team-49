@@ -44,7 +44,7 @@ public class Monster extends Card {
     }
 
     public int getAttack() {
-        return attack;
+        return attack + getBaseAttack();
     }
 
     public void setAttack(int attack) {
@@ -52,7 +52,7 @@ public class Monster extends Card {
     }
 
     public int getDefense() {
-        return defense;
+        return defense + getBaseDefense();
     }
 
     public void setDefense(int defense) {

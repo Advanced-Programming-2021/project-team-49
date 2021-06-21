@@ -199,6 +199,10 @@ public class DuelController extends AbstractController {
                 new MessengerOfPeace(getSelectedCard(), field, this).action();
                 break;
 
+            case YAMI:
+                new Yami(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");

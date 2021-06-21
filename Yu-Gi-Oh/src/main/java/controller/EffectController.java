@@ -48,4 +48,6 @@ public class EffectController {
     public void action() {}
 
     public void notifier(Event event) {}
+
+    public void deActive() {}
 }
