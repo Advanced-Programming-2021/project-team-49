@@ -1,7 +1,7 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
@@ -10,7 +10,7 @@ import model.game.card.Card;
 
 import java.util.List;
 
-public class ChangeOfHeart extends EffectController {
+public class ChangeOfHeart extends EffectHandler {
 
     private Card enemyCard;
     private final List<Card> enemyMonsters;
@@ -49,5 +49,10 @@ public class ChangeOfHeart extends EffectController {
 
         field.getAttackerMat().removeCard(enemyCard, Location.MONSTER_ZONE);
         field.getDefenderMat().addCard(enemyCard, Location.MONSTER_ZONE);
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

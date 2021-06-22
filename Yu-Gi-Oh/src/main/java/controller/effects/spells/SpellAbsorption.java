@@ -1,15 +1,20 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import model.game.Field;
 import model.game.card.Card;
 
-public class SpellAbsorption extends EffectController {
+public class SpellAbsorption extends EffectHandler {
 
     public SpellAbsorption(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+    }
+
+    @Override
+    public void activationRequirement() {
+
     }
 
     @Override
@@ -23,5 +28,10 @@ public class SpellAbsorption extends EffectController {
             return;
 
         field.getAttackerMat().getPlayer().addLifePoints(500);
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

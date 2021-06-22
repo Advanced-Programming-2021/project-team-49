@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
 import model.game.card.Card;
@@ -9,17 +10,22 @@ import model.game.card.Monster;
 
 import java.util.List;
 
-public class Yami extends EffectController {
+public class Yami extends EffectHandler {
 
     public Yami(Card card, Field field, DuelController controller) {
         super(card, field, controller);
     }
 
     @Override
+    public void activationRequirement() {
+
+    }
+
+    @Override
     public void action() {
-        EffectController effect = field.getAttackerMat().getFieldZoneEffect();
+        EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
-            effect.deActive();
+            effect.deActivate();
         field.getAttackerMat().setFieldZoneEffect(this);
 
         List<Card> cards = getBothMonsterZones();
@@ -38,7 +44,12 @@ public class Yami extends EffectController {
     }
 
     @Override
-    public void deActive() {
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
         List<Card> cards = getBothMonsterZones();
 
         for (Card card : cards) {

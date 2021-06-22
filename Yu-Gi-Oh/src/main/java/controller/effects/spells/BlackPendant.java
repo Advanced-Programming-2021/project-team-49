@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
@@ -10,7 +11,7 @@ import model.game.card.Monster;
 
 import java.util.List;
 
-public class BlackPendant extends EffectController {
+public class BlackPendant extends EffectHandler {
 
     private final List<Card> monsterZone;
 
@@ -33,5 +34,15 @@ public class BlackPendant extends EffectController {
         ((Monster) card).increaseAttack(500);
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

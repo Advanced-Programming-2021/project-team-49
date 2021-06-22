@@ -1,19 +1,24 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 
-public class SwordsOfRevealingLight extends EffectController {
+public class SwordsOfRevealingLight extends EffectHandler {
 
     private int turnCounter = 0;
 
     public SwordsOfRevealingLight(Card card,Field field, DuelController controller) {
         super(card, field, controller);
+    }
+
+    @Override
+    public void activationRequirement() {
+
     }
 
     @Override
@@ -36,5 +41,10 @@ public class SwordsOfRevealingLight extends EffectController {
             field.getDefenderMat().removeLimit(Limit.ALL_MONSTERS_CANT_ATTACK);
             moveCardToGraveyard();
         }
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

@@ -1,7 +1,7 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
@@ -11,7 +11,7 @@ import model.game.card.Monster;
 
 import java.util.List;
 
-public class UnitedWeStand extends EffectController {
+public class UnitedWeStand extends EffectHandler {
 
     private final List<Card> monsterZone;
 
@@ -40,8 +40,12 @@ public class UnitedWeStand extends EffectController {
 
     @Override
     public void notifier(Event event) {
-        super.notifier(event);
         // TODO check if face up monsters count changes and do the changes
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 
     private int getFaceUpMonstersCount() {

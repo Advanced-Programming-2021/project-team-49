@@ -1,5 +1,7 @@
 package model.game;
 
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.EndOfRoundException;
 import model.game.card.Card;
 import model.game.card.Monster;
@@ -56,5 +58,12 @@ public class Field {
             attackerMat.moveCard(Location.DECK, Location.HAND);
             defenderMat.moveCard(Location.DECK, Location.HAND);
         }
+    }
+
+    public void notifyEffects(Event event) {
+        for (EffectHandler effect : attackerMat.getActivatedEffects())
+            effect.notifier(event);
+        for (EffectHandler effect : defenderMat.getActivatedEffects())
+            effect.notifier(event);
     }
 }

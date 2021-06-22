@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
@@ -9,7 +10,7 @@ import model.game.card.Card;
 
 import java.util.List;
 
-public class DarkHole extends EffectController {
+public class DarkHole extends EffectHandler {
 
     private final List<Card> bothMonsterZones;
 
@@ -37,5 +38,15 @@ public class DarkHole extends EffectController {
         }
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

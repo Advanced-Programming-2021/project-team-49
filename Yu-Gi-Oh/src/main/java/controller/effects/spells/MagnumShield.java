@@ -1,7 +1,7 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.MonsterType;
@@ -13,7 +13,7 @@ import model.game.card.Monster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MagnumShield extends EffectController {
+public class MagnumShield extends EffectHandler {
 
     private final List<Card> requiredMonsters;
 
@@ -43,8 +43,12 @@ public class MagnumShield extends EffectController {
 
     @Override
     public void notifier(Event event) {
-        super.notifier(event);
         // TODO check if face of the equipped card changed, it changes or not
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 
     private List<Card> getRequiredMonsters() {

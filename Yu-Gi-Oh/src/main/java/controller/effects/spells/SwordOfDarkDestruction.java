@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
@@ -12,7 +13,7 @@ import model.game.card.Monster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwordOfDarkDestruction extends EffectController {
+public class SwordOfDarkDestruction extends EffectHandler {
 
     private final List<Card> requiredMonsters;
 
@@ -36,6 +37,16 @@ public class SwordOfDarkDestruction extends EffectController {
         ((Monster) card).decreaseDefense(200);
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 
     private List<Card> getRequiredMonsters() {

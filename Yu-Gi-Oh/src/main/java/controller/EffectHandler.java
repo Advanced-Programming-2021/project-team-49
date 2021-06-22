@@ -10,13 +10,13 @@ import view.DuelView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EffectController {
+public abstract class EffectHandler {
 
     protected final Card card;
     protected final Field field;
     protected final DuelController controller;
 
-    public EffectController(Card card, Field field, DuelController controller) {
+    public EffectHandler(Card card, Field field, DuelController controller) {
         this.card = card;
         this.field = field;
         this.controller = controller;
@@ -33,12 +33,7 @@ public class EffectController {
         return cards.get(selected - 1);
     }
     
-    public void notifyEffects(Event event) {
-        for (EffectController effect : field.getAttackerMat().getActivatedEffects())
-            effect.notifier(event);
-        for (EffectController effect : field.getDefenderMat().getActivatedEffects())
-            effect.notifier(event);
-    }
+
 
     public void moveCardToGraveyard() {
         field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
@@ -52,11 +47,11 @@ public class EffectController {
         return cards;
     }
 
-    public void activationRequirement() {}
+    public abstract void activationRequirement();
 
-    public void action() {}
+    public abstract void action();
 
-    public void notifier(Event event) {}
+    public abstract void notifier(Event event);
 
-    public void deActive() {}
+    public abstract void deActivate();
 }

@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
@@ -9,7 +10,7 @@ import model.game.card.Card;
 
 import java.util.List;
 
-public class HarpiesFeatherDuster extends EffectController {
+public class HarpiesFeatherDuster extends EffectHandler {
 
     private final List<Card> enemySpellZone;
 
@@ -31,5 +32,15 @@ public class HarpiesFeatherDuster extends EffectController {
             field.getDefenderMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

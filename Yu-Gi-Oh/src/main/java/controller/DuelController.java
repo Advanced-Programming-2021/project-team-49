@@ -22,7 +22,6 @@ public class DuelController extends AbstractController {
             "main phase 2", "end phase"};
     private static final int INIT_LIFE_POINTS = 8000;
 
-    private final EffectController effectController;
     private final boolean hasAI;
     private final int rounds;
     private int phase = 0;
@@ -41,7 +40,6 @@ public class DuelController extends AbstractController {
         Player playerOne = new Player(host, INIT_LIFE_POINTS);
         Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
         field = new Field(playerOne, playerTwo);
-        effectController = new EffectController(null, field, this);
     }
 
     public String getPhaseName() {
@@ -135,7 +133,6 @@ public class DuelController extends AbstractController {
         selectedCardLocation = null;
         phase++;
         if (phase > 5) {
-            effectController.notifyEffects(Event.END_TURN);
             phase = 0;
             field.switchTurn();
             for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))

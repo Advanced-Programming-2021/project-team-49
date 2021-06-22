@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
 import model.game.card.Card;
@@ -9,18 +10,23 @@ import model.game.card.Monster;
 
 import java.util.List;
 
-public class Umiiruka extends EffectController {
+public class Umiiruka extends EffectHandler {
 
     private final List<Card> bothMonsterZones;
 
     public Umiiruka(Card card, Field field, DuelController controller) {
         super(card, field, controller);
-        EffectController effect = field.getAttackerMat().getFieldZoneEffect();
+        EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
-            effect.deActive();
+            effect.deActivate();
         field.getAttackerMat().setFieldZoneEffect(this);
 
         bothMonsterZones = getBothMonsterZones();
+    }
+
+    @Override
+    public void activationRequirement() {
+
     }
 
     @Override
@@ -35,7 +41,12 @@ public class Umiiruka extends EffectController {
     }
 
     @Override
-    public void deActive() {
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
         for (Card card : bothMonsterZones) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.AQUA) {

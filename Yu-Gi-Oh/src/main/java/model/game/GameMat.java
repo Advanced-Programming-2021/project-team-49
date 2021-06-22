@@ -1,6 +1,6 @@
 package model.game;
 
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Limit;
 import model.game.card.Card;
 
@@ -16,8 +16,8 @@ public class GameMat {
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
     private Card fieldZoneCard = null;
-    private EffectController fieldZoneEffect = null;
-    private final List<EffectController> activatedEffects = new ArrayList<>();
+    private EffectHandler fieldZoneEffect = null;
+    private final List<EffectHandler> activatedEffects = new ArrayList<>();
     private final List<Limit> limits = new ArrayList<>();
 
     public GameMat(Player player, List<Card> deck) {
@@ -116,11 +116,11 @@ public class GameMat {
         addCard(card, newLocation);
     }
 
-    public void setFieldZoneEffect(EffectController fieldZoneEffect) {
+    public void setFieldZoneEffect(EffectHandler fieldZoneEffect) {
         this.fieldZoneEffect = fieldZoneEffect;
     }
 
-    public EffectController getFieldZoneEffect() {
+    public EffectHandler getFieldZoneEffect() {
         return fieldZoneEffect;
     }
 
@@ -128,7 +128,7 @@ public class GameMat {
         return locationMap.get(location);
     }
 
-    public List<EffectController> getActivatedEffects() {
+    public List<EffectHandler> getActivatedEffects() {
         return activatedEffects;
     }
 
@@ -136,11 +136,11 @@ public class GameMat {
         return limits;
     }
 
-    public void addActivatedEffect(EffectController effect) {
+    public void addActivatedEffect(EffectHandler effect) {
         activatedEffects.add(effect);
     }
 
-    public void removeActivatedEffect(EffectController effect) {
+    public void removeActivatedEffect(EffectHandler effect) {
         activatedEffects.remove(effect);
     }
 

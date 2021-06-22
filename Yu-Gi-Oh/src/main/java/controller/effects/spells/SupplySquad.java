@@ -1,15 +1,20 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import model.game.Field;
 import model.game.card.Card;
 
-public class SupplySquad extends EffectController {
+public class SupplySquad extends EffectHandler {
 
     public SupplySquad(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+    }
+
+    @Override
+    public void activationRequirement() {
+
     }
 
     @Override
@@ -23,5 +28,10 @@ public class SupplySquad extends EffectController {
             return;
 
         controller.drawCard();
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

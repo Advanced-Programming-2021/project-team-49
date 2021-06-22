@@ -1,17 +1,22 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
 import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.Field;
 import model.game.card.Card;
 import view.DuelView;
 
-public class MessengerOfPeace extends EffectController {
+public class MessengerOfPeace extends EffectHandler {
 
     public MessengerOfPeace(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+    }
+
+    @Override
+    public void activationRequirement() {
+
     }
 
     @Override
@@ -39,5 +44,10 @@ public class MessengerOfPeace extends EffectController {
             field.getDefenderMat().removeLimit(Limit.MONSTERS_WITH_1500_ATK_OR_MORE_CANT_ATTACK);
             moveCardToGraveyard();
         }
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 }

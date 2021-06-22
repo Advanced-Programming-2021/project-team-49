@@ -1,7 +1,8 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectController;
+import controller.EffectHandler;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.EffectType;
 import model.cardtemplate.SpellTrapType;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Terraforming extends EffectController {
+public class Terraforming extends EffectHandler {
 
     private final List<Card> fieldSpells;
 
@@ -36,6 +37,16 @@ public class Terraforming extends EffectController {
         field.getAttackerMat().removeCard(fieldSpells.get(random), Location.DECK);
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+
+    }
+
+    @Override
+    public void deActivate() {
+
     }
 
     private List<Card> getFieldSpells() {
