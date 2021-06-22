@@ -119,13 +119,16 @@ public class DuelController extends AbstractController {
     }
 
     public void deselectCard() {
-        if (selectedCardLocation == null)
+        if (getSelectedCard() == null)
             throw new GameErrorException("no card is selected yet");
         selectedCardLocation = null;
     }
 
     public Card getSelectedCard() {
-        return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
+        if (selectedCardLocation == null)
+            return null;
+        else
+            return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
     }
 
     public void changePhase() {
@@ -492,27 +495,40 @@ public class DuelController extends AbstractController {
         DuelView.showCardInfoStringView(card);
     }
 
-    public void attack(int targetPosition) throws EndOfRoundException {
-        if (targetPosition < 1 || targetPosition > 5)
-            throw new GameErrorException("card position number must be between 1 and 5");
-        else if (selectedCardLocation == null)
+    public void checkAttackConditions() {
+        if (getSelectedCard() == null)
             throw new GameErrorException("no card is selected yet");
-        else if (isOpponentCardSelected
-                || selectedCardLocation != Location.MONSTER_ZONE)
+        else if (isOpponentCardSelected || selectedCardLocation != Location.MONSTER_ZONE)
             throw new GameErrorException("you can't attack with this card");
         else if (phase != 3)
             throw new GameErrorException("you can't do this action in this phase");
+        else if (((Monster) getSelectedCard()).isUsedInAttack())
+            throw new GameErrorException("this card already attacked");
+    }
+
+    public void directAttack() {
+        checkAttackConditions();
+
+        if (field.getDefenderMat().getCardCount(Location.MONSTER_ZONE) > 0)
+            throw new GameErrorException("you can't attack the opponent directly");
         else {
-            Monster attacker = (Monster) getSelectedCard();
-            Monster target = (Monster) field.getDefenderMat().getCard(Location.MONSTER_ZONE, targetPosition);
-
-            if (attacker.isUsedInAttack())
-                throw new GameErrorException("this card already attacked");
-            else if (target == null)
-                throw new GameErrorException("there is no card to attack here");
-
-            attackMonster(attacker, target, selectedCardPosition, targetPosition);
+            int damage = ((Monster) getSelectedCard()).getTotalAttack();
+            field.getDefenderMat().getPlayer().removeLifePoints(damage);
+            DuelView.showDirectAttackOutcome(damage);
+            checkEndOfRoundWithLifePoints();
         }
+    }
+
+    public void attack(int targetPosition) throws EndOfRoundException {
+        checkAttackConditions();
+
+        Monster attacker = (Monster) getSelectedCard();
+        Monster target = (Monster) field.getDefenderMat().getCard(Location.MONSTER_ZONE, targetPosition);
+
+        if (target == null)
+            throw new GameErrorException("there is no card to attack here");
+
+        attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
 
     public void attackMonster(Monster attacker, Monster target, int attackerPosition, int targetPosition)

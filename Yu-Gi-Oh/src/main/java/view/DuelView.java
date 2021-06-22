@@ -211,7 +211,7 @@ public class DuelView extends AbstractView {
     public static void showAttackOutcome(boolean attackedDefendingCard, int damage) {
         if (attackedDefendingCard) {
             if (damage > 0)
-                System.out.println("your opponent’s monster is destroyed and your opponent receives "
+                System.out.println("your opponent's monster is destroyed and your opponent receives "
                         + damage + " battle damage");
             else if (damage == 0)
                 System.out.println("both you and your opponent monster cards are destroyed and no "
@@ -231,8 +231,12 @@ public class DuelView extends AbstractView {
     }
 
     public static void showAttackOutcome(String defendingCardName,  int damage) {
-        System.out.print("opponent’s monster card was " + defendingCardName + " and ");
+        System.out.print("opponent's monster card was " + defendingCardName + " and ");
         showAttackOutcome(true, damage);
+    }
+
+    public static void showDirectAttackOutcome(int damage) {
+        System.out.println("you opponent receives " + damage + " battle damage");
     }
 
     private void drawCard() throws EndOfRoundException {
@@ -287,6 +291,8 @@ public class DuelView extends AbstractView {
                 controller.showGraveyard(isFlagUsedInCommand("opponent", input));
             else if (input.equals("card show --selected"))
                 controller.showSelectedCard();
+            else if (input.equals("attack direct"))
+                controller.directAttack();
             else if (input.startsWith("attack "))
                 controller.attack(Integer.parseInt(input.substring(7)));
             else
