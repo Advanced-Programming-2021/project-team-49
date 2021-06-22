@@ -27,7 +27,8 @@ public class MessengerOfPeace extends EffectController {
 
         int selected;
         do {
-            selected = DuelView.selectAnOption(new String[]{"Pay 100 LP to keep the card",
+            selected = DuelView.selectAnOption(new String[]
+                    {"Pay 100 LP to keep the card",
                     "Destroy the card"});
 
         } while (selected == 0 || selected == -1);

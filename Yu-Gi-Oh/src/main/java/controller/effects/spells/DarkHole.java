@@ -11,17 +11,24 @@ import java.util.List;
 
 public class DarkHole extends EffectController {
 
+    private final List<Card> bothMonsterZones;
+
     public DarkHole(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        bothMonsterZones = getBothMonsterZones();
+        activationRequirement();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (bothMonsterZones.isEmpty())
+            throw new GameErrorException("There is no monster on the field");
     }
 
     @Override
     public void action() {
         List<Card> monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
         List<Card> enemyMonsterZone = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
-
-        if (monsterZone.isEmpty() && enemyMonsterZone.isEmpty())
-            throw new GameErrorException("There is no monster on the field");
 
         for (Card card : monsterZone)
             field.getAttackerMat().removeCard(card, Location.MONSTER_ZONE);

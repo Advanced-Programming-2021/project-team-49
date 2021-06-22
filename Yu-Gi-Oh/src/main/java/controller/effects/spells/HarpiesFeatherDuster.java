@@ -11,17 +11,23 @@ import java.util.List;
 
 public class HarpiesFeatherDuster extends EffectController {
 
+    private final List<Card> enemySpellZone;
+
     public HarpiesFeatherDuster(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        enemySpellZone = field.getDefenderMat().getCardList(Location.SPELL_AND_TRAP_ZONE);
+        activationRequirement();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (enemySpellZone.isEmpty())
+            throw new GameErrorException("The enemy has no spell and trap");
     }
 
     @Override
     public void action() {
-        List<Card> spellsAndTraps = field.getDefenderMat().getCardList(Location.SPELL_AND_TRAP_ZONE);
-        if (spellsAndTraps.isEmpty())
-            throw new GameErrorException("The enemy has no spells");
-
-        for (Card card : spellsAndTraps)
+        for (Card card : enemySpellZone)
             field.getDefenderMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
 
         moveCardToGraveyard();

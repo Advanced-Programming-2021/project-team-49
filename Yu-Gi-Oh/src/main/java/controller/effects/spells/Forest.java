@@ -11,20 +11,21 @@ import java.util.List;
 
 public class Forest extends EffectController {
 
+    private final List<Card> bothMonsterZones;
+
     public Forest(Card card, Field field, DuelController controller) {
         super(card, field, controller);
-    }
-
-    @Override
-    public void action() {
         EffectController effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
             effect.deActive();
         field.getAttackerMat().setFieldZoneEffect(this);
 
-        List<Card> cards = getBothMonsterZones();
+        bothMonsterZones = getBothMonsterZones();
+    }
 
-        for (Card card : cards) {
+    @Override
+    public void action() {
+        for (Card card : bothMonsterZones) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.INSECT
                     || monster.getMonsterType() == MonsterType.BEAST
@@ -37,9 +38,7 @@ public class Forest extends EffectController {
 
     @Override
     public void deActive() {
-        List<Card> cards = getBothMonsterZones();
-
-        for (Card card : cards) {
+        for (Card card : bothMonsterZones) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.INSECT
                     || monster.getMonsterType() == MonsterType.BEAST

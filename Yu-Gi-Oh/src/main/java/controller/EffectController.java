@@ -53,6 +53,8 @@ public class EffectController {
         return cards;
     }
 
+    public void activationRequirement() {}
+
     public void action() {}
 
     public void notifier(Event event) {}

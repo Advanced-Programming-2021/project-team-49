@@ -11,13 +11,17 @@ public class PotOfGreed extends EffectController {
 
     public PotOfGreed(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        activationRequirement();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (field.getAttackerMat().getCardCount(Location.DECK) < 2)
+            throw new GameErrorException("Not enough cards in deck");
     }
 
     @Override
     public void action() {
-        if (field.getAttackerMat().getCardCount(Location.DECK) < 2)
-            throw new GameErrorException("Not enough cards in deck");
-
         controller.drawCard();
         controller.drawCard();
 

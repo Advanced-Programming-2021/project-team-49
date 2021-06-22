@@ -16,12 +16,29 @@ import java.util.Random;
 
 public class Terraforming extends EffectController {
 
+    private final List<Card> fieldSpells;
+
     public Terraforming(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        fieldSpells = getFieldSpells();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (fieldSpells.isEmpty())
+            throw new GameErrorException("You don't have any field spell");
     }
 
     @Override
     public void action() {
+        int random = new Random().nextInt(fieldSpells.size() - 1);
+        field.getAttackerMat().addCard(fieldSpells.get(random), Location.HAND);
+        field.getAttackerMat().removeCard(fieldSpells.get(random), Location.DECK);
+
+        moveCardToGraveyard();
+    }
+
+    private List<Card> getFieldSpells() {
         List<Card> fieldSpells = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.DECK)) {
             if (card instanceof SpellTrap) {
@@ -30,13 +47,6 @@ public class Terraforming extends EffectController {
                     fieldSpells.add(card);
             }
         }
-        if (fieldSpells.isEmpty())
-            throw new GameErrorException("You don't have any field spell");
-
-        int random = new Random().nextInt(fieldSpells.size() - 1);
-        field.getAttackerMat().addCard(fieldSpells.get(random), Location.HAND);
-        field.getAttackerMat().removeCard(fieldSpells.get(random), Location.DECK);
-
-        moveCardToGraveyard();
+        return fieldSpells;
     }
 }

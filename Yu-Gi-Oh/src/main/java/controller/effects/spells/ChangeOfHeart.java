@@ -13,20 +13,25 @@ import java.util.List;
 public class ChangeOfHeart extends EffectController {
 
     private Card enemyCard;
+    private final List<Card> enemyMonsters;
 
     public ChangeOfHeart(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        enemyMonsters = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
+        activationRequirement();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (enemyMonsters.isEmpty())
+            throw new GameErrorException("There is no card on enemy's monster zone");
+
+        if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
+            throw new GameErrorException("monster card zone is full");
     }
 
     @Override
     public void action() {
-        List<Card> enemyMonsters = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
-
-        if (enemyMonsters.isEmpty())
-            throw new GameErrorException("There is no card on enemy's monster zone");
-        if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
-            throw new GameErrorException("monster card zone is full");
-
         enemyCard = selectCardFromList(enemyMonsters);
 
         field.getDefenderMat().removeCard(enemyCard, Location.MONSTER_ZONE);

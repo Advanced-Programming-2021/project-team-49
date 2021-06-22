@@ -13,29 +13,25 @@ import java.util.List;
 
 public class MonsterReborn extends EffectController {
 
+    private final List<Card> bothGraveyardsMonsters;
+
     public MonsterReborn(Card card, Field field, DuelController controller) {
         super(card, field, controller);
+        bothGraveyardsMonsters = getBothGraveyardsMonsters();
+        activationRequirement();
+    }
+
+    @Override
+    public void activationRequirement() {
+        if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
+            throw new GameErrorException("monster card zone is full");
+        if (bothGraveyardsMonsters.isEmpty())
+            throw new GameErrorException("Both graveyards are empty");
     }
 
     @Override
     public void action() {
-        if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
-            throw new GameErrorException("monster card zone is full");
-
-        List<Card> bothGraveyards = new ArrayList<>();
-        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
-            if (card instanceof Monster)
-                bothGraveyards.add(card);
-        }
-        for (Card card : field.getDefenderMat().getCardList(Location.GRAVEYARD)) {
-            if (card instanceof Monster)
-                bothGraveyards.add(card);
-        }
-
-        if (bothGraveyards.isEmpty())
-            throw new GameErrorException("Both graveyards are empty");
-
-        Card card = selectCardFromList(bothGraveyards);
+        Card card = selectCardFromList(bothGraveyardsMonsters);
 
         if (field.getAttackerMat().getCardList(Location.GRAVEYARD).contains(card))
             field.getAttackerMat().removeCard(card, Location.GRAVEYARD);
@@ -45,5 +41,18 @@ public class MonsterReborn extends EffectController {
         field.getAttackerMat().addCard(card, Location.MONSTER_ZONE);
 
         moveCardToGraveyard();
+    }
+
+    private List<Card> getBothGraveyardsMonsters() {
+        List<Card> bothGraveyardsMonsters = new ArrayList<>();
+        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof Monster)
+                bothGraveyardsMonsters.add(card);
+        }
+        for (Card card : field.getDefenderMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof Monster)
+                bothGraveyardsMonsters.add(card);
+        }
+        return bothGraveyardsMonsters;
     }
 }
