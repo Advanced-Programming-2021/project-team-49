@@ -33,6 +33,7 @@ public class UnitedWeStand extends EffectController {
         Card card = selectCardFromList(monsterZone);
 
         ((Monster) card).increaseAttack(getFaceUpMonstersCount() * 800);
+        ((Monster) card).increaseDefense(getFaceUpMonstersCount() * 800);
 
         moveCardToGraveyard();
     }

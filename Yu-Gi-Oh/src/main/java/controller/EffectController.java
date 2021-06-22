@@ -16,7 +16,6 @@ public class EffectController {
     protected final Field field;
     protected final DuelController controller;
 
-    
     public EffectController(Card card, Field field, DuelController controller) {
         this.card = card;
         this.field = field;
