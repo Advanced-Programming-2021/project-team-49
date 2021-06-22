@@ -2,7 +2,6 @@ package controller.effects.spells;
 
 import controller.DuelController;
 import controller.EffectController;
-import controller.effects.Event;
 import controller.effects.Limit;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
