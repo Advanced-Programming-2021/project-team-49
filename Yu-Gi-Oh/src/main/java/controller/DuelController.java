@@ -227,6 +227,10 @@ public class DuelController extends AbstractController {
                 new UnitedWeStand(getSelectedCard(), field, this).action();
                 break;
 
+            case MAGNUM_SHIELD:
+                new MagnumShield(getSelectedCard(), field, this).action();
+                break;
+
             case ADVANCED_RITUAL_ART:
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");

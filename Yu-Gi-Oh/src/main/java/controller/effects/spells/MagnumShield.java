@@ -2,6 +2,7 @@ package controller.effects.spells;
 
 import controller.DuelController;
 import controller.EffectController;
+import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
@@ -12,11 +13,11 @@ import model.game.card.Monster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwordOfDarkDestruction extends EffectController {
+public class MagnumShield extends EffectController {
 
     private final List<Card> requiredMonsters;
 
-    public SwordOfDarkDestruction(Card card, Field field, DuelController controller) {
+    public MagnumShield(Card card, Field field, DuelController controller) {
         super(card, field, controller);
         requiredMonsters = getRequiredMonsters();
         activationRequirement();
@@ -25,25 +26,32 @@ public class SwordOfDarkDestruction extends EffectController {
     @Override
     public void activationRequirement() {
         if (requiredMonsters.isEmpty())
-            throw new GameErrorException("you don't have any \"Fiend\" or \"Spellcaster\" monster");
+            throw new GameErrorException("you have no \"Warrior\" monster");
     }
 
     @Override
     public void action() {
-        Card card = selectCardFromList(requiredMonsters);
+        Monster monster = (Monster) selectCardFromList(requiredMonsters);
 
-        ((Monster) card).increaseAttack(400);
-        ((Monster) card).decreaseDefense(200);
+        if (monster.isAttacker())
+            monster.increaseAttack(monster.getBaseDefense());
+        else
+            monster.decreaseDefense(monster.getBaseAttack());
 
         moveCardToGraveyard();
+    }
+
+    @Override
+    public void notifier(Event event) {
+        super.notifier(event);
+        // TODO check if face of the equipped card changed, it changes or not
     }
 
     private List<Card> getRequiredMonsters() {
         List<Card> requiredMonsters = new ArrayList<>();
         for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE)) {
             Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.SPELLCASTER
-                    || monster.getMonsterType() == MonsterType.FIEND)
+            if (monster.getMonsterType() == MonsterType.WARRIOR)
                 requiredMonsters.add(card);
         }
         return requiredMonsters;
