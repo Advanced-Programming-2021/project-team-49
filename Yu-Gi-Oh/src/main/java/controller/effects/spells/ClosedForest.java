@@ -17,6 +17,8 @@ public class ClosedForest extends EffectController {
         super(card, field, controller);
     }
 
+    private int monstersInGraveyard = 0;
+
     @Override
     public void action() {
         EffectController effect = field.getAttackerMat().getFieldZoneEffect();
@@ -24,7 +26,6 @@ public class ClosedForest extends EffectController {
             effect.deActive();
         field.getAttackerMat().setFieldZoneEffect(this);
 
-        int monstersInGraveyard = 0;
         for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
             if (card instanceof Monster)
                 monstersInGraveyard++;
@@ -35,7 +36,7 @@ public class ClosedForest extends EffectController {
         for (Card card : cards) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.BEAST)
-                monster.setAttack(monstersInGraveyard * 100);
+                monster.increaseAttack(monstersInGraveyard * 100);
         }
 
         field.getDefenderMat().addLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);
@@ -48,7 +49,7 @@ public class ClosedForest extends EffectController {
         for (Card card : cards) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.BEAST)
-                monster.setAttack(0);
+                monster.decreaseAttack(monstersInGraveyard * 100);
         }
 
         field.getDefenderMat().removeLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);

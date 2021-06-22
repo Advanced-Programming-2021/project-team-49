@@ -504,7 +504,7 @@ public class DuelController extends AbstractController {
         int damage;
 
         if (target.isAttacker()) {
-            damage = attacker.getAttack() - target.getAttack();
+            damage = attacker.getTotalAttack() - target.getTotalAttack();
 
             if (damage > 0) {
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
@@ -517,7 +517,7 @@ public class DuelController extends AbstractController {
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
             }
         } else {
-            damage = attacker.getAttack() - target.getDefense();
+            damage = attacker.getTotalAttack() - target.getTotalDefense();
 
             if (damage > 0)
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);

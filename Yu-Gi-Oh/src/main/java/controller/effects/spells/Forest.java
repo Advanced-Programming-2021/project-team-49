@@ -29,8 +29,8 @@ public class Forest extends EffectController {
             if (monster.getMonsterType() == MonsterType.INSECT
                     || monster.getMonsterType() == MonsterType.BEAST
                     || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
-                monster.setAttack(200);
-                monster.setDefense(200);
+                monster.increaseAttack(200);
+                monster.increaseDefense(200);
             }
         }
     }
@@ -44,8 +44,8 @@ public class Forest extends EffectController {
             if (monster.getMonsterType() == MonsterType.INSECT
                     || monster.getMonsterType() == MonsterType.BEAST
                     || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
-                monster.setAttack(0);
-                monster.setDefense(0);
+                monster.decreaseAttack(200);
+                monster.decreaseDefense(200);
             }
         }
     }

@@ -43,20 +43,12 @@ public class Monster extends Card {
         return monsterCard.getBaseDefense();
     }
 
-    public int getAttack() {
-        return attack + getBaseAttack();
+    public int getTotalAttack() {
+        return Math.max(attack + getBaseAttack(), 0);
     }
 
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public int getDefense() {
-        return defense + getBaseDefense();
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
+    public int getTotalDefense() {
+        return Math.max(defense + getBaseDefense(), 0);
     }
 
     public boolean isAttacker() {
@@ -96,10 +88,7 @@ public class Monster extends Card {
     }
 
     public void decreaseAttack(int amount) {
-        if (attack < amount)
-            attack = 0;
-        else
-            attack -= amount;
+        attack -= amount;
     }
 
     public void increaseDefense(int amount) {
@@ -107,9 +96,6 @@ public class Monster extends Card {
     }
 
     public void decreaseDefense(int amount) {
-        if (defense < amount)
-            defense = 0;
-        else
-            defense -= amount;
+        defense -= amount;
     }
 }

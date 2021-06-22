@@ -28,11 +28,11 @@ public class Yami extends EffectController {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.SPELLCASTER
                     || monster.getMonsterType() == MonsterType.FIEND) {
-                monster.setAttack(200);
-                monster.setDefense(200);
+                monster.increaseAttack(200);
+                monster.increaseDefense(200);
             } else if (monster.getMonsterType() == MonsterType.FAIRY) {
-                monster.setAttack(-200);
-                monster.setDefense(-200);
+                monster.decreaseAttack(200);
+                monster.decreaseDefense(200);
             }
         }
     }
@@ -45,11 +45,11 @@ public class Yami extends EffectController {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.SPELLCASTER
                     || monster.getMonsterType() == MonsterType.FIEND) {
-                monster.setAttack(0);
-                monster.setDefense(0);
+                monster.decreaseAttack(200);
+                monster.decreaseDefense(200);
             } else if (monster.getMonsterType() == MonsterType.FAIRY) {
-                monster.setAttack(0);
-                monster.setDefense(0);
+                monster.increaseAttack(200);
+                monster.increaseDefense(200);
             }
         }
     }

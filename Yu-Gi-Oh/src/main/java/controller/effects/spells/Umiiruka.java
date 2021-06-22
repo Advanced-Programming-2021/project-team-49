@@ -28,8 +28,8 @@ public class Umiiruka extends EffectController {
         for (Card card : cards) {
             Monster monster = (Monster) card;
             if (monster.getAttribute() == Attribute.WATER) {
-                monster.setAttack(500);
-                monster.setDefense(-400);
+                monster.increaseAttack(500);
+                monster.decreaseDefense(400);
             }
         }
     }
@@ -41,8 +41,8 @@ public class Umiiruka extends EffectController {
         for (Card card : cards) {
             Monster monster = (Monster) card;
             if (monster.getAttribute() == Attribute.WATER) {
-                monster.setAttack(0);
-                monster.setDefense(0);
+                monster.increaseAttack(500);
+                monster.increaseDefense(400);
             }
         }
     }
