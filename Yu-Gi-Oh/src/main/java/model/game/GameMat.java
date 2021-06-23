@@ -48,9 +48,6 @@ public class GameMat {
     }
 
     public Card getCard(Location location, int position) {
-        if (location == Location.FIELD_ZONE)
-            return fieldZoneCard;
-
         List<Card> cardList = locationMap.get(location);
         return cardList.get(position - 1);
     }
@@ -68,9 +65,8 @@ public class GameMat {
     }
 
     public void addCard(Card card, Location location) {
-        if (location == Location.FIELD_ZONE) {
+        if (location == Location.FIELD_ZONE)
             fieldZoneCard = card;
-        }
 
         addCard(card, location, getCardCount(location));
     }
@@ -92,27 +88,20 @@ public class GameMat {
         removeCard(location, getCardCount(location));
     }
 
-    public void moveCard(Location oldLocation, int oldPosition, Location newLocation, int newPosition) {
-        Card card = getCard(oldLocation, oldPosition);
-        removeCard(oldLocation, oldPosition);
-        addCard(card, newLocation, newPosition);
-    }
-
     public void moveCard(Location oldLocation, Location newLocation) {
         Card card = getCard(oldLocation);
         removeCard(oldLocation);
         addCard(card, newLocation);
     }
 
-    public void moveCard(Location oldLocation, Location newLocation, int newPosition) {
-        Card card = getCard(oldLocation);
-        removeCard(oldLocation);
-        addCard(card, newLocation, newPosition);
-    }
-
     public void moveCard(Location oldLocation, int oldPosition, Location newLocation) {
         Card card = getCard(oldLocation, oldPosition);
         removeCard(oldLocation, oldPosition);
+        addCard(card, newLocation);
+    }
+
+    public void moveCard(Location oldLocation, Card card, Location newLocation) {
+        removeCard(card, oldLocation);
         addCard(card, newLocation);
     }
 

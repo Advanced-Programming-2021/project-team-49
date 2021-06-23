@@ -10,6 +10,7 @@ public abstract class Card {
 
     public Card(CardTemplate cardTemplate) {
         this.cardTemplate = cardTemplate;
+        faceUp = false;
     }
 
     public String getName() {
@@ -32,7 +33,7 @@ public abstract class Card {
         return faceUp;
     }
 
-    public void setFaceUp(boolean faceUp) {
-        this.faceUp = faceUp;
+    public void setFaceUp() {
+        faceUp = true;
     }
 }

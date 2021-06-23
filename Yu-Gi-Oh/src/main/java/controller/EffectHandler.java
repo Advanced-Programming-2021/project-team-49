@@ -32,8 +32,6 @@ public abstract class EffectHandler {
         } while (selected == -1);
         return cards.get(selected - 1);
     }
-    
-
 
     public void moveCardToGraveyard() {
         field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);

@@ -1,6 +1,7 @@
 package controller;
 
 import controller.effects.Event;
+import controller.effects.monsters.ManEaterBug;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
@@ -154,6 +155,9 @@ public class DuelController extends AbstractController {
         Effect effect = getSelectedCard().getEffect();
 
         switch (effect) {
+            case NONE:
+                return;
+
             case MONSTER_REBORN:
                 new MonsterReborn(getSelectedCard(), field, this).action();
                 break;
@@ -235,7 +239,13 @@ public class DuelController extends AbstractController {
                 if (!isRitualSummonPossible())
                     throw new GameErrorException("there is no way you could ritual summon a monster");
                 field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
-                getSelectedCard().setFaceUp(true);
+                getSelectedCard().setFaceUp();
+                break;
+
+
+                // TODO Monsters have different triggers in effect activating
+            case MAN_EATER_BUG:
+                new ManEaterBug(getSelectedCard(), field, this).action();
                 break;
         }
     }
@@ -333,7 +343,8 @@ public class DuelController extends AbstractController {
         } while (selected == -1);
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        getSelectedCard().setFaceUp(selected == 1);
+        getSelectedCard().setFaceUp();
+        ((Monster) getSelectedCard()).setAttacker(selected == 1);
 
         return true;
     }
@@ -368,7 +379,7 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
         if (summon)
-            getSelectedCard().setFaceUp(true);
+            getSelectedCard().setFaceUp();
 
         return true;
     }
@@ -384,8 +395,9 @@ public class DuelController extends AbstractController {
         else if (card.isFaceUp() || ((Monster) card).isAttacker())
             throw new GameErrorException("you can't flip summon this card");
 
-        card.setFaceUp(true);
+        card.setFaceUp();
         ((Monster) card).setAttacker(true);
+        callEffect();
     }
 
     public void summon() {
@@ -406,7 +418,7 @@ public class DuelController extends AbstractController {
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        card.setFaceUp(true);
+        card.setFaceUp();
         isMonsterAddedToField = true;
     }
 
@@ -556,7 +568,7 @@ public class DuelController extends AbstractController {
 
         if (!target.isAttacker() && !target.isFaceUp()) {
             DuelView.showAttackOutcome(target.getName(), damage);
-            target.setFaceUp(true);
+            target.setFaceUp();
         } else
             DuelView.showAttackOutcome(!target.isAttacker(), damage);
 

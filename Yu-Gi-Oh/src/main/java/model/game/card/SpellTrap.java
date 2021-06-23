@@ -25,8 +25,4 @@ public class SpellTrap extends Card {
     public SpellTrapType getType() {
         return spellTrapCard.getType();
     }
-
-    public void setFaceUp(boolean faceUp) {
-        this.faceUp = faceUp;
-    }
 }

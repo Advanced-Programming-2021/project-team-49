@@ -25,7 +25,7 @@ public class SwordsOfRevealingLight extends EffectHandler {
     public void action() {
         for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE)) {
             if (!card.isFaceUp())
-                card.setFaceUp(true);
+                card.setFaceUp();
         }
 
         field.getAttackerMat().addActivatedEffect(this);
