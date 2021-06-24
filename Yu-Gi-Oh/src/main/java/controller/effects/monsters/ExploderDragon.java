@@ -22,8 +22,8 @@ public class ExploderDragon extends EffectHandler {
 
     @Override
     public void action() {
-        //TODO diagnose if the card is attacker or defender.
-        //TODO destroy the enemy's card.
+        //TODO diagnose if the card is attacker or defender
+        //TODO destroy the enemy's card
     }
 
     @Override
