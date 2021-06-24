@@ -65,9 +65,11 @@ public class GameMat {
     }
 
     public void addCard(Card card, Location location) {
-        if (location == Location.FIELD_ZONE)
+        if (location == Location.FIELD_ZONE) {
+            if (fieldZoneCard != null)
+                moveCard(Location.FIELD_ZONE, Location.GRAVEYARD);
             fieldZoneCard = card;
-        else
+        } else
             addCard(card, location, getCardCount(location));
     }
 
