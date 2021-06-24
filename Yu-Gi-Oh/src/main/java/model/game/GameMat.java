@@ -76,6 +76,7 @@ public class GameMat {
     public void removeCard(Card card, Location location) {
         List<Card> cardList = locationMap.get(location);
 
+        activatedEffects.get(card).deActivate();
         activatedEffects.remove(card);
         cardList.remove(card);
     }
@@ -83,12 +84,14 @@ public class GameMat {
     public void removeCard(Location location, int position) {
         List<Card> cardList = locationMap.get(location);
 
+        activatedEffects.get(cardList.get(position - 1)).deActivate();
         activatedEffects.remove(cardList.get(position - 1));
         cardList.remove(position - 1);
     }
 
     public void removeCard(Location location) {
         if (location == Location.FIELD_ZONE) {
+            activatedEffects.get(fieldZoneCard).deActivate();
             activatedEffects.remove(fieldZoneCard);
             fieldZoneCard = null;
         } else
