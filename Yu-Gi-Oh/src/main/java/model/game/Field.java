@@ -36,6 +36,7 @@ public class Field {
             monster.setPositionChanged(false);
             monster.setUsedInAttack(false);
         }
+        notifyEffects(Event.END_TURN);
 
         GameMat tempMat = attackerMat;
         attackerMat = defenderMat;
