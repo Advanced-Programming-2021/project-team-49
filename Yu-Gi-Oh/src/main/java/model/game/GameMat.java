@@ -1,6 +1,7 @@
 package model.game;
 
 import controller.EffectHandler;
+import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.card.Card;
 
@@ -113,6 +114,11 @@ public class GameMat {
     public void moveCard(Location oldLocation, Card card, Location newLocation) {
         removeCard(card, oldLocation);
         addCard(card, newLocation);
+    }
+
+    public void notifyEffects(Event event) {
+        for (EffectHandler effect : activatedEffects.values())
+            effect.notifier(event);
     }
 
     public void setFieldZoneEffect(EffectHandler fieldZoneEffect) {

@@ -10,8 +10,8 @@ import model.game.card.Card;
 
 public class PotOfGreed extends EffectHandler {
 
-    public PotOfGreed(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public PotOfGreed(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         activationRequirement();
     }
 

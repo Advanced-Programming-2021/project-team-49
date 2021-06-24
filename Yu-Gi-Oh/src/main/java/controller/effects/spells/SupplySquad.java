@@ -8,8 +8,8 @@ import model.game.card.Card;
 
 public class SupplySquad extends EffectHandler {
 
-    public SupplySquad(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public SupplySquad(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override

@@ -15,8 +15,8 @@ public class ChangeOfHeart extends EffectHandler {
     private Card enemyCard;
     private final List<Card> enemyMonsters;
 
-    public ChangeOfHeart(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public ChangeOfHeart(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         enemyMonsters = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
         activationRequirement();
     }

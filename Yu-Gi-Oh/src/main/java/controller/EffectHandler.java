@@ -12,11 +12,13 @@ import java.util.List;
 
 public abstract class EffectHandler {
 
+    protected final int speed;
     protected final Card card;
     protected final Field field;
     protected final DuelController controller;
 
-    public EffectHandler(Card card, Field field, DuelController controller) {
+    public EffectHandler(int speed, Card card, Field field, DuelController controller) {
+        this.speed = speed;
         this.card = card;
         this.field = field;
         this.controller = controller;

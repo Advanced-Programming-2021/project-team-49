@@ -14,8 +14,8 @@ public class Umiiruka extends EffectHandler {
 
     private final List<Card> bothMonsterZones;
 
-    public Umiiruka(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public Umiiruka(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
             effect.deActivate();

@@ -17,8 +17,8 @@ public class SwordOfDarkDestruction extends EffectHandler {
 
     private final List<Card> requiredMonsters;
 
-    public SwordOfDarkDestruction(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public SwordOfDarkDestruction(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         requiredMonsters = getRequiredMonsters();
         activationRequirement();
     }

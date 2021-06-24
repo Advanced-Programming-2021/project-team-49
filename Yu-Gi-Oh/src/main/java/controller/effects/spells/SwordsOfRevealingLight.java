@@ -12,8 +12,8 @@ public class SwordsOfRevealingLight extends EffectHandler {
 
     private int turnCounter = 0;
 
-    public SwordsOfRevealingLight(Card card,Field field, DuelController controller) {
-        super(card, field, controller);
+    public SwordsOfRevealingLight(int speed, Card card,Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override

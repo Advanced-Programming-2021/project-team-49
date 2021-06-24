@@ -10,8 +10,8 @@ import view.DuelView;
 
 public class MessengerOfPeace extends EffectHandler {
 
-    public MessengerOfPeace(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public MessengerOfPeace(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override

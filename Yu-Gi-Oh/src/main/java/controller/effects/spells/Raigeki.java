@@ -14,8 +14,8 @@ public class Raigeki extends EffectHandler {
 
     private final List<Card> enemyMonsterZone;
 
-    public Raigeki(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public Raigeki(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         enemyMonsterZone = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
         activationRequirement();
     }

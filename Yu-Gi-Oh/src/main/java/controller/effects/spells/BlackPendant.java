@@ -15,8 +15,8 @@ public class BlackPendant extends EffectHandler {
 
     private final List<Card> monsterZone;
 
-    public BlackPendant(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public BlackPendant(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
         activationRequirement();
     }

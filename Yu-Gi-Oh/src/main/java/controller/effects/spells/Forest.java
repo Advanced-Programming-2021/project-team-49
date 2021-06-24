@@ -14,8 +14,8 @@ public class Forest extends EffectHandler {
 
     private final List<Card> bothMonsterZones;
 
-    public Forest(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public Forest(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
             effect.deActivate();

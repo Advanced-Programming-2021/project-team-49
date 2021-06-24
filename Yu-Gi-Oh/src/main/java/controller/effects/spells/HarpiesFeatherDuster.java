@@ -14,8 +14,8 @@ public class HarpiesFeatherDuster extends EffectHandler {
 
     private final List<Card> enemySpellZone;
 
-    public HarpiesFeatherDuster(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public HarpiesFeatherDuster(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         enemySpellZone = field.getDefenderMat().getCardList(Location.SPELL_AND_TRAP_ZONE);
         activationRequirement();
     }

@@ -12,8 +12,8 @@ import java.util.List;
 
 public class Yami extends EffectHandler {
 
-    public Yami(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public Yami(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override

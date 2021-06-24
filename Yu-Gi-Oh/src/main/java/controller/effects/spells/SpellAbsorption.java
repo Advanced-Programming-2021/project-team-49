@@ -8,8 +8,8 @@ import model.game.card.Card;
 
 public class SpellAbsorption extends EffectHandler {
 
-    public SpellAbsorption(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public SpellAbsorption(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override

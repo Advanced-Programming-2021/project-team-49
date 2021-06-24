@@ -36,7 +36,7 @@ public class Field {
             monster.setPositionChanged(false);
             monster.setUsedInAttack(false);
         }
-        notifyEffects(Event.END_TURN);
+        attackerMat.notifyEffects(Event.END_TURN);
         switchMats();
     }
 
@@ -62,12 +62,5 @@ public class Field {
             attackerMat.moveCard(Location.DECK, Location.HAND);
             defenderMat.moveCard(Location.DECK, Location.HAND);
         }
-    }
-
-    public void notifyEffects(Event event) {
-        for (EffectHandler effect : attackerMat.getActivatedEffects().values())
-            effect.notifier(event);
-        for (EffectHandler effect : defenderMat.getActivatedEffects().values())
-            effect.notifier(event);
     }
 }

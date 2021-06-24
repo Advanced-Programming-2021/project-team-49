@@ -16,8 +16,8 @@ public class MonsterReborn extends EffectHandler {
 
     private final List<Card> bothGraveyardsMonsters;
 
-    public MonsterReborn(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public MonsterReborn(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         bothGraveyardsMonsters = getBothGraveyardsMonsters();
         activationRequirement();
     }

@@ -17,8 +17,8 @@ public class MagnumShield extends EffectHandler {
 
     private final List<Card> requiredMonsters;
 
-    public MagnumShield(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public MagnumShield(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         requiredMonsters = getRequiredMonsters();
         activationRequirement();
     }

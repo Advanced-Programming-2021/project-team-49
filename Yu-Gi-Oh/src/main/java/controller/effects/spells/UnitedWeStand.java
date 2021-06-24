@@ -15,8 +15,8 @@ public class UnitedWeStand extends EffectHandler {
 
     private final List<Card> monsterZone;
 
-    public UnitedWeStand(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public UnitedWeStand(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
         activationRequirement();
     }

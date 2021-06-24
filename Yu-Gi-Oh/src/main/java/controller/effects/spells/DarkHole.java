@@ -14,8 +14,8 @@ public class DarkHole extends EffectHandler {
 
     private final List<Card> bothMonsterZones;
 
-    public DarkHole(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public DarkHole(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         bothMonsterZones = getBothMonsterZones();
         activationRequirement();
     }

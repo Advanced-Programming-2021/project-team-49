@@ -19,8 +19,8 @@ public class Terraforming extends EffectHandler {
 
     private final List<Card> fieldSpells;
 
-    public Terraforming(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public Terraforming(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         fieldSpells = getFieldSpells();
     }
 

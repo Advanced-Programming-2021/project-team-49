@@ -17,8 +17,8 @@ public class ClosedForest extends EffectHandler {
     private int monstersInGraveyard = 0;
     private final List<Card> bothMonsterZones;
 
-    public ClosedForest(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public ClosedForest(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
         EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
         if (effect != null)
             effect.deActivate();

@@ -157,80 +157,80 @@ public class DuelController extends AbstractController {
                 return;
 
             case MONSTER_REBORN:
-                new MonsterReborn(getSelectedCard(), field, this).action();
+                new MonsterReborn(1, getSelectedCard(), field, this).action();
                 break;
 
             case TERRAFORMING:
-                new Terraforming(getSelectedCard(), field, this).action();
+                new Terraforming(1, getSelectedCard(), field, this).action();
                 break;
 
             case POT_OF_GREED:
-                new PotOfGreed(getSelectedCard(), field, this).action();
+                new PotOfGreed(1, getSelectedCard(), field, this).action();
                 break;
 
             case RAIGEKI:
-                new Raigeki(getSelectedCard(), field, this).action();
+                new Raigeki(1, getSelectedCard(), field, this).action();
                 break;
 
             case CHANGE_OF_HEART:
-                new ChangeOfHeart(getSelectedCard(), field, this).action();
+                new ChangeOfHeart(1, getSelectedCard(), field, this).action();
                 break;
 
             case HARPIES_FEATHER_DUSTER:
-                new HarpiesFeatherDuster(getSelectedCard(), field, this).action();
+                new HarpiesFeatherDuster(1, getSelectedCard(), field, this).action();
                 break;
 
 
             case SWORDS_OF_REVEALING_LIGHT:
-                new SwordsOfRevealingLight(getSelectedCard(), field, this).action();
+                new SwordsOfRevealingLight(1, getSelectedCard(), field, this).action();
                 break;
 
             case DARK_HOLE:
-                new DarkHole(getSelectedCard(), field, this).action();
+                new DarkHole(1, getSelectedCard(), field, this).action();
                 break;
 
             case SUPPLY_SQUAD:
-                new SupplySquad(getSelectedCard(), field, this).action();
+                new SupplySquad(1, getSelectedCard(), field, this).action();
                 break;
 
             case SPELL_ABSORPTION:
-                new SpellAbsorption(getSelectedCard(), field, this).action();
+                new SpellAbsorption(1, getSelectedCard(), field, this).action();
                 break;
 
             case MESSENGER_OF_PEACE:
-                new MessengerOfPeace(getSelectedCard(), field, this).action();
+                new MessengerOfPeace(1, getSelectedCard(), field, this).action();
                 break;
 
             case YAMI:
-                new Yami(getSelectedCard(), field, this).action();
+                new Yami(1, getSelectedCard(), field, this).action();
                 break;
 
             case FOREST:
-                new Forest(getSelectedCard(), field, this).action();
+                new Forest(1, getSelectedCard(), field, this).action();
                 break;
 
             case CLOSED_FOREST:
-                new ClosedForest(getSelectedCard(), field, this).action();
+                new ClosedForest(1, getSelectedCard(), field, this).action();
                 break;
 
             case UMIIRUKA:
-                new Umiiruka(getSelectedCard(), field, this).action();
+                new Umiiruka(1, getSelectedCard(), field, this).action();
                 break;
 
             case SWORD_OF_DARK_DESTRUCTION:
-                new SwordOfDarkDestruction(getSelectedCard(), field, this).action();
+                new SwordOfDarkDestruction(1, getSelectedCard(), field, this).action();
                 break;
 
             case BLACK_PENDANT:
-                new BlackPendant(getSelectedCard(), field, this).action();
+                new BlackPendant(1, getSelectedCard(), field, this).action();
                 break;
 
             case UNITED_WE_STAND:
-                new UnitedWeStand(getSelectedCard(), field, this).action();
+                new UnitedWeStand(1, getSelectedCard(), field, this).action();
                 break;
 
             case MAGNUM_SHIELD:
-                new MagnumShield(getSelectedCard(), field, this).action();
+                new MagnumShield(1, getSelectedCard(), field, this).action();
                 break;
 
             case ADVANCED_RITUAL_ART:
@@ -243,7 +243,7 @@ public class DuelController extends AbstractController {
 
                 // TODO Monsters have different triggers in effect activating
             case MAN_EATER_BUG:
-                new ManEaterBug(getSelectedCard(), field, this).action();
+                new ManEaterBug(1, getSelectedCard(), field, this).action();
                 break;
         }
     }
@@ -571,6 +571,12 @@ public class DuelController extends AbstractController {
             DuelView.showAttackOutcome(!target.isAttacker(), damage);
 
         checkEndOfRoundWithLifePoints();
+    }
+
+    public void handleChain(Event event) {
+
+        field.getDefenderMat().notifyEffects(event);
+
     }
 
     public void checkEndOfRoundWithLifePoints() throws EndOfRoundException {

@@ -3,7 +3,6 @@ package controller.effects.traps;
 import controller.DuelController;
 import controller.EffectHandler;
 import controller.effects.Event;
-import model.cardtemplate.MonsterCard;
 import model.game.Field;
 import model.game.card.Card;
 import model.game.card.Monster;
@@ -13,8 +12,8 @@ public class MagicCylinder extends EffectHandler {
 
     Monster attacker;
 
-    public MagicCylinder(Card card, Field field, DuelController controller) {
-        super(card, field, controller);
+    public MagicCylinder(int speed, Card card, Field field, DuelController controller) {
+        super(speed, card, field, controller);
     }
 
     @Override
