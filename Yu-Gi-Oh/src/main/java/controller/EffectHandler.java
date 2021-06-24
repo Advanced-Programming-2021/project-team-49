@@ -22,6 +22,10 @@ public abstract class EffectHandler {
         this.controller = controller;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
     public Card selectCardFromList(List<Card> cards) {
         DuelView.showCardListStringView(cards);
         int selected;

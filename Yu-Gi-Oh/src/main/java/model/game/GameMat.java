@@ -10,6 +10,8 @@ public class GameMat {
 
     private final Player player;
     private final Map<Location, List<Card>> locationMap;
+    private final Map<Card, EffectHandler> activatedEffects = new HashMap<>();
+    private final List<Limit> limits = new ArrayList<>();
     private final List<Card> monsterZone = Collections.nCopies(5, null);
     private final List<Card> spellAndTrapZone = Collections.nCopies(5, null);
     private final List<Card> graveyard = new ArrayList<>();
@@ -17,8 +19,6 @@ public class GameMat {
     private final List<Card> deck;
     private Card fieldZoneCard = null;
     private EffectHandler fieldZoneEffect = null;
-    private final List<EffectHandler> activatedEffects = new ArrayList<>();
-    private final List<Limit> limits = new ArrayList<>();
 
     public GameMat(Player player, List<Card> deck) {
         this.player = player;
@@ -67,25 +67,30 @@ public class GameMat {
     public void addCard(Card card, Location location) {
         if (location == Location.FIELD_ZONE)
             fieldZoneCard = card;
-
-        addCard(card, location, getCardCount(location));
+        else
+            addCard(card, location, getCardCount(location));
     }
 
     public void removeCard(Card card, Location location) {
         List<Card> cardList = locationMap.get(location);
+
+        activatedEffects.remove(card);
         cardList.remove(card);
     }
 
     public void removeCard(Location location, int position) {
         List<Card> cardList = locationMap.get(location);
+
+        activatedEffects.remove(cardList.get(position - 1));
         cardList.remove(position - 1);
     }
 
     public void removeCard(Location location) {
-        if (location == Location.FIELD_ZONE)
+        if (location == Location.FIELD_ZONE) {
+            activatedEffects.remove(fieldZoneCard);
             fieldZoneCard = null;
-
-        removeCard(location, getCardCount(location));
+        } else
+            removeCard(location, getCardCount(location));
     }
 
     public void moveCard(Location oldLocation, Location newLocation) {
@@ -117,7 +122,7 @@ public class GameMat {
         return locationMap.get(location);
     }
 
-    public List<EffectHandler> getActivatedEffects() {
+    public Map<Card, EffectHandler> getActivatedEffects() {
         return activatedEffects;
     }
 
@@ -126,11 +131,7 @@ public class GameMat {
     }
 
     public void addActivatedEffect(EffectHandler effect) {
-        activatedEffects.add(effect);
-    }
-
-    public void removeActivatedEffect(EffectHandler effect) {
-        activatedEffects.remove(effect);
+        activatedEffects.put(effect.getCard(), effect);
     }
 
     public void addLimit(Limit limit) {

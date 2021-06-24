@@ -61,9 +61,9 @@ public class Field {
     }
 
     public void notifyEffects(Event event) {
-        for (EffectHandler effect : attackerMat.getActivatedEffects())
+        for (EffectHandler effect : attackerMat.getActivatedEffects().values())
             effect.notifier(event);
-        for (EffectHandler effect : defenderMat.getActivatedEffects())
+        for (EffectHandler effect : defenderMat.getActivatedEffects().values())
             effect.notifier(event);
     }
 }
