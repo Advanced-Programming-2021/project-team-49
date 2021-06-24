@@ -37,7 +37,10 @@ public class Field {
             monster.setUsedInAttack(false);
         }
         notifyEffects(Event.END_TURN);
+        switchMats();
+    }
 
+    public void switchMats() {
         GameMat tempMat = attackerMat;
         attackerMat = defenderMat;
         defenderMat = tempMat;
