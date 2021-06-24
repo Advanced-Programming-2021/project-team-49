@@ -2,6 +2,7 @@ package controller;
 
 import controller.effects.Event;
 import controller.effects.monsters.ManEaterBug;
+import controller.effects.monsters.YomiShip;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
@@ -245,6 +246,8 @@ public class DuelController extends AbstractController {
             case MAN_EATER_BUG:
                 new ManEaterBug(1, getSelectedCard(), field, this).action();
                 break;
+
+
         }
     }
 
