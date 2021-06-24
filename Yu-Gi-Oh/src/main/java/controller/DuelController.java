@@ -136,8 +136,6 @@ public class DuelController extends AbstractController {
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
-            for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
-                ((Monster) card).setPositionChanged(false);
             isMonsterAddedToField = false;
         }
     }
