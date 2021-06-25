@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
@@ -43,13 +42,12 @@ public class Database {
         return cards;
     }
 
-    public CardTemplate getCardByName(String name) {
+    public static CardTemplate getCardByName(String name) {
         for (CardTemplate card : cards) {
-            if (card.getName().equals(name))
+            if (card.getName().equalsIgnoreCase(name))
                 return card;
         }
         return null;
-
     }
 
     public Userbase loadUserbase() {

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Userbase {
+
     private static final int INIT_COINS = 10;
     private final List<User> users = new ArrayList<>();
 

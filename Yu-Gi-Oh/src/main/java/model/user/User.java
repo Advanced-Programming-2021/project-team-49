@@ -1,6 +1,7 @@
 package model.user;
 
 import model.cardtemplate.CardTemplate;
+import model.database.Database;
 
 import java.util.*;
 
@@ -19,6 +20,48 @@ public class User {
         this.nickname = nickname;
         this.password = password;
         this.coins = coins;
+        buildStartingDeck();
+    }
+
+    private void buildStartingDeck() {
+        ownedCards.put(Database.getCardByName("Battle OX"), 1);
+        ownedCards.put(Database.getCardByName("Axe Raider"), 1);
+        ownedCards.put(Database.getCardByName("Horn Imp"), 1);
+        ownedCards.put(Database.getCardByName("Yomi Ship"), 1);
+        ownedCards.put(Database.getCardByName("Silver Fang"), 2);
+        ownedCards.put(Database.getCardByName("Suijin"), 1);
+        ownedCards.put(Database.getCardByName("Fireyarou"), 1);
+        ownedCards.put(Database.getCardByName("Curtain of Dark Ones"), 2);
+        ownedCards.put(Database.getCardByName("Feral Imp"), 1);
+        ownedCards.put(Database.getCardByName("Dark Magician"), 1);
+        ownedCards.put(Database.getCardByName("Wattkid"), 2);
+        ownedCards.put(Database.getCardByName("Baby Dragon"), 1);
+        ownedCards.put(Database.getCardByName("Hero of the East"), 2);
+        ownedCards.put(Database.getCardByName("Battle Warrior"), 2);
+        ownedCards.put(Database.getCardByName("Crawling Dragon"), 1);
+        ownedCards.put(Database.getCardByName("Flame Manipulator"), 1);
+        ownedCards.put(Database.getCardByName("Crab Turtle"), 1);
+        ownedCards.put(Database.getCardByName("Haniva"), 2);
+        ownedCards.put(Database.getCardByName("Bitron"), 1);
+        ownedCards.put(Database.getCardByName("Leotron"), 1);
+        ownedCards.put(Database.getCardByName("Alexandrite Dragon"), 1);
+        ownedCards.put(Database.getCardByName("Exploder Dragon"), 1);
+        ownedCards.put(Database.getCardByName("Warrior Dai Grepher"), 1);
+        ownedCards.put(Database.getCardByName("Dark Blade"), 1);
+        ownedCards.put(Database.getCardByName("Pot of Greed"), 1);
+        ownedCards.put(Database.getCardByName("Raigeki"), 1);
+        ownedCards.put(Database.getCardByName("Harpie's Feather Duster"), 1);
+        ownedCards.put(Database.getCardByName("Swords of Revealing Light"), 1);
+        ownedCards.put(Database.getCardByName("Messenger of Peace"), 1);
+        ownedCards.put(Database.getCardByName("Yami"), 1);
+        ownedCards.put(Database.getCardByName("Forest"), 1);
+        ownedCards.put(Database.getCardByName("Black Pendant"), 1);
+        ownedCards.put(Database.getCardByName("United We Stand"), 1);
+        ownedCards.put(Database.getCardByName("Advanced Ritual Art"), 1);
+        ownedCards.put(Database.getCardByName("Magic Cylinder"), 1);
+        ownedCards.put(Database.getCardByName("Mirror Force"), 1);
+        ownedCards.put(Database.getCardByName("Trap Hole"), 1);
+        ownedCards.put(Database.getCardByName("Torrential Tribute"), 1);
     }
 
     public String getUsername() {
