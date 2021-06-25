@@ -145,7 +145,7 @@ public class DuelController extends AbstractController {
     public Card drawCard() throws EndOfRoundException {
         try {
             if (phase == 0)
-                field.getDefenderMat().notifyEffects(Event.DRAW_PHASE);
+                field.getDefenderMat().notifyAllEffects(Event.DRAW_PHASE);
             return field.drawCard();
         } catch (EndOfRoundException exception) {
             endRound(exception.getWinner(), exception.getLoser());
@@ -541,7 +541,7 @@ public class DuelController extends AbstractController {
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
 
-        field.getDefenderMat().notifyEffects(Event.DECLARED_ATTACK);
+        field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
 
@@ -580,11 +580,30 @@ public class DuelController extends AbstractController {
         checkEndOfRoundWithLifePoints();
     }
 
-    public void handleChain(Event event) {
-
-        field.getDefenderMat().notifyEffects(event);
-
-    }
+//    public void handleChain(Event event) {
+//        List<EffectHandler> activatableEffects = field.getDefenderMat().getActivatableEffects(event);
+//        List<Card> activatableEffectCards = new ArrayList<>();
+//        for (EffectHandler effect : activatableEffects)
+//            activatableEffectCards.add(effect.getCard());
+//        for (Card card : field.getDefenderMat().getCardList(Location.HAND)) {
+//            if (card instanceof SpellTrap)
+//                if (((SpellTrap) card).getEffectType() == EffectType.QUICK_PLAY)
+//                    activatableEffectCards.add(card);
+//        }
+//        DuelView.showCardListStringView(activatableEffectCards);
+//
+//        int selected;
+//        do {
+//            selected = DuelView.selectNumber(1, activatableEffects.size());
+//            if (selected == 0)
+//                throw new GameErrorException("cancelled");
+//        } while (selected == -1);
+//
+//
+//        field.getDefenderMat().notifyEffects(event, 2);
+//        field.getDefenderMat().notifyEffects(event, 3);
+//
+//    }
 
     public void checkEndOfRoundWithLifePoints() throws EndOfRoundException {
         if (field.getDefenderMat().getPlayer().getLifePoints() <= 0) {
