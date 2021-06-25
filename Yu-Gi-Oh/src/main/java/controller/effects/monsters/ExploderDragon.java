@@ -66,7 +66,7 @@ public class ExploderDragon extends EffectHandler {
 
     }
 
-    public void getRequirements(Card enemy, Card attacker) {
+    public void setCards(Card enemy, Card attacker) {
         enemyToBeDestroyed = enemy;
         this.attacker = attacker;
 
