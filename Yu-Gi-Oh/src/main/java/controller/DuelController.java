@@ -544,28 +544,37 @@ public class DuelController extends AbstractController {
 
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
-        attackToEffectCards(target, attacker);
+
+        if (attackToEffectCards(target, attacker))
+            return;
 
         field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
 
-    public void attackToEffectCards(Monster target, Monster attacker) {
-        switch (target.getName()) {
-            case "Yomi Ship":
+    public boolean attackToEffectCards(Monster target, Monster attacker) {
+        switch (target.getEffect()) {
+            case YOMI_SHIP:
                 YomiShip yomiShip = new YomiShip(1, target, field, this);
                 yomiShip.setAttacker(attacker);
                 yomiShip.action();
-                break;
+                return true;
 
-            case "Texchanger":
+            case TEX_CHANGER:
                 Texchanger texchanger = new Texchanger(1, target, field, this);
                 texchanger.action();
-                break;
+                return true;
 
-            case "Suijin":
+            case SUIJIN:
                 field.getDefenderMat().getActivatedEffects().get(target).action();
-                break;
+                return true;
+
+            case MARSHMALLON:
+
+                return false;
+
+            default:
+                return false;
         }
     }
 
