@@ -116,13 +116,28 @@ public class GameMat {
         addCard(card, newLocation);
     }
 
-    public void notifyEffects(Event event) {
+    public void notifyEffects(Event event, int speed) {
+        for (EffectHandler effect : activatedEffects.values())
+            if (effect.getSpeed() == speed)
+                effect.notifier(event);
+    }
+
+    public void notifyAllEffects(Event event) {
         for (EffectHandler effect : activatedEffects.values())
             effect.notifier(event);
     }
 
     public void setFieldZoneEffect(EffectHandler fieldZoneEffect) {
         this.fieldZoneEffect = fieldZoneEffect;
+    }
+
+    public List<EffectHandler> getActivatableEffects(Event event) {
+        ArrayList<EffectHandler> activatableEffects = new ArrayList<>();
+        for (EffectHandler value : activatedEffects.values()) {
+            if (value.canBeActivated(event))
+                activatableEffects.add(value);
+        }
+        return activatableEffects;
     }
 
     public EffectHandler getFieldZoneEffect() {

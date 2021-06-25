@@ -28,6 +28,10 @@ public abstract class EffectHandler {
         return card;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
     public Card selectCardFromList(List<Card> cards) {
         DuelView.showCardListStringView(cards);
         int selected;
@@ -58,6 +62,10 @@ public abstract class EffectHandler {
         } while (selected == -1);
 
         return selected == 1;
+    }
+
+    public boolean canBeActivated(Event event) {
+     return true;
     }
 
     public abstract void activationRequirement();

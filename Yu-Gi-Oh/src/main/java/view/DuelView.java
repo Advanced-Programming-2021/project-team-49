@@ -161,11 +161,19 @@ public class DuelView extends AbstractView {
         StringBuilder cards = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             cards.append(i + 1).append(". ").append(list.get(i).getName()).append(": ")
-                    .append(list.get(i).getDescription());
+                    .append(list.get(i).getDescription()).append("\n");
             if (list.get(i) instanceof Monster)
-                cards.append("\nLevel: ").append(((Monster) list.get(i)).getLevel());
+                cards.append("Level: ").append(((Monster) list.get(i)).getLevel()).append("\n");
         }
-        System.out.println(cards);
+        System.out.print(cards);
+    }
+
+    public static void showCardNameListStringView(List<CardTemplate> list) {
+        StringBuilder cards = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++)
+            cards.append(i + 1).append(". ").append(list.get(i).getName()).append("\n");
+        System.out.print(cards);
     }
 
     @Override

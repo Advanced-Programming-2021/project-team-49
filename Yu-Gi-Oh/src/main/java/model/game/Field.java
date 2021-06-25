@@ -1,6 +1,5 @@
 package model.game;
 
-import controller.EffectHandler;
 import controller.effects.Event;
 import exception.EndOfRoundException;
 import model.game.card.Card;
@@ -36,7 +35,7 @@ public class Field {
             monster.setPositionChanged(false);
             monster.setUsedInAttack(false);
         }
-        attackerMat.notifyEffects(Event.END_TURN);
+        attackerMat.notifyAllEffects(Event.END_TURN);
         switchMats();
     }
 
