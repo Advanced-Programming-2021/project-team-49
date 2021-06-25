@@ -32,9 +32,9 @@ public class DarkHole extends EffectHandler {
         List<Card> enemyMonsterZone = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
 
         for (Card card : monsterZone)
-            field.getAttackerMat().removeCard(card, Location.MONSTER_ZONE);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
         for (Card card : enemyMonsterZone) {
-            field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
+            field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
         }
 
         moveCardToGraveyard();

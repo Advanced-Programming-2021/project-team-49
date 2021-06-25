@@ -29,7 +29,7 @@ public class HarpiesFeatherDuster extends EffectHandler {
     @Override
     public void action() {
         for (Card card : enemySpellZone)
-            field.getDefenderMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
+            field.getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
 
         moveCardToGraveyard();
     }

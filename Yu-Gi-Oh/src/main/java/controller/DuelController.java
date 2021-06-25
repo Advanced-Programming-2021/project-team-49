@@ -335,9 +335,9 @@ public class DuelController extends AbstractController {
         for (Card card : nominatedCardsToTribute) {
             field.getAttackerMat().addCard(card, Location.GRAVEYARD);
             if (field.getAttackerMat().getCardList(Location.MONSTER_ZONE).contains(card))
-                field.getAttackerMat().removeCard(card, Location.MONSTER_ZONE);
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
             else
-                field.getAttackerMat().removeCard(card, Location.HAND);
+                field.getAttackerMat().moveCard(Location.HAND, card, Location.GRAVEYARD);
         }
 
         do {
@@ -366,7 +366,7 @@ public class DuelController extends AbstractController {
             if (selected == -1)
                 throw new GameErrorException("there is no monster on this address");
 
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected, Location.GRAVEYARD);
 
         } else {
             if (monsterCardCount < 2)
@@ -377,8 +377,8 @@ public class DuelController extends AbstractController {
             if (selected1 == -1 || selected2 == -1 || selected1 == selected2)
                 throw new GameErrorException("there is no monster on one of these addresses");
 
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected1);
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected2);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected1, Location.GRAVEYARD);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected2, Location.GRAVEYARD);
         }
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToField = true;

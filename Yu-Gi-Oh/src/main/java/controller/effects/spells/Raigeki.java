@@ -29,7 +29,7 @@ public class Raigeki extends EffectHandler {
     @Override
     public void action() {
         for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE))
-            field.getDefenderMat().removeCard(card, Location.MONSTER_ZONE);
+            field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
 
         moveCardToGraveyard();
     }
