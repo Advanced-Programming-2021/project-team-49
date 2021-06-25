@@ -307,7 +307,11 @@ public class DuelView extends AbstractView {
                 System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("attack "))
                 controller.attack(Integer.parseInt(input.substring(7)));
-            else
+            else if (input.startsWith("increase "))
+                controller.increaseLifePoints(Integer.parseInt(getArgument("LP", input, "increase ")));
+            else if (input.startsWith("duel set-winner ")) {
+                controller.forceWinner(input.substring("duel set-winner ".length()));
+            } else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException|StopAttackException exception) {
             System.out.println(exception.getMessage());

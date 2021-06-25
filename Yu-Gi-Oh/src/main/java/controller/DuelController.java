@@ -653,4 +653,17 @@ public class DuelController extends AbstractController {
             throw new EndOfRoundException(winner, loser);
         }
     }
+
+    public void increaseLifePoints(int amount) {
+        field.getAttackerMat().getPlayer().addLifePoints(amount);
+    }
+
+    public void forceWinner(String winnerNickname) {
+        if (winnerNickname.equals(field.getAttackerMat().getPlayer().getUser().getNickname()))
+            endMatch(field.getAttackerMat().getPlayer(), field.getDefenderMat().getPlayer());
+        else if (winnerNickname.equals(field.getDefenderMat().getPlayer().getUser().getNickname()))
+            endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
+        else
+            throw new GameErrorException(winnerNickname + " isn't the nickname of either player");
+    }
 }
