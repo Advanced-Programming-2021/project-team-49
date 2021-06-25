@@ -3,7 +3,6 @@ package view;
 import controller.DuelController;
 import exception.*;
 import model.cardtemplate.CardTemplate;
-import model.cardtemplate.MonsterCard;
 import model.game.Field;
 import model.game.GameMat;
 import model.game.Location;

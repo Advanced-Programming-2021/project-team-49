@@ -10,6 +10,7 @@ import model.game.card.Card;
 public class TimeSeal extends EffectHandler {
     public TimeSeal(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().addActivatedEffect(this);
     }
 
     @Override
