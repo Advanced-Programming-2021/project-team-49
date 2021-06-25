@@ -51,6 +51,15 @@ public abstract class EffectHandler {
         return cards;
     }
 
+    public boolean askForActivation() {
+        int selected;
+        do {
+            selected = DuelView.selectAnOption(new String[]{"Activate", "Don't Activate"});
+        } while (selected == -1);
+
+        return selected == 1;
+    }
+
     public abstract void activationRequirement();
 
     public abstract void action();

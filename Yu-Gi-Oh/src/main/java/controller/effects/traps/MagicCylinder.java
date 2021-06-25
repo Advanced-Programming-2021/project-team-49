@@ -3,10 +3,10 @@ package controller.effects.traps;
 import controller.DuelController;
 import controller.EffectHandler;
 import controller.effects.Event;
+import exception.StopAttackException;
 import model.game.Field;
 import model.game.card.Card;
 import model.game.card.Monster;
-import view.DuelView;
 
 public class MagicCylinder extends EffectHandler {
 
@@ -14,6 +14,7 @@ public class MagicCylinder extends EffectHandler {
 
     public MagicCylinder(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().addActivatedEffect(this);
     }
 
     @Override
@@ -26,7 +27,9 @@ public class MagicCylinder extends EffectHandler {
         attacker = (Monster) controller.getSelectedCard();
 
         field.getAttackerMat().getPlayer().removeLifePoints(attacker.getTotalAttack());
-
+        controller.checkEndOfRoundWithLifePoints();
+        moveCardToGraveyard();
+        throw new StopAttackException("Magic Cylinder stopped the attack");
     }
 
     @Override
@@ -34,12 +37,7 @@ public class MagicCylinder extends EffectHandler {
         if (event != Event.DECLARED_ATTACK)
             return;
 
-        int selected;
-        do {
-            selected = DuelView.selectAnOption(new String[]{"Activate", "Don't Activate"});
-        } while (selected == 0 || selected == -1);
-
-        if (selected == 1)
+        if (askForActivation())
             action();
     }
 
