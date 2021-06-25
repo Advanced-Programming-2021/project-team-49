@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import exception.GameErrorException;
 import model.cardtemplate.*;
 
 import java.io.*;
@@ -52,7 +53,7 @@ public class Database {
     public Userbase loadUserbase() {
         try {
             Type USERBASE_TYPE = new TypeToken<Userbase>() {}.getType();
-            JsonReader reader = new JsonReader(new FileReader("userbase.json"));
+            JsonReader reader = new JsonReader(new FileReader("savedfiles/userbase.json"));
 
             if (!reader.hasNext())
                 return new Userbase();
@@ -68,14 +69,36 @@ public class Database {
         File file = new File("savedfiles/userbase.json");
         file.createNewFile();
 
-        FileWriter writer = new FileWriter("savedfiles/userbase.json");
+        FileWriter writer = new FileWriter(file);
         writer.write(GSON.toJson(userbase));
         writer.close();
     }
 
-    private CSVReader readCSVFile(String address) throws IOException {
+    public void importCard(String path) throws IOException, CsvValidationException {
+        if (path.endsWith(".csv"))
+            loadMonsterCards(readCSVFile(path));
+        else if (path.endsWith(".json")) {
+            JsonReader reader = new JsonReader(new FileReader(path));
+            while (reader.hasNext())
+                cards.add(GSON.fromJson(reader, MonsterCard.class));
+        } else
+            throw new GameErrorException("invalid file extension");
+    }
+
+    public void exportCard(MonsterCard card) throws IOException {
+        new File("savedfiles").mkdirs();
+        new File("savedfiles/cards").mkdirs();
+        File file = new File("savedfiles/cards/" + card.getName());
+        file.createNewFile();
+
+        FileWriter writer = new FileWriter(file);
+        writer.write(GSON.toJson(card));
+        writer.close();
+    }
+
+    private CSVReader readCSVFile(String path) throws IOException {
         // TODO remove first line of csv files
-        return new CSVReader(new FileReader(address));
+        return new CSVReader(new FileReader(path));
     }
 
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
