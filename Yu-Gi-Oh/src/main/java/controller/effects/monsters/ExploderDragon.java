@@ -25,11 +25,13 @@ public class ExploderDragon extends EffectHandler {
 
     @Override
     public void action() {
-        if (enemyToBeDestroyed.getName().equals(attacker.getName()) && !card.isFaceUp()) {
+        if (enemyToBeDestroyed.getName().equals(attacker.getName()) && !((Monster)card).isAttacker()) {
+            card.setFaceUp();
             field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
             field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
-        } else if (enemyToBeDestroyed.getName().equals(attacker.getName()) && card.isFaceUp()){
+        } else if (enemyToBeDestroyed.getName().equals(attacker.getName()) && ((Monster)card).isAttacker()){
             int damage = ((Monster) attacker).getTotalAttack() - ((Monster) card).getTotalAttack();
+            card.setFaceUp();
             if (damage >= 0) {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);

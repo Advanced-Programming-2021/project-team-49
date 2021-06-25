@@ -1,9 +1,7 @@
 package controller;
 
 import controller.effects.Event;
-import controller.effects.monsters.ManEaterBug;
-import controller.effects.monsters.Texchanger;
-import controller.effects.monsters.YomiShip;
+import controller.effects.monsters.*;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
@@ -560,6 +558,11 @@ public class DuelController extends AbstractController {
                 yomiShip.action();
                 return true;
 
+            case EXPLODER_DRAGON:
+                ExploderDragon exploderDragon = new ExploderDragon(1, target, field, this);
+                exploderDragon.getRequirements(attacker, attacker);
+                exploderDragon.action();
+
             case TEX_CHANGER:
                 Texchanger texchanger = new Texchanger(1, target, field, this);
                 texchanger.action();
@@ -570,8 +573,8 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
-                System.out.println("fuck u");
-                return false;
+                Marshmallon marshmallon = new Marshmallon(1, target, field, this);
+                return true;
 
             default:
                 return false;
@@ -604,7 +607,7 @@ public class DuelController extends AbstractController {
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
         }
 
-        if (!target.isAttacker() && !target.isFaceUp()) {
+        if (!target.isFaceUp()) {
             DuelView.showAttackOutcome(target.getName(), damage);
             target.setFaceUp();
         } else
