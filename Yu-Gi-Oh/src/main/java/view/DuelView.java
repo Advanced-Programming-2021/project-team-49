@@ -267,9 +267,10 @@ public class DuelView extends AbstractView {
         try {
             if (input.equals("surrender"))
                 controller.surrender();
-            else if (input.equals("next phase"))
+            else if (input.equals("next phase")) {
                 beginNextPhase();
-            else if (input.equals("select -d")) {
+                System.out.println(getFieldStringView(controller.getField()));
+            } else if (input.equals("select -d")) {
                 controller.deselectCard();
                 System.out.println("card deselected");
             } else if (input.startsWith("select"))
@@ -277,12 +278,15 @@ public class DuelView extends AbstractView {
             else if (input.equals("activate effect")) {
                 controller.activateSpell();
                 System.out.println("spell activated");
+                System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("summon")) {
                 controller.summon();
                 System.out.println("summoned successfully");
+                System.out.println(getFieldStringView(controller.getField()));
             } else if (input.equals("flip-summon")) {
                 controller.flipSummon();
                 System.out.println("flip summoned successfully");
+                System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("set")) {
                 if (isFlagUsedInCommand("position", input)) {
                     String position = getArgument("position", input, "set");
@@ -293,13 +297,15 @@ public class DuelView extends AbstractView {
                 else
                     controller.setSpellOrTrap();
                 System.out.println("set successfully");
+                System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("show graveyard"))
                 controller.showGraveyard(isFlagUsedInCommand("opponent", input));
             else if (input.equals("card show --selected"))
                 controller.showSelectedCard();
-            else if (input.equals("attack direct"))
+            else if (input.equals("attack direct")) {
+                System.out.println(getFieldStringView(controller.getField()));
                 controller.directAttack();
-            else if (input.startsWith("attack "))
+            } else if (input.startsWith("attack "))
                 controller.attack(Integer.parseInt(input.substring(7)));
             else
                 return runDefaultCommands(input, controller);

@@ -45,6 +45,10 @@ public class DuelController extends AbstractController {
         field = new Field(playerOne, playerTwo);
     }
 
+    public Field getField() {
+        return field;
+    }
+
     public String getPhaseName() {
         return phaseNames[phase];
     }
