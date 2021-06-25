@@ -1,6 +1,7 @@
 package controller;
 
 import controller.effects.Event;
+import controller.effects.Limit;
 import controller.effects.monsters.*;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
@@ -137,6 +138,8 @@ public class DuelController extends AbstractController {
     public void changePhase() {
         selectedCardLocation = null;
         phase++;
+        if (phase == 1)
+            field.getAttackerMat().notifyAllEffects(Event.STANDBY_PHASE);
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
@@ -270,8 +273,13 @@ public class DuelController extends AbstractController {
         else if (getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
                 ((SpellTrap) card).getEffectType() != EffectType.FIELD)
             throw new GameErrorException("spell card zone is full");
-        else
+        else if (((SpellTrap) card).getEffectType() == EffectType.FIELD
+                && field.getAttackerMat().getLimits().contains(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED))
+            throw new GameErrorException("field spells can't be activated");
+        else {
             callEffect();
+            field.getAttackerMat().notifyAllEffects(Event.A_SPELL_ACTIVATED);
+        }
     }
 
     private boolean isRitualSummonPossible() {
@@ -352,6 +360,7 @@ public class DuelController extends AbstractController {
         getSelectedCard().setFaceUp();
         ((Monster) getSelectedCard()).setAttacker(selected == 1);
 
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         return true;
     }
 
@@ -387,7 +396,33 @@ public class DuelController extends AbstractController {
         if (summon)
             getSelectedCard().setFaceUp();
 
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         return true;
+    }
+
+    public boolean specialSummon() {
+        Effect effect = getSelectedCard().getEffect();
+
+        switch (effect) {
+            case GATE_GUARDIAN:
+                new GateGuardian(1, getSelectedCard(), field, this).action();
+                field.getAttackerMat().notifyAllEffects(Event.SUMMON);
+                return true;
+
+            case BEAST_KING_BARBAROS:
+                BeastKingBarbaros effectCard = new BeastKingBarbaros(1, getSelectedCard(), field, this);
+                effectCard.action();
+                field.getAttackerMat().notifyAllEffects(Event.SUMMON);
+                return effectCard.isSpecialSummoned();
+
+            case THE_TRICKY:
+                new TheTricky(1, getSelectedCard(), field, this).action();
+                field.getAttackerMat().notifyAllEffects(Event.SUMMON);
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     public void flipSummon() {
@@ -403,6 +438,8 @@ public class DuelController extends AbstractController {
 
         card.setFaceUp();
         ((Monster) card).setAttacker(true);
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.FLIP_SUMMON);
         callEffect();
     }
 
@@ -418,6 +455,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("monster card zone is full");
         else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
+        else if (specialSummon())
+            return;
         else if (ritualSummon())
             return;
         else if (tributeSummonOrSet(true))
@@ -426,6 +465,8 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         card.setFaceUp();
         isMonsterAddedToField = true;
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.NORMAL_SUMMON);
     }
 
     public void setPosition(String position) {
@@ -527,6 +568,7 @@ public class DuelController extends AbstractController {
         if (field.getDefenderMat().getCardCount(Location.MONSTER_ZONE) > 0)
             throw new GameErrorException("you can't attack the opponent directly");
         else {
+            field.getAttackerMat().notifyAllEffects(Event.DECLARED_ATTACK);
             int damage = ((Monster) getSelectedCard()).getTotalAttack();
             field.getDefenderMat().getPlayer().removeLifePoints(damage);
             DuelView.showDirectAttackOutcome(damage);
@@ -542,6 +584,11 @@ public class DuelController extends AbstractController {
 
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
+        if (field.getAttackerMat().getLimits().contains(Limit.ALL_MONSTERS_CANT_ATTACK))
+            throw new GameErrorException("no monster can attack");
+        if (field.getAttackerMat().getLimits().contains(Limit.MONSTERS_WITH_1500_ATK_OR_MORE_CANT_ATTACK)
+                && attacker.getTotalAttack() >= 1500)
+            throw new GameErrorException("monsters with 1500 ATK or more can't attack");
 
         if (attackToEffectCards(target, attacker))
             return;
@@ -558,11 +605,6 @@ public class DuelController extends AbstractController {
                 yomiShip.action();
                 return true;
 
-            case EXPLODER_DRAGON:
-                ExploderDragon exploderDragon = new ExploderDragon(1, target, field, this);
-                exploderDragon.getRequirements(attacker, attacker);
-                exploderDragon.action();
-
             case TEX_CHANGER:
                 Texchanger texchanger = new Texchanger(1, target, field, this);
                 texchanger.action();
@@ -573,8 +615,8 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
-                Marshmallon marshmallon = new Marshmallon(1, target, field, this);
-                return true;
+
+                return false;
 
             default:
                 return false;
@@ -590,12 +632,15 @@ public class DuelController extends AbstractController {
 
             if (damage > 0) {
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
+                field.getAttackerMat().notifyAllEffects(Event.A_MONSTER_DESTROYED);
                 field.getDefenderMat().getPlayer().removeLifePoints(damage);
             } else if (damage == 0) {
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, targetPosition, Location.GRAVEYARD);
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attackerPosition, Location.GRAVEYARD);
+                field.getAttackerMat().notifyAllEffects(Event.A_MONSTER_DESTROYED);
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attackerPosition, Location.GRAVEYARD);
+                field.getAttackerMat().notifyAllEffects(Event.A_MONSTER_DESTROYED);
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
             }
         } else {
@@ -607,7 +652,7 @@ public class DuelController extends AbstractController {
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
         }
 
-        if (!target.isFaceUp()) {
+        if (!target.isAttacker() && !target.isFaceUp()) {
             DuelView.showAttackOutcome(target.getName(), damage);
             target.setFaceUp();
         } else
@@ -655,5 +700,18 @@ public class DuelController extends AbstractController {
             endRound(winner, loser);
             throw new EndOfRoundException(winner, loser);
         }
+    }
+
+    public void increaseLifePoints(int amount) {
+        field.getAttackerMat().getPlayer().addLifePoints(amount);
+    }
+
+    public void forceWinner(String winnerNickname) {
+        if (winnerNickname.equals(field.getAttackerMat().getPlayer().getUser().getNickname()))
+            endMatch(field.getAttackerMat().getPlayer(), field.getDefenderMat().getPlayer());
+        else if (winnerNickname.equals(field.getDefenderMat().getPlayer().getUser().getNickname()))
+            endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
+        else
+            throw new GameErrorException(winnerNickname + " isn't the nickname of either player");
     }
 }

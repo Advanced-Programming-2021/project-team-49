@@ -14,6 +14,7 @@ import java.util.List;
 public class BeastKingBarbaros extends EffectHandler {
 
     private final List<Card> monsterZone;
+    private boolean specialSummoned;
 
     public BeastKingBarbaros(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
@@ -37,10 +38,18 @@ public class BeastKingBarbaros extends EffectHandler {
         } while (selected == 0 || selected == -1);
 
         if (selected == 1) {
-
+            specialSummoned = false;
+            return;
         }
 
+        List<Card> selectedCards = select3CardsFromList(monsterZone);
 
+        for (Card selectedCard : selectedCards)
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selectedCard, Location.GRAVEYARD);
+
+        field.getAttackerMat().moveCard(Location.HAND, card, Location.MONSTER_ZONE);
+
+        specialSummoned = true;
     }
 
     @Override
@@ -53,7 +62,7 @@ public class BeastKingBarbaros extends EffectHandler {
 
     }
 
-    private boolean canBeSpecialSummoned() {
-        return monsterZone.size() > 2;
+    public boolean isSpecialSummoned() {
+        return specialSummoned;
     }
 }

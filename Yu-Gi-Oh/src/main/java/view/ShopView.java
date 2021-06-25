@@ -23,8 +23,14 @@ public class ShopView extends AbstractView {
                 showAllCards(controller);
             else if (input.startsWith("card show"))
                 showCard(controller, input.substring(10));
+            else if (input.startsWith("increase "))
+                controller.increaseUserBalance(Integer.parseInt(input.substring("increase ".length())));
+            else
+                return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
+        } catch (NumberFormatException exception) {
+            System.out.println("invalid value entered as a number");
         }
         return true;
     }

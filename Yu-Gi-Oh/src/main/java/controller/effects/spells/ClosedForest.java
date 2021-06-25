@@ -45,7 +45,7 @@ public class ClosedForest extends EffectHandler {
                 monster.increaseAttack(monstersInGraveyard * 100);
         }
 
-        field.getDefenderMat().addLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);
+        field.getDefenderMat().addLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class ClosedForest extends EffectHandler {
                 monster.decreaseAttack(monstersInGraveyard * 100);
         }
 
-        field.getDefenderMat().removeLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATE);
+        field.getDefenderMat().removeLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED);
     }
 }

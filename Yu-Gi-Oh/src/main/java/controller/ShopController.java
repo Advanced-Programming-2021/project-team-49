@@ -43,4 +43,8 @@ public class ShopController extends AbstractController {
         database.getCards().sort(Comparator.comparing(CardTemplate::getName));
         return database.getCards();
     }
+
+    public void increaseUserBalance(int amount) {
+        user.addCoins(amount);
+    }
 }
