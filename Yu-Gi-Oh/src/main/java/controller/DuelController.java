@@ -144,6 +144,8 @@ public class DuelController extends AbstractController {
 
     public Card drawCard() throws EndOfRoundException {
         try {
+            if (phase == 0)
+                field.getDefenderMat().notifyEffects(Event.DRAW_PHASE);
             return field.drawCard();
         } catch (EndOfRoundException exception) {
             endRound(exception.getWinner(), exception.getLoser());

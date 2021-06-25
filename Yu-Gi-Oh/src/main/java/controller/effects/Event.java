@@ -1,6 +1,7 @@
 package controller.effects;
 
 public enum Event {
+    DRAW_PHASE,
     STANDBY_PHASE,
     END_TURN,
     A_MONSTER_DESTROYED,
