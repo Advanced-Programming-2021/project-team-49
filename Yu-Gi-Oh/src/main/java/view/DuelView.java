@@ -1,10 +1,7 @@
 package view;
 
 import controller.DuelController;
-import exception.EndOfMatchException;
-import exception.EndOfRoundException;
-import exception.GameErrorException;
-import exception.StopAttackException;
+import exception.*;
 import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
 import model.game.Field;
@@ -302,6 +299,9 @@ public class DuelView extends AbstractView {
             System.out.println(exception.getMessage());
         } catch (NumberFormatException exception) {
             System.out.println("invalid value entered as a number");
+        } catch (EndPhaseException exception) {
+            System.out.println(exception.getMessage());
+            beginNextPhase();
         } catch (EndOfMatchException exception) {
             System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
                     + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
