@@ -10,30 +10,30 @@ import model.game.card.Card;
 
 import java.util.List;
 
-public class GateGuardian extends EffectHandler {
+public class TheTricky extends EffectHandler {
 
-    private final List<Card> monsterZone;
+    private final List<Card> hand;
 
-    public GateGuardian(int speed, Card card, Field field, DuelController controller) {
+    public TheTricky(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
-        monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
+        hand = field.getAttackerMat().getCardList(Location.HAND);
         activationRequirement();
     }
 
     @Override
     public void activationRequirement() {
-        if (monsterZone.size() < 3)
+        if (hand.isEmpty())
             throw new GameErrorException();
     }
 
     @Override
     public void action() {
-        List<Card> selectedCards = select3CardsFromList(monsterZone);
+        Card selectCard = selectCardFromList(hand);
 
-        for (Card selectedCard : selectedCards)
-            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selectedCard, Location.GRAVEYARD);
+        field.getAttackerMat().moveCard(Location.HAND, selectCard, Location.GRAVEYARD);
 
         field.getAttackerMat().moveCard(Location.HAND, card, Location.MONSTER_ZONE);
+
     }
 
     @Override

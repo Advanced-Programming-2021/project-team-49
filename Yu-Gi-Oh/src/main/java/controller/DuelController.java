@@ -1,9 +1,7 @@
 package controller;
 
 import controller.effects.Event;
-import controller.effects.monsters.ManEaterBug;
-import controller.effects.monsters.Texchanger;
-import controller.effects.monsters.YomiShip;
+import controller.effects.monsters.*;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
@@ -392,6 +390,28 @@ public class DuelController extends AbstractController {
         return true;
     }
 
+    public boolean specialSummon() {
+        Effect effect = getSelectedCard().getEffect();
+
+        switch (effect) {
+            case GATE_GUARDIAN:
+                new GateGuardian(1, getSelectedCard(), field, this).action();
+                return true;
+
+            case BEAST_KING_BARBAROS:
+                BeastKingBarbaros effectCard = new BeastKingBarbaros(1, getSelectedCard(), field, this);
+                effectCard.action();
+                return effectCard.isSpecialSummoned();
+
+            case THE_TRICKY:
+                new TheTricky(1, getSelectedCard(), field, this).action();
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     public void flipSummon() {
         Card card = getSelectedCard();
         if (card == null)
@@ -420,6 +440,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("monster card zone is full");
         else if (isMonsterAddedToField)
             throw new GameErrorException("you already summoned/set on this turn");
+        else if (specialSummon())
+            return;
         else if (ritualSummon())
             return;
         else if (tributeSummonOrSet(true))
@@ -570,7 +592,7 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
-                System.out.println("fuck u");
+
                 return false;
 
             default:

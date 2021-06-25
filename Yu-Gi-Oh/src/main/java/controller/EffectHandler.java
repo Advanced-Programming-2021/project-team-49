@@ -43,6 +43,30 @@ public abstract class EffectHandler {
         return cards.get(selected - 1);
     }
 
+    public List<Card> select3CardsFromList(List<Card> cards) {
+        DuelView.showCardListStringView(cards);
+
+        int selected1;
+        int selected2;
+        int selected3;
+        do {
+            selected1 = DuelView.selectNumber(1, cards.size());
+            selected2 = DuelView.selectNumber(1, cards.size());
+            selected3 = DuelView.selectNumber(1, cards.size());
+            if (selected1 == 0 || selected2 == 0 || selected3 == 0)
+                throw new GameErrorException("cancelled");
+
+        } while (selected1 == -1 || selected2 == -1 || selected3 == -1
+                || selected1 == selected2 || selected1 == selected3);
+
+        List<Card> selectedCards = new ArrayList<>();
+        selectedCards.add(cards.get(selected1));
+        selectedCards.add(cards.get(selected2));
+        selectedCards.add(cards.get(selected3));
+
+        return selectedCards;
+    }
+
     public void moveCardToGraveyard() {
         field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
         field.getAttackerMat().addCard(card, Location.GRAVEYARD);
