@@ -9,13 +9,18 @@ import model.game.card.Monster;
 
 public class Suijin extends EffectHandler {
 
-    private Monster target;
+    private Monster attacker;
     private int decreasedAttack;
     private boolean activated = false;
+    private boolean activatedInThisTurn = false;
 
     public Suijin(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().addActivatedEffect(this);
+    }
+
+    public void setAttacker(Monster attacker) {
+        this.attacker = attacker;
     }
 
     @Override
@@ -25,25 +30,27 @@ public class Suijin extends EffectHandler {
 
     @Override
     public void action() {
-        target = (Monster) controller.getSelectedCard();
-        decreasedAttack = target.getTotalAttack();
-        target.decreaseAttack(decreasedAttack);
+        if (activated)
+            return;
+        if (!askForActivation())
+            return;
+
+        attacker = (Monster) controller.getSelectedCard();
+        decreasedAttack = attacker.getTotalAttack();
+        attacker.decreaseAttack(decreasedAttack);
         activated = true;
+        activatedInThisTurn = true;
     }
 
     @Override
     public void notifier(Event event) {
-        if (event == Event.DECLARED_ATTACK) {
-            if (!activated && target == null)
-                if (askForActivation())
-                    action();
-        } else if (event == Event.END_TURN && activated)
+        if (event == Event.END_TURN && activatedInThisTurn)
             deActivate();
     }
 
     @Override
     public void deActivate() {
-        target.increaseAttack(decreasedAttack);
-        activated = false;
+        attacker.increaseAttack(decreasedAttack);
+        activatedInThisTurn = false;
     }
 }

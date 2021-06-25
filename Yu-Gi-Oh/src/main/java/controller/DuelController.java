@@ -249,6 +249,8 @@ public class DuelController extends AbstractController {
             case MAN_EATER_BUG:
                 new ManEaterBug(1, getSelectedCard(), field, this).action();
                 break;
+
+
         }
     }
 
@@ -333,9 +335,9 @@ public class DuelController extends AbstractController {
         for (Card card : nominatedCardsToTribute) {
             field.getAttackerMat().addCard(card, Location.GRAVEYARD);
             if (field.getAttackerMat().getCardList(Location.MONSTER_ZONE).contains(card))
-                field.getAttackerMat().removeCard(card, Location.MONSTER_ZONE);
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
             else
-                field.getAttackerMat().removeCard(card, Location.HAND);
+                field.getAttackerMat().moveCard(Location.HAND, card, Location.GRAVEYARD);
         }
 
         do {
@@ -351,11 +353,6 @@ public class DuelController extends AbstractController {
         return true;
     }
 
-    private boolean specialSummon() {
-
-        return false;
-    }
-
     private boolean tributeSummonOrSet(boolean summon) {
         int level = ((Monster) getSelectedCard()).getLevel();
         int monsterCardCount = field.getAttackerMat().getCardCount(Location.MONSTER_ZONE);
@@ -369,7 +366,7 @@ public class DuelController extends AbstractController {
             if (selected == -1)
                 throw new GameErrorException("there is no monster on this address");
 
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected, Location.GRAVEYARD);
 
         } else {
             if (monsterCardCount < 2)
@@ -380,8 +377,8 @@ public class DuelController extends AbstractController {
             if (selected1 == -1 || selected2 == -1 || selected1 == selected2)
                 throw new GameErrorException("there is no monster on one of these addresses");
 
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected1);
-            field.getAttackerMat().removeCard(Location.MONSTER_ZONE, selected2);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected1, Location.GRAVEYARD);
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selected2, Location.GRAVEYARD);
         }
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
@@ -543,31 +540,28 @@ public class DuelController extends AbstractController {
 
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
-
-        if (attackToEffectCards(target, attacker))
-            return;
+        attackToEffectCards(target, attacker);
 
         field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
 
-    public boolean attackToEffectCards(Monster target, Monster attacker) {
+    public void attackToEffectCards(Monster target, Monster attacker) {
         switch (target.getName()) {
             case "Yomi Ship":
                 YomiShip yomiShip = new YomiShip(1, target, field, this);
                 yomiShip.setAttacker(attacker);
                 yomiShip.action();
-                return true;
+                break;
 
             case "Texchanger":
                 Texchanger texchanger = new Texchanger(1, target, field, this);
                 texchanger.action();
-                return true;
+                break;
 
-
-            default:
-                return false;
-                //TODO reform Suijin class
+            case "Suijin":
+                field.getDefenderMat().getActivatedEffects().get(target).action();
+                break;
         }
     }
 
