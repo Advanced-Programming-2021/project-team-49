@@ -32,7 +32,8 @@ public class TorrentialTribute extends EffectHandler {
     @Override
     public void notifier(Event event) {
         if (event == Event.SUMMON)
-            action();
+            if (askForActivation())
+                action();
     }
 
     @Override
