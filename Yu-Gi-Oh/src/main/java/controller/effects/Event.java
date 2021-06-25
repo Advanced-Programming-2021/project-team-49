@@ -6,6 +6,7 @@ public enum Event {
     A_MONSTER_DESTROYED,
     A_SPELL_ACTIVATED,
     DECLARED_ATTACK,
+    SUMMON,
     NORMAL_SUMMON,
     FLIP_SUMMON
     // TODO call the fieldZoneSpell.action() each standby phase
