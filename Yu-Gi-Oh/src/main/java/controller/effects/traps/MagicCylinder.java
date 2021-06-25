@@ -45,4 +45,9 @@ public class MagicCylinder extends EffectHandler {
     public void deActivate() {
 
     }
+
+    @Override
+    public boolean canBeActivated(Event event) {
+        return event == Event.DECLARED_ATTACK;
+    }
 }

@@ -31,13 +31,20 @@ public class MirrorForce extends EffectHandler {
 
     @Override
     public void notifier(Event event) {
-        if (event == Event.DECLARED_ATTACK)
-            if (askForActivation())
-                action();
+        if (event != Event.DECLARED_ATTACK)
+            return;
+
+        if (askForActivation())
+            action();
     }
 
     @Override
     public void deActivate() {
 
+    }
+
+    @Override
+    public boolean canBeActivated(Event event) {
+        return event == Event.DECLARED_ATTACK;
     }
 }

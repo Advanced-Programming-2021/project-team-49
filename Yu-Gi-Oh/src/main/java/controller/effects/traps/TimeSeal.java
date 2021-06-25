@@ -24,12 +24,19 @@ public class TimeSeal extends EffectHandler {
 
     @Override
     public void notifier(Event event) {
-        if (event == Event.DRAW_PHASE)
-            action();
+        if (event != Event.DRAW_PHASE)
+            return;
+
+        action();
     }
 
     @Override
     public void deActivate() {
 
+    }
+
+    @Override
+    public boolean canBeActivated(Event event) {
+        return event == Event.DRAW_PHASE;
     }
 }
