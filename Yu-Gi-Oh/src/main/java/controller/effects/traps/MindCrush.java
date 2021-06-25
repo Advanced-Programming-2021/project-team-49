@@ -18,6 +18,7 @@ public class MindCrush extends EffectHandler {
 
     public MindCrush(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().addActivatedEffect(this);
     }
 
     @Override
@@ -60,5 +61,10 @@ public class MindCrush extends EffectHandler {
     @Override
     public void deActivate() {
 
+    }
+
+    @Override
+    public boolean canBeActivated(Event event) {
+        return true;
     }
 }

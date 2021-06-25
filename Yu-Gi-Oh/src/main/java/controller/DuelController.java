@@ -156,53 +156,6 @@ public class DuelController extends AbstractController {
         }
     }
 
-    private void callTrapEffect(Card card, Event event) {
-        switch (card.getEffect()) {
-            case NONE:
-                return;
-
-            case MAGIC_CYLINDER:
-                new MagicCylinder(2, card, field, this).notifier(event);
-                break;
-
-            case MIND_CRUSH:
-                new MindCrush(2, null, field, this).action();
-                break;
-
-            case MIRROR_FORCE:
-                 new MirrorForce(2, card, field, this).notifier(event);
-                 break;
-
-            case NEGATE_ATTACK:
-                new NegateAttack(3, card, field, this).notifier(event);
-                break;
-
-            case TIME_SEAL:
-                new TimeSeal(2, card, field, this).notifier(event);
-                break;
-
-            case TORRENTIAL_TRIBUTE:
-                new TorrentialTribute(2, card, field, this).notifier(event);
-                break;
-
-            case TRAP_HOLE:
-                new TrapHole(2, card, field, this).notifier(event);
-                break;
-
-            case TWIN_TWISTERS:
-                // TODO
-                break;
-
-            case MYSTICAL_SPACE_TYPHOON:
-                // TODO
-                break;
-
-            case RING_OF_DEFENCE:
-                // TODO
-                break;
-        }
-    }
-
     private boolean callMonsterEffect(Monster target, Monster attacker) {
         switch (target.getEffect()) {
             case EXPLODER_DRAGON:
@@ -305,10 +258,37 @@ public class DuelController extends AbstractController {
                 getSelectedCard().setFaceUp();
                 break;
 
-
                 // TODO Monsters have different triggers in effect activating
             case MAN_EATER_BUG:
                 new ManEaterBug(1, getSelectedCard(), field, this).action();
+                break;
+
+            case MAGIC_CYLINDER:
+                new MagicCylinder(2, getSelectedCard(), field, this);
+                break;
+
+            case MIND_CRUSH:
+                new MindCrush(2, getSelectedCard(), field, this);
+                break;
+
+            case MIRROR_FORCE:
+                new MirrorForce(2, getSelectedCard(), field, this);
+                break;
+
+            case NEGATE_ATTACK:
+                new NegateAttack(2, getSelectedCard(), field, this);
+                break;
+
+            case TIME_SEAL:
+                new TimeSeal(2, getSelectedCard(), field, this);
+                break;
+
+            case TORRENTIAL_TRIBUTE:
+                new TorrentialTribute(2, getSelectedCard(), field, this);
+                break;
+
+            case TRAP_HOLE:
+                new TrapHole(2, getSelectedCard(), field, this);
                 break;
         }
     }
@@ -564,6 +544,7 @@ public class DuelController extends AbstractController {
         } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
 
+
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
     }
 
@@ -702,60 +683,55 @@ public class DuelController extends AbstractController {
         checkEndOfRoundWithLifePoints();
     }
 
-    public void handleChain(Event event) {
-        List<Card> chain = new ArrayList<>();
-
-        List<Card> activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
-        DuelView.showCardListStringView(activatableEffectCards);
-
-        int selected;
-        do {
-            selected = DuelView.selectNumber(1, activatableEffectCards.size());
-            if (selected == 0)
-                throw new GameErrorException("cancelled");
-        } while (selected == -1);
-        chain.add(activatableEffectCards.get(selected - 1));
-
-
-        activatableEffectCards = getActivableEffectCards(field.getAttackerMat(), event);
-        DuelView.showCardListStringView(activatableEffectCards);
-        do {
-            selected = DuelView.selectNumber(1, activatableEffectCards.size());
-            if (selected == 0)
-                throw new GameErrorException("cancelled");
-        } while (selected == -1);
-        chain.add(activatableEffectCards.get(selected - 1));
-
-
-        activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
-        DuelView.showCardListStringView(activatableEffectCards);
-        do {
-            selected = DuelView.selectNumber(1, activatableEffectCards.size());
-            if (selected == 0)
-                throw new GameErrorException("cancelled");
-        } while (selected == -1);
-        chain.add(activatableEffectCards.get(selected - 1));
-
-
-        for (int i = chain.size() - 1; i == 0; i--)
-            callTrapEffect(chain.get(i), event);
-
-        field.getDefenderMat().notifyEffects(event, 2);
-        field.getDefenderMat().notifyEffects(event, 3);
-    }
-
-    public List<Card> getActivableEffectCards(GameMat gameMat, Event event) {
-        List<Card> activatableEffectCards = new ArrayList<>();
-
-        for (EffectHandler effect : gameMat.getActivatableEffects(event))
-            activatableEffectCards.add(effect.getCard());
-        for (Card card : gameMat.getCardList(Location.HAND)) {
-            if (card instanceof SpellTrap)
-                if (((SpellTrap) card).getEffectType() == EffectType.QUICK_PLAY)
-                    activatableEffectCards.add(card);
-        }
-        return activatableEffectCards;
-    }
+//    public void handleChain(Event event) {
+//        List<Card> chain = new ArrayList<>();
+//
+//        List<Card> activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
+//        if (activatableEffectCards.isEmpty())
+//            return;
+//        DuelView.showChainMessage(field.getDefenderMat().getPlayer().getUser().getNickname());
+//        chain.add(selectCardFromList(activatableEffectCards));
+//
+//
+//        activatableEffectCards = getActivableEffectCards(field.getAttackerMat(), event);
+//        if (activatableEffectCards.isEmpty()) {
+//            for (Card card : chain)
+//                callTrapEffect(card, event);
+//            return;
+//        }
+//        DuelView.showChainMessage(field.getAttackerMat().getPlayer().getUser().getNickname());
+//        chain.add(selectCardFromList(activatableEffectCards));
+//
+//
+//        activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
+//        if (activatableEffectCards.isEmpty()) {
+//            for (Card card : chain)
+//                callTrapEffect(card, event);
+//            return;
+//        }
+//        DuelView.showChainMessage(field.getDefenderMat().getPlayer().getUser().getNickname());
+//        chain.add(selectCardFromList(activatableEffectCards));
+//
+//
+//        for (int i = chain.size() - 1; i == 0; i--)
+//            callTrapEffect(chain.get(i), event);
+//
+//        field.getDefenderMat().notifyEffects(event, 2);
+//        field.getDefenderMat().notifyEffects(event, 3);
+//    }
+//
+//    public List<Card> getActivableEffectCards(GameMat gameMat, Event event) {
+//        List<Card> activatableEffectCards = new ArrayList<>();
+//
+//        for (EffectHandler effect : gameMat.getActivatableEffects(event))
+//            activatableEffectCards.add(effect.getCard());
+//        for (Card card : gameMat.getCardList(Location.HAND)) {
+//            if (card instanceof SpellTrap)
+//                if (((SpellTrap) card).getEffectType() == EffectType.QUICK_PLAY)
+//                    activatableEffectCards.add(card);
+//        }
+//        return activatableEffectCards;
+//    }
 
     public void checkEndOfRoundWithLifePoints() throws EndOfRoundException {
         if (field.getDefenderMat().getPlayer().getLifePoints() <= 0) {

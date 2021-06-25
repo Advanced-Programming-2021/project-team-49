@@ -13,6 +13,7 @@ public class MirrorForce extends EffectHandler {
 
     public MirrorForce(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().addActivatedEffect(this);
     }
 
     @Override
