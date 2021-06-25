@@ -570,7 +570,7 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
-
+                System.out.println("fuck u");
                 return false;
 
             default:
