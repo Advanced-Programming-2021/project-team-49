@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 import exception.GameErrorException;
 import model.cardtemplate.*;
@@ -28,9 +30,9 @@ public class Database {
 
     public Database() throws IOException, CsvValidationException {
         userbase = loadUserbase();
-        loadMonsterCards(readCSVFile(Objects.requireNonNull(getClass().getResource("Monster.csv")).getPath()));
+        loadMonsterCards(readCSVFile(Objects.requireNonNull(getClass().getResource("/Monster.csv")).getPath()));
         loadSpellTrapCards(readCSVFile(
-                Objects.requireNonNull(getClass().getResource("SpellTrap.csv")).getPath()));
+                Objects.requireNonNull(getClass().getResource("/SpellTrap.csv")).getPath()));
     }
 
     public Userbase getUserbase() {
@@ -98,7 +100,7 @@ public class Database {
 
     private CSVReader readCSVFile(String path) throws IOException {
         // TODO remove first line of csv files
-        return new CSVReader(new FileReader(path));
+        return new CSVReaderBuilder(new FileReader(path)).withSkipLines(1).build();
     }
 
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
