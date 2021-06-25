@@ -203,8 +203,15 @@ public class DuelController extends AbstractController {
         }
     }
 
-    private void callMonsterEffect(Effect effect) {
-
+    private boolean callMonsterEffect(Monster target, Monster attacker) {
+        switch (target.getEffect()) {
+            case EXPLODER_DRAGON:
+                ExploderDragon exploderDragon = new ExploderDragon(1, getSelectedCard(), field, this);
+                exploderDragon.setCards(attacker, target);
+                exploderDragon.action();
+                return true;
+        }
+        return false;
     }
 
     private void callSelectedCardEffect() {
@@ -620,6 +627,9 @@ public class DuelController extends AbstractController {
         if (attackToEffectCards(target, attacker))
             return;
 
+        if (callMonsterEffect(target, attacker))
+            return;
+
         field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
@@ -642,8 +652,15 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
+                Marshmallon marshmallon = new Marshmallon(1, target, field, this);
+                marshmallon.setAttacker(attacker);
+                marshmallon.action();
+                return true;
 
-                return false;
+            case EXPLODER_DRAGON:
+                ExploderDragon exploderDragon = new ExploderDragon(1, target, field, this);
+                exploderDragon.setCards(attacker, attacker);
+                exploderDragon.action();
 
             default:
                 return false;
