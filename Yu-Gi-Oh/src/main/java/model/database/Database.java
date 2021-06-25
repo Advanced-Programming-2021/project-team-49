@@ -24,7 +24,7 @@ public class Database {
         GSON = builder.create();
     }
     private final Userbase userbase;
-    private  final List<CardTemplate> cards = new ArrayList<>();
+    private static final List<CardTemplate> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
         userbase = loadUserbase();
@@ -37,7 +37,7 @@ public class Database {
         return userbase;
     }
 
-    public List<CardTemplate> getCards() {
+    public static List<CardTemplate> getCards() {
         return cards;
     }
 

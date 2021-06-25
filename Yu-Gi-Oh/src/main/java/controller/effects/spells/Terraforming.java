@@ -10,6 +10,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 import model.game.card.SpellTrap;
+import view.DeckBuilderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,7 @@ public class Terraforming extends EffectHandler {
     @Override
     public void action() {
         int random = new Random().nextInt(fieldSpells.size() - 1);
-        field.getAttackerMat().addCard(fieldSpells.get(random), Location.HAND);
-        field.getAttackerMat().removeCard(fieldSpells.get(random), Location.DECK);
+        field.getAttackerMat().moveCard(Location.DECK, fieldSpells.get(random), Location.HAND);
 
         moveCardToGraveyard();
     }

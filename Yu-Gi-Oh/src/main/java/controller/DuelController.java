@@ -2,12 +2,10 @@ package controller;
 
 import controller.effects.Event;
 import controller.effects.monsters.ManEaterBug;
-import controller.effects.monsters.YomiShip;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
-import exception.StopAttackException;
 import model.cardtemplate.*;
 import model.game.*;
 import model.game.card.Card;
