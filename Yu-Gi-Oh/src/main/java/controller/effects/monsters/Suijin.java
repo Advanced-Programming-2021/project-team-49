@@ -15,6 +15,7 @@ public class Suijin extends EffectHandler {
 
     public Suijin(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().addActivatedEffect(this);
     }
 
     @Override
