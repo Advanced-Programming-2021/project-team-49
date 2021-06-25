@@ -4,11 +4,14 @@ import controller.DuelController;
 import controller.EffectHandler;
 import controller.effects.Event;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
+import model.game.card.Monster;
 
 public class ExploderDragon extends EffectHandler {
 
     private Card enemyToBeDestroyed;
+    private Card attacker;
 
     public ExploderDragon(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
@@ -22,8 +25,33 @@ public class ExploderDragon extends EffectHandler {
 
     @Override
     public void action() {
-        //TODO diagnose if the card is attacker or defender.
-        //TODO destroy the enemy's card.
+        if (enemyToBeDestroyed.getName().equals(attacker.getName()) && !card.isFaceUp()) {
+            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
+            field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+        } else if (enemyToBeDestroyed.getName().equals(attacker.getName()) && card.isFaceUp()){
+            int damage = ((Monster) attacker).getTotalAttack() - ((Monster) card).getTotalAttack();
+            if (damage >= 0) {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                //TODO show in duel view
+            } else {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
+                field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+                //TODO show in duel view
+            }
+        } else {
+            int damage = ((Monster) card).getTotalAttack() - ((Monster) enemyToBeDestroyed).getTotalAttack();
+            if (damage >= 0) {
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
+                field.getDefenderMat().getPlayer().removeLifePoints(damage);
+                //TODO show in duel view
+            } else {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemyToBeDestroyed, Location.GRAVEYARD);
+                //TODO show in duel view
+            }
+        }
+
     }
 
     @Override
@@ -36,7 +64,9 @@ public class ExploderDragon extends EffectHandler {
 
     }
 
-    public void getRequirements(Card enemy) {
+    public void getRequirements(Card enemy, Card attacker) {
         enemyToBeDestroyed = enemy;
+        this.attacker = attacker;
+
     }
 }
