@@ -10,7 +10,6 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 import model.game.card.SpellTrap;
-import view.DeckBuilderView;
 
 import java.util.ArrayList;
 import java.util.List;
