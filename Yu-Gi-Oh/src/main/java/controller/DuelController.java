@@ -559,7 +559,9 @@ public class DuelController extends AbstractController {
                 texchanger.action();
                 break;
 
-                //TODO reform Suijin class
+            case "Suijin":
+                field.getDefenderMat().getActivatedEffects().get(target).action();
+                break;
         }
     }
 
