@@ -15,7 +15,7 @@ public class ProfileView extends AbstractView {
     protected boolean runCommand(String input) {
         try {
             if (input.startsWith("profile change ")) {
-                if (isFlagUsedInCommand(input, "password")) {
+                if (isFlagUsedInCommand("password", input)) {
                     String[] arguments = getArguments(new String[] {"current", "new"}, "password", input,
                             "profile change");
 
