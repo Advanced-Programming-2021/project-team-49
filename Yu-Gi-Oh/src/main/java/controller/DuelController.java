@@ -615,8 +615,10 @@ public class DuelController extends AbstractController {
                 return true;
 
             case MARSHMALLON:
-
-                return false;
+                Marshmallon marshmallon = new Marshmallon(1, target, field, this);
+                marshmallon.setAttacker(attacker);
+                marshmallon.action();
+                return true;
 
             default:
                 return false;
