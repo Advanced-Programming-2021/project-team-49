@@ -99,7 +99,6 @@ public class Database {
     }
 
     private CSVReader readCSVFile(String path) throws IOException {
-        // TODO remove first line of csv files
         return new CSVReaderBuilder(new FileReader(path)).withSkipLines(1).build();
     }
 
