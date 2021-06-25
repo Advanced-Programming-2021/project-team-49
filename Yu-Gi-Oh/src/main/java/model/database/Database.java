@@ -12,6 +12,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Database {
 
@@ -25,23 +26,18 @@ public class Database {
     private  final List<CardTemplate> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
-        Userbase userbase;
-        try {
-            Type USERBASE_TYPE = new TypeToken<Userbase>() {}.getType();
-            JsonReader reader = new JsonReader(new FileReader("userbase.json"));
-
-            if (!reader.hasNext())
-                userbase = new Userbase();
-            else
-                userbase = GSON.fromJson(reader, USERBASE_TYPE);
-        } catch (IOException exception) {
-            userbase = new Userbase();
-        }
-        this.userbase = userbase;
+        userbase = loadUserbase();
+        loadMonsterCards(readCSVFile(Objects.requireNonNull(getClass().getResource("Monster.csv")).getPath()));
+        loadSpellTrapCards(readCSVFile(
+                Objects.requireNonNull(getClass().getResource("SpellTrap.csv")).getPath()));
     }
 
     public Userbase getUserbase() {
         return userbase;
+    }
+
+    public List<CardTemplate> getCards() {
+        return cards;
     }
 
     public CardTemplate getCardByName(String name) {
@@ -51,6 +47,20 @@ public class Database {
         }
         return null;
 
+    }
+
+    public Userbase loadUserbase() {
+        try {
+            Type USERBASE_TYPE = new TypeToken<Userbase>() {}.getType();
+            JsonReader reader = new JsonReader(new FileReader("userbase.json"));
+
+            if (!reader.hasNext())
+                return new Userbase();
+            else
+                return GSON.fromJson(reader, USERBASE_TYPE);
+        } catch (IOException exception) {
+            return new Userbase();
+        }
     }
 
     public void saveUserbase() throws IOException {
@@ -63,11 +73,7 @@ public class Database {
         writer.close();
     }
 
-    public List<CardTemplate> getCards() {
-        return cards;
-    }
-
-    private CSVReader readFile(String address) throws IOException {
+    private CSVReader readCSVFile(String address) throws IOException {
         // TODO remove first line of csv files
         return new CSVReader(new FileReader(address));
     }
