@@ -303,8 +303,8 @@ public class DuelView extends AbstractView {
             else if (input.equals("card show --selected"))
                 controller.showSelectedCard();
             else if (input.equals("attack direct")) {
-                System.out.println(getFieldStringView(controller.getField()));
                 controller.directAttack();
+                System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("attack "))
                 controller.attack(Integer.parseInt(input.substring(7)));
             else
