@@ -7,6 +7,7 @@ import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
+import exception.StopAttackException;
 import model.cardtemplate.*;
 import model.game.*;
 import model.game.card.Card;
@@ -538,6 +539,7 @@ public class DuelController extends AbstractController {
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
 
+        field.getDefenderMat().notifyEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
     }
 

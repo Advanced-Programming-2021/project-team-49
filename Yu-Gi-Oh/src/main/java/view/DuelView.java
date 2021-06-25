@@ -4,6 +4,7 @@ import controller.DuelController;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.GameErrorException;
+import exception.StopAttackException;
 import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
 import model.game.Field;
@@ -297,7 +298,7 @@ public class DuelView extends AbstractView {
                 controller.attack(Integer.parseInt(input.substring(7)));
             else
                 return runDefaultCommands(input, controller);
-        } catch (GameErrorException exception) {
+        } catch (GameErrorException|StopAttackException exception) {
             System.out.println(exception.getMessage());
         } catch (NumberFormatException exception) {
             System.out.println("invalid value entered as a number");
