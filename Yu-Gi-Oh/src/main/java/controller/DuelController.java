@@ -2,6 +2,8 @@ package controller;
 
 import controller.effects.Event;
 import controller.effects.monsters.ManEaterBug;
+import controller.effects.monsters.Texchanger;
+import controller.effects.monsters.YomiShip;
 import controller.effects.spells.*;
 import exception.EndOfMatchException;
 import exception.EndOfRoundException;
@@ -538,9 +540,27 @@ public class DuelController extends AbstractController {
 
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
+        attackToEffectCards(target, attacker);
 
         field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
         attackMonster(attacker, target, selectedCardPosition, targetPosition);
+    }
+
+    public void attackToEffectCards(Monster target, Monster attacker) {
+        switch (target.getName()) {
+            case "Yomi Ship":
+                YomiShip yomiShip = new YomiShip(1, target, field, this);
+                yomiShip.setAttacker(attacker);
+                yomiShip.action();
+                break;
+
+            case "Texchanger":
+                Texchanger texchanger = new Texchanger(1, target, field, this);
+                texchanger.action();
+                break;
+
+                //TODO reform Suijin class
+        }
     }
 
     public void attackMonster(Monster attacker, Monster target, int attackerPosition, int targetPosition)
