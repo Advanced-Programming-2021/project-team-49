@@ -93,13 +93,13 @@ public class DeckBuilderView extends AbstractView {
 
                 controller.activateDeck(deckName);
                 System.out.println("deck activated successfully!");
-            } else if (input.startsWith("deck add-card")) {
+            } else if (input.startsWith("deck add-card ")) {
                 String[] arguments = getArguments(new String[]{"card", "deck"}, "side",
                         input, "deck add-card");
 
                 controller.addCardToDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card added to deck successfully!");
-            } else if (input.startsWith("deck rm-card")) {
+            } else if (input.startsWith("deck rm-card ")) {
                 String[] arguments = getArguments(new String[]{"card", "deck"}, "side",
                         input, "deck rm-card");
 

@@ -15,6 +15,9 @@ public abstract class AbstractView {
     }
 
     public static String[] getArguments(String[] argumentNames, String[] flags, String input, String prefix) {
+        if (input.length() <= prefix.length())
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
+
         String[] command = getCommand(input, prefix);
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         boolean[] flagConditions = findFlags(flags, command);
@@ -35,6 +38,9 @@ public abstract class AbstractView {
     }
 
     public static String[] getArguments(String[] argumentNames, String input, String prefix) {
+        if (input.length() <= prefix.length())
+            throw new GameErrorException(INVALID_COMMAND_MESSAGE);
+
         String[] command = getCommand(input, prefix);
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
 
