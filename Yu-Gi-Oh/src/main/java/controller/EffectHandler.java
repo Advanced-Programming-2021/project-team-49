@@ -89,6 +89,10 @@ public abstract class EffectHandler {
         return selected == 1;
     }
 
+    public boolean canBeActivated(Event event) {
+     return true;
+    }
+
     public abstract void activationRequirement();
 
     public abstract void action();
