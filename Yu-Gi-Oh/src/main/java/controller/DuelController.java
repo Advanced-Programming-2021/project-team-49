@@ -140,6 +140,10 @@ public class DuelController extends AbstractController {
             return field.getAttackerMat().getCard(selectedCardLocation, selectedCardPosition);
     }
 
+    public void setSelectedCardLocation(Location location) {
+        selectedCardLocation = location;
+    }
+
     public void changePhase() {
         phase++;
         if (firstTurnCounter > 0 && phase == 3)
@@ -398,6 +402,8 @@ public class DuelController extends AbstractController {
         getSelectedCard().setFaceUp();
         ((Monster) getSelectedCard()).setAttacker(selected == 1);
 
+        selectedCardLocation = Location.MONSTER_ZONE;
+        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         return true;
     }
 
@@ -433,6 +439,8 @@ public class DuelController extends AbstractController {
         if (summon)
             getSelectedCard().setFaceUp();
 
+        selectedCardLocation = Location.MONSTER_ZONE;
+        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         return true;
     }
 
@@ -497,6 +505,8 @@ public class DuelController extends AbstractController {
         card.setFaceUp();
         ((Monster) card).setAttacker(true);
 
+        selectedCardLocation = Location.MONSTER_ZONE;
+        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
     }
 
@@ -538,6 +548,8 @@ public class DuelController extends AbstractController {
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        selectedCardLocation = Location.MONSTER_ZONE;
+        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         isMonsterAddedToField = true;
     }
 
@@ -556,8 +568,11 @@ public class DuelController extends AbstractController {
         } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
 
-
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
+        selectedCardLocation = Location.SPELL_AND_TRAP_ZONE;
+        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
+
+        callSelectedCardEffect();
     }
 
     public void showGraveyard(boolean opponent) {

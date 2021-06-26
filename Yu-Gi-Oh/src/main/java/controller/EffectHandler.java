@@ -70,6 +70,7 @@ public abstract class EffectHandler {
     public void moveCardToGraveyard() {
         field.getAttackerMat().removeCard(card, Location.SPELL_AND_TRAP_ZONE);
         field.getAttackerMat().addCard(card, Location.GRAVEYARD);
+        controller.setSelectedCardLocation(null);
     }
 
     public List<Card> getBothMonsterZones() {
