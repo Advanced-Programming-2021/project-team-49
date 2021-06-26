@@ -9,18 +9,12 @@ import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
-import java.util.List;
-
 public class Umiiruka extends EffectHandler {
-
-    private final List<Card> bothMonsterZones;
 
     public Umiiruka(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().setFieldZoneEffect(this);
         field.getAttackerMat().moveCard(Location.HAND, card, Location.FIELD_ZONE);
-
-        bothMonsterZones = getBothMonsterZones();
     }
 
     @Override
@@ -30,28 +24,30 @@ public class Umiiruka extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : bothMonsterZones) {
-            Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.AQUA) {
-                monster.increaseAttack(500);
-                monster.decreaseDefense(400);
-            }
-        }
+        for (Card card : getBothMonsterZones())
+            modify((Monster) card);
     }
 
     @Override
     public void notifier(Event event) {
-
+        modify((Monster) field.getAttackerMat().getCard(Location.MONSTER_ZONE));
     }
 
     @Override
     public void deActivate() {
-        for (Card card : bothMonsterZones) {
+        for (Card card : getBothMonsterZones()) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.AQUA) {
                 monster.decreaseAttack(500);
                 monster.increaseDefense(400);
             }
+        }
+    }
+
+    private void modify(Monster monster) {
+        if (monster.getMonsterType() == MonsterType.AQUA) {
+            monster.increaseAttack(500);
+            monster.decreaseDefense(400);
         }
     }
 }

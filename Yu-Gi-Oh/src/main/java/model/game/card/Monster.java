@@ -89,6 +89,10 @@ public class Monster extends Card {
         attack -= amount;
     }
 
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
     public void increaseDefense(int amount) {
         defense += amount;
     }

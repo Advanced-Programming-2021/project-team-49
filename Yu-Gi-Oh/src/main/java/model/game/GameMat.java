@@ -129,6 +129,7 @@ public class GameMat {
         for (EffectHandler effect : activatedEffects.values())
             effect.notifier(event);
     }
+
     public void notifyFieldZoneEffect() {
         if (fieldZoneEffect != null)
             fieldZoneEffect.notifier(Event.A_MONSTER_ADDED_TO_FIELD);

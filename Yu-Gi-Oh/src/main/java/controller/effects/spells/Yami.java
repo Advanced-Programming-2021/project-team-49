@@ -26,31 +26,18 @@ public class Yami extends EffectHandler {
 
     @Override
     public void action() {
-        List<Card> cards = getBothMonsterZones();
-
-        for (Card card : cards) {
-            Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.SPELLCASTER
-                    || monster.getMonsterType() == MonsterType.FIEND) {
-                monster.increaseAttack(200);
-                monster.increaseDefense(200);
-            } else if (monster.getMonsterType() == MonsterType.FAIRY) {
-                monster.decreaseAttack(200);
-                monster.decreaseDefense(200);
-            }
-        }
+        for (Card card : getBothMonsterZones())
+            modify((Monster) card);
     }
 
     @Override
     public void notifier(Event event) {
-
+        modify((Monster) field.getAttackerMat().getCard(Location.MONSTER_ZONE));
     }
 
     @Override
     public void deActivate() {
-        List<Card> cards = getBothMonsterZones();
-
-        for (Card card : cards) {
+        for (Card card : getBothMonsterZones()) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.SPELLCASTER
                     || monster.getMonsterType() == MonsterType.FIEND) {
@@ -60,6 +47,17 @@ public class Yami extends EffectHandler {
                 monster.increaseAttack(200);
                 monster.increaseDefense(200);
             }
+        }
+    }
+
+    private void modify(Monster monster) {
+        if (monster.getMonsterType() == MonsterType.SPELLCASTER
+                || monster.getMonsterType() == MonsterType.FIEND) {
+            monster.increaseAttack(200);
+            monster.increaseDefense(200);
+        } else if (monster.getMonsterType() == MonsterType.FAIRY) {
+            monster.decreaseAttack(200);
+            monster.decreaseDefense(200);
         }
     }
 }

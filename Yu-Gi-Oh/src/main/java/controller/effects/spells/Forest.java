@@ -30,20 +30,13 @@ public class Forest extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : bothMonsterZones) {
-            Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.INSECT
-                    || monster.getMonsterType() == MonsterType.BEAST
-                    || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
-                monster.increaseAttack(200);
-                monster.increaseDefense(200);
-            }
-        }
+        for (Card card : bothMonsterZones)
+            modify((Monster) card);
     }
 
     @Override
     public void notifier(Event event) {
-
+        modify((Monster) field.getAttackerMat().getCard(Location.MONSTER_ZONE));
     }
 
     @Override
@@ -56,6 +49,15 @@ public class Forest extends EffectHandler {
                 monster.decreaseAttack(200);
                 monster.decreaseDefense(200);
             }
+        }
+    }
+
+    private void modify(Monster monster) {
+        if (monster.getMonsterType() == MonsterType.INSECT
+                || monster.getMonsterType() == MonsterType.BEAST
+                || monster.getMonsterType() == MonsterType.BEAST_WARRIOR) {
+            monster.increaseAttack(200);
+            monster.increaseDefense(200);
         }
     }
 }

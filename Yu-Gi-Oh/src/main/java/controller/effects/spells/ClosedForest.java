@@ -10,19 +10,12 @@ import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
-import java.util.List;
-
 public class ClosedForest extends EffectHandler {
-
-    private int monstersInGraveyard = 0;
-    private final List<Card> bothMonsterZones;
 
     public ClosedForest(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().setFieldZoneEffect(this);
         field.getAttackerMat().moveCard(Location.HAND, card, Location.FIELD_ZONE);
-
-        bothMonsterZones = getBothMonsterZones();
     }
 
     @Override
@@ -32,33 +25,43 @@ public class ClosedForest extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
-            if (card instanceof Monster)
-                monstersInGraveyard++;
-        }
-
-        for (Card card : bothMonsterZones) {
-            Monster monster = (Monster) card;
-            if (monster.getMonsterType() == MonsterType.BEAST)
-                monster.increaseAttack(monstersInGraveyard * 100);
-        }
+        for (Card card : getBothMonsterZones())
+            modify((Monster) card);
 
         field.getDefenderMat().addLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED);
     }
 
     @Override
     public void notifier(Event event) {
-
+        for (Card card : getBothMonsterZones()) {
+            Monster monster = (Monster) card;
+            monster.setAttack(0);
+            modify(monster);
+        }
     }
 
     @Override
     public void deActivate() {
-        for (Card card : bothMonsterZones) {
+        for (Card card : getBothMonsterZones()) {
             Monster monster = (Monster) card;
             if (monster.getMonsterType() == MonsterType.BEAST)
-                monster.decreaseAttack(monstersInGraveyard * 100);
+                monster.decreaseAttack(getMonstersInGraveyardCount() * 100);
         }
 
         field.getDefenderMat().removeLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED);
+    }
+
+    private void modify(Monster monster) {
+        if (monster.getMonsterType() == MonsterType.BEAST)
+            monster.increaseAttack(getMonstersInGraveyardCount() * 100);
+    }
+
+    public int getMonstersInGraveyardCount() {
+        int monstersInGraveyard = 0;
+        for (Card card : field.getAttackerMat().getCardList(Location.GRAVEYARD)) {
+            if (card instanceof Monster)
+                monstersInGraveyard++;
+        }
+        return monstersInGraveyard;
     }
 }
