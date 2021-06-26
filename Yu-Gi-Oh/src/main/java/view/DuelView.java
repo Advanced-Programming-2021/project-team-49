@@ -148,7 +148,7 @@ public class DuelView extends AbstractView {
     }
 
     public static void askForActivationHeader(String cardName, String nickName) {
-        System.out.println("Now it's " + nickName + " turn." +
+        System.out.println("Now it's " + nickName + " turn.\n" +
                 "Do you want activate " + cardName + "?");
     }
 
@@ -212,7 +212,7 @@ public class DuelView extends AbstractView {
     }
 
     public static void showDirectAttackOutcome(int damage) {
-        System.out.println("you opponent receives " + damage + " battle damage");
+        System.out.println("your opponent receives " + damage + " battle damage");
     }
 
     private void drawCard() throws EndOfRoundException {
