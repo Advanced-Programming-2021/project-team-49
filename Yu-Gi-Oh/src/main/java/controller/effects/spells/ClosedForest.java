@@ -35,7 +35,7 @@ public class ClosedForest extends EffectHandler {
     public void notifier(Event event) {
         for (Card card : getBothMonsterZones()) {
             Monster monster = (Monster) card;
-            monster.setAttack(0);
+            monster.setAttackModifier(0);
             modify(monster);
         }
     }
