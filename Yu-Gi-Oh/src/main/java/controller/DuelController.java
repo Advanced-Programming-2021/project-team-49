@@ -608,7 +608,6 @@ public class DuelController extends AbstractController {
     }
 
     public void showSelectedCard() {
-        // TODO check phase 1 doc, page 11 (card show <card name>)
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
