@@ -147,8 +147,9 @@ public class DuelView extends AbstractView {
         System.out.print(cards);
     }
 
-    public static void askForActivationHeader(String cardName) {
-        System.out.println("activate " + cardName + "?");
+    public static void askForActivationHeader(String cardName, String nickName) {
+        System.out.println("Now it's " + nickName + " turn." +
+                "Do you want activate " + cardName + "?");
     }
 
     public static int selectNumber(int begin, int end) {

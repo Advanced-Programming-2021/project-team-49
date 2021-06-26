@@ -80,17 +80,13 @@ public abstract class EffectHandler {
     }
 
     public boolean askForActivation() {
-        DuelView.askForActivationHeader(card.getName());
+        DuelView.askForActivationHeader(card.getName(), field.getDefenderMat().getPlayer().getUser().getNickname());
         int selected;
         do {
             selected = DuelView.selectAnOption(new String[]{"Activate", "Don't Activate"});
         } while (selected == -1);
 
         return selected == 1;
-    }
-
-    public boolean canBeActivated(Event event) {
-     return true;
     }
 
     public abstract void activationRequirement();
