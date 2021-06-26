@@ -240,6 +240,8 @@ public class DuelView extends AbstractView {
         try {
             if (input.equals("show field"))
                 System.out.println(getFieldStringView(controller.getField()));
+            else if (input.equals("show hand"))
+                showCardListStringView(controller.getField().getAttackerMat().getCardList(Location.HAND));
             else if (input.equals("surrender"))
                 controller.surrender();
             else if (input.equals("next phase")) {
