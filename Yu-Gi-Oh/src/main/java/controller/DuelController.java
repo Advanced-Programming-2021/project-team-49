@@ -587,7 +587,7 @@ public class DuelController extends AbstractController {
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
         selectedCardLocation = Location.SPELL_AND_TRAP_ZONE;
-        selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
+        selectedCardPosition = getCardCount(Location.SPELL_AND_TRAP_ZONE);
 
         callSelectedCardEffect();
     }
