@@ -89,7 +89,6 @@ public abstract class AbstractView {
                 while (j < command.length - 1
                         && !command[j + 1].startsWith("-"))
                     commandStringBuilder.append(" ").append(command[++j]);
-                System.out.println(commandStringBuilder);
                 return commandStringBuilder.toString();
             }
         throw new GameErrorException(INVALID_COMMAND_MESSAGE, new NullPointerException());
