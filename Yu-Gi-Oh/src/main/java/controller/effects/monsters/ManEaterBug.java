@@ -30,9 +30,8 @@ public class ManEaterBug extends EffectHandler {
 
     @Override
     public void action() {
-        Card card = selectCardFromList(enemyMonsterZone);
-
-        field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+        Card defender = selectCardFromList(enemyMonsterZone);
+        field.getDefenderMat().moveCard(Location.MONSTER_ZONE, defender, Location.GRAVEYARD);
     }
 
     @Override

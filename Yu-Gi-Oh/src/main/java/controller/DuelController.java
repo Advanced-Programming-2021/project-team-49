@@ -172,11 +172,11 @@ public class DuelController extends AbstractController {
         }
     }
 
-    private boolean callMonsterEffect(Monster target, Monster defender) {
-        switch (target.getEffect()) {
+    private boolean callMonsterEffect(Monster effectCard, Monster defender) {
+        switch (effectCard.getEffect()) {
             case EXPLODER_DRAGON:
                 ExploderDragon exploderDragon = new ExploderDragon(1, getSelectedCard(), field, this);
-                exploderDragon.setCards(defender, target);
+                exploderDragon.setCards(defender, effectCard);
                 exploderDragon.action();
                 return true;
         }
@@ -272,11 +272,6 @@ public class DuelController extends AbstractController {
                     throw new GameErrorException("there is no way you could ritual summon a monster");
                 field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
                 getSelectedCard().setFaceUp();
-                break;
-
-                // TODO Monsters have different triggers in effect activating
-            case MAN_EATER_BUG:
-                new ManEaterBug(1, getSelectedCard(), field, this).action();
                 break;
 
             case MAGIC_CYLINDER:
@@ -482,6 +477,10 @@ public class DuelController extends AbstractController {
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
+        else if (card.getEffect() == Effect.MAN_EATER_BUG) {
+            ManEaterBug manEaterBug = new ManEaterBug(1, getSelectedCard(), field, this);
+            manEaterBug.action();
+        }
         else if (selectedCardLocation != Location.MONSTER_ZONE)
             throw new GameErrorException("you can't change this card position");
         else if (phase != 2 && phase != 4)
