@@ -40,8 +40,8 @@ public class LoginController extends AbstractController {
         if (user == null || !user.isPasswordCorrect(password))
             throw new GameErrorException("Username and password didn't match!");
 
-        MainMenuController mainMenuController = new MainMenuController(
-                masterController, user, masterController.getDatabase());
+        MainMenuController mainMenuController = new MainMenuController(masterController,
+                user, masterController.getDatabase());
         masterController.setNextController(mainMenuController);
     }
 

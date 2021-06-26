@@ -59,7 +59,7 @@ public class DeckBuilderView extends AbstractView {
                                    List<SpellTrapCard> spellTrapCards) {
         StringBuilder deck = new StringBuilder("Deck: " + deckName + "\n");
 
-        if (!sideDeck)
+        if (sideDeck)
             deck.append("Side deck:\n");
         else
             deck.append("Main deck:\n");
