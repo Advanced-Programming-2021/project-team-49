@@ -173,12 +173,11 @@ public class DuelController extends AbstractController {
     }
 
     private boolean callMonsterEffect(Monster effectCard, Monster defender) {
-        switch (effectCard.getEffect()) {
-            case EXPLODER_DRAGON:
-                ExploderDragon exploderDragon = new ExploderDragon(1, getSelectedCard(), field, this);
-                exploderDragon.setCards(defender, effectCard);
-                exploderDragon.action();
-                return true;
+        if (effectCard.getEffect() == Effect.EXPLODER_DRAGON) {
+            ExploderDragon exploderDragon = new ExploderDragon(1, getSelectedCard(), field, this);
+            exploderDragon.setCards(defender, effectCard);
+            exploderDragon.action();
+            return true;
         }
         return false;
     }
