@@ -107,7 +107,8 @@ public class DuelView extends AbstractView {
                     + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.GRAVEYARD))
                     + "\n  " + getZoneStringView(gameMat, Location.MONSTER_ZONE, zoneViewOrder)
                     + "\n  " + getZoneStringView(gameMat, Location.SPELL_AND_TRAP_ZONE, zoneViewOrder)
-                    + "\n" + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.DECK))
+                    + "\n  " + offsetString
+                    + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.DECK))
                     + "\n  \t" + handString
                     + "\n" + gameMat.getPlayer().getUser().getNickname() + ": " + gameMat.getPlayer().getLifePoints();
         }
