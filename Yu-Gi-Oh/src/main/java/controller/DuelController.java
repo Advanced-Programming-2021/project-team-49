@@ -149,6 +149,8 @@ public class DuelController extends AbstractController {
         phase++;
         if (firstTurnCounter > 0 && phase == 3)
             phase++;
+        if (phase == 1)
+            field.getAttackerMat().notifyAllEffects(Event.STANDBY_PHASE);
         if (phase > phaseNames.length - 1) {
             phase = 0;
             field.switchTurn();
@@ -327,6 +329,7 @@ public class DuelController extends AbstractController {
         else
             callSelectedCardEffect();
         card.setFaceUp();
+        field.getAttackerMat().notifyAllEffects(Event.A_SPELL_ACTIVATED);
     }
 
     private boolean isRitualSummonPossible() {
@@ -409,6 +412,7 @@ public class DuelController extends AbstractController {
 
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
+        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
         return true;
     }
 
@@ -446,6 +450,7 @@ public class DuelController extends AbstractController {
 
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
+        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
         return true;
     }
 
@@ -486,6 +491,8 @@ public class DuelController extends AbstractController {
 
         card.setFaceUp();
         ((Monster) card).setAttacker(true);
+        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getDefenderMat().notifyAllEffects(Event.FLIP_SUMMON);
         callSelectedCardEffect();
     }
 
@@ -511,6 +518,8 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         ((Monster) card).setAttacker(true);
         card.setFaceUp();
+        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getDefenderMat().notifyAllEffects(Event.NORMAL_SUMMON);
         field.getAttackerMat().notifyFieldZoneEffect();
 
         selectedCardLocation = Location.MONSTER_ZONE;

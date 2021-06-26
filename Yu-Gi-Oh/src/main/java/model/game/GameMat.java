@@ -91,6 +91,7 @@ public class GameMat {
         if (location == Location.MONSTER_ZONE) {
             ((Monster) card).setAttackModifier(0);
             ((Monster) card).setDefenseModifier(0);
+            notifyAllEffects(Event.A_MONSTER_DESTROYED);
         }
         if (activatedEffects.containsKey(card)) {
             activatedEffects.get(card).deActivate();
