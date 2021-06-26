@@ -8,6 +8,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HarpiesFeatherDuster extends EffectHandler {
@@ -28,7 +29,7 @@ public class HarpiesFeatherDuster extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : enemySpellZone)
+        for (Card card : new ArrayList<>(enemySpellZone))
             field.getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
 
         moveCardToGraveyard();

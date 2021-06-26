@@ -8,6 +8,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Raigeki extends EffectHandler {
@@ -28,7 +29,7 @@ public class Raigeki extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE))
+        for (Card card : new ArrayList<>(field.getDefenderMat().getCardList(Location.MONSTER_ZONE)))
             field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
 
         moveCardToGraveyard();

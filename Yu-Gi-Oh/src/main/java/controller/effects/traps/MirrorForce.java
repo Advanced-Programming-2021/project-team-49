@@ -9,6 +9,9 @@ import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MirrorForce extends EffectHandler {
 
     public MirrorForce(int speed, Card card, Field field, DuelController controller) {
@@ -23,7 +26,7 @@ public class MirrorForce extends EffectHandler {
 
     @Override
     public void action() {
-        for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
+        for (Card card : new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE)))
             if (((Monster) card).isAttacker())
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
         controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);

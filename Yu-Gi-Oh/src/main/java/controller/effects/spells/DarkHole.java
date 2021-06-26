@@ -8,6 +8,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DarkHole extends EffectHandler {
@@ -28,12 +29,9 @@ public class DarkHole extends EffectHandler {
 
     @Override
     public void action() {
-        List<Card> monsterZone = field.getAttackerMat().getCardList(Location.MONSTER_ZONE);
-        List<Card> enemyMonsterZone = field.getDefenderMat().getCardList(Location.MONSTER_ZONE);
-
-        for (Card card : monsterZone)
+        for (Card card : new ArrayList<>(field.getAttackerMat().getCardList(Location.MONSTER_ZONE)))
             field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
-        for (Card card : enemyMonsterZone) {
+        for (Card card : new ArrayList<>(field.getDefenderMat().getCardList(Location.MONSTER_ZONE))) {
             field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
         }
 

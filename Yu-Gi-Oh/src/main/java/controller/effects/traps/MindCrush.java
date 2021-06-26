@@ -10,6 +10,7 @@ import model.game.Location;
 import model.game.card.Card;
 import view.DuelView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -40,7 +41,7 @@ public class MindCrush extends EffectHandler {
         boolean isAnyCardRemoved = false;
         // TODO check if the trap is activated in own turn or enemy's turn. here is for own turn (use field.switchMat())
 
-        for (Card card : field.getDefenderMat().getCardList(Location.HAND)) {
+        for (Card card : new ArrayList<>(field.getDefenderMat().getCardList(Location.HAND))) {
             if (card.getName().equals(cardName)) {
                 field.getDefenderMat().moveCard(Location.HAND, card, Location.GRAVEYARD);
                 isAnyCardRemoved = true;
