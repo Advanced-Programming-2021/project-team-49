@@ -260,6 +260,8 @@ public class DuelView extends AbstractView {
             System.out.println("it's " + controller.getCurrentPlayer().getUser().getNickname() + "'s turn");
             System.out.println("phase: " + controller.getPhaseName());
             drawCard();
+            beginNextPhase();
+            beginNextPhase();
             return;
         }
         System.out.println("phase: " + controller.getPhaseName());

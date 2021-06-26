@@ -27,7 +27,7 @@ public class DuelController extends AbstractController {
     private final boolean hasAI;
     private final int rounds;
     private int firstTurnCounter = 2;
-    private int phase = 0;
+    private int phase = -1;
     private Field field;
     private Location selectedCardLocation = null;
     private int selectedCardPosition;
@@ -141,7 +141,6 @@ public class DuelController extends AbstractController {
     }
 
     public void changePhase() {
-        selectedCardLocation = null;
         phase++;
         if (firstTurnCounter > 0 && phase == 3)
             phase++;
