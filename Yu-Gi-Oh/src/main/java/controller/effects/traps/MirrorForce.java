@@ -26,7 +26,7 @@ public class MirrorForce extends EffectHandler {
         for (Card card : field.getAttackerMat().getCardList(Location.MONSTER_ZONE))
             if (((Monster) card).isAttacker())
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
-        moveCardToGraveyard();
+        controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
         throw new StopAttackException("Mirror Force destroyed all attack position cards and the attack is stopped");
     }
 

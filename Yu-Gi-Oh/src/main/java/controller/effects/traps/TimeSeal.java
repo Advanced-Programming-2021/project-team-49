@@ -5,6 +5,7 @@ import controller.EffectHandler;
 import controller.effects.Event;
 import exception.EndPhaseException;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
 
 public class TimeSeal extends EffectHandler {
@@ -20,6 +21,7 @@ public class TimeSeal extends EffectHandler {
 
     @Override
     public void action() {
+        controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
         throw new EndPhaseException("Time Seal stopped the draw phase");
     }
 

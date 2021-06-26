@@ -26,7 +26,7 @@ public class TorrentialTribute extends EffectHandler {
         for (Card card : field.getDefenderMat().getCardList(Location.MONSTER_ZONE))
             field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
 
-        moveCardToGraveyard();
+        controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
     }
 
     @Override

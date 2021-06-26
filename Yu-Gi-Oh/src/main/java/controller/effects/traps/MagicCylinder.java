@@ -5,6 +5,7 @@ import controller.EffectHandler;
 import controller.effects.Event;
 import exception.StopAttackException;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
@@ -28,7 +29,7 @@ public class MagicCylinder extends EffectHandler {
 
         field.getAttackerMat().getPlayer().removeLifePoints(attacker.getTotalAttack());
         controller.checkEndOfRoundWithLifePoints();
-        moveCardToGraveyard();
+        controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
         throw new StopAttackException("Magic Cylinder stopped the attack");
     }
 

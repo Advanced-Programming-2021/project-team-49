@@ -21,7 +21,7 @@ public class TrapHole extends EffectHandler {
     @Override
     public void action() {
         field.getAttackerMat().moveCard(Location.MONSTER_ZONE, controller.getSelectedCard(), Location.GRAVEYARD);
-        moveCardToGraveyard();
+        controller.getField().getDefenderMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
     }
 
     @Override
