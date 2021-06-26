@@ -4,8 +4,8 @@ import model.cardtemplate.*;
 
 public class Monster extends Card {
 
-    private int attack;
-    private int defense;
+    private int attack = 0;
+    private int defense = 0;
     private boolean attacker;
     private boolean effect;
     private boolean positionChanged;
@@ -15,8 +15,6 @@ public class Monster extends Card {
     public Monster(MonsterCard card) {
         super(card);
         this.monsterCard = card;
-        attack = card.getBaseAttack();
-        defense = card.getBaseDefense();
     }
 
     public int getLevel() {

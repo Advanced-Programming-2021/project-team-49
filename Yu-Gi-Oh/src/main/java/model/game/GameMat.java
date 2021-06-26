@@ -13,8 +13,8 @@ public class GameMat {
     private final Map<Location, List<Card>> locationMap;
     private final Map<Card, EffectHandler> activatedEffects = new HashMap<>();
     private final List<Limit> limits = new ArrayList<>();
-    private final List<Card> monsterZone = Collections.nCopies(5, null);
-    private final List<Card> spellAndTrapZone = Collections.nCopies(5, null);
+    private final List<Card> monsterZone = new ArrayList<>(Collections.nCopies(5, null));
+    private final List<Card> spellAndTrapZone = new ArrayList<>(Collections.nCopies(5, null));
     private final List<Card> graveyard = new ArrayList<>();
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
@@ -45,7 +45,11 @@ public class GameMat {
     }
 
     public int getCardCount(Location location) {
-        return locationMap.get(location).size();
+        int count = 0;
+        for (Card card : locationMap.get(location))
+            if (card != null)
+                count++;
+        return count;
     }
 
     public Card getCard(Location location, int position) {
