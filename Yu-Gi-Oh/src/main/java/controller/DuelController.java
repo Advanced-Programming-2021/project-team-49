@@ -561,11 +561,9 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't set this card");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (card instanceof SpellTrap && ((SpellTrap) card).getEffectType() == EffectType.FIELD) {
-            field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.FIELD_ZONE);
-            getSelectedCard().setFaceUp();
-            return;
-        } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
+        else if (card instanceof SpellTrap && ((SpellTrap) card).getEffectType() == EffectType.FIELD)
+            throw new GameErrorException("you can't set Field Spell");
+        else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.SPELL_AND_TRAP_ZONE);
