@@ -73,7 +73,7 @@ public class DuelController extends AbstractController {
     }
 
     public void surrender() throws EndOfRoundException {
-        endRound(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
+        endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
         throw new EndOfMatchException(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
     }
 

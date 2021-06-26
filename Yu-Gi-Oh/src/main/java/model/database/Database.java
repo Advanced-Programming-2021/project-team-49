@@ -22,7 +22,8 @@ public class Database {
     private static final Gson GSON;
     static {
         GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
+        builder.setPrettyPrinting().enableComplexMapKeySerialization();
+        builder.registerTypeAdapter(CardTemplate.class, new CardTemplateAdapter());
         GSON = builder.create();
     }
     private final Userbase userbase;
@@ -63,6 +64,10 @@ public class Database {
         } catch (IOException exception) {
             return new Userbase();
         }
+    }
+
+    public void save() throws IOException {
+        saveUserbase();
     }
 
     public void saveUserbase() throws IOException {

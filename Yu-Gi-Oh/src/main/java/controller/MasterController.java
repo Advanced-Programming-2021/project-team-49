@@ -24,7 +24,7 @@ public class MasterController {
             nextController.run();
 
         try {
-            database.saveUserbase();
+            database.save();
         } catch (IOException exception) {
             exception.printStackTrace();
             System.out.println("Couldn't save database");
