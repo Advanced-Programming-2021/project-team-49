@@ -35,46 +35,26 @@ public class DuelView extends AbstractView {
     }
 
     private static void selectCard(DuelController controller, String input) {
-        String[] locationFlags = {"hand", "monster", "spell", "field"};
-        boolean[] isFlagFound = findFlags(locationFlags, input);
-        int locationFlagIndex = getFlagIndex(isFlagFound);
-
-        int position = 0;
         boolean opponent = isFlagUsedInCommand("opponent", input);
 
-        if (locationFlags[locationFlagIndex].equals("field")) {
-            if ((opponent && input.split(" ").length > 3) || input.split(" ").length > 2)
-                throw new GameErrorException("invalid selection");
-        } else {
-            String positionString;
-            if (opponent)
-                positionString = getArgument("opponent", locationFlags[locationFlagIndex], input, "select");
-            else
-                positionString = getArgument(locationFlags[locationFlagIndex], input, "select");
-            position = Integer.parseInt(positionString);
-        }
-        controller.selectCard(LOCATION_MAP.get(locationFlags[locationFlagIndex]), position,
-                isFlagUsedInCommand("opponent", input));
+        if (isFlagUsedInCommand("monster", input))
+            controller.selectCard(Location.MONSTER_ZONE,
+                    Integer.parseInt(getArgument("hand", input, "select")),
+                    opponent);
+        else if (isFlagUsedInCommand("spell", input))
+            controller.selectCard(Location.SPELL_AND_TRAP_ZONE,
+                    Integer.parseInt(getArgument("hand", input, "select")),
+                    opponent);
+        else if (isFlagUsedInCommand("field", input))
+            controller.selectCard(Location.FIELD_ZONE, 0, opponent);
+        else if (isFlagUsedInCommand("hand", input))
+            controller.selectCard(Location.HAND,
+                    Integer.parseInt(getArgument("hand", input, "select")),
+                    opponent);
+        else
+            throw new GameErrorException("invalid selection");
 
         System.out.println("card selected");
-    }
-
-    private static int getFlagIndex(boolean[] isFlagFound) {
-        int locationFlagIndex = 0;
-
-        while (locationFlagIndex < isFlagFound.length) {
-            if (isFlagFound[locationFlagIndex])
-                break;
-            locationFlagIndex++;
-        }
-
-        if (locationFlagIndex == isFlagFound.length)
-            throw new GameErrorException("invalid selection");
-        for (int i = locationFlagIndex + 1; i < isFlagFound.length; i++)
-            if (isFlagFound[i])
-                throw new GameErrorException("invalid selection");
-
-        return locationFlagIndex;
     }
 
     private static String getFieldStringView(Field field) {
