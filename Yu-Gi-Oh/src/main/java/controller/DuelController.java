@@ -73,12 +73,12 @@ public class DuelController extends AbstractController {
         new DuelView(this).run();
     }
 
-    public void surrender() throws EndOfRoundException {
+    public void surrender() {
         endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
         throw new EndOfMatchException(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
     }
 
-    public void endRound(Player winner, Player loser) throws EndOfMatchException {
+    public void endRound(Player winner, Player loser) {
         selectedCardLocation = null;
 
         winner.incrementWinCount();

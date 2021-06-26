@@ -147,12 +147,6 @@ public class DuelView extends AbstractView {
         System.out.print(cards);
     }
 
-    @Override
-    public void run() {
-        runCommand("next phase");
-        super.run();
-    }
-
     public static int selectNumber(int begin, int end) {
         System.out.println("select a card:");
 
@@ -236,6 +230,12 @@ public class DuelView extends AbstractView {
     }
 
     @Override
+    public void run() {
+        runCommand("next phase");
+        super.run();
+    }
+
+    @Override
     protected boolean runCommand(String input) {
         try {
             if (input.equals("show field"))
@@ -302,6 +302,7 @@ public class DuelView extends AbstractView {
         } catch (EndOfMatchException exception) {
             System.out.println(exception.getWinner().getUser().getUsername() + " won the whole match with score: "
                     + exception.getWinner().getWinCount() + "-" + exception.getLoser().getWinCount());
+            controller.escape();
             return false;
         } catch (EndOfRoundException exception) {
             System.out.println(exception.getWinner().getUser().getUsername() + " won the game and the score is: "
