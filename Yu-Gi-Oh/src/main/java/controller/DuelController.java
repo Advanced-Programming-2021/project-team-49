@@ -516,12 +516,12 @@ public class DuelController extends AbstractController {
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         ((Monster) card).setAttacker(true);
         card.setFaceUp();
-        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
-        field.getDefenderMat().notifyAllEffects(Event.NORMAL_SUMMON);
         field.getAttackerMat().notifyFieldZoneEffect();
 
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
+        field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getDefenderMat().notifyAllEffects(Event.NORMAL_SUMMON);
         isMonsterAddedToField = true;
     }
 
