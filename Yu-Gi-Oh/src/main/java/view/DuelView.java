@@ -17,18 +17,7 @@ import java.util.Map;
 
 public class DuelView extends AbstractView {
 
-    private static final Map<String, Location> LOCATION_MAP;
     private final DuelController controller;
-
-    static {
-        LOCATION_MAP = new HashMap<>();
-
-        LOCATION_MAP.put("hand", Location.HAND);
-        LOCATION_MAP.put("graveyard", Location.GRAVEYARD);
-        LOCATION_MAP.put("monster", Location.MONSTER_ZONE);
-        LOCATION_MAP.put("spell", Location.SPELL_AND_TRAP_ZONE);
-        LOCATION_MAP.put("field", Location.FIELD_ZONE);
-    }
 
     public DuelView(DuelController controller) {
         this.controller = controller;
