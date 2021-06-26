@@ -94,22 +94,22 @@ public class DuelView extends AbstractView {
 
         if (isFlipped) {
             int[] flippedZoneViewOrder = {4, 2, 1, 3, 5};
-            return gameMat.getPlayer().getUser().getNickname() + ":" + gameMat.getPlayer().getLifePoints()
+            return gameMat.getPlayer().getUser().getNickname() + ": " + gameMat.getPlayer().getLifePoints()
                     + "\n  \t" + handString
-                    + "\n" + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.DECK))
+                    + "\n" + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.DECK))
                     + "\n  " + getZoneStringView(gameMat, Location.SPELL_AND_TRAP_ZONE, flippedZoneViewOrder)
                     + "\n  " + getZoneStringView(gameMat, Location.MONSTER_ZONE, flippedZoneViewOrder)
-                    + "\n" + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.GRAVEYARD))
+                    + "\n" + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.GRAVEYARD))
                     + offsetString + getCardStringView(gameMat.getCard(Location.FIELD_ZONE));
         } else {
             int[] zoneViewOrder = {5, 3, 1, 2, 4};
             return getCardStringView(gameMat.getCard(Location.FIELD_ZONE)) + offsetString
-                    + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.GRAVEYARD))
+                    + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.GRAVEYARD))
                     + "\n  " + getZoneStringView(gameMat, Location.MONSTER_ZONE, zoneViewOrder)
                     + "\n  " + getZoneStringView(gameMat, Location.SPELL_AND_TRAP_ZONE, zoneViewOrder)
-                    + "\n" + "  " + MessageFormat.format("{:02d}", gameMat.getCardCount(Location.DECK))
-                    + "\n" + handString
-                    + "\n" + gameMat.getPlayer().getUser().getNickname() + ":" + gameMat.getPlayer().getLifePoints();
+                    + "\n" + MessageFormat.format("{0, number}", gameMat.getCardCount(Location.DECK))
+                    + "\n  \t" + handString
+                    + "\n" + gameMat.getPlayer().getUser().getNickname() + ": " + gameMat.getPlayer().getLifePoints();
         }
     }
 

@@ -28,14 +28,17 @@ public class Deck {
     }
 
     public void addCardToMainDeck(CardTemplate card) {
-        mainDeck.putIfAbsent(card, 0);
-        mainDeck.computeIfPresent(card, (key, count) -> count++);
+        if (mainDeck.containsKey(card))
+            mainDeck.replace(card, mainDeck.get(card) + 1);
+        else
+            mainDeck.put(card, 1);
     }
 
     public boolean removeCardFromMainDeck(CardTemplate card) {
         if (mainDeck.containsKey(card)) {
-            mainDeck.computeIfPresent(card, (key, count) -> count--);
-            if (mainDeck.get(card) <= 0)
+            if (mainDeck.get(card) > 1)
+                mainDeck.replace(card, mainDeck.get(card) - 1);
+            else
                 mainDeck.remove(card);
             return true;
         }
@@ -47,16 +50,22 @@ public class Deck {
     }
 
     public void addCardToSideDeck(CardTemplate card) {
-        sideDeck.putIfAbsent(card, 0);
-        sideDeck.computeIfPresent(card, (key, count) -> count++);
+        if (sideDeck.containsKey(card))
+            sideDeck.put(card, sideDeck.get(card) + 1);
+        else
+            sideDeck.put(card, 1);
     }
 
     public boolean removeCardFromSideDeck(CardTemplate card) {
         if (sideDeck.containsKey(card)) {
-            sideDeck.computeIfPresent(card, (key, count) -> count--);
-            if (sideDeck.get(card) <= 0)
-                sideDeck.remove(card);
-            return true;
+            if (sideDeck.containsKey(card)) {
+                if (sideDeck.get(card) > 1)
+                    sideDeck.replace(card, sideDeck.get(card) - 1);
+                else
+                    sideDeck.remove(card);
+                return true;
+            }
+            return false;
         }
         return false;
     }
