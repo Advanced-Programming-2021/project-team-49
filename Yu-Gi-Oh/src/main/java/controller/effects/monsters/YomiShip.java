@@ -8,6 +8,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
+import view.DuelView;
 
 public class YomiShip extends EffectHandler {
 
@@ -30,18 +31,22 @@ public class YomiShip extends EffectHandler {
             if (damage > 0) {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                DuelView.showAttackOutcome(card.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of YomiShip");
             } else
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+                DuelView.showAttackOutcome(card.getName(), damage);
         } else {
             if (damage >= 0) {
                 field.getDefenderMat().getPlayer().removeLifePoints(damage);
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                DuelView.showAttackOutcome(card.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of YomiShip");
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+                DuelView.showAttackOutcome(card.getName(), damage);
             }
         }
     }

@@ -8,6 +8,7 @@ import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
+import view.DuelView;
 
 public class ExploderDragon extends EffectHandler {
 
@@ -37,10 +38,12 @@ public class ExploderDragon extends EffectHandler {
             if (damage >= 0) {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                DuelView.showAttackOutcome(card.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+                DuelView.showAttackOutcome(card.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             }
         } else {
@@ -48,10 +51,12 @@ public class ExploderDragon extends EffectHandler {
             if (damage >= 0) {
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
                 field.getDefenderMat().getPlayer().removeLifePoints(damage);
+                DuelView.showAttackOutcome(enemy.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
+                DuelView.showAttackOutcome(enemy.getName(), damage);
                 throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             }
         }
