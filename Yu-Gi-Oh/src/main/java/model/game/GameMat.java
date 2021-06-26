@@ -154,10 +154,6 @@ public class GameMat {
         return activatableEffects;
     }
 
-    public EffectHandler getFieldZoneEffect() {
-        return fieldZoneEffect;
-    }
-
     public List<Card> getCardList(Location location) {
         return locationMap.get(location);
     }
@@ -168,6 +164,10 @@ public class GameMat {
 
     public List<Limit> getLimits() {
         return limits;
+    }
+
+    public boolean hasLimit(Limit limit) {
+        return limits.contains(limit);
     }
 
     public void addActivatedEffect(EffectHandler effect) {

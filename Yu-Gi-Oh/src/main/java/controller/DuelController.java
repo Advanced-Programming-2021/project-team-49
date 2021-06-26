@@ -1,6 +1,7 @@
 package controller;
 
 import controller.effects.Event;
+import controller.effects.Limit;
 import controller.effects.monsters.*;
 import controller.effects.spells.*;
 import controller.effects.traps.*;
@@ -320,6 +321,9 @@ public class DuelController extends AbstractController {
         else if (getCardCount(Location.SPELL_AND_TRAP_ZONE) >= 5 &&
                 ((SpellTrap) card).getEffectType() != EffectType.FIELD)
             throw new GameErrorException("spell card zone is full");
+        else if (((SpellTrap) card).getEffectType() == EffectType.FIELD)
+            if (field.getAttackerMat().hasLimit(Limit.FIELD_SPELLS_CANT_BE_ACTIVATED))
+                throw new GameErrorException("you can't activate Field Spell because of an effect");
         else
             callSelectedCardEffect();
         card.setFaceUp();
@@ -612,6 +616,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't do this action in this phase");
         else if (((Monster) getSelectedCard()).isUsedInAttack())
             throw new GameErrorException("this card already attacked");
+        else if (field.getAttackerMat().hasLimit(Limit.ALL_MONSTERS_CANT_ATTACK))
+            throw new GameErrorException("you can't attack because of an effect");
     }
 
     public void directAttack() {
@@ -685,8 +691,11 @@ public class DuelController extends AbstractController {
 
     public void attackMonster(Monster attacker, Monster target, int attackerPosition, int targetPosition)
             throws EndOfRoundException {
-        int damage;
+        if (field.getAttackerMat().hasLimit(Limit.MONSTERS_WITH_1500_ATK_OR_MORE_CANT_ATTACK))
+            if (attacker.getTotalAttack() >= 1500)
+                throw new GameErrorException("you can't attack because of an effect");
 
+        int damage;
         if (target.isAttacker()) {
             damage = attacker.getTotalAttack() - target.getTotalAttack();
 

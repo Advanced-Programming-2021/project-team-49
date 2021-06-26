@@ -9,8 +9,6 @@ import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
-import java.util.List;
-
 public class Yami extends EffectHandler {
 
     public Yami(int speed, Card card, Field field, DuelController controller) {
