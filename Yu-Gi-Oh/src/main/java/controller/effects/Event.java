@@ -11,6 +11,4 @@ public enum Event {
     NORMAL_SUMMON,
     FLIP_SUMMON,
     A_MONSTER_ADDED_TO_FIELD
-    // TODO call the fieldZoneSpell.action() each standby phase
-    // TODO need to call notifyEffects in effectController for Events
 }

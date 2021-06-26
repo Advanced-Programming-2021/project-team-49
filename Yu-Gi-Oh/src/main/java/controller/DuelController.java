@@ -736,56 +736,6 @@ public class DuelController extends AbstractController {
         checkEndOfRoundWithLifePoints();
     }
 
-//    public void handleChain(Event event) {
-//        List<Card> chain = new ArrayList<>();
-//
-//        List<Card> activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
-//        if (activatableEffectCards.isEmpty())
-//            return;
-//        DuelView.showChainMessage(field.getDefenderMat().getPlayer().getUser().getNickname());
-//        chain.add(selectCardFromList(activatableEffectCards));
-//
-//
-//        activatableEffectCards = getActivableEffectCards(field.getAttackerMat(), event);
-//        if (activatableEffectCards.isEmpty()) {
-//            for (Card card : chain)
-//                callTrapEffect(card, event);
-//            return;
-//        }
-//        DuelView.showChainMessage(field.getAttackerMat().getPlayer().getUser().getNickname());
-//        chain.add(selectCardFromList(activatableEffectCards));
-//
-//
-//        activatableEffectCards = getActivableEffectCards(field.getDefenderMat(), event);
-//        if (activatableEffectCards.isEmpty()) {
-//            for (Card card : chain)
-//                callTrapEffect(card, event);
-//            return;
-//        }
-//        DuelView.showChainMessage(field.getDefenderMat().getPlayer().getUser().getNickname());
-//        chain.add(selectCardFromList(activatableEffectCards));
-//
-//
-//        for (int i = chain.size() - 1; i == 0; i--)
-//            callTrapEffect(chain.get(i), event);
-//
-//        field.getDefenderMat().notifyEffects(event, 2);
-//        field.getDefenderMat().notifyEffects(event, 3);
-//    }
-//
-//    public List<Card> getActivableEffectCards(GameMat gameMat, Event event) {
-//        List<Card> activatableEffectCards = new ArrayList<>();
-//
-//        for (EffectHandler effect : gameMat.getActivatableEffects(event))
-//            activatableEffectCards.add(effect.getCard());
-//        for (Card card : gameMat.getCardList(Location.HAND)) {
-//            if (card instanceof SpellTrap)
-//                if (((SpellTrap) card).getEffectType() == EffectType.QUICK_PLAY)
-//                    activatableEffectCards.add(card);
-//        }
-//        return activatableEffectCards;
-//    }
-
     public void checkEndOfRoundWithLifePoints() throws EndOfRoundException {
         if (field.getDefenderMat().getPlayer().getLifePoints() <= 0) {
             Player winner = field.getAttackerMat().getPlayer();
