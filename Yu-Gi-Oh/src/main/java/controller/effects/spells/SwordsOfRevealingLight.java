@@ -37,7 +37,7 @@ public class SwordsOfRevealingLight extends EffectHandler {
         if (event == Event.END_TURN)
             turnCounter++;
 
-        if (turnCounter == 6) {
+        if (turnCounter == 3) {
             field.getDefenderMat().removeLimit(Limit.ALL_MONSTERS_CANT_ATTACK);
             moveCardToGraveyard();
         }

@@ -26,7 +26,7 @@ public class TrapHole extends EffectHandler {
 
     @Override
     public void notifier(Event event) {
-        if (event == Event.NORMAL_SUMMON || event == Event.FLIP_SUMMON)
+        if (event != Event.NORMAL_SUMMON && event != Event.FLIP_SUMMON)
             return;
 
         if (askForActivation())

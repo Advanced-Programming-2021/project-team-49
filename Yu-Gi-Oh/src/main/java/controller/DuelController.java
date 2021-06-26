@@ -407,6 +407,7 @@ public class DuelController extends AbstractController {
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         return true;
     }
 
@@ -445,6 +446,7 @@ public class DuelController extends AbstractController {
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         return true;
     }
 
@@ -490,6 +492,7 @@ public class DuelController extends AbstractController {
         card.setFaceUp();
         ((Monster) card).setAttacker(true);
         field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         field.getDefenderMat().notifyAllEffects(Event.FLIP_SUMMON);
         callSelectedCardEffect();
     }
@@ -521,6 +524,7 @@ public class DuelController extends AbstractController {
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         field.getDefenderMat().notifyAllEffects(Event.SUMMON);
+        field.getAttackerMat().notifyAllEffects(Event.SUMMON);
         field.getDefenderMat().notifyAllEffects(Event.NORMAL_SUMMON);
         isMonsterAddedToField = true;
     }
