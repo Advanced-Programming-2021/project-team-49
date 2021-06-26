@@ -22,11 +22,12 @@ public abstract class AbstractView {
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
         boolean[] flagConditions = findFlags(flags, command);
 
-        int commandCount = argumentNames.length * 2;
+        int commandCount = argumentNames.length;
+        for (String argument : arguments)
+            commandCount += argument.split(" ").length;
         for (boolean flagCondition : flagConditions)
             if (flagCondition)
                 commandCount++;
-
         if (commandCount != command.length)
             throw new GameErrorException(INVALID_COMMAND_MESSAGE);
 
@@ -44,7 +45,10 @@ public abstract class AbstractView {
         String[] command = getCommand(input, prefix);
         String[] arguments = extractArgumentsFromCommand(argumentNames, command);
 
-        if (command.length != 2 * arguments.length)
+        int commandCount = argumentNames.length;
+        for (String argument : arguments)
+            commandCount += argument.split(" ").length;
+        if (commandCount != command.length)
             throw new GameErrorException(INVALID_COMMAND_MESSAGE);
 
         return arguments;
@@ -81,7 +85,12 @@ public abstract class AbstractView {
         for (int j = 0; j < command.length - 1; j++)
             if (commandString.equals(command[j])
                     || abbreviatedCommandString.equals(command[j])) {
-                return command[j + 1];
+                StringBuilder commandStringBuilder = new StringBuilder(command[++j]);
+                while (j < command.length - 1
+                        && !command[j + 1].startsWith("-"))
+                    commandStringBuilder.append(" ").append(command[++j]);
+                System.out.println(commandStringBuilder);
+                return commandStringBuilder.toString();
             }
         throw new GameErrorException(INVALID_COMMAND_MESSAGE, new NullPointerException());
     }
