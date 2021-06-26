@@ -39,9 +39,10 @@ public class MainMenuView extends AbstractView {
         String[] flags = {"new", "ai"};
         boolean[] isFlagFound = findFlags(flags, input);
 
-        if (!isFlagFound[0])
+        if (!isFlagFound[0]) {
+            System.out.println("hey");
             throw new GameErrorException(INVALID_COMMAND_MESSAGE);
-        else if (isFlagFound[1]) {
+        }else if (isFlagFound[1]) {
             String roundString = getArgument("rounds", flags, input, "duel");
             int rounds = Integer.parseInt(roundString);
 

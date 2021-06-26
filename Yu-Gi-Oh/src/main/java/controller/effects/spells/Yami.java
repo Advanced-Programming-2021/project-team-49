@@ -14,6 +14,7 @@ public class Yami extends EffectHandler {
 
     public Yami(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
+        field.getAttackerMat().setFieldZoneEffect(this);
     }
 
     @Override
@@ -23,11 +24,6 @@ public class Yami extends EffectHandler {
 
     @Override
     public void action() {
-        EffectHandler effect = field.getAttackerMat().getFieldZoneEffect();
-        if (effect != null)
-            effect.deActivate();
-        field.getAttackerMat().setFieldZoneEffect(this);
-
         List<Card> cards = getBothMonsterZones();
 
         for (Card card : cards) {

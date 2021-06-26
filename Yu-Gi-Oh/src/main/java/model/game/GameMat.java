@@ -71,22 +71,25 @@ public class GameMat {
                 moveCard(Location.FIELD_ZONE, Location.GRAVEYARD);
             fieldZoneCard = card;
         } else
-            addCard(card, location, getCardCount(location));
+            addCard(card, location, getCardCount(location) + 1);
     }
 
     public void removeCard(Card card, Location location) {
         List<Card> cardList = locationMap.get(location);
-
-        activatedEffects.get(card).deActivate();
-        activatedEffects.remove(card);
+        if (activatedEffects.containsKey(card)) {
+            activatedEffects.get(card).deActivate();
+            activatedEffects.remove(card);
+        }
         cardList.remove(card);
     }
 
     public void removeCard(Location location, int position) {
         List<Card> cardList = locationMap.get(location);
-
-        activatedEffects.get(cardList.get(position - 1)).deActivate();
-        activatedEffects.remove(cardList.get(position - 1));
+        Card card = cardList.get(position - 1);
+        if (activatedEffects.containsKey(card)) {
+            activatedEffects.get(card).deActivate();
+            activatedEffects.remove(card);
+        }
         cardList.remove(position - 1);
     }
 
