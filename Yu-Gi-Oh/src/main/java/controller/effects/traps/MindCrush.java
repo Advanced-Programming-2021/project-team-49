@@ -5,7 +5,6 @@ import controller.EffectHandler;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.CardTemplate;
-import model.database.Database;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;

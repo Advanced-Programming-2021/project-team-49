@@ -11,9 +11,7 @@ import model.game.card.Monster;
 import model.game.card.SpellTrap;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DuelView extends AbstractView {
 

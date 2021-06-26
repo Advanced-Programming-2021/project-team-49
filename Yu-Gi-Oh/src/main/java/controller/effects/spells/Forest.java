@@ -18,7 +18,7 @@ public class Forest extends EffectHandler {
     public Forest(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().setFieldZoneEffect(this);
-        field.getAttackerMat().moveCard(Location.HAND, Location.FIELD_ZONE);
+        field.getAttackerMat().moveCard(Location.HAND, card, Location.FIELD_ZONE);
 
         bothMonsterZones = getBothMonsterZones();
     }
