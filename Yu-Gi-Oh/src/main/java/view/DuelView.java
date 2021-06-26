@@ -131,8 +131,12 @@ public class DuelView extends AbstractView {
 
     private static String getZoneStringView(GameMat gameMat, Location zone, int[] viewOrder) {
         StringBuilder stringViewBuilder = new StringBuilder();
-        for (int position : viewOrder)
-            stringViewBuilder.append("\t").append(getCardStringView(gameMat.getCard(zone, position)));
+        for (int position : viewOrder) {
+            if (position < gameMat.getCardCount(zone))
+                stringViewBuilder.append("\t").append(getCardStringView(gameMat.getCard(zone, position)));
+            else
+                stringViewBuilder.append("\t").append("E ");
+        }
         return stringViewBuilder.toString();
     }
 

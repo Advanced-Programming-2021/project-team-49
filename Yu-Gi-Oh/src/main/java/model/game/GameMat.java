@@ -13,8 +13,8 @@ public class GameMat {
     private final Map<Location, List<Card>> locationMap;
     private final Map<Card, EffectHandler> activatedEffects = new HashMap<>();
     private final List<Limit> limits = new ArrayList<>();
-    private final List<Card> monsterZone = new ArrayList<>(Collections.nCopies(5, null));
-    private final List<Card> spellAndTrapZone = new ArrayList<>(Collections.nCopies(5, null));
+    private final List<Card> monsterZone = new ArrayList<>();
+    private final List<Card> spellAndTrapZone = new ArrayList<>();
     private final List<Card> graveyard = new ArrayList<>();
     private final List<Card> hand = new ArrayList<>();
     private final List<Card> deck;
