@@ -80,6 +80,7 @@ public abstract class EffectHandler {
     }
 
     public boolean askForActivation() {
+        DuelView.askForActivationHeader(card.getName());
         int selected;
         do {
             selected = DuelView.selectAnOption(new String[]{"Activate", "Don't Activate"});

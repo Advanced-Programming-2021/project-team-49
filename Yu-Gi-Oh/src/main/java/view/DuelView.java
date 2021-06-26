@@ -147,6 +147,10 @@ public class DuelView extends AbstractView {
         System.out.print(cards);
     }
 
+    public static void askForActivationHeader(String cardName) {
+        System.out.println("activate " + cardName + "?");
+    }
+
     public static int selectNumber(int begin, int end) {
         System.out.println("select a card:");
 
