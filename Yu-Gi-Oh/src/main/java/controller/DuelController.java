@@ -551,6 +551,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't do this action in this phase");
         else if (card instanceof SpellTrap && ((SpellTrap) card).getEffectType() == EffectType.FIELD) {
             field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.FIELD_ZONE);
+            getSelectedCard().setFaceUp();
             return;
         } else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");

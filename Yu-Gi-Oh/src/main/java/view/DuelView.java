@@ -132,7 +132,7 @@ public class DuelView extends AbstractView {
     private static String getZoneStringView(GameMat gameMat, Location zone, int[] viewOrder) {
         StringBuilder stringViewBuilder = new StringBuilder();
         for (int position : viewOrder) {
-            if (position < gameMat.getCardCount(zone))
+            if (position <= gameMat.getCardCount(zone))
                 stringViewBuilder.append("\t").append(getCardStringView(gameMat.getCard(zone, position)));
             else
                 stringViewBuilder.append("\t").append("E ");
@@ -153,7 +153,7 @@ public class DuelView extends AbstractView {
         } else {
             SpellTrap spellTrap = (SpellTrap) card;
             cardInfo.append("Name: ").append(spellTrap.getName()).append("\n")
-                    .append(spellTrap.getType().getType())
+                    .append(spellTrap.getType().getType()).append("\n")
                     .append("Type: ").append(spellTrap.getEffectType()).append("\n")
                     .append("Description: ").append(spellTrap.getDescription());
         }

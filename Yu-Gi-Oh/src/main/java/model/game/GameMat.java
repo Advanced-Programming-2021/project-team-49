@@ -45,11 +45,7 @@ public class GameMat {
     }
 
     public int getCardCount(Location location) {
-        int count = 0;
-        for (Card card : locationMap.get(location))
-            if (card != null)
-                count++;
-        return count;
+        return locationMap.get(location).size();
     }
 
     public Card getCard(Location location, int position) {
