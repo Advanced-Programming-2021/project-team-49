@@ -322,6 +322,7 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("spell card zone is full");
         else
             callSelectedCardEffect();
+        card.setFaceUp();
     }
 
     private boolean isRitualSummonPossible() {

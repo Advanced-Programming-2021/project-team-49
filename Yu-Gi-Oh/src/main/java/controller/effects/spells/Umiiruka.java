@@ -5,6 +5,7 @@ import controller.EffectHandler;
 import controller.effects.Event;
 import model.cardtemplate.MonsterType;
 import model.game.Field;
+import model.game.Location;
 import model.game.card.Card;
 import model.game.card.Monster;
 
@@ -17,6 +18,7 @@ public class Umiiruka extends EffectHandler {
     public Umiiruka(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().setFieldZoneEffect(this);
+        field.getAttackerMat().moveCard(Location.HAND, Location.FIELD_ZONE);
 
         bothMonsterZones = getBothMonsterZones();
     }

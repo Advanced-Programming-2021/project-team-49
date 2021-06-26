@@ -20,6 +20,7 @@ public class ClosedForest extends EffectHandler {
     public ClosedForest(int speed, Card card, Field field, DuelController controller) {
         super(speed, card, field, controller);
         field.getAttackerMat().setFieldZoneEffect(this);
+        field.getAttackerMat().moveCard(Location.HAND, Location.FIELD_ZONE);
 
         bothMonsterZones = getBothMonsterZones();
     }
