@@ -13,6 +13,7 @@ import model.cardtemplate.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -102,22 +103,24 @@ public class Database {
 
     private void loadMonsterCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
-        while ((info = csvReader.readNext()) != null)
-            try {
-                cards.add(createMonsterCard(info));
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-            }
+        while ((info = csvReader.readNext()) != null) {
+            CardTemplate card = createMonsterCard(info);
+            if (card != null)
+                cards.add(card);
+            else
+                System.out.println(Arrays.toString(info));
+        }
     }
 
     private void loadSpellTrapCards(CSVReader csvReader) throws IOException, CsvValidationException {
         String[] info;
-        while ((info = csvReader.readNext()) != null)
-            try {
-                cards.add(createSpellTrapCard(info));
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-            }
+        while ((info = csvReader.readNext()) != null) {
+            CardTemplate card = createSpellTrapCard(info);
+            if (card != null)
+                cards.add(card);
+            else
+                System.out.println(Arrays.toString(info));
+        }
     }
 
     private CardTemplate createMonsterCard(String[] info) {
@@ -132,7 +135,9 @@ public class Database {
                 break;
             }
         }
-        // TODO if monsterType was null, throw exception
+        if (monsterType == null)
+            return null;
+
 
         for (Attribute value : Attribute.values()) {
             if (value.getAttribute().equals(info[2])) {
@@ -140,7 +145,9 @@ public class Database {
                 break;
             }
         }
-        // TODO if attribute was null, throw exception
+        if (attribute == null)
+            return null;
+
 
         for (CardType value : CardType.values()) {
             if (value.getCardType().equals(info[4])) {
@@ -148,16 +155,17 @@ public class Database {
                 break;
             }
         }
-        // TODO if cardType was null, throw exception
+        if (cardType == null)
+            return null;
 
-        if (cardType != CardType.NORMAL) {
+
+        if (cardType == CardType.EFFECT) {
             for (Effect value : Effect.values()) {
                 if (value.getCardName().equals(info[0])) {
                     effect = value;
                     break;
                 }
             }
-            // TODO if effect was null, throw exception
         } else
             effect = Effect.NONE;
 
@@ -176,7 +184,9 @@ public class Database {
                 break;
             }
         }
-        // TODO if effectType was null, throw exception
+        if (effectType == null)
+            return null;
+
 
         for (Status value : Status.values()) {
             if (value.getStatus().equals(info[4])) {
@@ -184,7 +194,9 @@ public class Database {
                 break;
             }
         }
-        // TODO if status was null, throw exception
+        if (status == null)
+            return null;
+
 
         for (Effect value : Effect.values()) {
             if (value.getCardName().equals(info[0])) {
@@ -192,7 +204,8 @@ public class Database {
                 break;
             }
         }
-        // TODO if effect was null, throw exception
+        if (effect == null)
+            return null;
 
         if (info[1].equals(SpellTrapType.TRAP.getType()))
             return new SpellTrapCard(info[0], info[3], effect, effectType,

@@ -106,9 +106,9 @@ public class DeckBuilderView extends AbstractView {
                 controller.removeCardFromDeck(arguments[0], arguments[1], isFlagUsedInCommand("side", input));
                 System.out.println("card removed from deck successfully!");
             } else if (input.equals("deck show --all") || input.equals("deck show -a")) {
-                System.out.println(showAllDecks(controller.getUserActiveDeck(), controller.getUserDecks()));
+                System.out.print(showAllDecks(controller.getUserActiveDeck(), controller.getUserDecks()));
             } else if (input.equals("deck show --cards") || input.equals("deck show -c")) {
-                System.out.println(showAllCards(controller.getOwnedCards()));
+                System.out.print(showAllCards(controller.getOwnedCards()));
             } else if (input.startsWith("deck show")) {
                 String deckName = getArgument("deck", "side", input, "deck show");
 
