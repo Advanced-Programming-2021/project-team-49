@@ -21,7 +21,7 @@ import java.util.List;
 public class DuelController extends AbstractController {
 
     private static final String[] phaseNames = {"draw phase", "standby phase", "main phase 1", "battle phase",
-            "main phase 2", "end phase"};
+            "main phase 2"};
     private static final int INIT_LIFE_POINTS = 8000;
 
     private final boolean hasAI;
@@ -145,7 +145,7 @@ public class DuelController extends AbstractController {
         phase++;
         if (firstTurnCounter > 0 && phase == 3)
             phase++;
-        if (phase > 5) {
+        if (phase > phaseNames.length - 1) {
             phase = 0;
             field.switchTurn();
             selectedCardLocation = null;
