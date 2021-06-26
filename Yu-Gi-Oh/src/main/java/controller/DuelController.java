@@ -456,10 +456,12 @@ public class DuelController extends AbstractController {
             case BEAST_KING_BARBAROS:
                 BeastKingBarbaros effectCard = new BeastKingBarbaros(1, getSelectedCard(), field, this);
                 effectCard.action();
+                field.getAttackerMat().notifyFieldZoneEffect();
                 return effectCard.isSpecialSummoned();
 
             case THE_TRICKY:
                 new TheTricky(1, getSelectedCard(), field, this).action();
+                field.getAttackerMat().notifyFieldZoneEffect();
                 return true;
 
             default:
@@ -503,8 +505,9 @@ public class DuelController extends AbstractController {
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
-        card.setFaceUp();
         ((Monster) card).setAttacker(true);
+        card.setFaceUp();
+        field.getAttackerMat().notifyFieldZoneEffect();
 
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
@@ -549,6 +552,8 @@ public class DuelController extends AbstractController {
             return;
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
+        field.getAttackerMat().notifyFieldZoneEffect();
+
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
         isMonsterAddedToField = true;

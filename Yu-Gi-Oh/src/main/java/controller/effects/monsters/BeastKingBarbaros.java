@@ -7,6 +7,7 @@ import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
+import model.game.card.Monster;
 import view.DuelView;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class BeastKingBarbaros extends EffectHandler {
 
         if (selected == 1) {
             specialSummoned = false;
+            ((Monster) card).decreaseAttack(1100);
             return;
         }
 
