@@ -595,6 +595,8 @@ public class DuelController extends AbstractController {
             throw new GameErrorException("you can't attack the opponent directly");
         else {
             int damage = ((Monster) getSelectedCard()).getTotalAttack();
+            ((Monster) getSelectedCard()).setUsedInAttack(true);
+            field.getDefenderMat().notifyAllEffects(Event.DECLARED_ATTACK);
             field.getDefenderMat().getPlayer().removeLifePoints(damage);
             DuelView.showDirectAttackOutcome(damage);
             checkEndOfRoundWithLifePoints();
@@ -606,6 +608,8 @@ public class DuelController extends AbstractController {
 
         Monster attacker = (Monster) getSelectedCard();
         Monster target = (Monster) field.getDefenderMat().getCard(Location.MONSTER_ZONE, targetPosition);
+
+        attacker.setUsedInAttack(true);
 
         if (target == null)
             throw new GameErrorException("there is no card to attack here");
