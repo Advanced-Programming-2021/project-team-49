@@ -127,7 +127,7 @@ public class GameMat {
     }
 
     public void notifyAllEffects(Event event) {
-        for (EffectHandler effect : activatedEffects.values())
+        for (EffectHandler effect : new ArrayList<>(activatedEffects.values()))
             effect.notifier(event);
     }
 
