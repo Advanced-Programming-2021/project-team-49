@@ -33,7 +33,7 @@ public class DuelView extends AbstractView {
                     Integer.parseInt(getArgument("hand", input, "select")),
                     opponent);
         else if (isFlagUsedInCommand("field", input))
-            controller.selectCard(Location.FIELD_ZONE, 0, opponent);
+            controller.selectCard(Location.FIELD_ZONE, 1, opponent);
         else if (isFlagUsedInCommand("hand", input))
             controller.selectCard(Location.HAND,
                     Integer.parseInt(getArgument("hand", input, "select")),
