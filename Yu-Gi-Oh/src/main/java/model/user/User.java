@@ -1,7 +1,6 @@
 package model.user;
 
 import model.cardtemplate.CardTemplate;
-import model.database.Database;
 
 import java.util.*;
 

@@ -54,7 +54,7 @@ public class Database {
 
     public Userbase loadUserbase() {
         try {
-            Type USERBASE_TYPE = new TypeToken<Userbase>() {}.getType();
+            Type USERBASE_TYPE = new TypeToken<Userbase>(){}.getType();
             JsonReader reader = new JsonReader(new FileReader("savedfiles/userbase.json"));
 
             if (!reader.hasNext())
