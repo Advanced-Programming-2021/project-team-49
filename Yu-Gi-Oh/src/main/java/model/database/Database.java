@@ -26,7 +26,7 @@ public class Database {
         GSON = builder.create();
     }
     private final Userbase userbase;
-    private static final List<CardTemplate> cards = new ArrayList<>();
+    private final List<CardTemplate> cards = new ArrayList<>();
 
     public Database() throws IOException, CsvValidationException {
         userbase = loadUserbase();
@@ -39,11 +39,11 @@ public class Database {
         return userbase;
     }
 
-    public static List<CardTemplate> getCards() {
+    public List<CardTemplate> getCards() {
         return cards;
     }
 
-    public static CardTemplate getCardByName(String name) {
+    public CardTemplate getCardByName(String name) {
         for (CardTemplate card : cards) {
             if (card.getName().equalsIgnoreCase(name))
                 return card;
@@ -169,6 +169,7 @@ public class Database {
         } else
             effect = Effect.NONE;
 
+
         return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]), attribute, cardType,
                 monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]), Integer.parseInt(info[8]));
     }
@@ -206,6 +207,7 @@ public class Database {
         }
         if (effect == null)
             return null;
+
 
         if (info[1].equals(SpellTrapType.TRAP.getType()))
             return new SpellTrapCard(info[0], info[3], effect, effectType,

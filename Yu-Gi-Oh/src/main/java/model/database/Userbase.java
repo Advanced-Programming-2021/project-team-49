@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Userbase {
 
-    private static final int INIT_COINS = 10;
+    private static final int INIT_COINS = 10000;
     private final List<User> users = new ArrayList<>();
 
     public void addUser(String username, String nickname, String password) {

@@ -33,15 +33,15 @@ public class ShopController extends AbstractController {
     }
 
     public CardTemplate getCard(String cardName) {
-        CardTemplate card = Database.getCardByName(cardName);
+        CardTemplate card = database.getCardByName(cardName);
         if (card == null)
             throw new GameErrorException("there is no card with this name");
         return card;
     }
 
     public List<CardTemplate> getSortedCards() {
-        Database.getCards().sort(Comparator.comparing(CardTemplate::getName));
-        return Database.getCards();
+        database.getCards().sort(Comparator.comparing(CardTemplate::getName));
+        return database.getCards();
     }
 
     public void increaseUserBalance(int amount) {

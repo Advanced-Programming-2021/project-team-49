@@ -8,6 +8,7 @@ import model.user.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class DeckBuilderController extends AbstractController {
 
@@ -52,6 +53,8 @@ public class DeckBuilderController extends AbstractController {
             throw new GameErrorException("card with name " + cardName + " does not exist");
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
+        if (deck.getCardCount(card) >= user.getCardCount(card))
+            throw new GameErrorException("not enough cards");
 
         if (sideDeck) {
             if (deck.getSideDeckSize() > 15)
@@ -93,20 +96,20 @@ public class DeckBuilderController extends AbstractController {
         return user.getActiveDeck();
     }
 
-    public ArrayList<Deck> getUserDecks() {
+    public List<Deck> getUserDecks() {
         return user.getDecks();
     }
 
-    public ArrayList<CardTemplate> getOwnedCards() {
-        return user.getOwnedCards();
+    public List<CardTemplate> getOwnedCards() {
+        return user.getOwnedCardsList();
     }
 
-    public ArrayList<MonsterCard> getMonsters(String deckName, boolean sideDeck) {
+    public List<MonsterCard> getMonsters(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<MonsterCard> monsterCards = new ArrayList<>();
+        List<MonsterCard> monsterCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof MonsterCard)
@@ -123,12 +126,12 @@ public class DeckBuilderController extends AbstractController {
         return monsterCards;
     }
 
-    public ArrayList<SpellTrapCard> getSpells(String deckName, boolean sideDeck) {
+    public List<SpellTrapCard> getSpells(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<SpellTrapCard> spellCards = new ArrayList<>();
+        List<SpellTrapCard> spellCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.SPELL)
@@ -145,12 +148,12 @@ public class DeckBuilderController extends AbstractController {
         return spellCards;
     }
 
-    public ArrayList<SpellTrapCard> getTraps(String deckName, boolean sideDeck) {
+    public List<SpellTrapCard> getTraps(String deckName, boolean sideDeck) {
         Deck deck = user.getDeckByName(deckName);
         if (deck == null)
             throw new GameErrorException("deck with name " + deckName + " does not exist");
 
-        ArrayList<SpellTrapCard> trapCards = new ArrayList<>();
+        List<SpellTrapCard> trapCards = new ArrayList<>();
         if (sideDeck) {
             for (CardTemplate card : deck.getSideDeck().keySet()) {
                 if (card instanceof SpellTrapCard && ((SpellTrapCard) card).getType() == SpellTrapType.TRAP)

@@ -64,6 +64,10 @@ public class DuelController extends AbstractController {
         return field.getAttackerMat().getCardCount(location);
     }
 
+    public MasterController getMasterController() {
+        return masterController;
+    }
+
     public void run() {
         new DuelView(this).run();
     }

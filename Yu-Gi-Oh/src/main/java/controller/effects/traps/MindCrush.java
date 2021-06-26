@@ -28,7 +28,7 @@ public class MindCrush extends EffectHandler {
 
     @Override
     public void action() {
-        List<CardTemplate> cards = Database.getCards();
+        List<CardTemplate> cards = controller.getMasterController().getDatabase().getCards();
         DuelView.showCardNameListStringView(cards);
         int selected;
         do {

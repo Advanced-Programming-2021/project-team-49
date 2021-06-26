@@ -12,64 +12,14 @@ public class User {
     private int coins;
     private int score = 0;
     private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
-    private final ArrayList<Deck> decks = new ArrayList<>();
-    private Deck activeDeck = null;
+    private final List<Deck> decks = new ArrayList<>();
+    private Deck activeDeck;
 
     public User(String username, String nickname, String password, int coins) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
         this.coins = coins;
-        buildStartingDeck();
-    }
-
-    private void buildStartingDeck() {
-        ownedCards.put(Database.getCardByName("Battle OX"), 1);
-        ownedCards.put(Database.getCardByName("Axe Raider"), 1);
-        ownedCards.put(Database.getCardByName("Horn Imp"), 1);
-        ownedCards.put(Database.getCardByName("Yomi Ship"), 1);
-        ownedCards.put(Database.getCardByName("Silver Fang"), 2);
-        ownedCards.put(Database.getCardByName("Suijin"), 1);
-        ownedCards.put(Database.getCardByName("Fireyarou"), 1);
-        ownedCards.put(Database.getCardByName("Curtain of the dark ones"), 2);
-        ownedCards.put(Database.getCardByName("Feral Imp"), 1);
-        ownedCards.put(Database.getCardByName("Dark Magician"), 1);
-        ownedCards.put(Database.getCardByName("Wattkid"), 2);
-        ownedCards.put(Database.getCardByName("Baby Dragon"), 1);
-        ownedCards.put(Database.getCardByName("Hero of the East"), 2);
-        ownedCards.put(Database.getCardByName("Battle Warrior"), 2);
-        ownedCards.put(Database.getCardByName("Crawling Dragon"), 1);
-        ownedCards.put(Database.getCardByName("Flame Manipulator"), 1);
-        ownedCards.put(Database.getCardByName("Crab Turtle"), 1);
-        ownedCards.put(Database.getCardByName("Haniwa"), 2);
-        ownedCards.put(Database.getCardByName("Bitron"), 1);
-        ownedCards.put(Database.getCardByName("Leotron"), 1);
-        ownedCards.put(Database.getCardByName("Alexandrite Dragon"), 1);
-        ownedCards.put(Database.getCardByName("Exploder Dragon"), 1);
-        ownedCards.put(Database.getCardByName("Warrior Dai Grepher"), 1);
-        ownedCards.put(Database.getCardByName("Dark Blade"), 1);
-        ownedCards.put(Database.getCardByName("Pot of Greed"), 1);
-        ownedCards.put(Database.getCardByName("Raigeki"), 1);
-        ownedCards.put(Database.getCardByName("Harpie's Feather Duster"), 1);
-        ownedCards.put(Database.getCardByName("Swords of Revealing Light"), 1);
-        ownedCards.put(Database.getCardByName("Messenger of Peace"), 1);
-        ownedCards.put(Database.getCardByName("Yami"), 1);
-        ownedCards.put(Database.getCardByName("Forest"), 1);
-        ownedCards.put(Database.getCardByName("Black Pendant"), 1);
-        ownedCards.put(Database.getCardByName("United We Stand"), 1);
-        ownedCards.put(Database.getCardByName("Advanced Ritual Art"), 1);
-        ownedCards.put(Database.getCardByName("Magic Cylinder"), 1);
-        ownedCards.put(Database.getCardByName("Mirror Force"), 1);
-        ownedCards.put(Database.getCardByName("Trap Hole"), 1);
-        ownedCards.put(Database.getCardByName("Torrential Tribute"), 1);
-
-        Deck startingDeck = new Deck(nickname);
-        for (CardTemplate card : ownedCards.keySet())
-            startingDeck.addCardToMainDeck(card);
-        startingDeck.addCardToMainDeck(Database.getCardByName("Silver Fang"));
-        startingDeck.addCardToMainDeck(Database.getCardByName("Haniwa"));
-
-        addDeck(startingDeck);
     }
 
     public String getUsername() {
@@ -109,15 +59,23 @@ public class User {
         return null;
     }
 
-    public ArrayList<Deck> getDecks() {
+    public List<Deck> getDecks() {
         decks.sort(Comparator.comparing(Deck::getName));
         return decks;
     }
 
-    public ArrayList<CardTemplate> getOwnedCards() {
-        ArrayList<CardTemplate> cards = new ArrayList<>(ownedCards.keySet());
+    public List<CardTemplate> getOwnedCardsList() {
+        List<CardTemplate> cards = new ArrayList<>(ownedCards.keySet());
         cards.sort(Comparator.comparing(CardTemplate::getName));
         return cards;
+    }
+
+    public Map<CardTemplate, Integer> getOwnedCardsMap() {
+        return ownedCards;
+    }
+
+    public int getCardCount(CardTemplate card) {
+        return ownedCards.get(card);
     }
 
     public void addCard(CardTemplate card) {
