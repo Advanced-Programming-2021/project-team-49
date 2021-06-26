@@ -271,7 +271,9 @@ public class DuelView extends AbstractView {
     @Override
     protected boolean runCommand(String input) {
         try {
-            if (input.equals("surrender"))
+            if (input.equals("show field"))
+                System.out.println(getFieldStringView(controller.getField()));
+            else if (input.equals("surrender"))
                 controller.surrender();
             else if (input.equals("next phase")) {
                 beginNextPhase();
@@ -314,9 +316,10 @@ public class DuelView extends AbstractView {
             } else if (input.equals("attack direct")) {
                 controller.directAttack();
                 System.out.println(getFieldStringView(controller.getField()));
-            } else if (input.startsWith("attack "))
+            } else if (input.startsWith("attack ")) {
                 controller.attack(Integer.parseInt(input.substring(7)));
-            else if (input.startsWith("increase "))
+                System.out.println(getFieldStringView(controller.getField()));
+            } else if (input.startsWith("increase "))
                 controller.increaseLifePoints(Integer.parseInt(getArgument("LP", input, "increase ")));
             else if (input.startsWith("duel set-winner ")) {
                 controller.forceWinner(input.substring("duel set-winner ".length()));
