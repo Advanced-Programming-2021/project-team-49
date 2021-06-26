@@ -3,6 +3,7 @@ package controller.effects.monsters;
 import controller.DuelController;
 import controller.EffectHandler;
 import controller.effects.Event;
+import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
@@ -25,9 +26,24 @@ public class YomiShip extends EffectHandler {
     @Override
     public void action() {
         int damage = ((Monster) attacker).getTotalAttack() - ((Monster) this.card).getTotalDefense();
-        if (damage > 0)
-            field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
-        //TODO handle removing the card if it suppose not to be handled in attack method
+        if (!((Monster) card).isAttacker()) {
+            if (damage > 0) {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                throw new GameErrorException("The card has been destroyed by the effect of YomiShip");
+            } else
+                field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+        } else {
+            if (damage >= 0) {
+                field.getDefenderMat().getPlayer().removeLifePoints(damage);
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
+                field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
+                throw new GameErrorException("The card has been destroyed by the effect of YomiShip");
+            } else {
+                field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
+                field.getAttackerMat().getPlayer().removeLifePoints(-damage);
+            }
+        }
     }
 
     @Override
@@ -42,7 +58,6 @@ public class YomiShip extends EffectHandler {
 
     public void setAttacker(Card card) {
         attacker = card;
-        // TODO handle calling this method in attack
     }
 
 }

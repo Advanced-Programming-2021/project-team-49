@@ -3,6 +3,7 @@ package controller.effects.monsters;
 import controller.DuelController;
 import controller.EffectHandler;
 import controller.effects.Event;
+import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
@@ -29,29 +30,29 @@ public class ExploderDragon extends EffectHandler {
             card.setFaceUp();
             field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
             field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
-            //TODO show in duel view
+            throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
         } else if (enemy.getName().equals(attacker.getName()) && ((Monster)card).isAttacker()){
             int damage = ((Monster) attacker).getTotalAttack() - ((Monster) card).getTotalAttack();
             card.setFaceUp();
             if (damage >= 0) {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
-                //TODO show in duel view
+                throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, attacker, Location.GRAVEYARD);
                 field.getAttackerMat().getPlayer().removeLifePoints(-damage);
-                //TODO show in duel view
+                throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             }
         } else {
             int damage = ((Monster) card).getTotalAttack() - ((Monster) enemy).getTotalAttack();
             if (damage >= 0) {
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
                 field.getDefenderMat().getPlayer().removeLifePoints(damage);
-                //TODO show in duel view
+                throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             } else {
                 field.getAttackerMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
                 field.getDefenderMat().moveCard(Location.MONSTER_ZONE, enemy, Location.GRAVEYARD);
-                //TODO show in duel view
+                throw new GameErrorException("The card has been destroyed by the effect of Exploder Dragon");
             }
         }
 
