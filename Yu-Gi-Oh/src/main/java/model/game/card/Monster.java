@@ -4,8 +4,8 @@ import model.cardtemplate.*;
 
 public class Monster extends Card {
 
-    private int attack = 0;
-    private int defense = 0;
+    private int attackModifier = 0;
+    private int defenseModifier = 0;
     private boolean attacker;
     private boolean effect;
     private boolean positionChanged;
@@ -42,11 +42,19 @@ public class Monster extends Card {
     }
 
     public int getTotalAttack() {
-        return Math.max(attack + getBaseAttack(), 0);
+        return Math.max(attackModifier + getBaseAttack(), 0);
     }
 
     public int getTotalDefense() {
-        return Math.max(defense + getBaseDefense(), 0);
+        return Math.max(defenseModifier + getBaseDefense(), 0);
+    }
+
+    public void setAttackModifier(int amount) {
+        attackModifier = amount;
+    }
+
+    public void setDefenseModifier(int amount) {
+        defenseModifier = amount;
     }
 
     public boolean isAttacker() {
@@ -82,11 +90,11 @@ public class Monster extends Card {
     }
 
     public void increaseAttack(int amount) {
-        attack += amount;
+        attackModifier += amount;
     }
 
     public void decreaseAttack(int amount) {
-        attack -= amount;
+        attackModifier -= amount;
     }
 
     public void setAttack(int attack) {
@@ -94,10 +102,10 @@ public class Monster extends Card {
     }
 
     public void increaseDefense(int amount) {
-        defense += amount;
+        defenseModifier += amount;
     }
 
     public void decreaseDefense(int amount) {
-        defense -= amount;
+        defenseModifier -= amount;
     }
 }

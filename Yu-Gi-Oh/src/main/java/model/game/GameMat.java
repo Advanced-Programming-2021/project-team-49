@@ -4,6 +4,7 @@ import controller.EffectHandler;
 import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.card.Card;
+import model.game.card.Monster;
 
 import java.util.*;
 
@@ -86,6 +87,11 @@ public class GameMat {
     public void removeCard(Location location, int position) {
         List<Card> cardList = locationMap.get(location);
         Card card = cardList.get(position - 1);
+
+        if (location == Location.MONSTER_ZONE) {
+            ((Monster) card).setAttackModifier(0);
+            ((Monster) card).setDefenseModifier(0);
+        }
         if (activatedEffects.containsKey(card)) {
             activatedEffects.get(card).deActivate();
             activatedEffects.remove(card);
