@@ -62,6 +62,14 @@ public class User {
         ownedCards.put(Database.getCardByName("Mirror Force"), 1);
         ownedCards.put(Database.getCardByName("Trap Hole"), 1);
         ownedCards.put(Database.getCardByName("Torrential Tribute"), 1);
+
+        Deck startingDeck = new Deck(nickname);
+        for (CardTemplate card : ownedCards.keySet())
+            startingDeck.addCardToMainDeck(card);
+        startingDeck.addCardToMainDeck(Database.getCardByName("Silver Fang"));
+        startingDeck.addCardToMainDeck(Database.getCardByName("Haniwa"));
+
+        addDeck(startingDeck);
     }
 
     public String getUsername() {
