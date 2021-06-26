@@ -24,13 +24,15 @@ public class ShopView extends AbstractView {
             else if (input.startsWith("card show"))
                 showCard(controller, input.substring(10));
             else if (input.startsWith("increase "))
-                controller.increaseUserBalance(Integer.parseInt(input.substring("increase ".length())));
+                controller.increaseUserBalance(Integer.parseInt(input.substring(9)));
             else
                 return runDefaultCommands(input, controller);
         } catch (GameErrorException exception) {
             System.out.println(exception.getMessage());
         } catch (NumberFormatException exception) {
             System.out.println("invalid value entered as a number");
+        } catch (Exception exception) {
+            System.out.println(INVALID_COMMAND_MESSAGE);
         }
         return true;
     }
@@ -55,7 +57,7 @@ public class ShopView extends AbstractView {
         } else {
             SpellTrapCard spellTrapCard = (SpellTrapCard) card;
             cardInfo.append("Name: ").append(spellTrapCard.getName()).append("\n")
-                    .append(spellTrapCard.getType().getType())
+                    .append(spellTrapCard.getType().getType()).append("\n")
                     .append("Type: ").append(spellTrapCard.getEffectType()).append("\n")
                     .append("Price: ").append(spellTrapCard.getPrice()).append("\n")
                     .append("Description: ").append(spellTrapCard.getDescription());

@@ -21,7 +21,7 @@ public enum Effect {
     COMMAND_KNIGHT("Command Knight"),
 
     // Traps
-    TRAP_HOLE("TrapCard Hole"),
+    TRAP_HOLE("Trap Hole"),
     MIRROR_FORCE("Mirror Force"),
     MAGIC_CYLINDER("Magic Cylinder"),
     MIND_CRUSH("Mind Crush"),
@@ -30,12 +30,12 @@ public enum Effect {
     NEGATE_ATTACK("Negate Attack"),
     SOLEMN_WARNING("Solemn Warning"),
     MAGIC_JAMMER("Magic Jammer"),
-    CALL_OF_THE_HAUNTED("Call of The Haunted"),
+    CALL_OF_THE_HAUNTED("Call of the Haunted"),
     VANITYS_EMPTINESS("Vanity's Emptiness"),
     WALL_OF_REVEALING_LIGHT("Wall of Revealing Light"),
 
     // Spells
-    MONSTER_REBORN("MonsterCard Reborn"),
+    MONSTER_REBORN("Monster Reborn"),
     TERRAFORMING("Terraforming"),
     POT_OF_GREED("Pot of Greed"),
     RAIGEKI("Raigeki"),
@@ -44,8 +44,8 @@ public enum Effect {
     HARPIES_FEATHER_DUSTER("Harpie's Feather Duster"),
     DARK_HOLE("Dark Hole"),
     SUPPLY_SQUAD("Supply Squad"),
-    SPELL_ABSORPTION("SpellTrapCard Absorption"),
-    MESSENGER_OF_PEACE("Messenger of peace"),
+    SPELL_ABSORPTION("Spell Absorption"),
+    MESSENGER_OF_PEACE("Messenger of Peace"),
     TWIN_TWISTERS("Twin Twisters"),
     MYSTICAL_SPACE_TYPHOON("Mystical space typhoon"),
     RING_OF_DEFENCE("Ring of defense"),

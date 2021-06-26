@@ -24,7 +24,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void createDeck(String name) {
-        if (user.getDeckByName(name) == null)
+        if (user.getDeckByName(name) != null)
             throw new GameErrorException("deck with name " + name + " already exists");
 
         user.addDeck(new Deck(name));

@@ -31,7 +31,7 @@ public class User {
         ownedCards.put(Database.getCardByName("Silver Fang"), 2);
         ownedCards.put(Database.getCardByName("Suijin"), 1);
         ownedCards.put(Database.getCardByName("Fireyarou"), 1);
-        ownedCards.put(Database.getCardByName("Curtain of Dark Ones"), 2);
+        ownedCards.put(Database.getCardByName("Curtain of the dark ones"), 2);
         ownedCards.put(Database.getCardByName("Feral Imp"), 1);
         ownedCards.put(Database.getCardByName("Dark Magician"), 1);
         ownedCards.put(Database.getCardByName("Wattkid"), 2);
@@ -41,7 +41,7 @@ public class User {
         ownedCards.put(Database.getCardByName("Crawling Dragon"), 1);
         ownedCards.put(Database.getCardByName("Flame Manipulator"), 1);
         ownedCards.put(Database.getCardByName("Crab Turtle"), 1);
-        ownedCards.put(Database.getCardByName("Haniva"), 2);
+        ownedCards.put(Database.getCardByName("Haniwa"), 2);
         ownedCards.put(Database.getCardByName("Bitron"), 1);
         ownedCards.put(Database.getCardByName("Leotron"), 1);
         ownedCards.put(Database.getCardByName("Alexandrite Dragon"), 1);
