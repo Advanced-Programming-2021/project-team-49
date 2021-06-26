@@ -26,11 +26,11 @@ public class DuelView extends AbstractView {
 
         if (isFlagUsedInCommand("monster", input))
             controller.selectCard(Location.MONSTER_ZONE,
-                    Integer.parseInt(getArgument("hand", input, "select")),
+                    Integer.parseInt(getArgument("monster", input, "select")),
                     opponent);
         else if (isFlagUsedInCommand("spell", input))
             controller.selectCard(Location.SPELL_AND_TRAP_ZONE,
-                    Integer.parseInt(getArgument("hand", input, "select")),
+                    Integer.parseInt(getArgument("spell", input, "select")),
                     opponent);
         else if (isFlagUsedInCommand("field", input))
             controller.selectCard(Location.FIELD_ZONE, 1, opponent);
