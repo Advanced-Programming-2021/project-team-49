@@ -145,6 +145,7 @@ public class DuelController extends AbstractController {
         if (phase > 5) {
             phase = 0;
             field.switchTurn();
+            selectedCardLocation = null;
             isMonsterAddedToField = false;
         }
     }

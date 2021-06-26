@@ -299,9 +299,12 @@ public class DuelView extends AbstractView {
                 System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("show graveyard"))
                 controller.showGraveyard(isFlagUsedInCommand("opponent", input));
-            else if (input.equals("card show --selected"))
-                controller.showSelectedCard();
-            else if (input.equals("attack direct")) {
+            else if (input.equals("card show ")) {
+                if (isFlagUsedInCommand("selected", input))
+                    controller.showSelectedCard();
+                else
+                    throw new GameErrorException(INVALID_COMMAND_MESSAGE);
+            } else if (input.equals("attack direct")) {
                 controller.directAttack();
                 System.out.println(getFieldStringView(controller.getField()));
             } else if (input.startsWith("attack "))
