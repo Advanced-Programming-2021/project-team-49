@@ -19,6 +19,8 @@ public class PotOfGreed extends EffectHandler {
     public void activationRequirement() {
         if (field.getAttackerMat().getCardCount(Location.DECK) < 2)
             throw new GameErrorException("Not enough cards in deck");
+        if (field.getAttackerMat().getCardCount(Location.HAND) > 4)
+            throw new GameErrorException("Not enough space in hand");
     }
 
     @Override
