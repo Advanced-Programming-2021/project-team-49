@@ -10,15 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DeckBuilderController extends AbstractController {
-
-    private final Database database;
-
-    public DeckBuilderController(MasterController masterController, User user, Database database) {
-        super(masterController, user);
-        this.database = database;
-        title = "Deck Menu";
-    }
+public class DeckBuilderController extends Controller {
 
     public void run() {
         new DeckBuilderView(this).run();
@@ -46,7 +38,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void addCardToDeck(String cardName, String deckName, boolean sideDeck) {
-        CardTemplate card = database.getCardByName(cardName);
+        CardTemplate card = DATABASE.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
         if (card == null)
@@ -75,7 +67,7 @@ public class DeckBuilderController extends AbstractController {
     }
 
     public void removeCardFromDeck(String cardName, String deckName, boolean sideDeck) {
-        CardTemplate card = database.getCardByName(cardName);
+        CardTemplate card = DATABASE.getCardByName(cardName);
         Deck deck = user.getDeckByName(deckName);
 
         if (card == null)

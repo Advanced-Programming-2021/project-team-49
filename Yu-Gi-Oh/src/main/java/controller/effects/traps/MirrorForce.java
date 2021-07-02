@@ -1,7 +1,7 @@
 package controller.effects.traps;
 
 import controller.DuelController;
-import controller.EffectHandler;
+import controller.effects.EffectHandler;
 import controller.effects.Event;
 import exception.StopAttackException;
 import model.game.Field;
@@ -10,7 +10,6 @@ import model.game.card.Card;
 import model.game.card.Monster;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MirrorForce extends EffectHandler {
 

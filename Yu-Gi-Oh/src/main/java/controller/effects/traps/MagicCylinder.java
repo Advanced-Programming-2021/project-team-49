@@ -1,7 +1,7 @@
 package controller.effects.traps;
 
 import controller.DuelController;
-import controller.EffectHandler;
+import controller.effects.EffectHandler;
 import controller.effects.Event;
 import exception.StopAttackException;
 import model.game.Field;

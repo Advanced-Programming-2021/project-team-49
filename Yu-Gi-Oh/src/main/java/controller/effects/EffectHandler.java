@@ -1,5 +1,6 @@
-package controller;
+package controller.effects;
 
+import controller.DuelController;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.game.Field;

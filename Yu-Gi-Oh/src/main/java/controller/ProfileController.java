@@ -5,15 +5,9 @@ import model.database.Userbase;
 import model.user.User;
 import view.ProfileView;
 
-public class ProfileController extends AbstractController {
+public class ProfileController extends Controller {
 
-    private final Userbase userbase;
-
-    public ProfileController(MasterController masterController, User user, Userbase userbase) {
-        super(masterController, user);
-        this.userbase = userbase;
-        title = "Profile Menu";
-    }
+    private final Userbase userbase = DATABASE.getUserbase();
 
     public void run() {
         new ProfileView(this).run();

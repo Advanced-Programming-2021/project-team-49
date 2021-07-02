@@ -19,7 +19,7 @@ import view.DuelView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DuelController extends AbstractController {
+public class DuelController extends Controller {
 
     private static final String[] phaseNames = {"draw phase", "standby phase", "main phase 1", "battle phase",
             "main phase 2"};
@@ -35,11 +35,9 @@ public class DuelController extends AbstractController {
     private boolean isOpponentCardSelected;
     private boolean isMonsterAddedToField = false;
 
-    public DuelController(MasterController masterController, User host, User guest, int rounds, boolean hasAI) {
-        super(masterController, host);
+    public DuelController(User host, User guest, int rounds, boolean hasAI) {
         this.rounds = rounds;
         this.hasAI = hasAI;
-        title = "Duel Menu";
 
         Player playerOne = new Player(host, INIT_LIFE_POINTS);
         Player playerTwo = new Player(guest, INIT_LIFE_POINTS);
@@ -64,10 +62,6 @@ public class DuelController extends AbstractController {
 
     public int getCardCount(Location location) {
         return field.getAttackerMat().getCardCount(location);
-    }
-
-    public MasterController getMasterController() {
-        return masterController;
     }
 
     public void run() {

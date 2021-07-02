@@ -1,6 +1,6 @@
 package model.game;
 
-import controller.EffectHandler;
+import controller.effects.EffectHandler;
 import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.card.Card;

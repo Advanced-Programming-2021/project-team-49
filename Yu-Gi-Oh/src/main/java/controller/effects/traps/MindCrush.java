@@ -1,7 +1,8 @@
 package controller.effects.traps;
 
+import controller.Controller;
 import controller.DuelController;
-import controller.EffectHandler;
+import controller.effects.EffectHandler;
 import controller.effects.Event;
 import exception.GameErrorException;
 import model.cardtemplate.CardTemplate;
@@ -28,7 +29,7 @@ public class MindCrush extends EffectHandler {
 
     @Override
     public void action() {
-        List<CardTemplate> cards = controller.getMasterController().getDatabase().getCards();
+        List<CardTemplate> cards = Controller.getDatabase().getCards();
         DuelView.showCardNameListStringView(cards);
         int selected;
         do {

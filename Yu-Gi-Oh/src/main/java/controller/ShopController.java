@@ -9,22 +9,14 @@ import view.ShopView;
 import java.util.Comparator;
 import java.util.List;
 
-public class ShopController extends AbstractController {
-
-    private final Database database;
-
-    public ShopController(MasterController masterController, User user, Database database) {
-        super(masterController, user);
-        this.database = database;
-        title = "Shop Menu";
-    }
+public class ShopController extends Controller {
 
     public void run() {
         new ShopView(this).run();
     }
 
     public void buyCard(String cardName) {
-        CardTemplate card = database.getCardByName(cardName);
+        CardTemplate card = DATABASE.getCardByName(cardName);
         if (user.getCoins() < card.getPrice())
             throw new GameErrorException("not enough money");
 
@@ -33,15 +25,15 @@ public class ShopController extends AbstractController {
     }
 
     public CardTemplate getCard(String cardName) {
-        CardTemplate card = database.getCardByName(cardName);
+        CardTemplate card = DATABASE.getCardByName(cardName);
         if (card == null)
             throw new GameErrorException("there is no card with this name");
         return card;
     }
 
     public List<CardTemplate> getSortedCards() {
-        database.getCards().sort(Comparator.comparing(CardTemplate::getName));
-        return database.getCards();
+        DATABASE.getCards().sort(Comparator.comparing(CardTemplate::getName));
+        return DATABASE.getCards();
     }
 
     public void increaseUserBalance(int amount) {

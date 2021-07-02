@@ -2,35 +2,74 @@ package view;
 
 import controller.LoginController;
 import exception.GameErrorException;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
-public class LoginView extends AbstractView {
+import java.io.IOException;
 
-    private final LoginController controller;
+public class LoginView extends View {
 
-    public LoginView(LoginController controller) {
-        this.controller = controller;
+    private final LoginController controller = new LoginController();
+    @FXML
+    private VBox root;
+
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private TextField visiblePasswordField;
+
+    @FXML
+    private CheckBox showPasswordCheckBox;
+    @FXML
+    private Text message;
+
+    @FXML
+    private void enterWelcomeMenu() throws IOException {
+        enterWelcomeMenu(root);
     }
 
-    @Override
-    protected boolean runCommand(String input) {
+    @FXML
+    private void login() throws IOException {
         try {
-            if (input.startsWith("user create")) {
-                String[] arguments = getArguments(new String[]{"username", "nickname", "password"},
-                        input, "user create");
-
-                controller.createUser(arguments[0], arguments[1], arguments[2]);
-                System.out.println("user created successfully!");
-            } else if (input.startsWith("user login")) {
-                String[] arguments = getArguments(new String[]{"username", "password"}, input, "user login");
-
-                controller.login(arguments[0], arguments[1]);
-                System.out.println("user logged in successfully!");
-                return false;
-            } else
-                return runDefaultCommands(input, controller);
+            if (showPasswordCheckBox.isSelected())
+                controller.login(usernameField.getText(), visiblePasswordField.getText());
+            else
+                controller.login(usernameField.getText(), passwordField.getText());
+            enterNewMenu("/fxml/mainmenu.fxml", root);
         } catch (GameErrorException exception) {
-            System.out.println(exception.getMessage());
+            message.setText(exception.getMessage());
         }
-        return true;
+    }
+
+    @FXML
+    private void guestLogin() throws IOException {
+        enterNewMenu("/fxml/mainmenu.fxml", root);
+    }
+
+    @FXML
+    private void togglePasswordView() {
+        if (showPasswordCheckBox.isSelected()) {
+            passwordField.setVisible(false);
+            visiblePasswordField.setVisible(true);
+            visiblePasswordField.setText(passwordField.getText());
+        } else {
+            visiblePasswordField.setVisible(false);
+            passwordField.setVisible(true);
+            passwordField.setText(visiblePasswordField.getText());
+        }
+    }
+
+    @FXML
+    private void handleKeyInput(KeyEvent event) throws IOException {
+        if (event.getCode().equals(KeyCode.ENTER))
+            login();
     }
 }

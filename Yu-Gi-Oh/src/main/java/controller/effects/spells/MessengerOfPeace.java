@@ -1,7 +1,7 @@
 package controller.effects.spells;
 
 import controller.DuelController;
-import controller.EffectHandler;
+import controller.effects.EffectHandler;
 import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.Field;

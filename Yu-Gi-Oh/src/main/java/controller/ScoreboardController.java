@@ -6,15 +6,9 @@ import view.ScoreboardView;
 
 import java.util.*;
 
-public class ScoreboardController extends AbstractController {
+public class ScoreboardController extends Controller {
 
-    private final Userbase userbase;
-
-    public ScoreboardController(MasterController masterController, User user, Userbase userbase) {
-        super(masterController, user);
-        this.userbase = userbase;
-        title = "Scoreboard Menu";
-    }
+    private final Userbase userbase = DATABASE.getUserbase();
 
     public void run() {
         new ScoreboardView(this).run();
