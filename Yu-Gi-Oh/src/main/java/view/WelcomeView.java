@@ -2,8 +2,9 @@ package view;
 
 import controller.Controller;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 
@@ -15,7 +16,8 @@ public class WelcomeView extends View {
     private ImageView headerLogo;
 
     public void setListeners() {
-        headerLogo.fitWidthProperty().bind(headerLogo.getScene().getWindow().widthProperty().subtract(100));
+        headerLogo.fitWidthProperty().bind(headerLogo.getScene().getWindow().widthProperty().subtract(20));
+        headerLogo.setFitHeight(headerLogo.getImage().getHeight() / headerLogo.getImage().getWidth() * 780);
     }
 
     public void enterSignUpMenu() throws Exception {

@@ -2,33 +2,33 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/menu.css"
             fx:controller="view.WelcomeView" fx:id="root"
-            stylesheets="@../css/style.css"
             prefHeight="600.0" prefWidth="800.0">
-  <top>
-    <HBox alignment="CENTER">
-      <ImageView fx:id="headerLogo" translateY="20" fitWidth="760" preserveRatio="true">
-        <Image url="@../image/logo.png"/>
-      </ImageView>
-    </HBox>
-  </top>
-  <center>
-    <VBox alignment="CENTER" spacing="30">
-      <Button text="Sign Up" styleClass="button-blue" onMouseClicked="#enterSignUpMenu"/>
-      <Button text="Login" styleClass="button-green" onMouseClicked="#enterLoginMenu"/>
-      <Button text="Exit" styleClass="button-red" onMouseClicked="#closeApplicationRaw"/>
-    </VBox>
-  </center>
-  <bottom>
-    <VBox alignment="CENTER">
-      <Label text="Created By Saleh Shamloo, June 2021"/>
-    </VBox>
-  </bottom>
+    <top>
+        <HBox alignment="CENTER">
+            <ImageView fx:id="headerLogo" translateY="5" fitWidth="750" preserveRatio="true">
+                <Image url="@../image/logo.png"/>
+            </ImageView>
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Button text="Sign Up" onMouseClicked="#enterSignUpMenu"/>
+            <Button text="Login" onMouseClicked="#enterLoginMenu"/>
+            <Button text="Exit" onMouseClicked="#closeApplicationRaw"/>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox alignment="CENTER">
+            <Label text="Amin Ahmadzadeh, Saleh Shamloo, Mehdi Abbastabar"/>
+        </VBox>
+    </bottom>
 </BorderPane>

@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Stone Serif';
+    src: url('../font/Stone-Serif-Semi-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Stone Serif Bold';
+    src: url('../font/Stone-Serif-Bold.ttf');
+}
+
+.root {
+    -fx-background-color: black;
+    -fx-background-image: url('../image/background.jpg');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: 'Stone Serif';
+    -fx-font-size: 18px;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.title {
+    -fx-font-size: 60px;
+    -fx-fill: white;
+    -fx-stroke: red;
+    -fx-stroke-width: 3px;
+}
+
+.message {
+    -fx-font-size: 24px;
+}
+
+.check-box .text {
+    -fx-fill: white;
+    -fx-stroke: red;
+}
+
+.button {
+    -fx-background-color: linear-gradient(red, brown);
+    -fx-border-radius: 2px;
+    -fx-padding: 5px;
+}
+
+.button .text {
+    -fx-font-size: 24px;
+    -fx-fill: white;
+    -fx-opacity: 0.75;
+}
+
+.button-violet {
+    -fx-background-color: linear-gradient(mediumpurple, darkviolet);
+}
+
+.button-green {
+    -fx-background-color: linear-gradient(limegreen, green);
+}
+
+.button:hover {
+    -fx-effect: dropshadow(gaussian, yellow, 20, 0, 0, 0);
+}
+
+.button:hover .text {
+    -fx-opacity: 1;
+}
+
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}

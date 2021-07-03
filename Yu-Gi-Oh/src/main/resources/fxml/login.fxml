@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.CheckBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/menu.css"
       fx:controller="view.LoginView" fx:id="root"
-      stylesheets="@../css/style.css"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="30">
-  <HBox prefWidth="450" maxWidth="450">
-    <Text text="Login" styleClass="title"/>
-  </HBox>
-  <VBox alignment="CENTER" spacing="30">
-    <TextField fx:id="usernameField" promptText="Username" prefWidth="450" maxWidth="450"
-               onKeyPressed="#handleKeyInput"/>
-    <StackPane>
-      <PasswordField fx:id="passwordField" promptText="Password" prefWidth="450" maxWidth="450"
-                     onKeyPressed="#handleKeyInput"/>
-      <TextField fx:id="visiblePasswordField" visible="false"
-                 promptText="Password" prefWidth="450" maxWidth="450" onKeyPressed="#handleKeyInput"/>
-    </StackPane>
-  </VBox>
-  <CheckBox fx:id="showPasswordCheckBox" text="Show Password" onAction="#togglePasswordView"/>
-  <Text fx:id="message" styleClass="message" fill="firebrick"/>
-  <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_RIGHT" spacing="20">
-    <Button text="Back" onMouseClicked="#enterWelcomeMenu"/>
-    <Button text="Guest" onMouseClicked="#guestLogin"/>
-    <Button text="Login" onMouseClicked="#login"/>
-  </HBox>
+
+    <HBox prefWidth="450" maxWidth="450">
+        <Text text="Login" styleClass="title"/>
+    </HBox>
+    <VBox alignment="CENTER" spacing="30">
+        <TextField fx:id="usernameField" promptText="Username" prefWidth="450" maxWidth="450"
+                   onKeyPressed="#handleKeyInput"/>
+        <StackPane>
+            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="450" maxWidth="450"
+                           onKeyPressed="#handleKeyInput"/>
+            <TextField fx:id="visiblePasswordField" visible="false"
+                       promptText="Password" prefWidth="450" maxWidth="450" onKeyPressed="#handleKeyInput"/>
+        </StackPane>
+    </VBox>
+    <CheckBox fx:id="showPasswordCheckBox" text="Show Password" onAction="#togglePasswordView"/>
+    <Text fx:id="message" styleClass="message" fill="firebrick"/>
+    <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_RIGHT" spacing="20">
+        <Button text="Back" onMouseClicked="#enterWelcomeMenu"/>
+        <Button text="Guest" styleClass="button-violet" onMouseClicked="#guestLogin"/>
+        <Button text="Login" styleClass="button-green" onMouseClicked="#login"/>
+    </HBox>
 </VBox>
