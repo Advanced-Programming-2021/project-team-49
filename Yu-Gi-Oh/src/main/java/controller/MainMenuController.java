@@ -1,9 +1,7 @@
 package controller;
 
 import exception.GameErrorException;
-import model.database.Database;
 import model.user.User;
-import view.MainMenuView;
 
 public class MainMenuController extends Controller {
 

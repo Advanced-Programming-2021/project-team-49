@@ -31,8 +31,7 @@ public class LoginView extends View {
     @FXML
     private Text message;
 
-    @FXML
-    private void enterWelcomeMenu() throws IOException {
+    public void enterWelcomeMenu() throws IOException {
         enterWelcomeMenu(root);
     }
 

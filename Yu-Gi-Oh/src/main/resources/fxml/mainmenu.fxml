@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/menu.css"
+      fx:controller="view.MainMenuView" fx:id="root"
+      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
+      spacing="30">
+
+    <HBox prefWidth="450" maxWidth="450" alignment="CENTER">
+        <Text text="Main Menu" styleClass="title"/>
+    </HBox>
+    <VBox alignment="CENTER" spacing="15">
+        <HBox prefWidth="450" maxWidth="450"
+              alignment="CENTER" spacing="15">
+            <Button text="Deck" onMouseClicked="#enterDeckMenu"/>
+            <Button text="Duel" onMouseClicked="#enterDuelMenu"/>
+            <Button text="Shop" onMouseClicked="#enterShopMenu"/>
+        </HBox>
+        <Button text="Profile" onMouseClicked="#enterProfile"/>
+        <Button text="Scoreboard" onMouseClicked="#enterScoreboard"/>
+        <Button text="Import/Export" onMouseClicked="#enterImportExportMenu"/>
+        <Button text="Logout" onMouseClicked="#logout"/>
+    </VBox>
+</VBox>
