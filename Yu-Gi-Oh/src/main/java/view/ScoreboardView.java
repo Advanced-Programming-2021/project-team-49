@@ -2,12 +2,12 @@ package view;
 
 import controller.ScoreboardController;
 
-public class ScoreboardView {
+public class ScoreboardView extends View{
 
-    private final ScoreboardController controller;
+    private final ScoreboardController controller = new ScoreboardController();
 
     public ScoreboardView(ScoreboardController controller) {
-        this.controller = controller;
+
     }
 
     public void run() {

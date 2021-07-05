@@ -10,9 +10,9 @@ public class ScoreboardController extends Controller {
 
     private final Userbase userbase = DATABASE.getUserbase();
 
-    public void run() {
-        new ScoreboardView(this).run();
-    }
+    // public void run() {
+    //     new ScoreboardView(this).run();
+    // }
 
     public List<List<User>> getScoreboard() {
         List<List<User>> scoreboard = new ArrayList<>();
