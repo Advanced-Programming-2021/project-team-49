@@ -9,10 +9,6 @@ public class ProfileController extends Controller {
 
     private final Userbase userbase = DATABASE.getUserbase();
 
-    public void run() {
-        new ProfileView(this).run();
-    }
-
     public void changePassword(String oldPassword, String newPassword) {
         if (user.isPasswordCorrect(oldPassword))
             if (oldPassword.equals(newPassword))
@@ -27,5 +23,9 @@ public class ProfileController extends Controller {
         if (userbase.getUserByNickname(newNickname) != null)
             throw new GameErrorException("user with nickname " + newNickname + " already exists");
         user.setNickname(newNickname);
+    }
+
+    public User getUser() {
+        return user;
     }
 }
