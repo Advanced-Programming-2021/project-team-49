@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import model.user.Deck;
+import view.popup.DialogPopUp;
 import view.popup.RenamePopUp;
 
 import java.io.IOException;
@@ -99,8 +100,10 @@ public class DeckBuilderView extends View {
     }
 
     public void renameDeck() {
-        RenamePopUp renamePopUp = new RenamePopUp(root, selectedDeck, controller);
-        renamePopUp.initialize();
+        if (selectedDeck != null)
+            new RenamePopUp(root, selectedDeck, controller).initialize();
+        else
+            new DialogPopUp(root, "Select a card!").initialize();
 
         decks.refresh();
     }
