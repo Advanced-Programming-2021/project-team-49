@@ -19,6 +19,15 @@ public class DeckBuilderController extends Controller {
         user.addDeck(new Deck(name));
     }
 
+    public void renameDeck(String newName, String oldName) {
+        if (newName.equals(oldName))
+            throw new GameErrorException("Enter a new name!");
+        if (user.getDeckByName(newName) != null)
+            throw new GameErrorException("deck with name " + newName + " already exists");
+
+        user.getDeckByName(oldName).setName(newName);
+    }
+
     public void deleteDeck(String name) {
         if (user.getDeckByName(name) == null)
             throw new GameErrorException("deck with name " + name + " does not exist");

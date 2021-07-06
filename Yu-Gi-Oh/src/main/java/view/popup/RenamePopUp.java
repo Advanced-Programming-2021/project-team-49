@@ -45,12 +45,11 @@ public class RenamePopUp extends PopUp {
             if (newName == null || newName.equals(""))
                 return;
             try {
-                checkRename(newName);
+                controller.renameDeck(newName, deckData.getDeckName());
             } catch (GameErrorException exception) {
                 resultText.setText(exception.getMessage());
                 return;
             }
-            controller.getDeckByName(deckData.getDeckName()).setName(newName);
             deckData.setDeckName(newName);
             resultText.setText("Deck name changed successfully!");
         });
@@ -60,12 +59,5 @@ public class RenamePopUp extends PopUp {
         vBox.getChildren().addAll(newNameField, resultText, hBox);
 
         show(vBox, 150.0, 300.0);
-    }
-
-    private void checkRename(String newName) {
-        if (deckData.getDeckName().equals(newName))
-            throw new GameErrorException("Enter a new name!");
-        if (controller.getDeckByName(newName) != null)
-            throw new GameErrorException("This name is already taken!");
     }
 }
