@@ -9,16 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import view.DeckBuilderView;
 
-public class RenamePopUp extends PopUp {
+public class CreatePopUp extends PopUp {
 
     private final DeckBuilderController controller;
-    private final DeckBuilderView.DeckData deckData;
 
-    public RenamePopUp(Parent root, DeckBuilderView.DeckData deckData, DeckBuilderController controller) {
+    public CreatePopUp(Parent root, DeckBuilderController controller) {
         super(root);
-        this.deckData = deckData;
         this.controller = controller;
     }
 
@@ -29,8 +26,8 @@ public class RenamePopUp extends PopUp {
         vBox.setPrefHeight(150.0);
         vBox.setAlignment(Pos.CENTER);
 
-        TextField newNameField = new TextField();
-        newNameField.setPromptText("Enter a name...");
+        TextField nameField = new TextField();
+        nameField.setPromptText("Enter a name...");
 
         Text resultText = new Text();
 
@@ -40,23 +37,23 @@ public class RenamePopUp extends PopUp {
         Button exitButton = new Button("Back");
         exitButton.setOnMouseClicked(mouseEvent -> stage.close());
 
-        Button renameButton = new Button("Rename");
-        renameButton.setOnMouseClicked(mouseEvent -> {
-            String newName = newNameField.getText();
-            if (newName == null || newName.equals(""))
+        Button createButton = new Button("Create");
+        createButton.setOnMouseClicked(mouseEvent -> {
+            String name = nameField.getText();
+            if (name == null || name.equals(""))
                 return;
             try {
-                controller.renameDeck(newName, deckData.getDeckName());
+                controller.createDeck(name);
             } catch (GameErrorException exception) {
                 resultText.setText(exception.getMessage());
                 return;
             }
-            resultText.setText("Deck name changed successfully!");
+            resultText.setText("Deck created successfully!");
         });
 
-        hBox.getChildren().addAll(exitButton, renameButton);
+        hBox.getChildren().addAll(exitButton, createButton);
 
-        vBox.getChildren().addAll(newNameField, resultText, hBox);
+        vBox.getChildren().addAll(nameField, resultText, hBox);
 
         show(vBox, 150.0, 300.0);
     }

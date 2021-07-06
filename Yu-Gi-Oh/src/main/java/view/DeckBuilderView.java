@@ -1,6 +1,7 @@
 package view;
 
 import controller.DeckBuilderController;
+import exception.GameErrorException;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,12 +13,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import model.user.Deck;
+import view.popup.CreatePopUp;
 import view.popup.DialogPopUp;
 import view.popup.RenamePopUp;
+import view.popup.YesNoPopUp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +44,6 @@ public class DeckBuilderView extends View {
 
         decks.setEditable(true);
 
-        List<TableRow<DeckData>> tableRows = new ArrayList<>();
         decks.setRowFactory(tableView -> {
             TableRow<DeckData> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -51,13 +52,13 @@ public class DeckBuilderView extends View {
                     message.setText(selectedDeck.getDeckName() + " selected.");
                 }
             });
-            tableRows.add(row);
             return row;
         });
 
         decks.getColumns().add(column("Name", DeckData::getDeckNameProperty));
         decks.getColumns().add(column("Main Deck", DeckData::getMainDeckSizeProperty));
         decks.getColumns().add(column("Side Deck", DeckData::getSideDeckSizeProperty));
+        decks.getColumns().add(column("Active", DeckData::getActiveProperty));
 
 //        TableColumn<DeckData, String> deckName = new TableColumn<>("Name");
 //        deckName.setMinWidth(100);
@@ -75,51 +76,92 @@ public class DeckBuilderView extends View {
 
     }
 
-    public void run() {
-    }
-
     public void enterMainMenu() throws IOException {
         enterNewMenu("/fxml/mainmenu.fxml", root);
     }
 
     public void enterDeckMenu() throws IOException {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
-                (getClass().getResource("/fxml/welcome.fxml")));
+                (getClass().getResource("/fxml/deck.fxml")));
         Parent newRoot = loader.load();
         DeckView deckView = loader.getController();
         deckView.setDeck(controller.getDeckByName(selectedDeck.getDeckName()));
         root.getScene().setRoot(newRoot);
-
-        //TODO
     }
 
-    public void createNewDeck(MouseEvent mouseEvent) {
-    }
+    public void createNewDeck() {
+        new CreatePopUp(root, controller).initialize();
 
-    public void activateDeck(MouseEvent mouseEvent) {
-    }
-
-    public void renameDeck() {
-        if (selectedDeck != null)
-            new RenamePopUp(root, selectedDeck, controller).initialize();
-        else
-            new DialogPopUp(root, "Select a card!").initialize();
-
+        decks.setItems(getDecksData());
         decks.refresh();
     }
 
-    public void editDeck(MouseEvent mouseEvent) throws IOException {
-        // TODO selected deck != null and show popup and pass deck to deckView or controller
+    public void activateDeck() {
+        if (selectedDeck == null) {
+            new DialogPopUp(root, "Select a deck!").initialize();
+            return;
+        }
+
+        try {
+            controller.activateDeck(selectedDeck.getDeckName());
+            new DialogPopUp(root, "Deck activated successfully!").initialize();
+        } catch (GameErrorException exception) {
+            new DialogPopUp(root, exception.getMessage()).initialize();
+        }
+
+        decks.setItems(getDecksData());
+        decks.refresh();
+    }
+
+    public void renameDeck() {
+        if (selectedDeck == null) {
+            new DialogPopUp(root, "Select a deck!").initialize();
+            return;
+        }
+
+        new RenamePopUp(root, selectedDeck, controller).initialize();
+
+        decks.setItems(getDecksData());
+        decks.refresh();
+    }
+
+    public void editDeck() throws IOException {
+        if (selectedDeck == null) {
+            new DialogPopUp(root, "Select a deck!").initialize();
+            return;
+        }
+
         enterDeckMenu();
     }
 
-    public void deleteDeck(MouseEvent mouseEvent) {
+    public void deleteDeck() {
+        if (selectedDeck == null) {
+            new DialogPopUp(root, "Select a deck!").initialize();
+            return;
+        }
+
+        String deckName = selectedDeck.getDeckName();
+        new YesNoPopUp(root, "Are you sure you want to delete the Deck?",
+                () -> {
+            controller.deleteDeck(deckName);
+            message.setText(deckName + " deleted!");
+            selectedDeck = null;
+        }).initialize();
+
+        decks.setItems(getDecksData());
+        decks.refresh();
     }
 
     private ObservableList<DeckData> getDecksData() {
         List<DeckData> decksData = new ArrayList<>();
-        for (Deck deck : controller.getUserDecks())
-            decksData.add(new DeckData(deck.getName(), deck.getMainDeckSize(), deck.getSideDeckSize()));
+        for (Deck deck : controller.getUserDecks()) {
+            if (controller.isDeckActive(deck.getName()))
+                decksData.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
+                        deck.getSideDeckSize(), "✔"));
+            else
+                decksData.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
+                        deck.getSideDeckSize(), "❌"));
+        }
         return FXCollections.observableArrayList(decksData);
     }
 
@@ -134,11 +176,13 @@ public class DeckBuilderView extends View {
         private final StringProperty deckName;
         private final IntegerProperty mainDeckSize;
         private final IntegerProperty sideDeckSize;
+        private final StringProperty active;
 
-        private DeckData(String deckName, int mainDeckSize, int sideDeckSize) {
+        private DeckData(String deckName, int mainDeckSize, int sideDeckSize, String active) {
             this.deckName = new SimpleStringProperty(deckName);
             this.mainDeckSize = new SimpleIntegerProperty(mainDeckSize);
             this.sideDeckSize = new SimpleIntegerProperty(sideDeckSize);
+            this.active = new SimpleStringProperty(active);
         }
 
         public StringProperty getDeckNameProperty() {
@@ -153,6 +197,10 @@ public class DeckBuilderView extends View {
             return sideDeckSize;
         }
 
+        public StringProperty getActiveProperty() {
+            return active;
+        }
+
         public String getDeckName() {
             return deckName.get();
         }
@@ -163,6 +211,10 @@ public class DeckBuilderView extends View {
 
         public int getSideDeckSize() {
             return sideDeckSize.get();
+        }
+
+        public String isActive() {
+            return active.get();
         }
 
         public void setDeckName(String deckName) {
@@ -176,28 +228,9 @@ public class DeckBuilderView extends View {
         public void setSideDeckSize(int sideDeckSize) {
             this.sideDeckSize.set(sideDeckSize);
         }
-    }
 
-    //        Callback<TableColumn, TableCell> cellFactory =
-//                new Callback<TableColumn, TableCell>() {
-//                    public TableCell call(TableColumn p) {
-//                        return new EditingCell();
-//                    }
-//                };
-//
-//        TableColumn firstNameCol = new TableColumn("First Name");
-//        firstNameCol.setMinWidth(100);
-//        firstNameCol.setCellValueFactory(
-//                new PropertyValueFactory<DeckData, String>("firstName"));
-//        firstNameCol.setCellFactory(cellFactory);
-//        firstNameCol.setOnEditCommit(
-//                new EventHandler<CellEditEvent<Person, String>>() {
-//                    @Override
-//                    public void handle(CellEditEvent<Person, String> t) {
-//                        ((Person) t.getTableView().getItems().get(
-//                                t.getTablePosition().getRow())
-//                        ).setFirstName(t.getNewValue());
-//                    }
-//                }
-//        );
+        public void setActive(String active) {
+            this.active.set(active);
+        }
+    }
 }

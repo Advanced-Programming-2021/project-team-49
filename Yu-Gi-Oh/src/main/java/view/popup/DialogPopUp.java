@@ -15,6 +15,7 @@ public class DialogPopUp extends PopUp {
         this.dialog = dialog;
     }
 
+    @Override
     public void initialize() {
         VBox vBox = new VBox();
         vBox.setPrefWidth(300.0);

@@ -1,8 +1,6 @@
 package controller;
 
 import exception.GameErrorException;
-import model.database.Database;
-import view.DeckBuilderView;
 import model.cardtemplate.*;
 import model.user.*;
 
@@ -21,7 +19,7 @@ public class DeckBuilderController extends Controller {
 
     public void renameDeck(String newName, String oldName) {
         if (newName.equals(oldName))
-            throw new GameErrorException("Enter a new name!");
+            throw new GameErrorException("new name is equal to old one");
         if (user.getDeckByName(newName) != null)
             throw new GameErrorException("deck with name " + newName + " already exists");
 
@@ -29,17 +27,20 @@ public class DeckBuilderController extends Controller {
     }
 
     public void deleteDeck(String name) {
-        if (user.getDeckByName(name) == null)
-            throw new GameErrorException("deck with name " + name + " does not exist");
-
         user.deleteDeck(name);
     }
 
     public void activateDeck(String name) {
-        if (user.getDeckByName(name) == null)
-            throw new GameErrorException("deck with name " + name + " does not exist");
+        Deck activeDeck = user.getActiveDeck();
+        if (activeDeck != null && activeDeck.getName().equals(name))
+            throw new GameErrorException("deck with name " + name + " is already activated");
 
         user.setActiveDeck(name);
+    }
+
+    public boolean isDeckActive(String name) {
+        Deck activeDeck = user.getActiveDeck();
+        return activeDeck != null && activeDeck.getName().equals(name);
     }
 
     public void addCardToDeck(String cardName, String deckName, boolean sideDeck) {
