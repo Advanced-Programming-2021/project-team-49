@@ -1,6 +1,8 @@
 package view;
 
 import controller.ScoreboardController;
+import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 
 public class ScoreboardView extends View{
 

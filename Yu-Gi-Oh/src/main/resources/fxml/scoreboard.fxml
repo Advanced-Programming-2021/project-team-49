@@ -6,9 +6,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.ScoreboardView"
-            prefHeight="400.0" prefWidth="600.0">
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/menu.css"
+      fx:controller="view.ScoreboardView"
+      prefHeight="400.0" prefWidth="600.0" alignment="CENTER"
+      spacing="30">
+    <HBox prefWidth="450" maxWidth="450" alignment="CENTER">
+        <Text text="Scoreboard" styleClass="title"/>
+    </HBox>
+
 
 </VBox>
