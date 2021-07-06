@@ -63,6 +63,21 @@
     -fx-background-image: url('../image/button/cancel.png');
 }
 
+.button-back {
+    -fx-color: red;
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
+        linear-gradient(derive(-fx-color,34%), derive(-fx-color,-34%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 1;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.button-back .text {
+    -fx-font-size: 24px;
+    -fx-fill: white;
+    -fx-opacity: 0.75;
+}
+
 .text-input, .text-input:focused {
     -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }

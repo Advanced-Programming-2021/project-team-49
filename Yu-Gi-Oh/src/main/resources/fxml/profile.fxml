@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -38,5 +37,8 @@
         <TextFlow fx:id="messageContainer" textAlignment="CENTER" prefWidth="400" maxWidth="400">
             <Text fx:id="message" styleClass="message"/>
         </TextFlow>
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Back" styleClass="button-back" onMouseClicked="#enterMainMenu"/>
+        </HBox>
     </VBox>
 </HBox>

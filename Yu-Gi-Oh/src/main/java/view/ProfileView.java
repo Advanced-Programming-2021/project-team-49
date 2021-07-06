@@ -15,8 +15,9 @@ import javafx.scene.text.TextFlow;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class ProfileView {
+public class ProfileView extends View {
 
     private final ProfileController controller = new ProfileController();
 
@@ -81,5 +82,9 @@ public class ProfileView {
             message.setFill(Color.FIREBRICK);
             messageContainer.setStyle("-fx-background-color: white;");
         }
+    }
+
+    public void enterMainMenu() throws IOException {
+        enterNewMenu("/fxml/mainmenu.fxml", root);
     }
 }
