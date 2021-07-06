@@ -27,7 +27,6 @@
     <Text fx:id="message" styleClass="message" fill="firebrick"/>
     <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_RIGHT" spacing="20">
         <Button text="Back" onMouseClicked="#enterWelcomeMenu"/>
-        <Button text="Guest" styleClass="button-violet" onMouseClicked="#guestLogin"/>
         <Button text="Login" styleClass="button-green" onMouseClicked="#login"/>
     </HBox>
 </VBox>

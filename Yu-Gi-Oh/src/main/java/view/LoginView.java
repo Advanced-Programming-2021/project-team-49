@@ -48,11 +48,6 @@ public class LoginView extends View {
     }
 
     @FXML
-    private void guestLogin() throws IOException {
-        enterNewMenu("/fxml/mainmenu.fxml", root);
-    }
-
-    @FXML
     private void togglePasswordView() {
         if (showPasswordCheckBox.isSelected()) {
             passwordField.setVisible(false);
