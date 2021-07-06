@@ -2,18 +2,12 @@ package controller;
 
 import exception.GameErrorException;
 import model.cardtemplate.CardTemplate;
-import model.database.Database;
-import model.user.User;
-import view.ShopView;
+
 
 import java.util.Comparator;
 import java.util.List;
 
 public class ShopController extends Controller {
-
-    public void run() {
-        new ShopView(this).run();
-    }
 
     public void buyCard(String cardName) {
         CardTemplate card = DATABASE.getCardByName(cardName);
