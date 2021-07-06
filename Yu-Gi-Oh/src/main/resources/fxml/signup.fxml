@@ -3,39 +3,44 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.text.TextFlow?>
+<HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
       fx:controller="view.SignUpView" fx:id="root"
-      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
-      spacing="15">
-
-    <HBox prefWidth="400" maxWidth="400">
-        <Text text="Sign Up" styleClass="title"/>
-    </HBox>
-    <VBox alignment="CENTER" spacing="20">
-        <TextField fx:id="usernameField" promptText="Username" prefWidth="400" maxWidth="400"
-                   onKeyPressed="#handleKeyInput"/>
-        <TextField fx:id="nicknameField" promptText="Nickname" prefWidth="400" maxWidth="400"
-                   onKeyPressed="#handleKeyInput"/>
-        <StackPane>
-            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="400" maxWidth="400"
-                           onKeyPressed="#handleKeyInput"/>
-            <TextField fx:id="visiblePasswordField" visible="false"
-                       promptText="Password" prefWidth="400" maxWidth="400" onKeyPressed="#handleKeyInput"/>
-        </StackPane>
-        <StackPane>
-            <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" prefWidth="400" maxWidth="400"
-                           onKeyPressed="#handleKeyInput"/>
-            <TextField fx:id="visibleConfirmPasswordField" visible="false"
-                       promptText="Confirm Password" prefWidth="400" maxWidth="400" onKeyPressed="#handleKeyInput"/>
-        </StackPane>
+      prefHeight="600.0" prefWidth="800.0"
+      alignment="CENTER" spacing="50">
+    <fx:include fx:id="profilePicView" source="profilepic.fxml"/>
+    <VBox alignment="CENTER" spacing="15">
+        <HBox prefWidth="400" maxWidth="400">
+            <Text text="Sign Up" styleClass="title"/>
+        </HBox>
+        <VBox alignment="CENTER" spacing="15">
+            <TextField fx:id="usernameField" promptText="Username" prefWidth="400" maxWidth="400"
+                       onKeyPressed="#handleKeyInput"/>
+            <TextField fx:id="nicknameField" promptText="Nickname" prefWidth="400" maxWidth="400"
+                       onKeyPressed="#handleKeyInput"/>
+            <StackPane>
+                <PasswordField fx:id="passwordField" promptText="Password" prefWidth="400" maxWidth="400"
+                               onKeyPressed="#handleKeyInput"/>
+                <TextField fx:id="visiblePasswordField" visible="false"
+                           promptText="Password" prefWidth="400" maxWidth="400" onKeyPressed="#handleKeyInput"/>
+            </StackPane>
+            <StackPane>
+                <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" prefWidth="400" maxWidth="400"
+                               onKeyPressed="#handleKeyInput"/>
+                <TextField fx:id="visibleConfirmPasswordField" visible="false"
+                           promptText="Confirm Password" prefWidth="400" maxWidth="400" onKeyPressed="#handleKeyInput"/>
+            </StackPane>
+        </VBox>
+        <CheckBox fx:id="showPasswordCheckBox" text="Show Password" onAction="#togglePasswordView"/>
+        <TextFlow fx:id="messageContainer" textAlignment="CENTER" prefWidth="400" maxWidth="400">
+            <Text fx:id="message" styleClass="message"/>
+        </TextFlow>
+        <HBox prefWidth="400" maxWidth="400" alignment="BOTTOM_RIGHT" spacing="15">
+            <Button text="Back" onMouseClicked="#enterWelcomeMenu"/>
+            <Button text="Sign Up" styleClass="button-green" onMouseClicked="#createUser"/>
+        </HBox>
     </VBox>
-    <CheckBox fx:id="showPasswordCheckBox" text="Show Password" onAction="#togglePasswordView"/>
-    <Text fx:id="message" styleClass="message"/>
-    <HBox prefWidth="400" maxWidth="400" alignment="BOTTOM_RIGHT" spacing="15">
-        <Button text="Back" onMouseClicked="#enterWelcomeMenu"/>
-        <Button text="Sign Up" styleClass="button-green" onMouseClicked="#createUser"/>
-    </HBox>
-</VBox>
+</HBox>
 

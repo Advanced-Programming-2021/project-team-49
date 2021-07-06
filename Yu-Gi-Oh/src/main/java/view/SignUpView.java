@@ -9,17 +9,22 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 
 public class SignUpView extends View {
 
     private final SignUpController controller = new SignUpController();
+
     @FXML
-    private VBox root;
+    private HBox root;
+    @FXML
+    private VBox profilePicView;
 
     @FXML
     private TextField usernameField;
@@ -39,6 +44,8 @@ public class SignUpView extends View {
     @FXML
     private CheckBox showPasswordCheckBox;
     @FXML
+    private TextFlow messageContainer;
+    @FXML
     private Text message;
 
     @FXML
@@ -56,16 +63,20 @@ public class SignUpView extends View {
         try {
             if (showPasswordCheckBox.isSelected())
                 controller.createUser(usernameField.getText(), nicknameField.getText(),
-                        visiblePasswordField.getText(), visibleConfirmPasswordField.getText());
+                        visiblePasswordField.getText(), visibleConfirmPasswordField.getText(),
+                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicPath());
             else
                 controller.createUser(usernameField.getText(), nicknameField.getText(),
-                        passwordField.getText(), confirmPasswordField.getText());
+                        passwordField.getText(), confirmPasswordField.getText(),
+                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicPath());
             message.setText("Sign up successful");
             message.setFill(Color.GREEN);
+            messageContainer.setStyle("-fx-background-color: white;");
             clearFields();
         } catch (GameErrorException exception) {
             message.setText(exception.getMessage());
             message.setFill(Color.FIREBRICK);
+            messageContainer.setStyle("-fx-background-color: white;");
         }
     }
 

@@ -1,0 +1,10 @@
+.button {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-color: limegreen;
+    -fx-shape: "M 0 -1 v 2 l 1 -1 z";
+}
+
+.button:hover {
+    -fx-background-color: lime;
+}
