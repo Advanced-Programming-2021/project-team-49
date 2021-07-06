@@ -38,8 +38,11 @@
 }
 
 .button {
-    -fx-background-color: linear-gradient(red, brown);
-    -fx-border-radius: 2px;
+    -fx-color: red;
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
+        linear-gradient(derive(-fx-color,34%), derive(-fx-color,-34%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 1;
+    -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
 
@@ -49,12 +52,8 @@
     -fx-opacity: 0.75;
 }
 
-.button-violet {
-    -fx-background-color: linear-gradient(mediumpurple, darkviolet);
-}
-
 .button-green {
-    -fx-background-color: linear-gradient(limegreen, green);
+    -fx-color: limegreen;
 }
 
 .button:hover {
@@ -63,6 +62,42 @@
 
 .button:hover .text {
     -fx-opacity: 1;
+}
+
+.button:pressed {
+    -fx-background-color:
+            -fx-shadow-highlight-color,
+            linear-gradient(to bottom, derive(-fx-color,-90%) 0%, derive(-fx-color,-60%) 100%),
+            linear-gradient(to bottom, derive(-fx-color,-60%) 0%, derive(-fx-color,-35%) 50%,
+            derive(-fx-color,-30%) 98%, derive(-fx-color,-50%) 100%),
+            linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,0.3) 100%);
+    -fx-background-insets: 0 0 -1 0, 0, 1, 1;
+}
+
+.button-edit {
+    -fx-font-size: 1;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-background-image: url('../image/button/edit.png');
+    -fx-background-size: 16px 16px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.button-accept {
+    -fx-background-color: transparent;
+    -fx-background-image: url('../image/button/accept.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 0;
+}
+
+.button-cancel {
+    -fx-background-color: transparent;
+    -fx-background-image: url('../image/button/cancel.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 0;
 }
 
 .text-input, .text-input:focused {
