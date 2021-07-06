@@ -12,10 +12,6 @@ import java.util.List;
 
 public class DeckBuilderController extends Controller {
 
-    public void run() {
-        new DeckBuilderView(this).run();
-    }
-
     public void createDeck(String name) {
         if (user.getDeckByName(name) != null)
             throw new GameErrorException("deck with name " + name + " already exists");
@@ -90,6 +86,10 @@ public class DeckBuilderController extends Controller {
 
     public List<Deck> getUserDecks() {
         return user.getDecks();
+    }
+
+    public Deck getDeckByName(String name) {
+        return user.getDeckByName(name);
     }
 
     public List<CardTemplate> getOwnedCards() {

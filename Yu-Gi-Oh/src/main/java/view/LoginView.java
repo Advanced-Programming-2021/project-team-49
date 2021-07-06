@@ -25,7 +25,6 @@ public class LoginView extends View {
     private PasswordField passwordField;
     @FXML
     private TextField visiblePasswordField;
-
     @FXML
     private CheckBox showPasswordCheckBox;
     @FXML

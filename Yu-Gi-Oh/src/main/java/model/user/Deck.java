@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Deck {
 
-    private final String name;
+    private String name;
     private final Map<CardTemplate, Integer> mainDeck = new HashMap<>();
     private final Map<CardTemplate, Integer> sideDeck = new HashMap<>();
 
@@ -21,6 +21,10 @@ public class Deck {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Map<CardTemplate, Integer> getMainDeck() {

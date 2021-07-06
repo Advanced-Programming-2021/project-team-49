@@ -29,6 +29,7 @@ public class Main extends Application {
         WelcomeView welcomeView = loader.getController();
 
         stage.setScene(scene);
+        welcomeView.setStage(stage);
         stage.setFullScreen(true);
         stage.setResizable(false);
         welcomeView.setListeners();

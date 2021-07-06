@@ -20,7 +20,7 @@ public class MainMenuView extends View {
     }
 
     public void enterDeckMenu() throws IOException {
-        enterNewMenu("/fxml/deckmenu.fxml", root);
+        enterNewMenu("/fxml/deckbuilder.fxml", root);
     }
 
     public void enterShopMenu() throws IOException {

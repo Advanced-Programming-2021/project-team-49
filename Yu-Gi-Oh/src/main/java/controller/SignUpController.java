@@ -76,7 +76,11 @@ public class SignUpController extends Controller {
         ownedCards.put(DATABASE.getCardByName("Trap Hole"), 1);
         ownedCards.put(DATABASE.getCardByName("Torrential Tribute"), 1);
 
-        Deck startingDeck = new Deck(user.getNickname());
+        Deck startingDeck;
+        if (user.getNickname().equals(""))
+            startingDeck = new Deck("Starting Deck");
+        else
+            startingDeck = new Deck(user.getNickname());
         for (CardTemplate card : ownedCards.keySet()) {
             for (int i = 0; i < ownedCards.get(card); i++)
                 startingDeck.addCardToMainDeck(card);

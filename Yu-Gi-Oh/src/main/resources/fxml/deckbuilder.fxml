@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="view.DeckBuilderView" fx:id="root"
+      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
+      spacing="30">
+
+    <VBox>
+        <TableView fx:id="decks" >
+
+        </TableView>
+        <Text fx:id="message" styleClass="message" fill="firebrick" text="Double Click to select a deck"/>
+        <Button text="Back" onMouseClicked="#enterMainMenu"/>
+    </VBox>
+
+    <VBox>
+        <HBox alignment="CENTER" maxWidth="450" prefWidth="450">
+            <Text styleClass="title" text="Deck Builder" />
+        </HBox>
+        <VBox alignment="CENTER" spacing="15">
+            <Button text="Create New Deck" onMouseClicked="#createNewDeck"/>
+            <Button text="Activate Deck" onMouseClicked="#activateDeck"/>
+            <Button text="Rename Deck" onMouseClicked="#renameDeck"/>
+            <Button text="Edit Deck" onMouseClicked="#editDeck"/>
+            <Button text="Delete" onMouseClicked="#deleteDeck"/>
+        </VBox>
+    </VBox>
+</HBox>
