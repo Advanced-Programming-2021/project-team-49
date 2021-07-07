@@ -15,41 +15,42 @@ import java.util.stream.Collectors;
 
 public class ProfilePicView {
 
-    private final List<String> profilePicPaths;
+    private final List<String> profilePicResourcePaths;
     private final List<Image> profilePics = new ArrayList<>();
     private int currentProfilePicIndex = 0;
 
     @FXML
     private ImageView profilePic;
 
-    public ProfilePicView() throws FileNotFoundException {
-        File folder = new File("src/main/resources/image/profile");
-        profilePicPaths = Arrays.stream(Objects.requireNonNull(folder.listFiles())).map(File::getPath)
-                .collect(Collectors.toList());
-        for (String profilePicPath : profilePicPaths)
-            profilePics.add(new Image(new FileInputStream(profilePicPath)));
+    public ProfilePicView() {
+        File folder = new File(Objects.requireNonNull(getClass().getResource("/image/profile")).getPath());
+        profilePicResourcePaths = Arrays.stream(Objects.requireNonNull(folder.listFiles()))
+                .map(file -> "/image/profile/" + file.getName()).collect(Collectors.toList());
+        for (String profilePicResourcePath : profilePicResourcePaths)
+            profilePics.add(new Image(
+                    Objects.requireNonNull(getClass().getResource(profilePicResourcePath)).toExternalForm()));
     }
 
     @FXML
-    public void initialize() throws FileNotFoundException {
-        profilePic.setImage(new Image(new FileInputStream(profilePicPaths.get(currentProfilePicIndex))));
+    public void initialize() {
+        profilePic.setImage(profilePics.get(currentProfilePicIndex));
     }
 
-    public String getProfilePicPath() {
-        return profilePicPaths.get(currentProfilePicIndex);
+    public String getProfilePicResourcePath() {
+        return profilePicResourcePaths.get(currentProfilePicIndex);
     }
 
     public void showPreviousProfilePic() {
         if (currentProfilePicIndex > 0)
             currentProfilePicIndex--;
         else
-            currentProfilePicIndex = profilePicPaths.size() - 1;
+            currentProfilePicIndex = profilePicResourcePaths.size() - 1;
 
         profilePic.setImage(profilePics.get(currentProfilePicIndex));
     }
 
     public void showNextProfilePic() {
-        if (currentProfilePicIndex < profilePicPaths.size() - 1)
+        if (currentProfilePicIndex < profilePicResourcePaths.size() - 1)
             currentProfilePicIndex++;
         else
             currentProfilePicIndex = 0;

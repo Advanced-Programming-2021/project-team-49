@@ -11,8 +11,8 @@ public class Userbase {
     private static final int INIT_COINS = 10000;
     private final List<User> users = new ArrayList<>();
 
-    public void addUser(String username, String nickname, String password, String profilePicPath) {
-        User user = new User(username, nickname, password, profilePicPath, INIT_COINS);
+    public void addUser(String username, String nickname, String password, String profilePicResourcePath) {
+        User user = new User(username, nickname, password, profilePicResourcePath, INIT_COINS);
         users.add(user);
     }
 

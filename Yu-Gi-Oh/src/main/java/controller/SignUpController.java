@@ -14,7 +14,7 @@ public class SignUpController extends Controller {
 
     public void createUser(String username, String nickname,
             String password, String confirmPassword,
-            String profilePicPath) {
+            String profilePicResourcePath) {
         checkEmptyFields(username, password, confirmPassword);
         if (userbase.getUserByUsername(username) != null)
             throw new GameErrorException("User with username " + username + " already exists");
@@ -23,7 +23,7 @@ public class SignUpController extends Controller {
         if (!password.equals(confirmPassword))
             throw new GameErrorException("Passwords didn't match");
 
-        userbase.addUser(username, nickname, password, profilePicPath);
+        userbase.addUser(username, nickname, password, profilePicResourcePath);
         buildStartingDeck(userbase.getUserByUsername(username));
     }
 

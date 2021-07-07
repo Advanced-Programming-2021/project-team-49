@@ -3,7 +3,6 @@ package view;
 import controller.ProfileController;
 import exception.GameErrorException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +17,7 @@ import javafx.scene.text.TextFlow;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ProfileView extends View {
 
@@ -52,11 +52,12 @@ public class ProfileView extends View {
     private TextField nicknameTextField;
 
     @FXML
-    public void initialize() throws FileNotFoundException {
+    public void initialize() {
         usernameText.setText("Username: " + controller.getUser().getUsername());
         nicknameText.setText("Nickname: " + controller.getUser().getNickname());
         scoreText.setText("Score: " + controller.getUser().getScore());
-        profilePic.setImage(new Image(new FileInputStream(controller.getUser().getProfilePicPath())));
+        profilePic.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                controller.getUser().getProfilePicResourcePath())).toExternalForm()));
     }
 
     @FXML

@@ -64,11 +64,11 @@ public class SignUpView extends View {
             if (showPasswordCheckBox.isSelected())
                 controller.createUser(usernameField.getText(), nicknameField.getText(),
                         visiblePasswordField.getText(), visibleConfirmPasswordField.getText(),
-                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicPath());
+                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicResourcePath());
             else
                 controller.createUser(usernameField.getText(), nicknameField.getText(),
                         passwordField.getText(), confirmPasswordField.getText(),
-                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicPath());
+                        ((ProfilePicView) profilePicView.getUserData()).getProfilePicResourcePath());
             message.setText("Sign up successful");
             message.setFill(Color.GREEN);
             messageContainer.setStyle("-fx-background-color: white;");

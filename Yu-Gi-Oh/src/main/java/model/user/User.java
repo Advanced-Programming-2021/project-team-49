@@ -8,18 +8,18 @@ public class User {
     private final String username;
     private String nickname;
     private String password;
-    private String profilePicPath;
+    private String profilePicResourcePath;
     private int coins;
     private int score = 0;
     private final Map<CardTemplate, Integer> ownedCards = new HashMap<>();
     private final List<Deck> decks = new ArrayList<>();
     private Deck activeDeck;
 
-    public User(String username, String nickname, String password, String profilePicPath, int coins) {
+    public User(String username, String nickname, String password, String profilePicResourcePath, int coins) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
-        this.profilePicPath = profilePicPath;
+        this.profilePicResourcePath = profilePicResourcePath;
         this.coins = coins;
     }
 
@@ -39,12 +39,12 @@ public class User {
         this.password = password;
     }
 
-    public String getProfilePicPath() {
-        return profilePicPath;
+    public String getProfilePicResourcePath() {
+        return profilePicResourcePath;
     }
 
-    public void setProfilePicPath(String profilePicPath) {
-        this.profilePicPath = profilePicPath;
+    public void setProfilePicResourcePath(String profilePicResourcePath) {
+        this.profilePicResourcePath = profilePicResourcePath;
     }
 
     public int getCoins() {
