@@ -74,32 +74,6 @@
     -fx-background-insets: 0 0 -1 0, 0, 1, 1;
 }
 
-.button-edit {
-    -fx-font-size: 1;
-    -fx-padding: 0;
-    -fx-background-color: transparent;
-    -fx-background-image: url('../image/button/edit.png');
-    -fx-background-size: 16px 16px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-}
-
-.button-accept {
-    -fx-background-color: transparent;
-    -fx-background-image: url('../image/button/accept.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-padding: 0;
-}
-
-.button-cancel {
-    -fx-background-color: transparent;
-    -fx-background-image: url('../image/button/cancel.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-padding: 0;
-}
-
 .text-input, .text-input:focused {
     -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }

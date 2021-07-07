@@ -63,19 +63,37 @@
     -fx-background-image: url('../image/button/cancel.png');
 }
 
-.button-back {
+.button-rect {
     -fx-color: red;
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
-        linear-gradient(derive(-fx-color,34%), derive(-fx-color,-34%));
+                linear-gradient(derive(-fx-color,34%), derive(-fx-color,-34%));
     -fx-background-insets: 0 0 -1 0, 0, 1, 1;
     -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
 
-.button-back .text {
+.button-rect .text {
     -fx-font-size: 24px;
     -fx-fill: white;
     -fx-opacity: 0.75;
+}
+
+.button-rect:hover .text {
+    -fx-opacity: 1;
+}
+
+.button-rect:pressed {
+    -fx-background-color:
+            -fx-shadow-highlight-color,
+            linear-gradient(to bottom, derive(-fx-color,-90%) 0%, derive(-fx-color,-60%) 100%),
+            linear-gradient(to bottom, derive(-fx-color,-60%) 0%, derive(-fx-color,-35%) 50%,
+            derive(-fx-color,-30%) 98%, derive(-fx-color,-50%) 100%),
+            linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,0.3) 100%);
+    -fx-background-insets: 0 0 -1 0, 0, 1, 1;
+}
+
+.button-rect.orange {
+    -fx-color: orange;
 }
 
 .text-input, .text-input:focused {
