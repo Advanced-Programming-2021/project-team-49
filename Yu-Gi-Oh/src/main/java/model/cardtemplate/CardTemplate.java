@@ -31,4 +31,8 @@ public abstract class CardTemplate {
     public int getPrice() {
         return price;
     }
+
+    public String getCardPicPath() {
+        return getClass().getResource(cardPicPath).toExternalForm();
+    }
 }
