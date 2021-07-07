@@ -16,10 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import model.user.Deck;
-import view.popup.CreatePopUp;
-import view.popup.DialogPopUp;
-import view.popup.RenamePopUp;
-import view.popup.YesNoPopUp;
+import view.popup.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +36,8 @@ public class DeckBuilderView extends View {
     private Text message;
 
     private DeckData selectedDeck = null;
+
+    private ObservableList<DeckData> decksData;
 
     public void initialize() {
 
@@ -73,7 +72,6 @@ public class DeckBuilderView extends View {
 //        sideDeckSize.setCellValueFactory(new PropertyValueFactory<>("sideDeckSize"));
 
         decks.setItems(getDecksData());
-
     }
 
     public void enterMainMenu() throws IOException {
@@ -90,7 +88,12 @@ public class DeckBuilderView extends View {
     }
 
     public void createNewDeck() {
-        new CreatePopUp(root, controller).initialize();
+        new TextFieldPopUp(root, "Enter a name:", "Create", name -> {
+            if (name == null || name.equals(""))
+                return "";
+            controller.createDeck(name);
+            return "Deck created successfully!";
+        }).initialize();
 
         decks.setItems(getDecksData());
         decks.refresh();
@@ -119,7 +122,12 @@ public class DeckBuilderView extends View {
             return;
         }
 
-        new RenamePopUp(root, selectedDeck, controller).initialize();
+        new TextFieldPopUp(root, "Enter a new name:", "Rename", name -> {
+            if (name == null || name.equals(""))
+                return "";
+            controller.renameDeck(name, selectedDeck.getDeckName());
+            return "Deck name changed successfully!";
+        }).initialize();
 
         decks.setItems(getDecksData());
         decks.refresh();
@@ -153,16 +161,17 @@ public class DeckBuilderView extends View {
     }
 
     private ObservableList<DeckData> getDecksData() {
-        List<DeckData> decksData = new ArrayList<>();
+        List<DeckData> decks = new ArrayList<>();
         for (Deck deck : controller.getUserDecks()) {
             if (controller.isDeckActive(deck.getName()))
-                decksData.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
+                decks.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
                         deck.getSideDeckSize(), "✔"));
             else
-                decksData.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
+                decks.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
                         deck.getSideDeckSize(), "❌"));
         }
-        return FXCollections.observableArrayList(decksData);
+        decksData = FXCollections.observableArrayList(decks);
+        return decksData;
     }
 
     private static <S,T> TableColumn<S,T> column(String title, Function<S, ObservableValue<T>> property) {
