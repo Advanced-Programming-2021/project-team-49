@@ -20,6 +20,10 @@
         <Text text="Scoreboard" styleClass="title"/>
     </HBox>
 
+    <TableView fx:id="scoreboard">
+
+    </TableView>
+
     <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_CENTER">
         <Button text="Back" alignment="BOTTOM_CENTER" onMouseClicked="#backToMainMenu"/>
     </HBox>

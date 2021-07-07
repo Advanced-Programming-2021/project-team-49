@@ -11,7 +11,7 @@
       spacing="30">
 
     <VBox>
-        <TableView fx:id="decks" >
+        <TableView fx:id="decks">
 
         </TableView>
         <Text fx:id="message" styleClass="message" fill="firebrick" text="Double Click to select a deck"/>

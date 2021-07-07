@@ -29,6 +29,7 @@ public class YesNoPopUp extends PopUp {
 
         HBox hBox = new HBox();
         hBox.setSpacing(30.0);
+        hBox.setAlignment(Pos.CENTER);
 
         Button noButton = new Button("No");
         noButton.setOnMouseClicked(mouseEvent -> stage.close());

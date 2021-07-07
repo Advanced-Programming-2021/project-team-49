@@ -39,6 +39,7 @@ public class TextFieldPopUp extends PopUp {
 
         HBox hBox = new HBox();
         hBox.setSpacing(30.0);
+        hBox.setAlignment(Pos.CENTER);
 
         Button exitButton = new Button("Cancel");
         exitButton.setOnMouseClicked(mouseEvent -> stage.close());
