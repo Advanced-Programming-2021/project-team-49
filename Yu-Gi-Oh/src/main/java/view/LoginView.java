@@ -49,15 +49,17 @@ public class LoginView extends View {
 
     @FXML
     private void togglePasswordView() {
-        if (showPasswordCheckBox.isSelected()) {
-            passwordField.setVisible(false);
-            visiblePasswordField.setVisible(true);
+        setPasswordFieldVisibilities(showPasswordCheckBox.isSelected());
+
+        if (showPasswordCheckBox.isSelected())
             visiblePasswordField.setText(passwordField.getText());
-        } else {
-            visiblePasswordField.setVisible(false);
-            passwordField.setVisible(true);
+        else
             passwordField.setText(visiblePasswordField.getText());
-        }
+    }
+
+    private void setPasswordFieldVisibilities(boolean visible) {
+        visiblePasswordField.setVisible(visible);
+        passwordField.setVisible(!visible);
     }
 
     @FXML

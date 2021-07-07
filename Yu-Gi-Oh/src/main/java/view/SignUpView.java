@@ -91,25 +91,23 @@ public class SignUpView extends View {
 
     @FXML
     private void togglePasswordView() {
+        setPasswordFieldVisibilities(showPasswordCheckBox.isSelected());
+
         if (showPasswordCheckBox.isSelected()) {
-            passwordField.setVisible(false);
-            confirmPasswordField.setVisible(false);
-
-            visiblePasswordField.setVisible(true);
-            visibleConfirmPasswordField.setVisible(true);
-
             visiblePasswordField.setText(passwordField.getText());
             visibleConfirmPasswordField.setText(confirmPasswordField.getText());
         } else {
-            visiblePasswordField.setVisible(false);
-            visibleConfirmPasswordField.setVisible(false);
-
-            passwordField.setVisible(true);
-            confirmPasswordField.setVisible(true);
-
             passwordField.setText(visiblePasswordField.getText());
             confirmPasswordField.setText(visibleConfirmPasswordField.getText());
         }
+    }
+
+    private void setPasswordFieldVisibilities(boolean visible) {
+        visiblePasswordField.setVisible(visible);
+        visibleConfirmPasswordField.setVisible(visible);
+
+        passwordField.setVisible(!visible);
+        confirmPasswordField.setVisible(!visible);
     }
 
     @FXML
