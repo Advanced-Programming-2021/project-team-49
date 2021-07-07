@@ -8,9 +8,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -37,12 +37,7 @@ public class DeckBuilderView extends View {
 
     private DeckData selectedDeck = null;
 
-    private ObservableList<DeckData> decksData;
-
     public void initialize() {
-
-        decks.setEditable(true);
-
         decks.setRowFactory(tableView -> {
             TableRow<DeckData> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -53,25 +48,20 @@ public class DeckBuilderView extends View {
             });
             return row;
         });
+        TableColumn<DeckData, ?> nameColumn = column("Name", DeckData::getDeckNameProperty);
+        TableColumn<DeckData, ?> mainDeckColumn = column("Main Deck", DeckData::getMainDeckSizeProperty);
+        TableColumn<DeckData, ?> sideDeckColumn = column("Side Deck", DeckData::getSideDeckSizeProperty);
+        TableColumn<DeckData, ?> activeColumn = column("Active", DeckData::getActiveProperty);
 
-        decks.getColumns().add(column("Name", DeckData::getDeckNameProperty));
-        decks.getColumns().add(column("Main Deck", DeckData::getMainDeckSizeProperty));
-        decks.getColumns().add(column("Side Deck", DeckData::getSideDeckSizeProperty));
-        decks.getColumns().add(column("Active", DeckData::getActiveProperty));
+        decks.getColumns().addAll(nameColumn, mainDeckColumn, sideDeckColumn, activeColumn);
 
-//        TableColumn<DeckData, String> deckName = new TableColumn<>("Name");
-//        deckName.setMinWidth(100);
-//        deckName.setCellValueFactory(new PropertyValueFactory<>("deckName"));
-//
-//        TableColumn<DeckData, Integer> mainDeckSize = new TableColumn<>("Main Deck");
-//        mainDeckSize.setMinWidth(100);
-//        mainDeckSize.setCellValueFactory(new PropertyValueFactory<>("mainDeckSize"));
-//
-//        TableColumn<DeckData, Integer> sideDeckSize = new TableColumn<>("Side Deck");
-//        sideDeckSize.setMinWidth(100);
-//        sideDeckSize.setCellValueFactory(new PropertyValueFactory<>("sideDeckSize"));
+        decks.getColumns().forEach(column -> {
+            column.setResizable(false);
+            column.setReorderable(false);
+        });
+
+        decks.setCursor(Cursor.HAND);
         refreshDecksData();
-        decks.setItems(decksData);
     }
 
     public void enterMainMenu() throws IOException {
@@ -162,8 +152,7 @@ public class DeckBuilderView extends View {
                 deckDataList.add(new DeckData(deck.getName(), deck.getMainDeckSize(),
                         deck.getSideDeckSize(), "❌"));
         }
-        decksData = FXCollections.observableArrayList(deckDataList);
-        decks.setItems(decksData);
+        decks.setItems(FXCollections.observableArrayList(deckDataList));
         decks.refresh();
     }
 
