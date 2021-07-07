@@ -5,12 +5,14 @@ public abstract class CardTemplate {
     protected final String name;
     protected final Effect effect;
     protected final String description;
+    protected final String cardPicPath;
     protected final int price;
 
-    public CardTemplate(String name, String description, Effect effect, int price) {
+    public CardTemplate(String name, String description, Effect effect, String cardPicPath, int price) {
         this.name = name;
         this.description = description;
         this.effect = effect;
+        this.cardPicPath = cardPicPath;
         this.price = price;
     }
 
@@ -28,5 +30,9 @@ public abstract class CardTemplate {
 
     public int getPrice() {
         return price;
+    }
+
+    public String getCardPicPath() {
+        return getClass().getResource(cardPicPath).toExternalForm();
     }
 }

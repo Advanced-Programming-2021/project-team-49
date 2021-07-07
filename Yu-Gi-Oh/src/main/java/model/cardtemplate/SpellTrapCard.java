@@ -7,8 +7,8 @@ public class SpellTrapCard extends CardTemplate {
     private final SpellTrapType type;
 
     public SpellTrapCard(String name, String description, Effect effect, EffectType effectType,
-                         Status status, SpellTrapType type, int price) {
-        super(name, description, effect, price);
+                         Status status, SpellTrapType type, String cardPicPath, int price) {
+        super(name, description, effect, cardPicPath, price);
         this.effectType = effectType;
         this.status = status;
         this.type = type;

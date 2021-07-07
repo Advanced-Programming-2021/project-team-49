@@ -10,8 +10,8 @@ public class MonsterCard extends CardTemplate {
     private final int baseDefense;
 
     public MonsterCard(String name, String description, Effect effect, int level, Attribute attribute,
-                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefense, int price) {
-        super(name, description, effect, price);
+                       CardType cardType, MonsterType monsterType, int baseAttack, int baseDefense, String cardPicPath, int price) {
+        super(name, description, effect, cardPicPath, price);
         this.level = level;
         this.attribute = attribute;
         this.cardType = cardType;
