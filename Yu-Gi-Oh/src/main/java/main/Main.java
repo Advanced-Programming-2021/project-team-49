@@ -30,8 +30,6 @@ public class Main extends Application {
 
         stage.setScene(scene);
         welcomeView.setStage(stage);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
         welcomeView.setListeners();
     }
 
@@ -39,6 +37,7 @@ public class Main extends Application {
         stage.setTitle("Yu-Gi-Oh!");
         stage.setWidth(800);
         stage.setHeight(600);
+        stage.setResizable(false);
         stage.show();
     }
 }
