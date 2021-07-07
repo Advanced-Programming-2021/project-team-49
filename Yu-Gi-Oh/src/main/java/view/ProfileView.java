@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -57,18 +59,21 @@ public class ProfileView extends View {
         profilePic.setImage(new Image(new FileInputStream(controller.getUser().getProfilePicPath())));
     }
 
-    public void beginEditingNickname() {
+    @FXML
+    private void beginEditingNickname() {
         nicknameBox.setVisible(false);
         editNicknameBox.setVisible(true);
         nicknameTextField.setText(controller.getUser().getNickname());
     }
 
-    public void endEditingNickname() {
+    @FXML
+    private void endEditingNickname() {
         editNicknameBox.setVisible(false);
         nicknameBox.setVisible(true);
     }
 
-    public void acceptNewNickname() {
+    @FXML
+    private void acceptNewNickname() {
         try {
             controller.changeNickname(nicknameTextField.getText());
             message.setText("Nickname changed successfully");
@@ -84,7 +89,19 @@ public class ProfileView extends View {
         }
     }
 
-    public void enterMainMenu() throws IOException {
+    @FXML
+    private void enterChangePasswordMenu() throws IOException {
+        enterNewMenu("/fxml/changepassword.fxml", root);
+    }
+
+    @FXML
+    private void enterMainMenu() throws IOException {
         enterNewMenu("/fxml/mainmenu.fxml", root);
+    }
+
+    @FXML
+    private void handleKeyInput(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER))
+            acceptNewNickname();
     }
 }

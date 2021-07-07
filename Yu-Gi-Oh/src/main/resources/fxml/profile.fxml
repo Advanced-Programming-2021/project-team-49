@@ -26,7 +26,8 @@
                         onMouseClicked="#beginEditingNickname"/>
             </HBox>
             <HBox fx:id="editNicknameBox" spacing="20" alignment="CENTER_LEFT" visible="false">
-                <TextField fx:id="nicknameTextField" promptText="Nickname" prefWidth="300" maxWidth="300"/>
+                <TextField fx:id="nicknameTextField" promptText="Nickname" prefWidth="300" maxWidth="300"
+                           onKeyPressed="#handleKeyInput"/>
                 <Button styleClass="button-accept" prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32"
                         onMouseClicked="#acceptNewNickname"/>
                 <Button styleClass="button-cancel" prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32"
@@ -37,8 +38,9 @@
         <TextFlow fx:id="messageContainer" textAlignment="CENTER" prefWidth="400" maxWidth="400">
             <Text fx:id="message" styleClass="message"/>
         </TextFlow>
-        <HBox alignment="CENTER_RIGHT">
-            <Button text="Back" styleClass="button-back" onMouseClicked="#enterMainMenu"/>
+        <HBox spacing="20" alignment="CENTER_RIGHT">
+            <Button text="Back" styleClass="button-rect" onMouseClicked="#enterMainMenu"/>
+            <Button text="Change Password" styleClass="button-rect, orange" onMouseClicked="#enterChangePasswordMenu"/>
         </HBox>
     </VBox>
 </HBox>
