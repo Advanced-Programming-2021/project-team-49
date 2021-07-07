@@ -41,6 +41,7 @@ public class MainMenuView extends View {
 
     @FXML
     private void logout() throws IOException {
+        controller.logout();
         enterWelcomeMenu(root);
     }
 }

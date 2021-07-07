@@ -26,4 +26,8 @@ public class MainMenuController extends Controller {
 
         DuelController duelController = new DuelController(user, null, rounds, true);
     }
+
+    public void logout() {
+        user = null;
+    }
 }
