@@ -129,6 +129,7 @@ public class Database {
     }
 
     private CardTemplate createMonsterCard(String[] info) {
+        String cardPicPath = "/cards/Monsters/" + info[0].replaceAll("\\s+", "") + ".jpg";
         MonsterType monsterType = null;
         Attribute attribute = null;
         CardType cardType = null;
@@ -175,11 +176,13 @@ public class Database {
             effect = Effect.NONE;
 
 
-        return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]), attribute, cardType,
-                monsterType, Integer.parseInt(info[5]), Integer.parseInt(info[6]), Integer.parseInt(info[8]));
+        return new MonsterCard(info[0], info[7], effect, Integer.parseInt(info[1]),
+                attribute, cardType, monsterType, Integer.parseInt(info[5]),
+                Integer.parseInt(info[6]), cardPicPath, Integer.parseInt(info[8]));
     }
 
     private CardTemplate createSpellTrapCard(String[] info) {
+        String cardPicPath = "/cards/SpellTrap/" + info[0].replaceAll("\\s+", "") + ".jpg";
         EffectType effectType = null;
         Status status = null;
         Effect effect = null;
@@ -216,9 +219,9 @@ public class Database {
 
         if (info[1].equals(SpellTrapType.TRAP.getType()))
             return new SpellTrapCard(info[0], info[3], effect, effectType,
-                    status, SpellTrapType.TRAP, Integer.parseInt(info[5]));
+                    status, SpellTrapType.TRAP, cardPicPath, Integer.parseInt(info[5]));
         else
             return new SpellTrapCard(info[0], info[3], effect, effectType,
-                    status, SpellTrapType.SPELL, Integer.parseInt(info[5]));
+                    status, SpellTrapType.SPELL, cardPicPath, Integer.parseInt(info[5]));
     }
 }

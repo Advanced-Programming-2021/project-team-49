@@ -4,17 +4,24 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.image.ImageView?>
+<HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
       fx:controller="view.DeckView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="30">
 
-    <HBox prefWidth="450" maxWidth="450" alignment="CENTER">
-        <Text text="Deck" styleClass="title"/>
-    </HBox>
+    <VBox alignment="CENTER" spacing="15">
+        <ImageView/>
+
+        <Button text="Back" onMouseClicked="#enterDeckMenu"/>
+    </VBox>
+
     <VBox alignment="CENTER" spacing="15">
         <Button text="Back" onMouseClicked="#enterDeckMenu"/>
     </VBox>
-</VBox>
+
+    <ListView/>
+
+</HBox>
