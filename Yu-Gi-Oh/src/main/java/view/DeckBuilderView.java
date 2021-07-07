@@ -14,6 +14,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import model.user.Deck;
 import view.popup.*;
@@ -59,6 +60,11 @@ public class DeckBuilderView extends View {
             column.setResizable(false);
             column.setReorderable(false);
         });
+
+        nameColumn.setMinWidth(100);
+        mainDeckColumn.setMinWidth(100);
+        sideDeckColumn.setMinWidth(100);
+        decks.setMinWidth(Region.USE_PREF_SIZE);
 
         decks.setCursor(Cursor.HAND);
         refreshDecksData();

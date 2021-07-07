@@ -69,3 +69,40 @@
             linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,0.3) 100%);
     -fx-background-insets: 0 0 -1 0, 0, 1, 1;
 }
+
+.table-view {
+    -fx-color: firebrick;
+    -fx-background-color: red;
+}
+
+.table-view .column-header {
+    -fx-color: firebrick;
+    -fx-border-style: solid;
+    -fx-border-color: red;
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,
+        linear-gradient(derive(-fx-color,34%), derive(-fx-color,-34%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 1;
+}
+
+.table-view .column-header-background {
+    -fx-border-color: red;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-table-cell-border-color, salmon;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -fx-table-cell-border-color, lightpink;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-view .filler {
+    -fx-background-color: red;
+    -fx-border-insets: 10
+}
