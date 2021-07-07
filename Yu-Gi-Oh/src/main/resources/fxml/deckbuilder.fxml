@@ -6,17 +6,18 @@
 
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/deckbuilder.css"
       fx:controller="view.DeckBuilderView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="30">
 
-    <VBox>
+    <VBox alignment="CENTER" spacing="10">
         <TableView fx:id="decks"/>
         <Text fx:id="message" styleClass="message" fill="firebrick" text="Double Click to select a deck"/>
-        <Button text="Back" onMouseClicked="#enterMainMenu"/>
+        <Button text="Back" onMouseClicked="#enterMainMenu" alignment="CENTER"/>
     </VBox>
 
-    <VBox>
+    <VBox alignment="CENTER">
         <HBox alignment="CENTER" maxWidth="450" prefWidth="450">
             <Text styleClass="title" text="Deck Builder" />
         </HBox>
