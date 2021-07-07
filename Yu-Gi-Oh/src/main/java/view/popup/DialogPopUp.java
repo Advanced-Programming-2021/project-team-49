@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.Objects;
+
 public class DialogPopUp extends PopUp {
 
     private final String dialog;
@@ -18,9 +20,10 @@ public class DialogPopUp extends PopUp {
     @Override
     public void initialize() {
         VBox vBox = new VBox();
-        vBox.setPrefWidth(300.0);
-        vBox.setPrefHeight(150.0);
+        vBox.setPrefWidth(WIDTH);
+        vBox.setPrefHeight(HEIGHT);
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(30);
 
         Text text = new Text(dialog);
 
@@ -29,6 +32,11 @@ public class DialogPopUp extends PopUp {
 
         vBox.getChildren().addAll(text, okButton);
 
-        show(vBox, 150.0, 300.0);
+        vBox.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/css/popup.css")).toExternalForm());
+        vBox.getStyleClass().add("root");
+        text.getStyleClass().add("prompt-text");
+
+        show(vBox, HEIGHT, WIDTH);
     }
 }

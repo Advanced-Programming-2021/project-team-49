@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.Objects;
+
 public class YesNoPopUp extends PopUp {
 
     private final String question;
@@ -21,9 +23,10 @@ public class YesNoPopUp extends PopUp {
     @Override
     public void initialize() {
         VBox vBox = new VBox();
-        vBox.setPrefWidth(300.0);
-        vBox.setPrefHeight(150.0);
+        vBox.setPrefWidth(WIDTH);
+        vBox.setPrefHeight(HEIGHT);
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(30);
 
         Text questionText = new Text(question);
 
@@ -41,9 +44,13 @@ public class YesNoPopUp extends PopUp {
         });
 
         hBox.getChildren().addAll(noButton, yesButton);
-
         vBox.getChildren().addAll(questionText, hBox);
 
-        show(vBox, 150.0, 300.0);
+        vBox.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/css/popup.css")).toExternalForm());
+        vBox.getStyleClass().add("root");
+        questionText.getStyleClass().add("prompt-text");
+
+        show(vBox, HEIGHT, WIDTH);
     }
 }

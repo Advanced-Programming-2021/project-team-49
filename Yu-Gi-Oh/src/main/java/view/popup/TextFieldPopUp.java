@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class TextFieldPopUp extends PopUp {
@@ -27,18 +28,20 @@ public class TextFieldPopUp extends PopUp {
     @Override
     public void initialize() {
         VBox vBox = new VBox();
-        vBox.setPrefWidth(300.0);
-        vBox.setPrefHeight(150.0);
+        vBox.setPrefWidth(WIDTH);
+        vBox.setPrefHeight(HEIGHT);
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(5);
 
         Text sentenceText = new Text(sentence);
 
         TextField inputField = new TextField();
+        inputField.setMaxWidth(300);
 
         Text resultText = new Text();
 
         HBox hBox = new HBox();
-        hBox.setSpacing(30.0);
+        hBox.setSpacing(120.0);
         hBox.setAlignment(Pos.CENTER);
 
         Button exitButton = new Button("Cancel");
@@ -54,9 +57,13 @@ public class TextFieldPopUp extends PopUp {
         });
 
         hBox.getChildren().addAll(exitButton, choiceButton);
-
         vBox.getChildren().addAll(sentenceText, inputField, resultText, hBox);
 
-        show(vBox, 150.0, 300.0);
+        vBox.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/css/popup.css")).toExternalForm());
+        vBox.getStyleClass().add("root");
+        sentenceText.getStyleClass().add("prompt-text");
+
+        show(vBox, 200.0, WIDTH);
     }
 }

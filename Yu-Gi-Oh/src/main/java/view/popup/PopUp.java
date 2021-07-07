@@ -9,6 +9,9 @@ import javafx.stage.Window;
 
 public abstract class PopUp {
 
+    protected static final double WIDTH = 480.0;
+    protected static final double HEIGHT = 180.0;
+
     protected final Stage stage;
     protected final Parent root;
 
