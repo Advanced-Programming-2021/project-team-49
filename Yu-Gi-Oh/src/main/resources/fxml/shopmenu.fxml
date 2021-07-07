@@ -17,6 +17,6 @@
     </HBox>
 
     <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_CENTER">
-        <Button text="Back" alignment="BOTTOM_RIGHT" onMouseClicked="#backToMainMenu"/>
+        <Button text="Back" alignment="BOTTOM_LEFT" onMouseClicked="#backToMainMenu"/>
     </HBox>
 </VBox>

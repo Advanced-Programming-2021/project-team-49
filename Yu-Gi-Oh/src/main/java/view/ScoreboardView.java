@@ -31,6 +31,7 @@ public class ScoreboardView extends View{
     @FXML
     private TableView<ScoreboardData> scoreboard;
 
+
     public void initialize() {
         scoreboard.setRowFactory(tableView -> new TableRow<>());
 
@@ -45,7 +46,21 @@ public class ScoreboardView extends View{
             column.setReorderable(false);
         });
 
-        scoreboard.setCursor(Cursor.HAND);
+        List<ScoreboardData> scoreboardData = new ArrayList<>();
+        int counter = 0;
+        int rank = 1;
+        for (int i = 0; i < controller.getScoreboard().size(); i++) {
+            if (counter >= 20) break;
+            for (int j = 0; j < controller.getScoreboard().get(i).size(); j++) {
+                scoreboardData.add(new ScoreboardData(rank, controller.getScoreboard().get(i).get(j).getNickname(),
+                        controller.getScoreboard().get(i).get(j).getScore()));
+                counter ++;
+            }
+            rank++;
+        }
+
+        scoreboard.setItems(FXCollections.observableList(scoreboardData));
+        scoreboard.refresh();
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
