@@ -15,6 +15,10 @@
     <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
         <Text text="Shop" styleClass="title" textAlignment="CENTER"/>
     </HBox>
+    <GridPane hgap="5" vgap="10" fx:id="gridPane" alignment="CENTER">
+
+
+    </GridPane>
 
     <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_CENTER">
         <Button text="Back" alignment="BOTTOM_LEFT" onMouseClicked="#backToMainMenu"/>
