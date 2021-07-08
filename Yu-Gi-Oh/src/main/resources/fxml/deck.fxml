@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@../css/menu.css"
+<HBox xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/deck.css"
       fx:controller="view.DeckView" fx:id="root"
-      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
-      spacing="30">
+       alignment="CENTER" prefHeight="600.0" prefWidth="800.0"
+      spacing="5">
 
     <VBox alignment="CENTER" spacing="15">
-        <ImageView fx:id="image" fitWidth="200" preserveRatio="true">
-            <Image url="@../cards/Unknown.jpg"/>
+        <ImageView fx:id="image" fitWidth="150" preserveRatio="true">
+            <Image url="@../cards/Unknown.jpg" />
         </ImageView>
-        <Label fx:id="description" prefWidth="200"/>
 
-        <Button text="Back" onMouseClicked="#enterDeckMenu"/>
+        <Text fx:id="description" wrappingWidth="150"/>
+
+        <Button onMouseClicked="#enterDeckMenu" text="Back" />
     </VBox>
 
-    <VBox alignment="CENTER" spacing="15">
-        <StackPane>
-            <ImageView fx:id="sampleImage" fitWidth="300" preserveRatio="true">
-                <Image url="@../cards/Unknown.jpg"/>
-            </ImageView>
-        </StackPane>
+    <VBox alignment="CENTER">
+        <Pane fx:id="mainDeckPane" prefHeight="405.0" prefWidth="532.0" styleClass="mainDeckPane">
+
+        </Pane>
+        <Pane fx:id="sideDeckPane" prefHeight="100.0" prefWidth="532.0" styleClass="sideDeckPane">
+
+        </Pane>
+
     </VBox>
 
-    <ListView fx:id="cards" minWidth="350"/>
+    <ListView fx:id="cards" minWidth="100" />
 
 </HBox>
