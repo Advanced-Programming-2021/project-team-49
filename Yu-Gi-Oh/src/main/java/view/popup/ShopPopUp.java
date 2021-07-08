@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -33,8 +34,12 @@ public class ShopPopUp {
         Button cancelButton = new Button("Cancel");
         cancelButton.setOnMouseClicked(mouseEvent -> stage.close());
 
-        borderPane.setBottom(buyButton);
-        borderPane.setBottom(cancelButton);
+        HBox hBox = new HBox();
+
+        hBox.getChildren().addAll(cancelButton, buyButton);
+        hBox.setSpacing(15);
+
+        borderPane.setBottom(hBox);
 
         ImageView image = new ImageView(new Image(card.getCardPicPath()));
         image.setFitHeight(255);
