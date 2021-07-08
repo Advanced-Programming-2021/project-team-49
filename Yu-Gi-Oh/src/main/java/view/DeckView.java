@@ -23,8 +23,8 @@ public class DeckView extends View {
 
     private final DeckBuilderController controller = new DeckBuilderController();
 
-    public ImageView sampleImage;
-
+    public Pane mainDeckPane;
+    public Pane sideDeckPane;
 
     private Deck deck;
     private Map<CardTemplate, Integer> ownedCards;
@@ -34,7 +34,7 @@ public class DeckView extends View {
     @FXML
     private ImageView image;
     @FXML
-    private Label description;
+    private Text description;
     @FXML
     private ListView<CardTemplate> cards;
 
@@ -63,17 +63,6 @@ public class DeckView extends View {
         });
 
 
-        sampleImage.setOnDragOver(dragEvent -> dragEvent.acceptTransferModes(TransferMode.MOVE));
-
-        sampleImage.setOnDragDropped(dragEvent -> {
-            Dragboard dragboard = dragEvent.getDragboard();
-
-            sampleImage.setImage(dragboard.getImage());
-
-            dragEvent.setDropCompleted(true);
-
-            dragEvent.consume();
-        });
     }
 
     public void enterDeckMenu() throws IOException {
@@ -87,13 +76,12 @@ public class DeckView extends View {
         Text cardCountText = new Text();
         VBox vBox = new VBox();
         Text nameText = new Text();
-        HBox descriptionBox = new HBox();
         Text powerText = new Text();
         Text levelText = new Text();
 
         cardCountText.setText(String.valueOf(ownedCards.get(card)));
         cardImage = new ImageView(new Image(card.getCardPicPath()));
-        cardImage.setFitHeight(80);
+        cardImage.setFitHeight(60);
         cardImage.setPreserveRatio(true);
 
         nameText.setText(card.getName());
@@ -109,9 +97,7 @@ public class DeckView extends View {
             levelText.setText("LVL: " + monster.getLevel());
         }
 
-        descriptionBox.setSpacing(15);
-        descriptionBox.getChildren().addAll(powerText, levelText);
-        vBox.getChildren().addAll(nameText, descriptionBox);
+        vBox.getChildren().addAll(nameText, powerText, levelText);
         stackPane.getChildren().addAll(cardImage, cardCountText);
         hBox.setSpacing(15);
         hBox.getChildren().addAll(stackPane, vBox);
