@@ -4,9 +4,7 @@ import exception.GameErrorException;
 import model.cardtemplate.*;
 import model.user.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class DeckBuilderController extends Controller {
 
@@ -102,7 +100,17 @@ public class DeckBuilderController extends Controller {
         return user.getDeckByName(name);
     }
 
-    public List<CardTemplate> getOwnedCards() {
+    public Map<CardTemplate, Integer> getOwnedCardsCopyMap() {
+        Map<CardTemplate, Integer> ownedCards = user.getOwnedCardsMap();
+        Map<CardTemplate, Integer> ownedCardsCopy = new HashMap<>();
+
+        for (CardTemplate card : ownedCards.keySet())
+            ownedCardsCopy.put(card, ownedCards.get(card));
+
+        return ownedCardsCopy;
+    }
+
+    public List<CardTemplate> getOwnedCardsList() {
         return user.getOwnedCardsList();
     }
 

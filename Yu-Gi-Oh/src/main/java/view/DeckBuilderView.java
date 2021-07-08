@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import model.user.Deck;
 import view.popup.*;
 

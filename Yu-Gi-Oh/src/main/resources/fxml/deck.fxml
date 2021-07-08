@@ -5,6 +5,7 @@
 
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
@@ -13,15 +14,22 @@
       spacing="30">
 
     <VBox alignment="CENTER" spacing="15">
-        <ImageView/>
+        <ImageView fx:id="image" fitWidth="200" preserveRatio="true">
+            <Image url="@../cards/Unknown.jpg"/>
+        </ImageView>
+        <Label fx:id="description" prefWidth="200"/>
 
         <Button text="Back" onMouseClicked="#enterDeckMenu"/>
     </VBox>
 
     <VBox alignment="CENTER" spacing="15">
-        <Button text="Back" onMouseClicked="#enterDeckMenu"/>
+        <StackPane>
+            <ImageView fx:id="sampleImage" fitWidth="300" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg"/>
+            </ImageView>
+        </StackPane>
     </VBox>
 
-    <ListView/>
+    <ListView fx:id="cards" minWidth="350"/>
 
 </HBox>
