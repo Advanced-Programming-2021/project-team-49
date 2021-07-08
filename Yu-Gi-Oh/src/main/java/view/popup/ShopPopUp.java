@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,12 +53,20 @@ public class ShopPopUp {
         hBox.setSpacing(15);
 
         borderPane.setBottom(hBox);
-        hBox.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.TOP_CENTER);
 
         ImageView image = new ImageView(new Image(card.getCardPicPath()));
         image.setFitHeight(255);
         image.setPreserveRatio(true);
         borderPane.setCenter(image);
+
+        VBox vBox = new VBox();
+        Text name = new Text("Name : " + card.getName());
+        Text description = new Text("Description : " + card.getDescription());
+        Text price = new Text("Price : " + card.getPrice());
+        vBox.getChildren().addAll(name, description, price);
+
+        borderPane.setRight(vBox);
 
         show(borderPane);
     }
