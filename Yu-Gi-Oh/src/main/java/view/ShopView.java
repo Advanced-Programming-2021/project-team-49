@@ -67,10 +67,14 @@ public class ShopView extends View{
     }
 
     public void selectCardToBuy(int i, int j) {
-        new ShopPopUp(allCards.get(12 * j + i), root).initialize();
+        new ShopPopUp(allCards.get(12 * j + i), root, this).initialize();
     }
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         enterNewMenu("/fxml/mainmenu.fxml", root);
+    }
+
+    public void buyTheSelectedCard(CardTemplate card) {
+        controller.buyCard(card.getName());
     }
 }
