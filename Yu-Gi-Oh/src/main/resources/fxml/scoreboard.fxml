@@ -13,7 +13,7 @@
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
       fx:controller="view.ScoreboardView" fx:id="root"
-      prefHeight="400.0" prefWidth="600.0" alignment="CENTER"
+      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="30">
 
     <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
