@@ -11,11 +11,11 @@
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
       fx:controller="view.ShopView" fx:id="root"
-      prefHeight="400.0" prefWidth="600.0">
+      prefHeight="400.0" prefWidth="600.0" spacing="8">
     <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
         <Text text="Shop" styleClass="title" textAlignment="CENTER"/>
     </HBox>
-    <GridPane hgap="5" vgap="10" fx:id="gridPane" alignment="CENTER">
+    <GridPane hgap="5" vgap="5" fx:id="gridPane" alignment="CENTER">
 
 
     </GridPane>
