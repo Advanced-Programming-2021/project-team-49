@@ -1,6 +1,7 @@
 package view;
 
 import controller.DuelController;
+import javafx.scene.layout.AnchorPane;
 import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public class DuelView {
 
     private final DuelController controller;
+
+    public AnchorPane root;
 
     public DuelView(DuelController controller) {
         this.controller = controller;
