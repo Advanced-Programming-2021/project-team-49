@@ -1,5 +1,7 @@
 package model.cardtemplate;
 
+import java.util.Objects;
+
 public abstract class CardTemplate {
 
     protected final String name;
@@ -34,5 +36,18 @@ public abstract class CardTemplate {
 
     public String getCardPicPath() {
         return getClass().getResource(cardPicPath).toExternalForm();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CardTemplate)) return false;
+        CardTemplate that = (CardTemplate) o;
+        return getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

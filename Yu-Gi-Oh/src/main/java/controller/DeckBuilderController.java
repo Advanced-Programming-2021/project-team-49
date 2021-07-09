@@ -8,6 +8,14 @@ import java.util.*;
 
 public class DeckBuilderController extends Controller {
 
+    public void setDeck(Deck newDeck) {
+        deck = newDeck;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
     public void createDeck(String name) {
         if (user.getDeckByName(name) != null)
             throw new GameErrorException("deck with name " + name + " already exists");
@@ -108,6 +116,10 @@ public class DeckBuilderController extends Controller {
             ownedCardsCopy.put(card, ownedCards.get(card));
 
         return ownedCardsCopy;
+    }
+
+    public Map<CardTemplate, Integer> getOwnedCardsMap() {
+        return user.getOwnedCardsMap();
     }
 
     public List<CardTemplate> getOwnedCardsList() {

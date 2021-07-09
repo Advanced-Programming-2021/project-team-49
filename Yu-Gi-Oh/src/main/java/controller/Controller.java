@@ -2,6 +2,7 @@ package controller;
 
 import com.opencsv.exceptions.CsvValidationException;
 import model.database.Database;
+import model.user.Deck;
 import model.user.User;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class Controller {
         DATABASE = database;
     }
     protected static User user;
+    protected static Deck deck;
 
     public static Database getDatabase() {
         return DATABASE;

@@ -9,29 +9,35 @@
       xmlns:fx="http://javafx.com/fxml/1"
       stylesheets="@../css/deck.css"
       fx:controller="view.DeckView" fx:id="root"
-       alignment="CENTER" prefHeight="600.0" prefWidth="800.0"
+      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="5">
 
-    <VBox alignment="CENTER" spacing="15">
-        <ImageView fx:id="image" fitWidth="150" preserveRatio="true">
+    <VBox alignment="CENTER" spacing="5">
+        <ImageView fx:id="image" fitWidth="170" preserveRatio="true">
             <Image url="@../cards/Unknown.jpg" />
         </ImageView>
 
-        <Text fx:id="description" wrappingWidth="150"/>
+        <ScrollPane fitToWidth="true" prefHeight="200">
+            <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
+        </ScrollPane>
+
 
         <Button onMouseClicked="#enterDeckMenu" text="Back" />
     </VBox>
 
     <VBox alignment="CENTER">
-        <Pane fx:id="mainDeckPane" prefHeight="405.0" prefWidth="532.0" styleClass="mainDeckPane">
+        <GridPane fx:id="mainDeckPane" prefHeight="405.0" prefWidth="532.0" styleClass="mainDeckPane"
+                  hgap="-15" vgap="5">
 
-        </Pane>
-        <Pane fx:id="sideDeckPane" prefHeight="100.0" prefWidth="532.0" styleClass="sideDeckPane">
+        </GridPane>
+        <GridPane fx:id="sideDeckPane" prefHeight="100.0" prefWidth="532.0" styleClass="sideDeckPane"
+                  hgap="-22" vgap="5">
 
-        </Pane>
+        </GridPane>
 
     </VBox>
-
-    <ListView fx:id="cards" minWidth="100" />
+    <VBox alignment="CENTER" prefHeight="700">
+        <ListView fx:id="cards" prefHeight="500.0" />
+    </VBox>
 
 </HBox>

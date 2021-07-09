@@ -9,6 +9,7 @@
 }
 
 .root {
+    -fx-padding: 5 5 5 5;
     -fx-background-color: black;
     -fx-background-image: url('../image/background.jpg');
     -fx-background-position: center;

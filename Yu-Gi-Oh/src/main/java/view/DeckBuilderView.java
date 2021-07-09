@@ -76,11 +76,10 @@ public class DeckBuilderView extends View {
     }
 
     public void enterDeckMenu() throws IOException {
+        controller.setDeck(controller.getDeckByName(selectedDeck.getDeckName()));
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                 (getClass().getResource("/fxml/deck.fxml")));
         Parent newRoot = loader.load();
-        DeckView deckView = loader.getController();
-        deckView.setDeck(controller.getDeckByName(selectedDeck.getDeckName()));
         root.getScene().setRoot(newRoot);
     }
 
