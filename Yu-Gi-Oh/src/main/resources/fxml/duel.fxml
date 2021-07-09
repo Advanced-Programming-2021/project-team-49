@@ -1,55 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.text.Text?>
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@../css/duel.css"
-      fx:controller="view.DuelView" fx:id="root"
-      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
-      spacing="5">
+<HBox fx:id="root" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="5" stylesheets="@../css/duel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DuelView">
 
-    <VBox alignment="CENTER" spacing="5">
-        <ImageView fx:id="image" fitWidth="170" preserveRatio="true">
+    <VBox alignment="CENTER" prefHeight="600.0" prefWidth="228.0" spacing="5">
+
+        <VBox prefHeight="72.0" prefWidth="214.0">
+            <Text text="hp" />
+        </VBox>
+        <ImageView fx:id="image" fitHeight="309.0" fitWidth="223.0" preserveRatio="true">
             <Image url="@../cards/Unknown.jpg" />
         </ImageView>
 
-        <ScrollPane fitToWidth="true" prefHeight="200">
-            <Text fx:id="description" wrappingWidth="150"/>
+        <ScrollPane fitToWidth="true" prefHeight="180.0" prefWidth="203.0">
+            <Text fx:id="description" wrappingWidth="150" />
         </ScrollPane>
-
+        <VBox prefHeight="36.0" prefWidth="214.0">
+            <Text text="hp" />
+        </VBox>
         <!-- Button For Testing -->
-        <Button text="Back" onMouseClicked="#enterDuelMenu" alignment="CENTER"/>
+        <Button alignment="CENTER" onMouseClicked="#enterDuelMenu" text="Back" />
     </VBox>
 
-    <VBox fx:id="phaseButtonBox">
+    <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
 
-    </VBox>
+        <VBox fx:id="phaseButtonBox">
 
-    <Pane fx:id="defenderSidePane">
+        </VBox>
 
+        <GridPane fx:id="defenderHand">
+            <ImageView fitHeight="84.0" fitWidth="123.0" preserveRatio="true">
+               <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
+
+        <GridPane fx:id="defenderSpellZone">
+            <ImageView fitHeight="61.0" fitWidth="213.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
+
+        <GridPane fx:id="defenderMonsterZone">
+            <!-- attacker monster card sample -->
+            <ImageView fitWidth="60.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
+
+        <GridPane fx:id="attackerMonsterZone">
+            <!-- defender monster card sample -->
+            <ImageView fitHeight="169.0" fitWidth="94.0" preserveRatio="true" rotate="90">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
+
+        <GridPane fx:id="attackerSpellZone">
+            <!-- spell card sample -->
+            <ImageView fitHeight="80.0" fitWidth="65.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
+
+        <GridPane fx:id="attackerHand">
+            <ImageView fitHeight="80.0" fitWidth="65.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+        </GridPane>
     </Pane>
-
-    <VBox fx:id="fieldBox">
-        <GridPane fx:id="defenderHand"/>
-
-        <GridPane fx:id="defenderSpellZone"/>
-
-        <GridPane fx:id="defenderMonsterZone"/>
-
-        <GridPane fx:id="attackerMonsterZone"/>
-
-        <GridPane fx:id="attackerSpellZone"/>
-
-        <GridPane fx:id="attackerHand"/>
-    </VBox>
-
-    <Pane fx:id="attackerSidePane">
-
-    </Pane>
-
 </HBox>

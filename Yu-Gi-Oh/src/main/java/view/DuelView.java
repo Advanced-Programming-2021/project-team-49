@@ -16,6 +16,7 @@ import java.util.List;
 
 public class DuelView extends View {
 
+
     private DuelController controller;
 
     @FXML
@@ -28,7 +29,7 @@ public class DuelView extends View {
     // TODO public modifier for accecing from another stage
     public VBox phaseButtonBox;
     public Pane defenderSidePane;
-    public VBox fieldBox;
+    public Pane fieldPane;
     public GridPane defenderHand;
     public GridPane defenderSpellZone;
     public GridPane defenderMonsterZone;

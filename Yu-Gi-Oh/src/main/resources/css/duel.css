@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'Stone Serif';
+    src: url('../font/Stone-Serif-Semi-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Stone Serif Bold';
+    src: url('../font/Stone-Serif-Bold.ttf');
+}
+
+.field {
+    -fx-padding: 5 5 5 5;
+    -fx-background-color: black;
+    -fx-background-image: url('../image/Field/fie_normal.bmp');
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: 'Stone Serif';
+    -fx-font-size: 10px;
+}
