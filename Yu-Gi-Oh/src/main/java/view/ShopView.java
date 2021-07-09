@@ -3,6 +3,7 @@ package view;
 import controller.ShopController;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,12 +25,15 @@ public class ShopView extends View {
     @FXML
     private GridPane cardsPane;
     @FXML
+    private Text coins;
+    @FXML
     private ImageView image;
     @FXML
-    private Text description;
+    private Label ownedCount;
 
     public void initialize() {
         List<CardTemplate> cards = controller.getSortedCards();
+        coins.setText("\uD83D\uDCB0 " + controller.getUserCoins());
 
         int columnCounter = 0;
         int rowCounter = 0;
@@ -49,18 +53,22 @@ public class ShopView extends View {
 
     public ImageView createCardImage(CardTemplate card) {
         ImageView cardImage = new ImageView(new Image(card.getCardPicPath()));
-        cardImage.setFitHeight(65);
+        cardImage.setFitHeight(70);
         cardImage.setPreserveRatio(true);
         cardImage.setCursor(Cursor.HAND);
 
         cardImage.setOnMouseEntered(mouseEvent -> {
             cardImage.setEffect(new DropShadow());
             image.setImage(cardImage.getImage());
-            description.setText(card.getDescription());
+            ownedCount.setText("Inventory: " + controller.getOwnedCardCount(card) + " cards");
         });
         cardImage.setOnMouseExited(mouseEvent -> cardImage.setEffect(null));
         cardImage.setOnMouseClicked(mouseEvent -> new ShopPopUp(root, card,
-                () -> controller.buyCard(card.getName())).initialize());
+                () -> {
+            controller.buyCard(card.getName());
+            coins.setText("\uD83D\uDCB0 " + controller.getUserCoins());
+            ownedCount.setText("Inventory: " + controller.getOwnedCardCount(card) + " cards");
+                }).initialize());
 
         return cardImage;
     }

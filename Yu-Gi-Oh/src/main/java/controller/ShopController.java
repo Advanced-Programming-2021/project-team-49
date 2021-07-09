@@ -6,8 +6,20 @@ import model.cardtemplate.CardTemplate;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class ShopController extends Controller {
+
+    public int getUserCoins() {
+        return user.getCoins();
+    }
+
+    public int getOwnedCardCount(CardTemplate card) {
+        Map<CardTemplate, Integer> ownedCards = user.getOwnedCardsMap();
+        if (ownedCards.containsKey(card))
+            return ownedCards.get(card);
+        return 0;
+    }
 
     public void buyCard(String cardName) {
         CardTemplate card = DATABASE.getCardByName(cardName);

@@ -1,5 +1,6 @@
 package view.popup;
 
+import exception.GameErrorException;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,7 +16,12 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import model.cardtemplate.CardTemplate;
 
-public class ShopPopUp extends PopUp{
+import java.util.Objects;
+
+public class ShopPopUp extends PopUp {
+
+    private static final double WIDTH = 440.0;
+    private static final double HEIGHT = 330.0;
 
     private final CardTemplate card;
     private final Runnable runnable;
@@ -27,48 +33,52 @@ public class ShopPopUp extends PopUp{
     }
 
     public void initialize() {
-        BorderPane borderPane = new BorderPane();
-        borderPane.setPrefWidth(300);
-        borderPane.setPrefHeight(380);
-
-        Button buyButton = new Button("Buy");
-        Button cancelButton = new Button("Cancel");
-        cancelButton.setOnMouseClicked(mouseEvent -> stage.close());
-        buyButton.setOnMouseClicked(mouseEvent -> runnable.run());
         HBox hBox = new HBox();
-
-        hBox.getChildren().addAll(cancelButton, buyButton);
-        hBox.setSpacing(15);
-
-        borderPane.setBottom(hBox);
-        hBox.setAlignment(Pos.TOP_CENTER);
-
-        ImageView image = new ImageView(new Image(card.getCardPicPath()));
-        image.setFitHeight(255);
-        image.setPreserveRatio(true);
-        borderPane.setCenter(image);
+        hBox.setPrefWidth(WIDTH);
+        hBox.setPrefHeight(HEIGHT);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(10);
 
         VBox vBox = new VBox();
-        Text name = new Text("Name : " + card.getName());
-        Text description = new Text("Description : " + card.getDescription());
-        Text price = new Text("Price : " + card.getPrice());
-        vBox.getChildren().addAll(name, description, price);
+        vBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.setSpacing(10);
 
-        borderPane.setRight(vBox);
+        Text nameText = new Text("Name: " + card.getName());
+        nameText.setWrappingWidth(220.0);
+        Text priceText = new Text("Price: " + card.getPrice());
+        Text resultText = new Text("");
 
-        show(borderPane);
-    }
+        Button buyButton = new Button("Buy");
+        buyButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                runnable.run();
+                System.out.println("Card has been bought successfully!");
+            } catch (GameErrorException exception) {
+                resultText.setText(exception.getMessage());
+            }
+        });
+        Button cancelButton = new Button("Cancel");
+        cancelButton.setOnMouseClicked(mouseEvent -> stage.close());
 
-    public void show(Parent pane) {
-        Scene popUpScene = new Scene(pane);
-        stage.setScene(popUpScene);
-        stage.initOwner(root.getScene().getWindow());
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        Window outerWindow = root.getScene().getWindow();
-        Window innerWindow = popUpScene.getWindow();
-        innerWindow.setX(outerWindow.getX() + (outerWindow.getWidth() / 2) - (150));
-        innerWindow.setY(outerWindow.getY() + (outerWindow.getHeight() / 2) - (190));
-        stage.show();
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().addAll(cancelButton, buyButton);
+        buttonBox.setSpacing(15);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        ImageView cardImage = new ImageView(new Image(card.getCardPicPath()));
+        cardImage.setFitWidth(200);
+        cardImage.setPreserveRatio(true);
+
+        vBox.getChildren().addAll(nameText, priceText, resultText, buttonBox);
+        hBox.getChildren().addAll(cardImage, vBox);
+
+        hBox.getStylesheets().add(Objects.requireNonNull(getClass().getResource
+                        ("/css/popup.css")).toExternalForm());
+        hBox.getStyleClass().add("root");
+        nameText.getStyleClass().add("shop-text");
+        priceText.getStyleClass().add("shop-text");
+        resultText.getStyleClass().add("result-text");
+
+        show(hBox, HEIGHT, WIDTH);
     }
 }

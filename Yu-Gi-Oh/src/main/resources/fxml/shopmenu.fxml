@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -11,28 +8,30 @@
 <?import javafx.scene.image.Image?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@../css/deck.css"
+      stylesheets="@../css/shop.css"
       fx:controller="view.ShopView" fx:id="root"
-      prefHeight="600.0" prefWidth="800.0" spacing="8">
+      prefHeight="600.0" prefWidth="800.0" spacing="25" alignment="CENTER">
 
-    <VBox alignment="CENTER" spacing="5">
-        <ImageView fx:id="image" fitWidth="170" preserveRatio="true">
+    <VBox alignment="CENTER" spacing="10">
+
+        <Text fx:id="coins" wrappingWidth="200" textAlignment="CENTER" styleClass="coin"/>
+
+        <ImageView fx:id="image" fitWidth="200" preserveRatio="true">
             <Image url="@../cards/Unknown.jpg" />
         </ImageView>
 
-        <ScrollPane fitToWidth="true" prefHeight="200">
-            <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
-        </ScrollPane>
+        <Label fx:id="ownedCount" text="mmd" prefWidth="200" />
 
         <Button text="Back" onMouseClicked="#backToMainMenu"/>
     </VBox>
 
-    <VBox>
+    <VBox alignment="CENTER" spacing="10">
         <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
             <Text text="Shop" styleClass="title" textAlignment="CENTER"/>
         </HBox>
 
         <GridPane hgap="-10" vgap="5" fx:id="cardsPane" alignment="CENTER"/>
     </VBox>
+
 
 </HBox>
