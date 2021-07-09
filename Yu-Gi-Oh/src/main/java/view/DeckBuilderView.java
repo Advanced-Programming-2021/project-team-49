@@ -79,6 +79,7 @@ public class DeckBuilderView extends View {
         controller.setDeck(controller.getDeckByName(selectedDeck.getDeckName()));
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                 (getClass().getResource("/fxml/deck.fxml")));
+        loader.setController(new DeckView(controller));
         Parent newRoot = loader.load();
         root.getScene().setRoot(newRoot);
     }

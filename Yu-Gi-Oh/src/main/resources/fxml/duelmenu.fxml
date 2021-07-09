@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -24,7 +21,7 @@
                 <VBox alignment="CENTER" spacing="8">
                     <Button text="Single Duel"/>
                     <Button text="Match Duel"/>
-                    <Button text="2-Player Duel"/>
+                    <Button text="2-Player Duel" onMouseClicked="#startDuel"/>
                 </VBox>
             </center>
             <bottom>

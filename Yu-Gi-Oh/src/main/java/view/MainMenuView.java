@@ -12,9 +12,6 @@ public class MainMenuView extends View {
     @FXML
     private VBox root;
 
-    public void run() {
-    }
-
     public void enterDuelMenu() throws IOException {
         enterNewMenu("/fxml/duelmenu.fxml", root);
     }

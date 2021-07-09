@@ -3,25 +3,39 @@ package view;
 import controller.DuelController;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 
+import java.io.IOException;
 import java.util.List;
 
-public class DuelView {
+public class DuelView extends View {
 
-    private final DuelController controller;
+    private DuelController controller;
 
     @FXML
     private HBox root;
     @FXML
     private ImageView image;
+    @FXML
+    private Text description;
 
-    public DuelView(DuelController controller) {
-        this.controller = controller;
-    }
+    // TODO public modifier for accecing from another stage
+    public VBox phaseButtonBox;
+    public Pane defenderSidePane;
+    public VBox fieldBox;
+    public GridPane defenderHand;
+    public GridPane defenderSpellZone;
+    public GridPane defenderMonsterZone;
+    public GridPane attackerMonsterZone;
+    public GridPane attackerSpellZone;
+    public GridPane attackerHand;
+    public Pane attackerSidePane;
 
     public static void showCardInfoStringView(Card card) {
     }
@@ -52,6 +66,7 @@ public class DuelView {
     public static void showDirectAttackOutcome(int damage) {
     }
 
-    public void run() {
+    public void enterDuelMenu() throws IOException {
+        enterNewMenu("/fxml/duelmenu.fxml", root);
     }
 }

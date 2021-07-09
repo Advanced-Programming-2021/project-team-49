@@ -8,7 +8,7 @@
 <HBox xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       stylesheets="@../css/deck.css"
-      fx:controller="view.DeckView" fx:id="root"
+      fx:id="root"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="5">
 
@@ -21,7 +21,7 @@
             <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
         </ScrollPane>
 
-        <Button onMouseClicked="#enterDeckMenu" text="Back" />
+        <Button fx:id="backButton" text="Back"/>
     </VBox>
 
     <VBox alignment="CENTER">

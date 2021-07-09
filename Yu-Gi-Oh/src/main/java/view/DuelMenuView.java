@@ -2,7 +2,6 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -15,7 +14,11 @@ public class DuelMenuView extends View{
     private ImageView headerLogo;
 
 
-    public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
+    public void backToMainMenu() throws IOException {
         enterNewMenu("/fxml/mainmenu.fxml", root);
+    }
+
+    public void startDuel() throws IOException {
+        enterNewMenu("/fxml/duel.fxml", root);
     }
 }

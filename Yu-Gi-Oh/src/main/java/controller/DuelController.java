@@ -64,9 +64,6 @@ public class DuelController extends Controller {
         return field.getAttackerMat().getCardCount(location);
     }
 
-    public void run() {
-        new DuelView(this).run();
-    }
 
     public void surrender() {
         endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());

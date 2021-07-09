@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/duel.css"
       fx:controller="view.DuelView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
       spacing="5">
@@ -20,12 +19,37 @@
         </ImageView>
 
         <ScrollPane fitToWidth="true" prefHeight="200">
-            <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
+            <Text fx:id="description" wrappingWidth="150"/>
         </ScrollPane>
 
-        <Button onMouseClicked="#enterDeckMenu" text="Back" />
+        <!-- Button For Testing -->
+        <Button text="Back" onMouseClicked="#enterDuelMenu" alignment="CENTER"/>
     </VBox>
 
+    <VBox fx:id="phaseButtonBox">
 
+    </VBox>
+
+    <Pane fx:id="defenderSidePane">
+
+    </Pane>
+
+    <VBox fx:id="fieldBox">
+        <GridPane fx:id="defenderHand"/>
+
+        <GridPane fx:id="defenderSpellZone"/>
+
+        <GridPane fx:id="defenderMonsterZone"/>
+
+        <GridPane fx:id="attackerMonsterZone"/>
+
+        <GridPane fx:id="attackerSpellZone"/>
+
+        <GridPane fx:id="attackerHand"/>
+    </VBox>
+
+    <Pane fx:id="attackerSidePane">
+
+    </Pane>
 
 </HBox>

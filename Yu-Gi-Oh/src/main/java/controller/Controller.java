@@ -21,7 +21,6 @@ public class Controller {
         DATABASE = database;
     }
     protected static User user;
-    protected static Deck deck;
 
     public static Database getDatabase() {
         return DATABASE;

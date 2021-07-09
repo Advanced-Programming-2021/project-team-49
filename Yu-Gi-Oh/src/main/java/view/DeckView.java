@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.DeckBuilderController;
 import exception.GameErrorException;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -27,7 +28,7 @@ import java.util.Map;
 
 public class DeckView extends View {
 
-    private final DeckBuilderController controller = new DeckBuilderController();
+    private final DeckBuilderController controller;
 
     private Deck deck;
     private Map<CardTemplate, Integer> ownedCards;
@@ -44,10 +45,16 @@ public class DeckView extends View {
     private GridPane mainDeckPane;
     @FXML
     private GridPane sideDeckPane;
+    @FXML
+    private Button backButton;
 
     private int mainDeckColumns = 0;
     private int mainDeckRows = 0;
     private int sideDeckColumns = 0;
+
+    public DeckView(DeckBuilderController controller) {
+        this.controller = controller;
+    }
 
     public void initialize() {
         deck = controller.getDeck();
@@ -175,6 +182,14 @@ public class DeckView extends View {
             dragEvent.setDropCompleted(true);
 
             dragEvent.consume();
+        });
+
+        backButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                enterDeckMenu();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         });
     }
 

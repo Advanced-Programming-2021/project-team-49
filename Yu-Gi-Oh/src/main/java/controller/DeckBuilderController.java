@@ -8,6 +8,8 @@ import java.util.*;
 
 public class DeckBuilderController extends Controller {
 
+    private Deck deck;
+
     public void setDeck(Deck newDeck) {
         deck = newDeck;
     }
