@@ -16,7 +16,7 @@ public class MainMenuView extends View {
     }
 
     public void enterDuelMenu() throws IOException {
-        enterNewMenu("/fxml/duelmenu.fxml", root);
+        enterNewMenu("/fxml/duel.fxml", root);
     }
 
     public void enterDeckMenu() throws IOException {

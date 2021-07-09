@@ -1,7 +1,10 @@
 package view;
 
 import controller.DuelController;
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
 
@@ -11,7 +14,10 @@ public class DuelView {
 
     private final DuelController controller;
 
-    public AnchorPane root;
+    @FXML
+    private HBox root;
+    @FXML
+    private ImageView image;
 
     public DuelView(DuelController controller) {
         this.controller = controller;

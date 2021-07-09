@@ -7,11 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.WelcomeView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -23,15 +19,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Media media = new Media(new File("/audio/Without Words - Despacito.mp3").toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
         setUpScene(stage);
         setUpStage(stage);
     }
 
     private void setUpScene(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/welcome.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
+                (getClass().getResource("/fxml/welcome.fxml")));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         WelcomeView welcomeView = loader.getController();

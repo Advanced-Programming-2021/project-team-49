@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="view.DuelView" fx:id="root"
+      prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
+      spacing="5">
+
+    <VBox alignment="CENTER" spacing="5">
+        <ImageView fx:id="image" fitWidth="170" preserveRatio="true">
+            <Image url="@../cards/Unknown.jpg" />
+        </ImageView>
+
+        <ScrollPane fitToWidth="true" prefHeight="200">
+            <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
+        </ScrollPane>
+
+        <Button onMouseClicked="#enterDeckMenu" text="Back" />
+    </VBox>
+
+
+
+</HBox>
