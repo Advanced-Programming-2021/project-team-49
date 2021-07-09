@@ -184,7 +184,6 @@ public class DeckView extends View {
     }
 
 
-
     public void refreshOwnedCards() {
         cards.setItems(FXCollections.observableArrayList(ownedCards.keySet()));
         cards.refresh();

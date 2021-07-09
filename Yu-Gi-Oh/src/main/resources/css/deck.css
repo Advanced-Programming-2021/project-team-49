@@ -8,6 +8,13 @@
     -fx-font-size: 12px;
 }
 
+.title {
+    -fx-font-size: 60px;
+    -fx-fill: white;
+    -fx-stroke: red;
+    -fx-stroke-width: 3px;
+}
+
 .mainDeckPane {
     -fx-padding: 20 0 0 15;
     -fx-background-image: url('../image/MainDeck.jpg');

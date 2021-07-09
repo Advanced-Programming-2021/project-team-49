@@ -7,19 +7,32 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      stylesheets="@../css/menu.css"
+      stylesheets="@../css/deck.css"
       fx:controller="view.ShopView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0" spacing="8">
-    <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
-        <Text text="Shop" styleClass="title" textAlignment="CENTER"/>
-    </HBox>
 
-    <GridPane hgap="-10" vgap="5" fx:id="gridPane" alignment="CENTER">
-    </GridPane>
+    <VBox alignment="CENTER" spacing="5">
+        <ImageView fx:id="image" fitWidth="170" preserveRatio="true">
+            <Image url="@../cards/Unknown.jpg" />
+        </ImageView>
 
-    <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_CENTER">
-        <Button text="Back" alignment="BOTTOM_LEFT" onMouseClicked="#backToMainMenu"/>
-    </HBox>
-</VBox>
+        <ScrollPane fitToWidth="true" prefHeight="200">
+            <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
+        </ScrollPane>
+
+        <Button text="Back" onMouseClicked="#backToMainMenu"/>
+    </VBox>
+
+    <VBox>
+        <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
+            <Text text="Shop" styleClass="title" textAlignment="CENTER"/>
+        </HBox>
+
+        <GridPane hgap="-10" vgap="5" fx:id="cardsPane" alignment="CENTER"/>
+    </VBox>
+
+</HBox>

@@ -1,36 +1,29 @@
 package view.popup;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import model.cardtemplate.CardTemplate;
-import view.ShopView;
 
-public class ShopPopUp {
+public class ShopPopUp extends PopUp{
 
     private final CardTemplate card;
-    private final Stage stage;
-    private final Parent root;
-    private final ShopView shopView;
+    private final Runnable runnable;
 
-    public ShopPopUp(CardTemplate card, Parent root, ShopView view) {
-        this.stage = new Stage();
+    public ShopPopUp(Parent root, CardTemplate card, Runnable runnable) {
+        super(root);
         this.card = card;
-        this.root = root;
-        this.shopView = view;
+        this.runnable = runnable;
     }
 
     public void initialize() {
@@ -41,12 +34,7 @@ public class ShopPopUp {
         Button buyButton = new Button("Buy");
         Button cancelButton = new Button("Cancel");
         cancelButton.setOnMouseClicked(mouseEvent -> stage.close());
-        buyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                shopView.buyTheSelectedCard(card);
-            }
-        });
+        buyButton.setOnMouseClicked(mouseEvent -> runnable.run());
         HBox hBox = new HBox();
 
         hBox.getChildren().addAll(cancelButton, buyButton);

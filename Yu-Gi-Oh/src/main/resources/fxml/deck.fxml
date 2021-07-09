@@ -21,21 +21,16 @@
             <Text fx:id="description" wrappingWidth="150" styleClass="description"/>
         </ScrollPane>
 
-
         <Button onMouseClicked="#enterDeckMenu" text="Back" />
     </VBox>
 
     <VBox alignment="CENTER">
-        <GridPane fx:id="mainDeckPane" prefHeight="405.0" prefWidth="532.0" styleClass="mainDeckPane"
-                  hgap="-15" vgap="5">
-
-        </GridPane>
-        <GridPane fx:id="sideDeckPane" prefHeight="100.0" prefWidth="532.0" styleClass="sideDeckPane"
-                  hgap="-22" vgap="5">
-
-        </GridPane>
-
+        <GridPane fx:id="mainDeckPane" prefHeight="405.0" prefWidth="532.0"
+                  styleClass="mainDeckPane" hgap="-15" vgap="5"/>
+        <GridPane fx:id="sideDeckPane" prefHeight="100.0" prefWidth="532.0"
+                  styleClass="sideDeckPane" hgap="-22" vgap="5"/>
     </VBox>
+
     <VBox alignment="CENTER" prefHeight="700">
         <ListView fx:id="cards" prefHeight="500.0" />
     </VBox>
