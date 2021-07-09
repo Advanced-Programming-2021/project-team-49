@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       stylesheets="@../css/menu.css"
@@ -20,7 +19,7 @@
         <Text text="Scoreboard" styleClass="title"/>
     </HBox>
 
-    <TableView fx:id="scoreboard" maxWidth="250" />
+    <TableView fx:id="scoreboard" maxWidth="245" stylesheets="@../css/deckbuilder.css"/>
 
     <HBox prefWidth="450" maxWidth="450" alignment="BOTTOM_CENTER">
         <Button text="Back" alignment="BOTTOM_CENTER" onMouseClicked="#backToMainMenu"/>

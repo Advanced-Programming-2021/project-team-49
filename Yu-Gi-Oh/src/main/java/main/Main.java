@@ -4,9 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.WelcomeView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -18,6 +23,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Media media = new Media(new File("/audio/Without Words - Despacito.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
         setUpScene(stage);
         setUpStage(stage);
     }
@@ -38,6 +46,8 @@ public class Main extends Application {
         stage.setWidth(800);
         stage.setHeight(600);
         stage.setResizable(false);
+
+        stage.getIcons().add(new Image(getClass().getResource("/image/icon.png").toExternalForm()));
         stage.show();
     }
 }

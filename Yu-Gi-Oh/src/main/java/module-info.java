@@ -3,9 +3,11 @@ module yugioh {
     requires javafx.fxml;
     requires com.google.gson;
     requires opencsv;
+    requires javafx.media;
+    requires javafx.graphics;
 
     opens view to javafx.fxml;
-    opens main to javafx.fxml;
+    opens main to javafx.fxml, javafx.media, javafx.graphics;
     opens model.user to com.google.gson;
     opens model.database to com.google.gson;
     opens model.cardtemplate to com.google.gson;

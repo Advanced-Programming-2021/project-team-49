@@ -25,7 +25,6 @@ public class ShopController extends Controller {
         CardTemplate card = DATABASE.getCardByName(cardName);
         if (user.getCoins() < card.getPrice())
             throw new GameErrorException("not enough money");
-
         user.removeCoins(card.getPrice());
         user.addCard(card);
     }
