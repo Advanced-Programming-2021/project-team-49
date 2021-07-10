@@ -7,10 +7,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import model.cardtemplate.CardTemplate;
 import model.game.card.Card;
@@ -20,7 +17,7 @@ import java.util.List;
 
 public class DuelView extends View {
 
-    private static final String UNKNOWN_CARD_PATH = View.class.getResource("/cards/Unknown.jpg").toExternalForm();
+    private static final Image UNKNOWN_CARD = new Image(View.class.getResource("/cards/Unknown.jpg").toExternalForm());
 
     private DuelController controller;
 
@@ -47,6 +44,10 @@ public class DuelView extends View {
         for (int i = 0; i < 6; i++) {
             defenderHand.add(createCardInHandImage(null, true), i, 0);
             attackerHand.add(createCardInHandImage(null, true), i, 0);
+        }
+        for (int i = 0; i < 5; i++) {
+            defenderSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
+            attackerSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
         }
     }
 
@@ -84,23 +85,22 @@ public class DuelView extends View {
         enterNewMenu("/fxml/duelmenu.fxml", root);
     }
 
-    public ImageView createCardInHandImage(CardTemplate card, boolean opponent) {
-        // TODO opponent boolean could be removed, instead if card is null
+    public ImageView createCardImage(CardTemplate card, int width, boolean hide) {
         ImageView cardImage;
-        if (opponent)
-            cardImage = new ImageView(new Image(UNKNOWN_CARD_PATH));
+        if (hide)
+            cardImage = new ImageView(UNKNOWN_CARD);
         else
             cardImage = new ImageView(new Image(card.getCardPicPath()));
 
-        cardImage.setFitWidth(95);
+        cardImage.setFitWidth(width);
         cardImage.setPreserveRatio(true);
         cardImage.setCursor(Cursor.HAND);
 
         cardImage.setOnMouseEntered(mouseEvent -> {
             cardImage.setEffect(new DropShadow());
 
-            if (opponent) {
-                image.setImage(new Image(UNKNOWN_CARD_PATH));
+            if (hide) {
+                image.setImage(UNKNOWN_CARD);
                 description.setText("");
             } else {
                 image.setImage(cardImage.getImage());
@@ -109,7 +109,14 @@ public class DuelView extends View {
 
             mouseEvent.consume();
         });
+
         cardImage.setOnMouseExited(mouseEvent -> cardImage.setEffect(null));
+
+        return cardImage;
+    }
+
+    public ImageView createCardInHandImage(CardTemplate card, boolean opponent) {
+        ImageView cardImage = createCardImage(card, 95, opponent);
 
         cardImage.setOnMouseClicked(mouseEvent -> {
             // TODO main idea of handling is a bit tricky
@@ -118,6 +125,16 @@ public class DuelView extends View {
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 // TODO set monster, set spell
             }
+        });
+
+        return cardImage;
+    }
+
+    public ImageView createCardInSpellZoneImage(CardTemplate card, boolean opponent, boolean hide) {
+        ImageView cardImage = createCardImage(card, 55, hide);
+
+        cardImage.setOnMouseClicked(mouseEvent -> {
+
         });
 
         return cardImage;

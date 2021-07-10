@@ -10,7 +10,7 @@
     <VBox alignment="CENTER" prefHeight="600.0" prefWidth="228.0" spacing="5">
 
         <VBox prefHeight="72.0" prefWidth="214.0">
-            <Text text="hp" />
+            <Text text="avatar nickname hp hpbar" />
         </VBox>
         <ImageView fx:id="image" fitHeight="309.0" fitWidth="223.0" preserveRatio="true">
             <Image url="@../cards/Unknown.jpg" />
@@ -20,10 +20,10 @@
             <Text fx:id="description" wrappingWidth="150" />
         </ScrollPane>
         <VBox prefHeight="36.0" prefWidth="214.0">
-            <Text text="hp" />
+            <Text text="avatar nickname hp hpbar" />
         </VBox>
         <!-- Button For Testing -->
-        <Button alignment="CENTER" onMouseClicked="#enterDuelMenu" text="Back" />
+        <Button alignment="CENTER" onMouseClicked="#enterDuelMenu" text="Pause Button and popup" />
     </VBox>
 
     <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
@@ -32,9 +32,11 @@
 
         </VBox>
 
-        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0"/>
+        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0" />
+        <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefHeight="138.0" />
 
-        <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefHeight="138.0"/>
+        <GridPane fx:id="defenderSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="75.0" prefHeight="95.0" />
+        <GridPane fx:id="attackerSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="395.0" prefHeight="95.0" />
 
     </Pane>
 </HBox>
