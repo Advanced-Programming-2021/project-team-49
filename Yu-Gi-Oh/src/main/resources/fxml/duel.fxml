@@ -32,43 +32,11 @@
 
         </VBox>
 
-        <GridPane fx:id="defenderHand">
-            <ImageView fitHeight="84.0" fitWidth="123.0" preserveRatio="true">
-               <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
+        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-10" layoutX="-88.0" layoutY="-69.0" prefHeight="138.0" prefWidth="755.0">
+
         </GridPane>
 
-        <GridPane fx:id="defenderSpellZone">
-            <ImageView fitHeight="61.0" fitWidth="213.0" preserveRatio="true">
-                <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
-        </GridPane>
 
-        <GridPane fx:id="defenderMonsterZone">
-            <!-- attacker monster card sample -->
-            <ImageView fitWidth="60.0" preserveRatio="true">
-                <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
-        </GridPane>
 
-        <GridPane fx:id="attackerMonsterZone">
-            <!-- defender monster card sample -->
-            <ImageView fitHeight="169.0" fitWidth="94.0" preserveRatio="true" rotate="90">
-                <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
-        </GridPane>
-
-        <GridPane fx:id="attackerSpellZone">
-            <!-- spell card sample -->
-            <ImageView fitHeight="80.0" fitWidth="65.0" preserveRatio="true">
-                <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
-        </GridPane>
-
-        <GridPane fx:id="attackerHand">
-            <ImageView fitHeight="80.0" fitWidth="65.0" preserveRatio="true">
-                <Image url="@../cards/Unknown.jpg" />
-            </ImageView>
-        </GridPane>
     </Pane>
 </HBox>
