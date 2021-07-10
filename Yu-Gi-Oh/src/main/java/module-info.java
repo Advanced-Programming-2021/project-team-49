@@ -3,7 +3,7 @@ module yugioh {
     requires javafx.fxml;
     requires com.google.gson;
     requires opencsv;
-    //requires javafx.media;
+    requires javafx.media;
     requires javafx.graphics;
 
     opens view to javafx.fxml;

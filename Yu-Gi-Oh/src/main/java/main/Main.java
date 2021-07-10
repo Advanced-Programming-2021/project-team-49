@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.WelcomeView;
-//import javafx.scene.media.*;
+import javafx.scene.media.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,9 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //Media media = new Media(Objects.requireNonNull(getClass().getResource("/audio/Despacito.mp3")).toExternalForm());
-        //MediaPlayer mediaPlayer = new MediaPlayer(media);
-        //mediaPlayer.play();
+        Media media = new Media(Objects.requireNonNull(getClass().getResource("/audio/Despacito.mp3")).toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
         setUpScene(stage);
         setUpStage(stage);
     }
