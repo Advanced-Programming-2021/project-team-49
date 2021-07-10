@@ -44,8 +44,9 @@ public class DuelView extends View {
     public Pane attackerSidePane;
 
     public void initialize() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             defenderHand.add(createCardInHandImage(null, true), i, 0);
+            attackerHand.add(createCardInHandImage(null, true), i, 0);
         }
     }
 
