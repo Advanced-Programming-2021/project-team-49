@@ -28,9 +28,26 @@
 
     <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
 
-        <VBox fx:id="phaseButtonBox">
-
-        </VBox>
+        <GridPane fx:id="phaseButtonPane" alignment="CENTER" layoutY="86.0" prefWidth="30.0" vgap="21">
+            <ImageView fx:id="drawButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="0">
+                <Image url="@../image/phasebuttons/blue/draw.jpg" />
+            </ImageView>
+            <ImageView fx:id="standbyButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="1">
+                <Image url="@../image/phasebuttons/blue/standby.jpg" />
+            </ImageView>
+            <ImageView fx:id="main1Button" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="2">
+                <Image url="@../image/phasebuttons/blue/main1.jpg" />
+            </ImageView>
+            <ImageView fx:id="battleButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="3">
+                <Image url="@../image/phasebuttons/blue/battle.jpg" />
+            </ImageView>
+            <ImageView fx:id="main2Button" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="4">
+                <Image url="@../image/phasebuttons/blue/main2.jpg" />
+            </ImageView>
+            <ImageView fx:id="endButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="5">
+                <Image url="@../image/phasebuttons/blue/end.jpg" />
+            </ImageView>
+        </GridPane>
 
         <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0" />
         <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefHeight="138.0" />
@@ -38,5 +55,7 @@
         <GridPane fx:id="defenderSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="75.0" prefHeight="95.0" />
         <GridPane fx:id="attackerSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="395.0" prefHeight="95.0" />
 
+        <GridPane fx:id="defenderMonsterZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="172.0" prefHeight="95.0" />
+        <GridPane fx:id="attackerMonsterZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="292.0" prefHeight="95.0" />
     </Pane>
 </HBox>

@@ -19,6 +19,7 @@ public class DuelView extends View {
 
     private static final Image UNKNOWN_CARD = new Image(View.class.getResource("/cards/Unknown.jpg").toExternalForm());
 
+
     private DuelController controller;
 
     @FXML
@@ -29,8 +30,7 @@ public class DuelView extends View {
     private Text description;
 
     // TODO public modifier for accessing from another stage
-    public VBox phaseButtonBox;
-    public Pane defenderSidePane;
+    public GridPane phaseButtonPane;
     public Pane fieldPane;
     public GridPane defenderHand;
     public GridPane defenderSpellZone;
@@ -38,7 +38,13 @@ public class DuelView extends View {
     public GridPane attackerMonsterZone;
     public GridPane attackerSpellZone;
     public GridPane attackerHand;
-    public Pane attackerSidePane;
+
+    public ImageView drawButton;
+    public ImageView standbyButton;
+    public ImageView main1Button;
+    public ImageView battleButton;
+    public ImageView main2Button;
+    public ImageView endButton;
 
     public void initialize() {
         for (int i = 0; i < 6; i++) {
@@ -48,6 +54,15 @@ public class DuelView extends View {
         for (int i = 0; i < 5; i++) {
             defenderSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
             attackerSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
+        }
+        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 0, 0);
+        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), 1, 0);
+        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 2, 0);
+        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), 3, 0);
+        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 4, 0);
+        for (int i = 0; i < 5; i++) {
+            attackerMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), i, 0);
+
         }
     }
 
@@ -118,6 +133,9 @@ public class DuelView extends View {
     public ImageView createCardInHandImage(CardTemplate card, boolean opponent) {
         ImageView cardImage = createCardImage(card, 95, opponent);
 
+        if (opponent)
+            cardImage.setRotate(180.0);
+
         cardImage.setOnMouseClicked(mouseEvent -> {
             // TODO main idea of handling is a bit tricky
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -132,6 +150,24 @@ public class DuelView extends View {
 
     public ImageView createCardInSpellZoneImage(CardTemplate card, boolean opponent, boolean hide) {
         ImageView cardImage = createCardImage(card, 55, hide);
+
+        if (opponent)
+            cardImage.setRotate(180.0);
+
+        cardImage.setOnMouseClicked(mouseEvent -> {
+
+        });
+
+        return cardImage;
+    }
+
+    public ImageView createCardInMonsterZoneImage(CardTemplate card, boolean opponent, boolean hide, boolean horizontal) {
+        ImageView cardImage = createCardImage(card, 55, hide);
+
+        if (opponent)
+            cardImage.setRotate(180.0);
+        if (horizontal)
+            cardImage.setRotate(90.0);
 
         cardImage.setOnMouseClicked(mouseEvent -> {
 
