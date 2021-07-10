@@ -6,9 +6,15 @@ import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
 
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 
 public class ImportExportController extends Controller {
 
+    public List<CardTemplate> getSortedCards() {
+        DATABASE.getCards().sort(Comparator.comparing(CardTemplate::getName));
+        return DATABASE.getCards();
+    }
 
     public void importCard(String cardPath) {
         try {

@@ -1,5 +1,6 @@
 package view;
 
+import controller.ImportExportController;
 import controller.ShopController;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ShopView extends View {
 
     private final ShopController controller = new ShopController();
+    private final ImportExportController exportController = new ImportExportController();
 
     @FXML
     private HBox root;
@@ -68,7 +70,11 @@ public class ShopView extends View {
             controller.buyCard(card.getName());
             coins.setText("\uD83D\uDCB0 " + controller.getUserCoins());
             ownedCount.setText("Inventory: " + controller.getOwnedCardCount(card) + " cards");
-                }).initialize());
+                },
+                () -> {
+            exportController.exportCard(card.getName());
+                },
+                controller).initialize());
 
         return cardImage;
     }

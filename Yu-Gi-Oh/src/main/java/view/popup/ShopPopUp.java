@@ -1,5 +1,6 @@
 package view.popup;
 
+import controller.ShopController;
 import exception.GameErrorException;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import model.cardtemplate.CardTemplate;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class ShopPopUp extends PopUp {
@@ -24,12 +26,17 @@ public class ShopPopUp extends PopUp {
     private static final double HEIGHT = 330.0;
 
     private final CardTemplate card;
-    private final Runnable runnable;
+    private final Runnable buyRunnable;
+    private final Runnable exportRunnable;
+    private final ShopController controller;
 
-    public ShopPopUp(Parent root, CardTemplate card, Runnable runnable) {
+    public ShopPopUp(Parent root, CardTemplate card, Runnable buyRunnable, Runnable exportRunnable,
+                     ShopController controller) {
         super(root);
         this.card = card;
-        this.runnable = runnable;
+        this.buyRunnable = buyRunnable;
+        this.exportRunnable = exportRunnable;
+        this.controller = controller;
     }
 
     public void initialize() {
@@ -51,25 +58,39 @@ public class ShopPopUp extends PopUp {
         Button buyButton = new Button("Buy");
         buyButton.setOnMouseClicked(mouseEvent -> {
             try {
-                runnable.run();
-                System.out.println("Card has been bought successfully!");
+                buyRunnable.run();
+                resultText.setText(("Card has been bought successfully!"));
             } catch (GameErrorException exception) {
                 resultText.setText(exception.getMessage());
             }
         });
-        Button cancelButton = new Button("Cancel");
+        Button exportCardButton = new Button("Export");
+        exportCardButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                exportRunnable.run();
+                resultText.setText("Card has been exported successfully");
+            } catch (GameErrorException exception) {
+                resultText.setText("couldn't save file");
+            }
+
+        });
+        Button cancelButton = new Button("Back");
         cancelButton.setOnMouseClicked(mouseEvent -> stage.close());
 
         HBox buttonBox = new HBox();
-        buttonBox.getChildren().addAll(cancelButton, buyButton);
-        buttonBox.setSpacing(15);
+        buttonBox.getChildren().addAll(exportCardButton, buyButton);
+        buttonBox.setSpacing(8);
         buttonBox.setAlignment(Pos.CENTER);
+
+        HBox cancelBox = new HBox();
+        cancelBox.getChildren().add(cancelButton);
+        cancelBox.setAlignment(Pos.CENTER);
 
         ImageView cardImage = new ImageView(new Image(card.getCardPicPath()));
         cardImage.setFitWidth(200);
         cardImage.setPreserveRatio(true);
 
-        vBox.getChildren().addAll(nameText, priceText, resultText, buttonBox);
+        vBox.getChildren().addAll(nameText, priceText, resultText, buttonBox, cancelBox);
         hBox.getChildren().addAll(cardImage, vBox);
 
         hBox.getStylesheets().add(Objects.requireNonNull(getClass().getResource
@@ -79,6 +100,9 @@ public class ShopPopUp extends PopUp {
         priceText.getStyleClass().add("shop-text");
         resultText.getStyleClass().add("result-text");
 
+        if (card.getPrice() > controller.getUserCoins()) {
+            buyButton.setDisable(true);
+        }
         show(hBox, HEIGHT, WIDTH);
     }
 }

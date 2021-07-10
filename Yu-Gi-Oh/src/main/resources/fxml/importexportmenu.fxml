@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             stylesheets="@../css/menu.css"
@@ -18,10 +20,7 @@
                 </HBox>
             </top>
             <center>
-                <VBox alignment="CENTER" spacing="8">
-                    <Button text="Import cards" styleClass="button"/>
-                    <Button text="Export cards" styleClass="button"/>
-                </VBox>
+
             </center>
             <bottom>
                 <HBox alignment="TOP_CENTER">
