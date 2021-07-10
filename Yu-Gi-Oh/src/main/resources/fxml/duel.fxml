@@ -9,9 +9,18 @@
 
     <VBox alignment="CENTER" prefHeight="600.0" prefWidth="228.0" spacing="5">
 
-        <VBox prefHeight="72.0" prefWidth="214.0">
-            <Text text="avatar nickname hp hpbar" />
-        </VBox>
+        <HBox prefHeight="72.0" prefWidth="214.0" spacing="5">
+            <ImageView fx:id="opponentProfilePic" fitWidth="72" preserveRatio="true"/>
+            <VBox spacing="5">
+                <TextFlow>
+                    <Text fx:id="opponentNicknameText" styleClass="player-text"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="LP: " styleClass="player-text"/>
+                    <Text fx:id="opponentLifePointsText" styleClass="player-text"/>
+                </TextFlow>
+            </VBox>
+        </HBox>
         <ImageView fx:id="image" fitHeight="309.0" fitWidth="223.0" preserveRatio="true">
             <Image url="@../cards/Unknown.jpg" />
         </ImageView>
@@ -19,9 +28,18 @@
         <ScrollPane fitToWidth="true" prefHeight="180.0" prefWidth="203.0">
             <Text fx:id="description" wrappingWidth="150" />
         </ScrollPane>
-        <VBox prefHeight="36.0" prefWidth="214.0">
-            <Text text="avatar nickname hp hpbar" />
-        </VBox>
+        <HBox prefHeight="72.0" prefWidth="214.0" spacing="5">
+            <ImageView fx:id="selfProfilePic" fitWidth="72" preserveRatio="true"/>
+            <VBox spacing="5">
+                <TextFlow>
+                    <Text fx:id="selfNicknameText" styleClass="player-text"/>
+                </TextFlow>
+                <TextFlow>
+                    <Text text="LP: " styleClass="player-text"/>
+                    <Text fx:id="selfLifePointsText" styleClass="player-text"/>
+                </TextFlow>
+            </VBox>
+        </HBox>
         <!-- Button For Testing -->
         <Button fx:id="pauseButton" alignment="CENTER" text="Pause Button and popup" />
     </VBox>

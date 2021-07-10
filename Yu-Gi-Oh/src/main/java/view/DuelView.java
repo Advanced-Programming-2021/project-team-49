@@ -1,6 +1,8 @@
 package view;
 
 import controller.DuelController;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -19,12 +21,17 @@ import model.game.card.Card;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class DuelView extends View {
 
-    private static final Image UNKNOWN_CARD = new Image(View.class.getResource("/cards/Unknown.jpg").toExternalForm());
+    private static final Image UNKNOWN_CARD = new Image(Objects.requireNonNull(
+            View.class.getResource("/cards/Unknown.jpg")).toExternalForm());
 
     private final DuelController controller;
+
+    private GameMat selfMat;
+    private GameMat opponentMat;
 
     @FXML
     private HBox root;
@@ -32,6 +39,18 @@ public class DuelView extends View {
     private ImageView image;
     @FXML
     private Text description;
+    @FXML
+    private Text opponentNicknameText;
+    @FXML
+    private Text selfNicknameText;
+    @FXML
+    private Text opponentLifePointsText;
+    @FXML
+    private Text selfLifePointsText;
+    @FXML
+    private ImageView selfProfilePic;
+    @FXML
+    private ImageView opponentProfilePic;
 
     // TODO public modifier for accessing from another stage
     public Pane fieldPane;
@@ -67,17 +86,18 @@ public class DuelView extends View {
     public void initialize() {
 
         int culomn = 0;
-        GameMat attackerMat = controller.getField().getAttackerMat();
-        for (Card card : attackerMat.getCardList(Location.HAND)) {
+        selfMat = controller.getField().getAttackerMat();
+        for (Card card : selfMat.getCardList(Location.HAND)) {
             attackerHand.add(createCardInHandImage(card, false), culomn++, 0);
-            attackerDeckCount.setText(String.valueOf(attackerMat.getCardCount(Location.DECK)));
+            attackerDeckCount.setText(String.valueOf(selfMat.getCardCount(Location.DECK)));
         }
         culomn = 0;
-        GameMat defenderMat = controller.getField().getDefenderMat();
-        for (Card card : defenderMat.getCardList(Location.HAND)) {
+        opponentMat = controller.getField().getDefenderMat();
+        for (Card card : opponentMat.getCardList(Location.HAND)) {
             defenderHand.add(createCardInHandImage(card, true), culomn++, 0);
-            defenderDeckCount.setText(String.valueOf(defenderMat.getCardCount(Location.DECK)));
+            defenderDeckCount.setText(String.valueOf(opponentMat.getCardCount(Location.DECK)));
         }
+        setPlayerData();
         controller.getField().switchMats();
 
         pauseButton.setOnMouseClicked(event -> {
@@ -87,8 +107,9 @@ public class DuelView extends View {
                 exception.printStackTrace();
             }
         });
-    }
 
+
+    }
 
     public static void showCardInfoStringView(Card card) {
     }
@@ -121,6 +142,21 @@ public class DuelView extends View {
 
     public void enterDuelMenu() throws IOException {
         enterNewMenu("/fxml/duelmenu.fxml", root);
+    }
+
+    private void setPlayerData() {
+        opponentProfilePic.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                opponentMat.getPlayer().getUser().getProfilePicResourcePath())).toExternalForm()));
+        selfProfilePic.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                selfMat.getPlayer().getUser().getProfilePicResourcePath())).toExternalForm()));
+
+        opponentNicknameText.setText(opponentMat.getPlayer().getUser().getNickname());
+        selfNicknameText.setText(selfMat.getPlayer().getUser().getNickname());
+
+        opponentLifePointsText.textProperty().bind(
+                new SimpleIntegerProperty(opponentMat.getPlayer().getLifePoints()).asString());
+        selfLifePointsText.textProperty().bind(
+                new SimpleIntegerProperty(selfMat.getPlayer().getLifePoints()).asString());
     }
 
     public ImageView createCardImage(Card card, int width, boolean hide) {

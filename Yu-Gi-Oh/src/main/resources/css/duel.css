@@ -24,3 +24,8 @@
     -fx-stroke: black;
     -fx-stroke-width: 1px;
 }
+
+.player-text {
+    -fx-font-family: 'Stone Serif';
+    -fx-font-size: 15px;
+}
