@@ -20,21 +20,21 @@ public class ImportExportController extends Controller {
         try {
             DATABASE.importCard(cardPath);
         } catch (IOException|CsvValidationException exception) {
-            throw new GameErrorException("couldn't load file");
+            throw new GameErrorException("Couldn't load file");
         }
     }
 
     public void exportCard(String cardName) {
         CardTemplate card = DATABASE.getCardByName(cardName);
         if (card == null)
-            throw new GameErrorException("no card exists with this name");
+            throw new GameErrorException("No card exists with this name");
         else if (!(card instanceof MonsterCard))
-            throw new GameErrorException("you can only save monster cards");
+            throw new GameErrorException("You can only save monster cards");
         else {
             try {
                 DATABASE.exportCard((MonsterCard) card);
             } catch (IOException exception) {
-                throw new GameErrorException("couldn't save file");
+                throw new GameErrorException("Couldn't save file");
             }
         }
     }

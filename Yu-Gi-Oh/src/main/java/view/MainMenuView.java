@@ -1,6 +1,5 @@
 package view;
 
-import controller.DuelController;
 import controller.MainMenuController;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -34,7 +33,7 @@ public class MainMenuView extends View {
     }
 
     public void enterImportExportMenu() throws IOException {
-        enterNewMenu("/fxml/importexportmenu.fxml", root);
+        enterNewMenu("/fxml/import.fxml", root);
     }
 
     @FXML

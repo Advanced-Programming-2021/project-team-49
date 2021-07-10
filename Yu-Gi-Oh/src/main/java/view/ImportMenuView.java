@@ -4,27 +4,23 @@ import controller.ImportExportController;
 import exception.GameErrorException;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
 
-public class ImportExportMenuView extends View {
+public class ImportMenuView extends View {
 
     private final ImportExportController controller = new ImportExportController();
 
     @FXML
-    public HBox filesToChoose;
+    private VBox root;
     @FXML
-    private BorderPane root;
-
-
-    public void initialize() {
-
-    }
+    private Text message;
 
     public void backToMainMenu(MouseEvent mouseEvent) throws IOException {
         enterNewMenu("/fxml/mainmenu.fxml", root);
@@ -34,13 +30,13 @@ public class ImportExportMenuView extends View {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(stage);
-        Text resultText = new Text("");
         try {
             controller.importCard(file.getPath());
-            resultText.setText("Card has been imported successfully!");
+            message.setText("Card has been imported successfully!");
+            message.setFill(Color.GREEN);
         } catch (GameErrorException exception) {
-            resultText.setText("couldn't load file");
+            message.setText("couldn't load file");
+            message.setFill(Color.FIREBRICK);
         }
-        filesToChoose.getChildren().add(resultText);
     }
 }
