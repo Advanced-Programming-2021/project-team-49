@@ -70,17 +70,6 @@
             <ImageView fx:id="endButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="5">
                 <Image url="@../image/phasebuttons/blue/end.jpg" />
             </ImageView>
-         <columnConstraints>
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
         </GridPane>
 
         <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0" />
