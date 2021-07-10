@@ -28,6 +28,29 @@
 
     <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
 
+        <ImageView fx:id="defenderFieldZone" fitWidth="55.0" layoutX="503.0" layoutY="180.0" preserveRatio="true"/>
+
+        <ImageView fx:id="defenderGraveyard" fitWidth="55.0" layoutX="32.0" layoutY="180.0" preserveRatio="true"/>
+
+        <VBox alignment="CENTER" layoutX="503.0" layoutY="395.0">
+            <ImageView fx:id="defenderDeck" fitWidth="55.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+            <Text fx:id="defenderDeckCount" text="40" styleClass="deck-count"/>
+        </VBox>
+
+        <ImageView fx:id="attackerFieldZone" fitWidth="55.0" layoutX="32.0" layoutY="298.0" preserveRatio="true"/>
+
+        <ImageView fx:id="attackerGraveyard" fitWidth="55.0" layoutX="503.0" layoutY="298.0" preserveRatio="true"/>
+
+        <VBox alignment="CENTER" layoutX="32.0" layoutY="75.0">
+            <ImageView fx:id="attackerDeck" fitWidth="55.0" preserveRatio="true">
+                <Image url="@../cards/Unknown.jpg" />
+            </ImageView>
+            <Text fx:id="attackerDeckCount" text="40" styleClass="deck-count"/>
+        </VBox>
+
+
         <GridPane fx:id="phaseButtonPane" alignment="CENTER" layoutY="67.0" prefWidth="30.0" vgap="21">
             <ImageView fx:id="drawButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="0">
                 <Image url="@../image/phasebuttons/blue/draw.jpg" />
@@ -47,6 +70,17 @@
             <ImageView fx:id="endButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="5">
                 <Image url="@../image/phasebuttons/blue/end.jpg" />
             </ImageView>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
 
         <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0" />

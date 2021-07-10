@@ -17,3 +17,10 @@
     -fx-font-family: 'Stone Serif';
     -fx-font-size: 10px;
 }
+
+.deck-count {
+    -fx-font-size: 12px;
+    -fx-fill: white;
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
+}

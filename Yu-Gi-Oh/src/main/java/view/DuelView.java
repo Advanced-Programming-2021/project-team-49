@@ -46,6 +46,15 @@ public class DuelView extends View {
     public ImageView main2Button;
     public ImageView endButton;
 
+    public ImageView defenderFieldZone;
+    public ImageView attackerFieldZone;
+    public ImageView defenderGraveyard;
+    public ImageView attackerGraveyard;
+    public ImageView defenderDeck;
+    public Text defenderDeckCount;
+    public ImageView attackerDeck;
+    public Text attackerDeckCount;
+
     public void initialize() {
         for (int i = 0; i < 6; i++) {
             defenderHand.add(createCardInHandImage(null, true), i, 0);
