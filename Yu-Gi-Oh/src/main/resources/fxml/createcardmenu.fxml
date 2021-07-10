@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../css/menu.css"
+            fx:controller="view.CreateCardView"
+            prefHeight="600.0" prefWidth="800.0" fx:id="root"
+            spacing="30">
+    <HBox alignment="CENTER">
+        <CheckBox fx:id="types" alignment="CENTER_LEFT">
+            <String fx:value="Monster"/>
+            <String fx:value="Spell"/>
+            <String fx:value="Trap"/>
+        </CheckBox>
+    </HBox>
+    <HBox alignment="BOTTOM_CENTER">
+        <Button text="Back" styleClass="button" onMouseClicked="#backToMainMenu"/>
+    </HBox>
+</VBox>

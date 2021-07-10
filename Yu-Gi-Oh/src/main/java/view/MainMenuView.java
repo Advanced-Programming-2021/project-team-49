@@ -2,6 +2,7 @@ package view;
 
 import controller.MainMenuController;
 import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -34,6 +35,10 @@ public class MainMenuView extends View {
 
     public void enterImportExportMenu() throws IOException {
         enterNewMenu("/fxml/import.fxml", root);
+    }
+
+    public void enterCreateCardsMenu(MouseEvent mouseEvent) throws IOException {
+        enterNewMenu("/fxml/createcardmenu.fxml", root);
     }
 
     @FXML

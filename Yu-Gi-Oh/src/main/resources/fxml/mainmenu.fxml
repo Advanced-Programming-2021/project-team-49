@@ -8,7 +8,7 @@
       stylesheets="@../css/menu.css"
       fx:controller="view.MainMenuView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0" alignment="CENTER"
-      spacing="30">
+      spacing="17">
 
     <HBox prefWidth="450" maxWidth="450" alignment="CENTER">
         <Text text="Main Menu" styleClass="title"/>
@@ -23,6 +23,7 @@
         <Button text="Profile" onMouseClicked="#enterProfile"/>
         <Button text="Scoreboard" onMouseClicked="#enterScoreboard"/>
         <Button text="Import/Export" onMouseClicked="#enterImportExportMenu"/>
+        <Button text="Create Cards" onMouseClicked="#enterCreateCardsMenu"/>
         <Button text="Logout" onMouseClicked="#logout"/>
     </VBox>
 </VBox>
