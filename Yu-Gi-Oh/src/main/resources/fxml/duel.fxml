@@ -32,11 +32,9 @@
 
         </VBox>
 
-        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-10" layoutX="-88.0" layoutY="-69.0" prefHeight="138.0" prefWidth="755.0">
+        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0"/>
 
-        </GridPane>
-
-
+        <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefHeight="138.0"/>
 
     </Pane>
 </HBox>
