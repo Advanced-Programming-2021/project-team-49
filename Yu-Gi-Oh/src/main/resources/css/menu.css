@@ -38,6 +38,11 @@
     -fx-stroke: red;
 }
 
+.radio-button .text {
+    -fx-fill: white;
+    -fx-stroke: red;
+}
+
 .button {
     -fx-color: red;
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border,

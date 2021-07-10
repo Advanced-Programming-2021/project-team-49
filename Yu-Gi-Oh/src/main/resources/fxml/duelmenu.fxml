@@ -12,7 +12,7 @@
             prefHeight="600.0" prefWidth="800.0" fx:id="root">
             <top>
                 <HBox alignment="CENTER" spacing="20">
-                    <ImageView fx:id="headerLogo" translateY="5" fitWidth="750" preserveRatio="true">
+                    <ImageView translateY="5" fitWidth="750" preserveRatio="true">
                         <Image url="@../image/header.png"/>
                     </ImageView>
                 </HBox>
@@ -21,7 +21,7 @@
                 <VBox alignment="CENTER" spacing="8">
                     <Button text="Single Duel"/>
                     <Button text="Match Duel"/>
-                    <Button text="2-Player Duel" onMouseClicked="#startDuel"/>
+                    <Button text="2-Player Duel" onMouseClicked="#startTwoPlayerDuel"/>
                 </VBox>
             </center>
             <bottom>

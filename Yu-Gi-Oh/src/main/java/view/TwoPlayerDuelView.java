@@ -16,7 +16,9 @@ import java.io.IOException;
 
 public class TwoPlayerDuelView extends View {
 
-    private MainMenuController controller = new MainMenuController();
+    private final MainMenuController controller = new MainMenuController();
+
+    private final ToggleGroup roundCountToggleGroup = new ToggleGroup();
 
     @FXML
     private VBox root;
@@ -29,9 +31,8 @@ public class TwoPlayerDuelView extends View {
     @FXML
     private Text errorMessage;
 
-    private ToggleGroup roundCountToggleGroup;
-
-    public void initialize() {
+    @FXML
+    private void initialize() {
         oneRoundButton.setToggleGroup(roundCountToggleGroup);
         threeRoundsButton.setToggleGroup(roundCountToggleGroup);
     }
@@ -47,7 +48,7 @@ public class TwoPlayerDuelView extends View {
             int roundCount = Integer.parseInt(selectedRoundCountButton.getText());
             duelController = controller.startPlayerDuel(secondPlayerUsernameField.getText(), roundCount);
         } catch (GameErrorException exception) {
-
+            errorMessage.setText(exception.getMessage());
         }
     }
 
