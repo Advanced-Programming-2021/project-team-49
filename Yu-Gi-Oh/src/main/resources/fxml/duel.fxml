@@ -28,7 +28,7 @@
 
     <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
 
-        <GridPane fx:id="phaseButtonPane" alignment="CENTER" layoutY="86.0" prefWidth="30.0" vgap="21">
+        <GridPane fx:id="phaseButtonPane" alignment="CENTER" layoutY="67.0" prefWidth="30.0" vgap="21">
             <ImageView fx:id="drawButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="0">
                 <Image url="@../image/phasebuttons/blue/draw.jpg" />
             </ImageView>
