@@ -1,5 +1,6 @@
 package view;
 
+import controller.DuelController;
 import controller.MainMenuController;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;

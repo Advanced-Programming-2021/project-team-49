@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" stylesheets="@../css/menu.css"
+      fx:controller="view.TwoPlayerDuelView" fx:id="root"
+      prefHeight="600.0" prefWidth="800.0">
+
+    <HBox prefWidth="450" maxWidth="450">
+        <Text text="Two Player Duel" styleClass="title"/>
+    </HBox>
+    <TextField fx:id="secondPlayerUsernameField" promptText="Second Player Username" prefWidth="450" maxWidth="450"
+               onKeyPressed="#handleKeyInput"/>
+    <HBox prefWidth="450" maxWidth="450" spacing="50" alignment="CENTER">
+        <Text text="Number of Rounds:"/>
+        <RadioButton fx:id="oneRoundButton" text="1"/>
+        <RadioButton fx:id="threeRoundsButton" text="3"/>
+    </HBox>
+    <Text fx:id="errorMessage" fill="firebrick"/>
+    <HBox prefWidth="450" maxWidth="450" spacing="50" alignment="CENTER">
+        <Button text="Back" onMouseClicked="#openDuelMenu"/>
+        <Button text="Start Duel" styleClass="button-green" onMouseClicked="#startDuel"/>
+    </HBox>
+</VBox>

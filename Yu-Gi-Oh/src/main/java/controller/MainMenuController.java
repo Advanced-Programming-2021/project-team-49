@@ -5,7 +5,7 @@ import model.user.User;
 
 public class MainMenuController extends Controller {
 
-    public void startPlayerDuel(String secondPlayerUsername, int rounds) {
+    public DuelController startPlayerDuel(String secondPlayerUsername, int rounds) {
         User secondPlayer = DATABASE.getUserbase().getUserByUsername(secondPlayerUsername);
 
         if (secondPlayer == null)
@@ -17,14 +17,14 @@ public class MainMenuController extends Controller {
         else if (rounds != 1 && rounds != 3)
             System.out.println("number of rounds is not supported");
 
-        DuelController duelController = new DuelController(user, secondPlayer, rounds, false);
+        return new DuelController(user, secondPlayer, rounds, false);
     }
 
-    public void startAIDuel(int rounds) {
+    public DuelController startAIDuel(int rounds) {
         if (rounds != 1 && rounds != 3)
             System.out.println("number of rounds is not supported");
 
-        DuelController duelController = new DuelController(user, null, rounds, true);
+        return new DuelController(user, null, rounds, true);
     }
 
     public void logout() {
