@@ -15,12 +15,14 @@
             fx:controller="view.ImportExportMenuView"
             prefHeight="600.0" prefWidth="800.0" fx:id="root">
             <top>
-                <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
-                    <Text text="ImportExport menu" styleClass="title" textAlignment="CENTER"/>
+                <HBox prefWidth="450" maxWidth="450" alignment="CENTER">
+                    <Text text="Import menu" styleClass="title" textAlignment="CENTER"/>
                 </HBox>
             </top>
             <center>
-
+                <HBox fx:id="filesToChoose" alignment="TOP_CENTER">
+                    <Button text="Import" onMouseClicked="#chooseFiles" styleClass="button" alignment="CENTER"/>
+                </HBox>
             </center>
             <bottom>
                 <HBox alignment="TOP_CENTER">
