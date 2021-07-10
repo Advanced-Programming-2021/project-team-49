@@ -21,7 +21,7 @@ public class MainMenuView extends View {
     }
 
     public void enterShopMenu() throws IOException {
-        enterNewMenu("/fxml/shopmenu.fxml", root);
+        enterNewMenu("/fxml/shop.fxml", root);
     }
 
     public void enterProfile() throws IOException {
