@@ -10,8 +10,22 @@
       fx:controller="view.ProfileView" fx:id="root"
       prefHeight="600.0" prefWidth="800.0"
       alignment="CENTER" spacing="50">
-    <VBox alignment="CENTER">
-        <ImageView fx:id="profilePic" fitWidth="144" preserveRatio="true"/>
+    <VBox alignment="CENTER" spacing="20">
+        <StackPane>
+            <fx:include fx:id="profilePicView" source="profilepic.fxml" visible="false"/>
+            <ImageView fx:id="profilePic" fitWidth="144" preserveRatio="true"/>
+        </StackPane>
+        <StackPane>
+            <Button fx:id="editProfilePicButton" styleClass="button-edit"
+                    prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32"
+                    onMouseClicked="#beginEditingProfilePic"/>
+            <HBox fx:id="editProfilePicButtonBox" alignment="CENTER" spacing="30" visible="false">
+                <Button styleClass="button-accept" prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32"
+                        onMouseClicked="#acceptNewProfilePic"/>
+                <Button styleClass="button-cancel" prefWidth="32" prefHeight="32" maxWidth="32" maxHeight="32"
+                        onMouseClicked="#endEditingProfilePic"/>
+            </HBox>
+        </StackPane>
     </VBox>
     <VBox alignment="CENTER_LEFT" spacing="15">
         <HBox prefWidth="400" maxWidth="400">
