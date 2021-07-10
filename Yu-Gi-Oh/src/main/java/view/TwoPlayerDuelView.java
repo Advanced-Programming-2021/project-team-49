@@ -39,6 +39,7 @@ public class TwoPlayerDuelView extends View {
 
     @FXML
     private void initialize() {
+        oneRoundButton.setSelected(true);
         oneRoundButton.setToggleGroup(roundCountToggleGroup);
         threeRoundsButton.setToggleGroup(roundCountToggleGroup);
     }
@@ -47,12 +48,11 @@ public class TwoPlayerDuelView extends View {
         enterNewMenu("/fxml/duelmenu.fxml", root);
     }
 
-    public void startDuel() {
-        DuelController duelController;
+    public void startDuel() throws IOException {
         try {
             RadioButton selectedRoundCountButton = (RadioButton) roundCountToggleGroup.getSelectedToggle();
             int roundCount = Integer.parseInt(selectedRoundCountButton.getText());
-            duelController = controller.startPlayerDuel(secondPlayerUsernameField.getText(), roundCount);
+            DuelController duelController = controller.startPlayerDuel(secondPlayerUsernameField.getText(), roundCount);
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
@@ -65,7 +65,7 @@ public class TwoPlayerDuelView extends View {
             loader.setController(new DuelView(duelController));
             newRoot = loader.load();
             setUpStage(newRoot);
-        } catch (GameErrorException | IOException exception) {
+        } catch (GameErrorException exception) {
             errorMessage.setText(exception.getMessage());
         }
     }
@@ -79,12 +79,13 @@ public class TwoPlayerDuelView extends View {
         stage.setHeight(600);
         stage.setResizable(false);
 
-        stage.getIcons().add(new Image(getClass().getResource("/image/icon.png").toExternalForm()));
+        stage.getIcons().add(new Image(Objects.requireNonNull(
+                getClass().getResource("/image/icon.png")).toExternalForm()));
         stage.show();
     }
 
     @FXML
-    private void handleKeyInput(KeyEvent event) {
+    private void handleKeyInput(KeyEvent event) throws IOException {
         if (event.getCode().equals(KeyCode.ENTER))
             startDuel();
     }
