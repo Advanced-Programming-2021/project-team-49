@@ -3,6 +3,7 @@ package view;
 import controller.ProfileController;
 import exception.GameErrorException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +31,10 @@ public class ProfileView extends View {
     private VBox profilePicView;
     @FXML
     private ImageView profilePic;
+    @FXML
+    private Button editProfilePicButton;
+    @FXML
+    private HBox editProfilePicButtonBox;
 
     @FXML
     private HBox nicknameBox;
@@ -58,6 +63,8 @@ public class ProfileView extends View {
         scoreText.setText("Score: " + controller.getUser().getScore());
         profilePic.setImage(new Image(Objects.requireNonNull(getClass().getResource(
                 controller.getUser().getProfilePicResourcePath())).toExternalForm()));
+        ((ProfilePicView) profilePicView.getUserData()).setCurrentProfilePic(
+                controller.getUser().getProfilePicResourcePath());
     }
 
     @FXML
@@ -104,5 +111,32 @@ public class ProfileView extends View {
     private void handleKeyInput(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER))
             acceptNewNickname();
+    }
+
+    @FXML
+    private void beginEditingProfilePic() {
+        profilePic.setVisible(false);
+        editProfilePicButton.setVisible(false);
+
+        profilePicView.setVisible(true);
+        editProfilePicButtonBox.setVisible(true);
+    }
+
+    @FXML
+    private void endEditingProfilePic() {
+        profilePicView.setVisible(false);
+        editProfilePicButtonBox.setVisible(false);
+
+        profilePic.setVisible(true);
+        editProfilePicButton.setVisible(true);
+    }
+
+    @FXML
+    private void acceptNewProfilePic() {
+        controller.getUser().setProfilePicResourcePath(
+                ((ProfilePicView) profilePicView.getUserData()).getProfilePicResourcePath());
+        profilePic.setImage(new Image(Objects.requireNonNull(getClass().getResource(
+                controller.getUser().getProfilePicResourcePath())).toExternalForm()));
+        endEditingProfilePic();
     }
 }

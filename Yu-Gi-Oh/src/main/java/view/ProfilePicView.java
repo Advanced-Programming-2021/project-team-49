@@ -31,6 +31,11 @@ public class ProfilePicView {
                     Objects.requireNonNull(getClass().getResource(profilePicResourcePath)).toExternalForm()));
     }
 
+    public void setCurrentProfilePic(String currentProfilePicResourcePath) {
+        currentProfilePicIndex = profilePicResourcePaths.indexOf(currentProfilePicResourcePath);
+        profilePic.setImage(profilePics.get(currentProfilePicIndex));
+    }
+
     @FXML
     public void initialize() {
         profilePic.setImage(profilePics.get(currentProfilePicIndex));
