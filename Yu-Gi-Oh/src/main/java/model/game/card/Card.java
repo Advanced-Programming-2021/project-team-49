@@ -25,6 +25,10 @@ public abstract class Card {
         return cardTemplate.getEffect();
     }
 
+    public String getCardPicPath() {
+        return cardTemplate.getCardPicPath();
+    }
+
     public int getPrice() {
         return cardTemplate.getPrice();
     }

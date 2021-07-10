@@ -21,7 +21,7 @@
                 <VBox alignment="CENTER" spacing="8">
                     <Button text="Single Duel"/>
                     <Button text="Match Duel"/>
-                    <Button text="2-Player Duel" onMouseClicked="#startTwoPlayerDuel"/>
+                    <Button text="2-Player Duel" onMouseClicked="#enterTwoPlayerDuel"/>
                 </VBox>
             </center>
             <bottom>

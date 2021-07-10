@@ -29,7 +29,7 @@
     </StackPane>
     <Text fx:id="errorMessage" fill="firebrick"/>
     <HBox prefWidth="450" maxWidth="450" spacing="50" alignment="CENTER">
-        <Button text="Back" onMouseClicked="#openDuelMenu"/>
+        <Button text="Back" onMouseClicked="#enterDuelMenu"/>
         <Button text="Start Duel" styleClass="button-green" onMouseClicked="#startDuel"/>
     </HBox>
 </VBox>

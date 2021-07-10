@@ -1,15 +1,20 @@
 package view;
 
 import controller.DuelController;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import model.cardtemplate.CardTemplate;
+import model.game.GameMat;
+import model.game.Location;
 import model.game.card.Card;
 
 import java.io.IOException;
@@ -19,8 +24,7 @@ public class DuelView extends View {
 
     private static final Image UNKNOWN_CARD = new Image(View.class.getResource("/cards/Unknown.jpg").toExternalForm());
 
-
-    private DuelController controller;
+    private final DuelController controller;
 
     @FXML
     private HBox root;
@@ -30,8 +34,8 @@ public class DuelView extends View {
     private Text description;
 
     // TODO public modifier for accessing from another stage
-    public GridPane phaseButtonPane;
     public Pane fieldPane;
+    public GridPane phaseButtonPane;
     public GridPane defenderHand;
     public GridPane defenderSpellZone;
     public GridPane defenderMonsterZone;
@@ -54,25 +58,35 @@ public class DuelView extends View {
     public Text defenderDeckCount;
     public ImageView attackerDeck;
     public Text attackerDeckCount;
+    public Button pauseButton;
+
+    public DuelView(DuelController controller) {
+        this.controller = controller;
+    }
 
     public void initialize() {
-        for (int i = 0; i < 6; i++) {
-            defenderHand.add(createCardInHandImage(null, true), i, 0);
-            attackerHand.add(createCardInHandImage(null, true), i, 0);
-        }
-        for (int i = 0; i < 5; i++) {
-            defenderSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
-            attackerSpellZone.add(createCardInSpellZoneImage(null, true, true), i, 0);
-        }
-        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 0, 0);
-        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), 1, 0);
-        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 2, 0);
-        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), 3, 0);
-        defenderMonsterZone.add(createCardInMonsterZoneImage(null, true, true, true), 4, 0);
-        for (int i = 0; i < 5; i++) {
-            attackerMonsterZone.add(createCardInMonsterZoneImage(null, true, true, false), i, 0);
 
+        int culomn = 0;
+        GameMat attackerMat = controller.getField().getAttackerMat();
+        for (Card card : attackerMat.getCardList(Location.HAND)) {
+            attackerHand.add(createCardInHandImage(card, false), culomn++, 0);
+            attackerDeckCount.setText(String.valueOf(attackerMat.getCardCount(Location.DECK)));
         }
+        culomn = 0;
+        GameMat defenderMat = controller.getField().getDefenderMat();
+        for (Card card : defenderMat.getCardList(Location.HAND)) {
+            defenderHand.add(createCardInHandImage(card, true), culomn++, 0);
+            defenderDeckCount.setText(String.valueOf(defenderMat.getCardCount(Location.DECK)));
+        }
+        controller.getField().switchMats();
+
+        pauseButton.setOnMouseClicked(event -> {
+            try {
+                enterDuelMenu();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        });
     }
 
 
@@ -109,7 +123,7 @@ public class DuelView extends View {
         enterNewMenu("/fxml/duelmenu.fxml", root);
     }
 
-    public ImageView createCardImage(CardTemplate card, int width, boolean hide) {
+    public ImageView createCardImage(Card card, int width, boolean hide) {
         ImageView cardImage;
         if (hide)
             cardImage = new ImageView(UNKNOWN_CARD);
@@ -139,7 +153,7 @@ public class DuelView extends View {
         return cardImage;
     }
 
-    public ImageView createCardInHandImage(CardTemplate card, boolean opponent) {
+    public ImageView createCardInHandImage(Card card, boolean opponent) {
         ImageView cardImage = createCardImage(card, 95, opponent);
 
         if (opponent)
@@ -148,6 +162,7 @@ public class DuelView extends View {
         cardImage.setOnMouseClicked(mouseEvent -> {
             // TODO main idea of handling is a bit tricky
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                //controller.summon();
                 // TODO summon monster, activate spell, set trap
             } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 // TODO set monster, set spell
@@ -157,7 +172,7 @@ public class DuelView extends View {
         return cardImage;
     }
 
-    public ImageView createCardInSpellZoneImage(CardTemplate card, boolean opponent, boolean hide) {
+    public ImageView createCardInSpellZoneImage(Card card, boolean opponent, boolean hide) {
         ImageView cardImage = createCardImage(card, 55, hide);
 
         if (opponent)
@@ -170,7 +185,7 @@ public class DuelView extends View {
         return cardImage;
     }
 
-    public ImageView createCardInMonsterZoneImage(CardTemplate card, boolean opponent, boolean hide, boolean horizontal) {
+    public ImageView createCardInMonsterZoneImage(Card card, boolean opponent, boolean hide, boolean horizontal) {
         ImageView cardImage = createCardImage(card, 55, hide);
 
         if (opponent)

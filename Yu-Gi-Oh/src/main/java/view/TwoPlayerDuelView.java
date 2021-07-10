@@ -4,15 +4,21 @@ import controller.DuelController;
 import controller.MainMenuController;
 import exception.GameErrorException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class TwoPlayerDuelView extends View {
 
@@ -37,7 +43,7 @@ public class TwoPlayerDuelView extends View {
         threeRoundsButton.setToggleGroup(roundCountToggleGroup);
     }
 
-    public void openDuelMenu() throws IOException {
+    public void enterDuelMenu() throws IOException {
         enterNewMenu("/fxml/duelmenu.fxml", root);
     }
 
@@ -47,9 +53,34 @@ public class TwoPlayerDuelView extends View {
             RadioButton selectedRoundCountButton = (RadioButton) roundCountToggleGroup.getSelectedToggle();
             int roundCount = Integer.parseInt(selectedRoundCountButton.getText());
             duelController = controller.startPlayerDuel(secondPlayerUsernameField.getText(), roundCount);
-        } catch (GameErrorException exception) {
+
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
+                    (getClass().getResource("/fxml/duel.fxml")));
+            loader.setController(new DuelView(duelController));
+            Parent newRoot = loader.load();
+            root.getScene().setRoot(newRoot);
+
+            loader = new FXMLLoader(Objects.requireNonNull
+                    (getClass().getResource("/fxml/duel.fxml")));
+            loader.setController(new DuelView(duelController));
+            newRoot = loader.load();
+            setUpStage(newRoot);
+        } catch (GameErrorException | IOException exception) {
             errorMessage.setText(exception.getMessage());
         }
+    }
+
+    private void setUpStage(Parent root) {
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Yu-Gi-Oh!");
+        stage.setWidth(800);
+        stage.setHeight(600);
+        stage.setResizable(false);
+
+        stage.getIcons().add(new Image(getClass().getResource("/image/icon.png").toExternalForm()));
+        stage.show();
     }
 
     @FXML

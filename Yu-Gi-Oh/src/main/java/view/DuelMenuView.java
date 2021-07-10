@@ -15,7 +15,7 @@ public class DuelMenuView extends View{
         enterNewMenu("/fxml/mainmenu.fxml", root);
     }
 
-    public void startTwoPlayerDuel() throws IOException {
+    public void enterTwoPlayerDuel() throws IOException {
         enterNewMenu("/fxml/twoplayerduel.fxml", root);
     }
 }

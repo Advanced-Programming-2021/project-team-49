@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox fx:id="root" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="5" stylesheets="@../css/duel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DuelView">
+<HBox fx:id="root" alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="5" stylesheets="@../css/duel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox alignment="CENTER" prefHeight="600.0" prefWidth="228.0" spacing="5">
 
@@ -23,31 +23,31 @@
             <Text text="avatar nickname hp hpbar" />
         </VBox>
         <!-- Button For Testing -->
-        <Button alignment="CENTER" onMouseClicked="#enterDuelMenu" text="Pause Button and popup" />
+        <Button fx:id="pauseButton" alignment="CENTER" text="Pause Button and popup" />
     </VBox>
 
     <Pane fx:id="fieldPane" prefHeight="600.0" prefWidth="570.0" styleClass="field">
 
-        <ImageView fx:id="defenderFieldZone" fitWidth="55.0" layoutX="503.0" layoutY="180.0" preserveRatio="true"/>
+        <ImageView fx:id="defenderFieldZone" fitWidth="55.0" layoutX="503.0" layoutY="180.0" preserveRatio="true" />
 
-        <ImageView fx:id="defenderGraveyard" fitWidth="55.0" layoutX="32.0" layoutY="180.0" preserveRatio="true"/>
+        <ImageView fx:id="defenderGraveyard" fitWidth="55.0" layoutX="32.0" layoutY="180.0" preserveRatio="true" />
 
         <VBox alignment="CENTER" layoutX="503.0" layoutY="395.0">
             <ImageView fx:id="defenderDeck" fitWidth="55.0" preserveRatio="true">
                 <Image url="@../cards/Unknown.jpg" />
             </ImageView>
-            <Text fx:id="defenderDeckCount" text="40" styleClass="deck-count"/>
+            <Text fx:id="defenderDeckCount" styleClass="deck-count" text="40" />
         </VBox>
 
-        <ImageView fx:id="attackerFieldZone" fitWidth="55.0" layoutX="32.0" layoutY="298.0" preserveRatio="true"/>
+        <ImageView fx:id="attackerFieldZone" fitWidth="55.0" layoutX="32.0" layoutY="298.0" preserveRatio="true" />
 
-        <ImageView fx:id="attackerGraveyard" fitWidth="55.0" layoutX="503.0" layoutY="298.0" preserveRatio="true"/>
+        <ImageView fx:id="attackerGraveyard" fitWidth="55.0" layoutX="503.0" layoutY="298.0" preserveRatio="true" />
 
         <VBox alignment="CENTER" layoutX="32.0" layoutY="75.0">
             <ImageView fx:id="attackerDeck" fitWidth="55.0" preserveRatio="true">
                 <Image url="@../cards/Unknown.jpg" />
             </ImageView>
-            <Text fx:id="attackerDeckCount" text="40" styleClass="deck-count"/>
+            <Text fx:id="attackerDeckCount" styleClass="deck-count" text="40" />
         </VBox>
 
 
@@ -70,10 +70,21 @@
             <ImageView fx:id="endButton" fitWidth="30.0" preserveRatio="true" GridPane.rowIndex="5">
                 <Image url="@../image/phasebuttons/blue/end.jpg" />
             </ImageView>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
 
-        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefHeight="138.0" />
-        <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefHeight="138.0" />
+        <GridPane fx:id="defenderHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="-80.0" prefWidth="520.0"/>
+        <GridPane fx:id="attackerHand" alignment="CENTER" hgap="-12" layoutX="33.0" layoutY="510.0" prefWidth="520.0"/>
 
         <GridPane fx:id="defenderSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="75.0" prefHeight="95.0" />
         <GridPane fx:id="attackerSpellZone" alignment="CENTER" hgap="23" layoutX="107.0" layoutY="395.0" prefHeight="95.0" />
