@@ -14,14 +14,16 @@ import java.util.Objects;
 
 public class Main extends Application {
 
+    public static MediaPlayer mediaPlayer;
+
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
     public void start(Stage stage) throws IOException {
-        Media media = new Media(Objects.requireNonNull(getClass().getResource("/audio/Despacito.mp3")).toExternalForm());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        Media media = new Media(Objects.requireNonNull
+                (getClass().getResource("/audio/Despacito.mp3")).toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
         setUpScene(stage);
         setUpStage(stage);
