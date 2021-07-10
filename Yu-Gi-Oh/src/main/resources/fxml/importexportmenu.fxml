@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../css/menu.css"
+            fx:controller="view.ImportExportMenuView"
+            prefHeight="600.0" prefWidth="800.0" fx:id="root">
+            <top>
+                <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
+                    <Text text="ImportExport menu" styleClass="title" textAlignment="CENTER"/>
+                </HBox>
+            </top>
+            <center>
+                <VBox alignment="CENTER" spacing="8">
+                    <Button text="Import cards" styleClass="button"/>
+                    <Button text="Export cards" styleClass="button"/>
+                </VBox>
+            </center>
+            <bottom>
+                <HBox alignment="TOP_CENTER">
+                    <Button text="Back" onMouseClicked="#backToMainMenu" styleClass="button" alignment="TOP_CENTER"/>
+                </HBox>
+            </bottom>
+</BorderPane>

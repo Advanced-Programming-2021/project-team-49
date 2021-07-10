@@ -4,17 +4,11 @@ import com.opencsv.exceptions.CsvValidationException;
 import exception.GameErrorException;
 import model.cardtemplate.CardTemplate;
 import model.cardtemplate.MonsterCard;
-import model.database.Database;
-import model.user.User;
-import view.ImportExportView;
 
 import java.io.IOException;
 
 public class ImportExportController extends Controller {
 
-    public void run() {
-        new ImportExportView(this).run();
-    }
 
     public void importCard(String cardPath) {
         try {

@@ -24,7 +24,7 @@ public class Main extends Application {
         Media media = new Media(Objects.requireNonNull
                 (getClass().getResource("/audio/Despacito.mp3")).toExternalForm());
         mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+        //mediaPlayer.play();
         setUpScene(stage);
         setUpStage(stage);
     }
