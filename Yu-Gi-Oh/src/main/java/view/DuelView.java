@@ -10,6 +10,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -33,6 +35,7 @@ import model.game.card.SpellTrap;
 import view.popup.DialogPopUp;
 import view.popup.SelectCardPopUp;
 import view.popup.SelectOptionPopUp;
+import view.popup.YesNoPopUp;
 
 import java.io.IOException;
 import java.util.List;
@@ -132,8 +135,24 @@ public class DuelView extends View {
             // TODO show card
         });
 
-        attackerDeck.setOnMouseClicked(event -> {
-            // TODO surrender
+        attackerDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                new YesNoPopUp(root, "Do you want to surrender?",
+                        () -> {
+                    try{
+                        new DialogPopUp(root, "Match ended! You lost.").initialize();
+                        controller.surrender();
+                    } catch (EndOfMatchException exception) {
+                        try {
+                            enterNewMenu("/fxml/mainmenu.fxml", root);
+                            secondStage.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).initialize();
+            }
         });
 
         pauseButton.setOnMouseClicked(event -> {
