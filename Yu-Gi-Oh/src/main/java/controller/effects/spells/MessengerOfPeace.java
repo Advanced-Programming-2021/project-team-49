@@ -8,6 +8,9 @@ import model.game.Field;
 import model.game.card.Card;
 import view.DuelView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MessengerOfPeace extends EffectHandler {
 
     public MessengerOfPeace(int speed, Card card, Field field, DuelController controller) {
@@ -30,15 +33,20 @@ public class MessengerOfPeace extends EffectHandler {
         if (event != Event.STANDBY_PHASE)
             return;
 
-        int selected;
-        do {
-            selected = DuelView.selectAnOption(new String[]
-                    {"Pay 100 LP to keep the card",
-                    "Destroy the card"});
 
-        } while (selected == 0 || selected == -1);
+        final String[] selected = new String[1];
+        List<String> options = new ArrayList<>();
+        options.add("Pay 100 LP to keep the card");
+        options.add("Destroy the card");
+        field.getAttackerMat().getDuelView().selectAnOption(
+                "Select:", options, selectedOption -> {
+                    for (String option : options) {
+                        if (selectedOption.equals(option))
+                            selected[0] = option;
+                    }
+                });
 
-        if (selected == 1)
+        if (selected[0].startsWith("Pay"))
             field.getAttackerMat().getPlayer().removeLifePoints(100);
         else {
             field.getDefenderMat().removeLimit(Limit.MONSTERS_WITH_1500_ATK_OR_MORE_CANT_ATTACK);

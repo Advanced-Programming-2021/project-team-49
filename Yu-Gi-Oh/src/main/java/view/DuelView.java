@@ -35,10 +35,14 @@ import model.game.card.Card;
 import model.game.card.Monster;
 import model.game.card.SpellTrap;
 import view.popup.DialogPopUp;
+import view.popup.SelectCardPopUp;
+import view.popup.SelectOptionPopUp;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class DuelView extends View {
 
@@ -203,7 +207,7 @@ public class DuelView extends View {
         } catch (EndOfMatchException endOfMatch) {
             // TODO close the second player stage and change root to mainmenu
         } catch (EndOfRoundException endOfRound) {
-            // TODO open deck view on active deck for both players and on the button resume do next round
+            // TODO open deck view on active deck for both players and on the button click resume do next round
         }
         controller.changePhase(1);
         controller.changePhase(2);
@@ -213,7 +217,12 @@ public class DuelView extends View {
         isOpponentTurn = opponentTurn;
     }
 
-    public static void showCardInfoStringView(Card card) {
+    public void selectCardFromList(String sentence, int selectCount, List<Card> cards, Consumer<List<Card>> consumer) {
+        new SelectCardPopUp(root, sentence, selectCount, cards, consumer).initialize();
+    }
+
+    public void selectAnOption(String sentence, List<String> options, Consumer<String> consumer) {
+        new SelectOptionPopUp(root, sentence, options, consumer).initialize();
     }
 
     public static void showCardListStringView(List<Card> list) {
@@ -226,10 +235,6 @@ public class DuelView extends View {
     }
 
     public static int selectNumber(int begin, int end) {
-        return 0;
-    }
-
-    public static int selectAnOption(String[] options) {
         return 0;
     }
 
@@ -261,7 +266,7 @@ public class DuelView extends View {
                 new SimpleIntegerProperty(selfMat.getPlayer().getLifePoints()).asString());
     }
 
-    public Animation getSlideCardAnimation(ImageView cardImage, int moveOffset) {
+    public static Animation getSlideCardAnimation(ImageView cardImage, int moveOffset) {
         TranslateTransition slideAnimation = new TranslateTransition();
         slideAnimation.setNode(cardImage);
         slideAnimation.setToY(moveOffset);
@@ -395,6 +400,8 @@ public class DuelView extends View {
 
                             opponentMat.getDuelView().defenderSpellZone.getChildren().remove(cardInOpponentField);
                             opponentMat.getDuelView().defenderGraveyard.setImage(new Image(card.getCardPicPath()));
+
+                            refreshSpellZoneAfterRemove(columnIndex);
                         }
                     } else {
                         controller.setSpellOrTrap();
@@ -476,6 +483,38 @@ public class DuelView extends View {
             opponentMat.getDuelView().defenderHand.getChildren().remove(node);
 
             opponentMat.getDuelView().defenderHand.add(node, columnCounter++, 0);
+        }
+    }
+
+    public void refreshSpellZoneAfterRemove(int columnIndex) {
+        int columnCounter = columnIndex;
+        int columnCount = attackerSpellZone.getColumnCount();
+        for (int i = 0; i < columnCount - columnIndex - 1; i++) {
+            Node node = attackerSpellZone.getChildren().get(columnIndex);
+            attackerSpellZone.getChildren().remove(node);
+
+            attackerSpellZone.add(node, columnCounter, 0);
+
+            node = opponentMat.getDuelView().defenderSpellZone.getChildren().get(columnIndex);
+            opponentMat.getDuelView().defenderSpellZone.getChildren().remove(node);
+
+            opponentMat.getDuelView().defenderSpellZone.add(node, columnCounter++, 0);
+        }
+    }
+
+    public void refreshMonsterZoneAfterRemove(int columnIndex) {
+        int columnCounter = columnIndex;
+        int columnCount = attackerMonsterZone.getColumnCount();
+        for (int i = 0; i < columnCount - columnIndex - 1; i++) {
+            Node node = attackerMonsterZone.getChildren().get(columnIndex);
+            attackerMonsterZone.getChildren().remove(node);
+
+            attackerMonsterZone.add(node, columnCounter, 0);
+
+            node = opponentMat.getDuelView().defenderMonsterZone.getChildren().get(columnIndex);
+            opponentMat.getDuelView().defenderMonsterZone.getChildren().remove(node);
+
+            opponentMat.getDuelView().defenderMonsterZone.add(node, columnCounter++, 0);
         }
     }
 }

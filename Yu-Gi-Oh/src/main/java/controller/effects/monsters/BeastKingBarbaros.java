@@ -10,6 +10,7 @@ import model.game.card.Card;
 import model.game.card.Monster;
 import view.DuelView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BeastKingBarbaros extends EffectHandler {
@@ -31,14 +32,20 @@ public class BeastKingBarbaros extends EffectHandler {
 
     @Override
     public void action() {
-        int selected;
-        do {
-            selected = DuelView.selectAnOption(new String[]
-                    {"Normal summon/set without tributing (original ATK becomes 1900)",
-                            "Tribute 3 monsters to tribute summon (all opponent monsters will be destroyed)"});
-        } while (selected == 0 || selected == -1);
 
-        if (selected == 1) {
+        final String[] selected = new String[1];
+        List<String> options = new ArrayList<>();
+        options.add("Normal summon/set without tributing (original ATK becomes 1900)");
+        options.add("Tribute 3 monsters to tribute summon (all opponent monsters will be destroyed)");
+        field.getAttackerMat().getDuelView().selectAnOption(
+                "Select:", options, selectedOption -> {
+                    for (String option : options) {
+                        if (selectedOption.equals(option))
+                            selected[0] = option;
+                    }
+                });
+
+        if (selected[0].startsWith("Normal")) {
             specialSummoned = false;
             ((Monster) card).decreaseAttack(1100);
             return;

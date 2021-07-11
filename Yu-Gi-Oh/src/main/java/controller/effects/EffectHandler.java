@@ -82,12 +82,20 @@ public abstract class EffectHandler {
 
     public boolean askForActivation() {
         DuelView.askForActivationHeader(card.getName(), field.getDefenderMat().getPlayer().getUser().getNickname());
-        int selected;
-        do {
-            selected = DuelView.selectAnOption(new String[]{"Activate", "Don't Activate"});
-        } while (selected == -1);
 
-        return selected == 1;
+        final String[] selected = new String[1];
+        List<String> options = new ArrayList<>();
+        options.add("Activate");
+        options.add("Don't Activate");
+        field.getAttackerMat().getDuelView().selectAnOption(
+                "Select:", options, selectedOption -> {
+                    for (String option : options) {
+                        if (selectedOption.equals(option))
+                            selected[0] = option;
+                    }
+                });
+
+        return selected[0].equals("Activate");
     }
 
     public boolean canBeActivated(Event event) {

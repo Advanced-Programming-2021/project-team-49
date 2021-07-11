@@ -18,6 +18,7 @@ import view.DuelView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DuelController extends Controller {
 
@@ -372,20 +373,20 @@ public class DuelController extends Controller {
         }
 
         List<Card> nominatedCardsToTribute = new ArrayList<>();
-        int selected;
-        int sumOfLevels = 0;
         int ritualCardLevel = ((Monster) getSelectedCard()).getLevel();
-        do {
-            DuelView.showCardListStringView(monsterCards);
-            do {
-                selected = DuelView.selectNumber(1, monsterCards.size());
-                if (selected == 0)
-                    throw new GameErrorException("cancelled");
-            } while (selected == -1);
-            sumOfLevels += ((Monster) monsterCards.get(selected - 1)).getLevel();
-            nominatedCardsToTribute.add(monsterCards.get(selected - 1));
-            monsterCards.remove(selected - 1);
-        } while (sumOfLevels < ritualCardLevel);
+            field.getAttackerMat().getDuelView().selectCardFromList(
+                    "Select cards with sum of levels equal to " + ritualCardLevel, 10,
+                    monsterCards, cards -> {
+                        int sumOfLevels = 0;
+                        for (Card card : cards)
+                            sumOfLevels += ((Monster) card).getLevel();
+
+                        if (sumOfLevels < ritualCardLevel)
+                            throw new GameErrorException("Sum of levels don't match with ritual card");
+
+                        nominatedCardsToTribute.addAll(cards);
+                    }
+            );
 
         for (Card card : nominatedCardsToTribute) {
             field.getAttackerMat().addCard(card, Location.GRAVEYARD);
@@ -395,15 +396,21 @@ public class DuelController extends Controller {
                 field.getAttackerMat().moveCard(Location.HAND, card, Location.GRAVEYARD);
         }
 
-        do {
-            selected = DuelView.selectAnOption(new String[]{"Attacking", "Defensive"});
-            if (selected == 0)
-                throw new GameErrorException("cancelled");
-        } while (selected == -1);
+        final String[] selected = new String[1];
+        List<String> options = new ArrayList<>();
+        options.add("Attacking");
+        options.add("Defensive");
+        field.getAttackerMat().getDuelView().selectAnOption(
+                "Select card position:", options, selectedOption -> {
+                    for (String option : options) {
+                        if (selectedOption.equals(option))
+                            selected[0] = option;
+                    }
+                });
 
         field.getAttackerMat().moveCard(Location.HAND, selectedCardPosition, Location.MONSTER_ZONE);
         getSelectedCard().setFaceUp();
-        ((Monster) getSelectedCard()).setAttacker(selected == 1);
+        ((Monster) getSelectedCard()).setAttacker(selected[0].equals("Attacking"));
 
         selectedCardLocation = Location.MONSTER_ZONE;
         selectedCardPosition = getCardCount(Location.MONSTER_ZONE);
@@ -606,16 +613,6 @@ public class DuelController extends Controller {
             throw new GameErrorException("graveyard is empty");
         else
             DuelView.showCardListStringView(graveyard);
-    }
-
-    public void showSelectedCard() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-        else if (isOpponentCardSelected && !card.isFaceUp())
-            throw new GameErrorException("card is not visible");
-
-        DuelView.showCardInfoStringView(card);
     }
 
     public void checkAttackConditions() {
