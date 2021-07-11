@@ -617,22 +617,22 @@ public class DuelController extends Controller {
 
     public void checkAttackConditions() {
         if (getSelectedCard() == null)
-            throw new GameErrorException("no card is selected yet");
+            throw new GameErrorException("No card is selected yet");
         else if (isOpponentCardSelected || selectedCardLocation != Location.MONSTER_ZONE)
-            throw new GameErrorException("you can't attack with this card");
+            throw new GameErrorException("You can't attack with this card");
         else if (phase != 3)
-            throw new GameErrorException("you can't do this action in this phase");
+            throw new GameErrorException("You can't do this action in this phase");
         else if (((Monster) getSelectedCard()).isUsedInAttack())
-            throw new GameErrorException("this card already attacked");
+            throw new GameErrorException("This card already attacked");
         else if (field.getAttackerMat().hasLimit(Limit.ALL_MONSTERS_CANT_ATTACK))
-            throw new GameErrorException("you can't attack because of an effect");
+            throw new GameErrorException("You can't attack because of an effect");
     }
 
     public void directAttack() {
         checkAttackConditions();
 
         if (field.getDefenderMat().getCardCount(Location.MONSTER_ZONE) > 0)
-            throw new GameErrorException("you can't attack the opponent directly");
+            throw new GameErrorException("You can't attack the opponent directly");
         else {
             int damage = ((Monster) getSelectedCard()).getTotalAttack();
             ((Monster) getSelectedCard()).setUsedInAttack(true);
@@ -727,7 +727,7 @@ public class DuelController extends Controller {
         }
 
         if (!target.isAttacker() && !target.isFaceUp()) {
-            DuelView.showAttackOutcome(target.getName(), damage);
+            field.getAttackerMat().getDuelView().showAttackOutcomeToAttacker(damage, targetPosition);
             target.setFaceUp();
         } else
             DuelView.showAttackOutcome(!target.isAttacker(), damage);

@@ -7,10 +7,9 @@ import exception.EndPhaseException;
 import exception.GameErrorException;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.EventHandler;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -19,11 +18,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.cardtemplate.CardTemplate;
@@ -95,6 +91,8 @@ public class DuelView extends View {
     public ImageView attackerDeck;
     public Text attackerDeckCount;
     public Button pauseButton;
+
+    public ImageView selectedAttackingCardImageView;
 
     public DuelView(DuelController controller) {
         this.controller = controller;
@@ -284,7 +282,8 @@ public class DuelView extends View {
         cardImage.setCursor(Cursor.HAND);
 
         cardImage.setOnMouseEntered(mouseEvent -> {
-            cardImage.setEffect(new DropShadow());
+            if (!cardImage.equals(selectedAttackingCardImageView))
+                cardImage.setEffect(new DropShadow());
 
             if (opponent) {
                 image.setImage(UNKNOWN_CARD);
@@ -297,7 +296,10 @@ public class DuelView extends View {
             mouseEvent.consume();
         });
 
-        cardImage.setOnMouseExited(mouseEvent -> cardImage.setEffect(null));
+        cardImage.setOnMouseExited(mouseEvent -> {
+            if (!cardImage.equals(selectedAttackingCardImageView))
+                cardImage.setEffect(null);
+        });
 
         return cardImage;
     }
@@ -364,7 +366,7 @@ public class DuelView extends View {
                             opponentMat.getDuelView().defenderMonsterZone.add(
                                     createCardInMonsterZoneImage(card, true, false, false),
                                     selfMat.getCardCount(Location.MONSTER_ZONE) - 1, 0);
-                        } else {
+                        } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                             controller.setMonster();
                             attackerMonsterZone.add(
                                     createCardInMonsterZoneImage(card, false, true, true),
@@ -448,10 +450,34 @@ public class DuelView extends View {
             cardImage.setRotate(90.0);
 
         cardImage.setOnMouseClicked(mouseEvent -> {
+            int columnIndex = GridPane.getColumnIndex(cardImage);
+            if (opponent) {
+                try {
+                    controller.attack(columnIndex + 1);
+                } catch (GameErrorException exception) {
+                    new DialogPopUp(root, exception.getMessage()).initialize();
+                } catch (EndOfMatchException exception) {
+                    // TODO: end match
+                } catch (EndOfRoundException exception) {
+                    // TODO: end round
+                }
+            } else {
+                if (selectedAttackingCardImageView != null)
+                    selectedAttackingCardImageView.setEffect(null);
+                selectedAttackingCardImageView = cardImage;
+                selectedAttackingCardImageView.setEffect(new DropShadow(20, Color.RED));
 
+                controller.selectCard(Location.MONSTER_ZONE, columnIndex + 1, false);
+            }
+
+            mouseEvent.consume();
         });
 
         return cardImage;
+    }
+
+    public void showAttackOutcomeToAttacker(int damage, int targetPosition) {
+
     }
 
     public ImageView createCardInGraveyardImage(Card card, boolean opponent) {
