@@ -309,6 +309,11 @@ public class DuelView extends View {
 
             Animation slideUpAnimation = getSlideCardAnimation(cardImage, 80);
             cardImage.setOnMouseEntered(mouseEvent -> {
+
+
+                image.setImage(UNKNOWN_CARD);
+                description.setText("");
+
                 slideDownAnimation.stop();
                 slideUpAnimation.play();
                 mouseEvent.consume();
@@ -318,12 +323,15 @@ public class DuelView extends View {
                 slideDownAnimation.play();
                 mouseEvent.consume();
             });
-        }
-        if (!opponent) {
+        } else {
             Animation slideUpAnimation = getSlideCardAnimation(cardImage, -80);
             cardImage.setOnMouseEntered(mouseEvent -> {
                 slideDownAnimation.stop();
                 slideUpAnimation.play();
+
+                image.setImage(new Image(card.getCardPicPath()));
+                description.setText(card.getDescription());
+
                 mouseEvent.consume();
             });
             cardImage.setOnMouseExited(mouseEvent -> {
