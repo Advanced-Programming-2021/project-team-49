@@ -57,7 +57,7 @@ public class TwoPlayerDuelView extends View {
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            DuelView fistPlayerDuelView = new DuelView(duelController);
+            DuelView fistPlayerDuelView = new DuelView(duelController, true);
             loader.setController(fistPlayerDuelView);
             Parent newRoot = loader.load();
             fistPlayerDuelView.setOpponentTurn(false);
@@ -65,7 +65,7 @@ public class TwoPlayerDuelView extends View {
 
             loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            DuelView secondPlayerDuelView = new DuelView(duelController);
+            DuelView secondPlayerDuelView = new DuelView(duelController, false);
             loader.setController(secondPlayerDuelView);
             newRoot = loader.load();
             secondPlayerDuelView.setOpponentTurn(true);
