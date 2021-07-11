@@ -309,7 +309,8 @@ public class DuelView extends View {
 
             Animation slideUpAnimation = getSlideCardAnimation(cardImage, 80);
             cardImage.setOnMouseEntered(mouseEvent -> {
-
+                cardImage.getParent().toFront();
+                cardImage.toFront();
 
                 image.setImage(UNKNOWN_CARD);
                 description.setText("");
@@ -326,6 +327,9 @@ public class DuelView extends View {
         } else {
             Animation slideUpAnimation = getSlideCardAnimation(cardImage, -80);
             cardImage.setOnMouseEntered(mouseEvent -> {
+                cardImage.getParent().toFront();
+                cardImage.toFront();
+
                 slideDownAnimation.stop();
                 slideUpAnimation.play();
 
