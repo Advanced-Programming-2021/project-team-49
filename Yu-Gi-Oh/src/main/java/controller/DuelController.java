@@ -119,8 +119,6 @@ public class DuelController extends Controller {
     }
 
     public void deselectCard() {
-        if (getSelectedCard() == null)
-            throw new GameErrorException("no card is selected yet");
         selectedCardLocation = null;
     }
 
@@ -324,6 +322,7 @@ public class DuelController extends Controller {
                 throw new GameErrorException("you can't activate Field Spell because of an effect");
         else
             callSelectedCardEffect();
+
         card.setFaceUp();
         field.getAttackerMat().notifyAllEffects(Event.A_SPELL_ACTIVATED);
     }
@@ -499,9 +498,12 @@ public class DuelController extends Controller {
         callSelectedCardEffect();
     }
 
-    public void summon(Card card) {
+    public void summon() {
+        Card card = getSelectedCard();
 
-        if (phase != 2 && phase != 4)
+        if (!(card instanceof Monster))
+            throw new GameErrorException("you can't summon this card" + card.getName());
+        else if (phase != 2 && phase != 4)
             throw new GameErrorException("action not allowed in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
             throw new GameErrorException("monster card zone is full");
@@ -576,11 +578,11 @@ public class DuelController extends Controller {
         Card card = getSelectedCard();
         if (card == null)
             throw new GameErrorException("no card is selected yet");
-        else if (selectedCardLocation != Location.HAND)
+        else if (selectedCardLocation != Location.HAND || card instanceof Monster)
             throw new GameErrorException("you can't set this card");
         else if (phase != 2 && phase != 4)
             throw new GameErrorException("you can't do this action in this phase");
-        else if (card instanceof SpellTrap && ((SpellTrap) card).getEffectType() == EffectType.FIELD)
+        else if (((SpellTrap) card).getEffectType() == EffectType.FIELD)
             throw new GameErrorException("you can't set Field Spell");
         else if (field.getAttackerMat().getCardCount(Location.SPELL_AND_TRAP_ZONE) == 5)
             throw new GameErrorException("spell card zone is full");
@@ -589,7 +591,8 @@ public class DuelController extends Controller {
         selectedCardLocation = Location.SPELL_AND_TRAP_ZONE;
         selectedCardPosition = getCardCount(Location.SPELL_AND_TRAP_ZONE);
 
-        callSelectedCardEffect();
+        if (((SpellTrap) card).getType() == SpellTrapType.TRAP)
+            callSelectedCardEffect();
     }
 
     public void showGraveyard(boolean opponent) {

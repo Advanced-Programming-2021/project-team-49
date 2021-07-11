@@ -60,6 +60,9 @@ public class GameMat {
     }
 
     public Card getCard(Location location, int position) {
+        if (location == Location.FIELD_ZONE)
+            return fieldZoneCard;
+
         List<Card> cardList = locationMap.get(location);
         return cardList.get(position - 1);
     }

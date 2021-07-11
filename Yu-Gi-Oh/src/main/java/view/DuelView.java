@@ -6,6 +6,7 @@ import exception.EndOfRoundException;
 import exception.EndPhaseException;
 import exception.GameErrorException;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -14,9 +15,11 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import model.cardtemplate.CardTemplate;
+import model.cardtemplate.EffectType;
 import model.cardtemplate.SpellTrapType;
 import model.game.GameMat;
 import model.game.Location;
@@ -102,6 +105,26 @@ public class DuelView extends View {
         }
         setPlayerData();
         controller.getField().switchMats();
+
+        attackerGraveyard.setOnMouseClicked(event -> {
+            // TODO show graveyard popup
+        });
+
+        defenderGraveyard.setOnMouseClicked(event -> {
+            // TODO show graveyard popup
+        });
+
+        attackerFieldZone.setOnMouseClicked(event -> {
+            // TODO show card
+        });
+
+        defenderFieldZone.setOnMouseClicked(event -> {
+            // TODO show card
+        });
+
+        attackerDeck.setOnMouseClicked(event -> {
+            // TODO surrender
+        });
 
         pauseButton.setOnMouseClicked(event -> {
             try {
@@ -230,7 +253,7 @@ public class DuelView extends View {
                 new SimpleIntegerProperty(selfMat.getPlayer().getLifePoints()).asString());
     }
 
-    public ImageView createCardImage(Card card, int width, boolean hide) {
+    public ImageView createCardImage(Card card, int width, boolean opponent, boolean hide) {
         ImageView cardImage;
         if (hide)
             cardImage = new ImageView(UNKNOWN_CARD);
@@ -244,11 +267,11 @@ public class DuelView extends View {
         cardImage.setOnMouseEntered(mouseEvent -> {
             cardImage.setEffect(new DropShadow());
 
-            if (hide) {
+            if (opponent) {
                 image.setImage(UNKNOWN_CARD);
                 description.setText("");
             } else {
-                image.setImage(cardImage.getImage());
+                image.setImage(new Image(card.getCardPicPath()));
                 description.setText(card.getDescription());
             }
 
@@ -261,7 +284,7 @@ public class DuelView extends View {
     }
 
     public ImageView createCardInHandImage(Card card, boolean opponent) {
-        ImageView cardImage = createCardImage(card, 95, opponent);
+        ImageView cardImage = createCardImage(card, 95, opponent, opponent);
 
         if (opponent)
             cardImage.setRotate(180.0);
@@ -271,28 +294,74 @@ public class DuelView extends View {
                 if (isOpponentTurn)
                     return;
 
-                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                    try {
-                        if (card instanceof Monster)
-                            controller.summon(card);
-                        else if (((SpellTrap) card).getType() == SpellTrapType.SPELL)
+                int columnIndex = GridPane.getColumnIndex(cardImage);
+
+                controller.selectCard(Location.HAND, columnIndex + 1, false);
+
+                try {
+                    if (card instanceof Monster) {
+                        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                            controller.summon();
+                            attackerMonsterZone.add(
+                                    createCardInMonsterZoneImage(card, false, false, false),
+                                    selfMat.getCardCount(Location.MONSTER_ZONE) - 1, 0);
+                            opponentMat.getDuelView().defenderMonsterZone.add(
+                                    createCardInMonsterZoneImage(card, true, false, false),
+                                    selfMat.getCardCount(Location.MONSTER_ZONE) - 1, 0);
+                        } else {
+                            controller.setMonster();
+                            attackerMonsterZone.add(
+                                    createCardInMonsterZoneImage(card, false, true, true),
+                                    selfMat.getCardCount(Location.MONSTER_ZONE) - 1, 0);
+                            opponentMat.getDuelView().defenderMonsterZone.add(
+                                    createCardInMonsterZoneImage(card, true, true, true),
+                                    selfMat.getCardCount(Location.MONSTER_ZONE) - 1, 0);
+                        }
+                    } else if (((SpellTrap) card).getType() == SpellTrapType.SPELL
+                            && mouseEvent.getButton() == MouseButton.PRIMARY) {
+                        if (((SpellTrap) card).getEffectType() == EffectType.FIELD) {
+                            attackerFieldZone.setImage(new Image(card.getCardPicPath()));
+                            opponentMat.getDuelView().defenderFieldZone.setImage(new Image(card.getCardPicPath()));
                             controller.activateSpell();
-                        else
+                        } else {
                             controller.setSpellOrTrap();
 
-                        attackerHand.getChildren().remove(cardImage);
-                        int columnIndex = GridPane.getColumnIndex(cardImage);
-                        opponentMat.getDuelView().defenderHand.getChildren().remove(columnIndex);
-                        refreshHandAfterRemove(columnIndex);
+                            ImageView cardInSelfField = createCardInSpellZoneImage(card, false, false);
+                            attackerSpellZone.add(cardInSelfField,
+                                    selfMat.getCardCount(Location.SPELL_AND_TRAP_ZONE) - 1, 0);
+
+                            ImageView cardInOpponentField = createCardInSpellZoneImage(card, true, false);
+                            opponentMat.getDuelView().defenderSpellZone.add(cardInOpponentField,
+                                    selfMat.getCardCount(Location.SPELL_AND_TRAP_ZONE) - 1, 0);
+
+                            controller.activateSpell();
+
+                            attackerSpellZone.getChildren().remove(cardInSelfField);
+                            attackerGraveyard.setImage(new Image(card.getCardPicPath()));
+
+                            opponentMat.getDuelView().defenderSpellZone.getChildren().remove(cardInOpponentField);
+                            opponentMat.getDuelView().defenderGraveyard.setImage(new Image(card.getCardPicPath()));
+                        }
+                    } else {
+                        controller.setSpellOrTrap();
+
+                        attackerSpellZone.add(
+                                createCardInSpellZoneImage(card, false, true),
+                                selfMat.getCardCount(Location.SPELL_AND_TRAP_ZONE) - 1, 0);
+
+                        opponentMat.getDuelView().defenderSpellZone.add(
+                                createCardInSpellZoneImage(card, true, true),
+                                selfMat.getCardCount(Location.SPELL_AND_TRAP_ZONE) - 1, 0);
+                    }
+
+                    attackerHand.getChildren().remove(columnIndex);
+                    opponentMat.getDuelView().defenderHand.getChildren().remove(columnIndex);
+                    refreshHandAfterRemove(columnIndex);
 
                     } catch (GameErrorException exception) {
                         new DialogPopUp(root, exception.getMessage()).initialize();
                     }
-
-                    // TODO summon monster, activate spell, set trap
-                } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                    // TODO set monster, set spell
-                }
+                controller.deselectCard();
             });
         }
 
@@ -300,7 +369,7 @@ public class DuelView extends View {
     }
 
     public ImageView createCardInSpellZoneImage(Card card, boolean opponent, boolean hide) {
-        ImageView cardImage = createCardImage(card, 55, hide);
+        ImageView cardImage = createCardImage(card, 55, opponent, hide);
 
         if (opponent)
             cardImage.setRotate(180.0);
@@ -313,7 +382,7 @@ public class DuelView extends View {
     }
 
     public ImageView createCardInMonsterZoneImage(Card card, boolean opponent, boolean hide, boolean horizontal) {
-        ImageView cardImage = createCardImage(card, 55, hide);
+        ImageView cardImage = createCardImage(card, 55, opponent, hide);
 
         if (opponent)
             cardImage.setRotate(180.0);
@@ -327,9 +396,23 @@ public class DuelView extends View {
         return cardImage;
     }
 
+    public ImageView createCardInGraveyardImage(Card card, boolean opponent) {
+        ImageView cardImage = createCardImage(card, 55, false, false);
+
+        if (opponent)
+            cardImage.setRotate(180.0);
+
+        cardImage.setOnMouseClicked(mouseEvent -> {
+
+        });
+
+        return cardImage;
+    }
+
     public void refreshHandAfterRemove(int columnIndex) {
         int columnCounter = columnIndex;
-        for (int i = 0; i < attackerHand.getColumnCount() - columnIndex; i++) {
+        int columnCount = attackerHand.getColumnCount();
+        for (int i = 0; i < columnCount - columnIndex - 1; i++) {
             Node node = attackerHand.getChildren().get(columnIndex);
             attackerHand.getChildren().remove(node);
 
