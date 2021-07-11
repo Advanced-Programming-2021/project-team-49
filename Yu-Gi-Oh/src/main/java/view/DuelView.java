@@ -5,6 +5,10 @@ import exception.EndOfMatchException;
 import exception.EndOfRoundException;
 import exception.EndPhaseException;
 import exception.GameErrorException;
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +21,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.cardtemplate.CardTemplate;
 import model.cardtemplate.EffectType;
 import model.cardtemplate.SpellTrapType;
@@ -253,6 +261,15 @@ public class DuelView extends View {
                 new SimpleIntegerProperty(selfMat.getPlayer().getLifePoints()).asString());
     }
 
+    public Animation getSlideCardAnimation(ImageView cardImage, int moveOffset) {
+        TranslateTransition slideAnimation = new TranslateTransition();
+        slideAnimation.setNode(cardImage);
+        slideAnimation.setToY(moveOffset);
+        slideAnimation.setDuration(Duration.millis(250));
+        slideAnimation.setInterpolator(Interpolator.EASE_OUT);
+        return slideAnimation;
+    }
+
     public ImageView createCardImage(Card card, int width, boolean opponent, boolean hide) {
         ImageView cardImage;
         if (hide)
@@ -285,14 +302,39 @@ public class DuelView extends View {
 
     public ImageView createCardInHandImage(Card card, boolean opponent) {
         ImageView cardImage = createCardImage(card, 95, opponent, opponent);
+        Animation slideDownAnimation = getSlideCardAnimation(cardImage, 0);
 
-        if (opponent)
+        if (opponent) {
             cardImage.setRotate(180.0);
 
+            Animation slideUpAnimation = getSlideCardAnimation(cardImage, 80);
+            cardImage.setOnMouseEntered(mouseEvent -> {
+                slideDownAnimation.stop();
+                slideUpAnimation.play();
+                mouseEvent.consume();
+            });
+            cardImage.setOnMouseExited(mouseEvent -> {
+                slideUpAnimation.stop();
+                slideDownAnimation.play();
+                mouseEvent.consume();
+            });
+        }
         if (!opponent) {
+            Animation slideUpAnimation = getSlideCardAnimation(cardImage, -80);
+            cardImage.setOnMouseEntered(mouseEvent -> {
+                slideDownAnimation.stop();
+                slideUpAnimation.play();
+                mouseEvent.consume();
+            });
+            cardImage.setOnMouseExited(mouseEvent -> {
+                slideUpAnimation.stop();
+                slideDownAnimation.play();
+                mouseEvent.consume();
+            });
             cardImage.setOnMouseClicked(mouseEvent -> {
                 if (isOpponentTurn)
                     return;
+                slideUpAnimation.stop();
 
                 int columnIndex = GridPane.getColumnIndex(cardImage);
 
