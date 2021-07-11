@@ -30,8 +30,8 @@ public class ManEaterBug extends EffectHandler {
 
     @Override
     public void action() {
-        Card defender = selectCardFromList(enemyMonsterZone);
-        field.getDefenderMat().moveCard(Location.MONSTER_ZONE, defender, Location.GRAVEYARD);
+        Card card = selectCardFromList("Destroy a card:", enemyMonsterZone, 1).get(0);
+        field.getDefenderMat().moveCard(Location.MONSTER_ZONE, card, Location.GRAVEYARD);
         throw new GameErrorException("The card has been destroyed by the effect of ManEaterBug");
     }
 

@@ -51,8 +51,7 @@ public class BeastKingBarbaros extends EffectHandler {
             return;
         }
 
-        List<Card> selectedCards = select3CardsFromList(monsterZone);
-
+        List<Card> selectedCards = selectCardFromList("Select 3 monsters:", monsterZone, 3);
         for (Card selectedCard : selectedCards)
             field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selectedCard, Location.GRAVEYARD);
 

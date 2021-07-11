@@ -28,7 +28,7 @@ public class GateGuardian extends EffectHandler {
 
     @Override
     public void action() {
-        List<Card> selectedCards = select3CardsFromList(monsterZone);
+        List<Card> selectedCards = selectCardFromList("Select 3 monsters:", monsterZone, 3);
 
         for (Card selectedCard : selectedCards)
             field.getAttackerMat().moveCard(Location.MONSTER_ZONE, selectedCard, Location.GRAVEYARD);

@@ -28,9 +28,9 @@ public class TheTricky extends EffectHandler {
 
     @Override
     public void action() {
-        Card selectCard = selectCardFromList(hand);
+        Card selectedCard = selectCardFromList("Destroy a card:", hand, 1).get(0);
 
-        field.getAttackerMat().moveCard(Location.HAND, selectCard, Location.GRAVEYARD);
+        field.getAttackerMat().moveCard(Location.HAND, selectedCard, Location.GRAVEYARD);
 
         field.getAttackerMat().moveCard(Location.HAND, card, Location.MONSTER_ZONE);
 

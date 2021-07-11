@@ -29,7 +29,7 @@ public class BlackPendant extends EffectHandler {
 
     @Override
     public void action() {
-        Card card = selectCardFromList(monsterZone);
+        Card card = selectCardFromList("Select a monster:", monsterZone, 1).get(0);
 
         ((Monster) card).increaseAttack(500);
 

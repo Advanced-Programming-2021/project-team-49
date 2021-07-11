@@ -6,6 +6,7 @@ import exception.GameErrorException;
 import model.game.Field;
 import model.game.Location;
 import model.game.card.Card;
+import model.game.card.Monster;
 import view.DuelView;
 
 import java.util.ArrayList;
@@ -33,40 +34,14 @@ public abstract class EffectHandler {
         return speed;
     }
 
-    public Card selectCardFromList(List<Card> cards) {
-        DuelView.showCardListStringView(cards);
-        int selected;
-        do {
-            selected = DuelView.selectNumber(1, cards.size());
-            if (selected == 0)
-                throw new GameErrorException("cancelled");
-        } while (selected == -1);
-        return cards.get(selected - 1);
-    }
-
-    public List<Card> select3CardsFromList(List<Card> cards) {
-        DuelView.showCardListStringView(cards);
-
-        int selected1;
-        int selected2;
-        int selected3;
-        do {
-            selected1 = DuelView.selectNumber(1, cards.size());
-            selected2 = DuelView.selectNumber(1, cards.size());
-            selected3 = DuelView.selectNumber(1, cards.size());
-            if (selected1 == 0 || selected2 == 0 || selected3 == 0)
-                throw new GameErrorException("cancelled");
-
-        } while (selected1 == -1 || selected2 == -1 || selected3 == -1
-                || selected1 == selected2 || selected1 == selected3);
-
+    public List<Card> selectCardFromList(String sentence, List<Card> cardsToSelect, int selectCount) {
         List<Card> selectedCards = new ArrayList<>();
-        selectedCards.add(cards.get(selected1));
-        selectedCards.add(cards.get(selected2));
-        selectedCards.add(cards.get(selected3));
-
+        field.getAttackerMat().getDuelView().selectCardFromList(sentence, selectCount,
+                cardsToSelect, selectedCards::addAll
+        );
         return selectedCards;
     }
+
 
     public void moveCardToGraveyard() {
         field.getAttackerMat().moveCard(Location.SPELL_AND_TRAP_ZONE, card, Location.GRAVEYARD);
@@ -81,14 +56,13 @@ public abstract class EffectHandler {
     }
 
     public boolean askForActivation() {
-        DuelView.askForActivationHeader(card.getName(), field.getDefenderMat().getPlayer().getUser().getNickname());
-
         final String[] selected = new String[1];
         List<String> options = new ArrayList<>();
         options.add("Activate");
         options.add("Don't Activate");
-        field.getAttackerMat().getDuelView().selectAnOption(
-                "Select:", options, selectedOption -> {
+        field.getDefenderMat().getDuelView().selectAnOption(
+                "Do you want to activate \"" + card.getName() + "\" effect?!",
+                options, selectedOption -> {
                     for (String option : options) {
                         if (selectedOption.equals(option))
                             selected[0] = option;

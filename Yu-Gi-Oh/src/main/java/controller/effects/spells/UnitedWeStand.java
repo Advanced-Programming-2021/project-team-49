@@ -30,7 +30,7 @@ public class UnitedWeStand extends EffectHandler {
 
     @Override
     public void action() {
-        Card card = selectCardFromList(monsterZone);
+        Card card = selectCardFromList("Select a monster:", monsterZone, 1).get(0);;
 
         ((Monster) card).increaseAttack(getFaceUpMonstersCount() * 800);
         ((Monster) card).increaseDefense(getFaceUpMonstersCount() * 800);

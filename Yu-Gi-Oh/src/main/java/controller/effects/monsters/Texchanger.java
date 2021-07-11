@@ -34,7 +34,7 @@ public class Texchanger extends EffectHandler {
         if (!isEffectUsed) {
             if (cyberseCards.isEmpty())
                 throw new GameErrorException("You don't have any cyberse card");
-            Card card = selectCardFromList(cyberseCards);
+            Card card = selectCardFromList("Revive a card:", cyberseCards, 1).get(0);
             if (field.getDefenderMat().getCardList(Location.GRAVEYARD).contains(card))
                 field.getDefenderMat().moveCard(Location.GRAVEYARD, card, Location.MONSTER_ZONE);
             else if (field.getDefenderMat().getCardList(Location.DECK).contains(card))

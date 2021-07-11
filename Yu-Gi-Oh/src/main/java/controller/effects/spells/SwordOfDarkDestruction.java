@@ -31,7 +31,7 @@ public class SwordOfDarkDestruction extends EffectHandler {
 
     @Override
     public void action() {
-        Card card = selectCardFromList(requiredMonsters);
+        Card card = selectCardFromList("Select a monster:", requiredMonsters, 1).get(0);;
 
         ((Monster) card).increaseAttack(400);
         ((Monster) card).decreaseDefense(200);

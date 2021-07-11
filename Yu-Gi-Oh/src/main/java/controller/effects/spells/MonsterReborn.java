@@ -32,7 +32,7 @@ public class MonsterReborn extends EffectHandler {
 
     @Override
     public void action() {
-        Card card = selectCardFromList(bothGraveyardsMonsters);
+        Card card = selectCardFromList("Select a monster:", bothGraveyardsMonsters, 1).get(0);
 
         if (field.getAttackerMat().getCardList(Location.GRAVEYARD).contains(card))
             field.getAttackerMat().removeCard(card, Location.GRAVEYARD);

@@ -54,6 +54,7 @@ public class SelectCardPopUp extends PopUp {
         sentenceText.setWrappingWidth(420.0);
 
         GridPane cardPane = new GridPane();
+        cardPane.setAlignment(Pos.CENTER);
         cardPane.setHgap(-5);
         for (int i = 0; i < cards.size(); i++)
             cardPane.add(createCardImage(cards.get(i)), i, 0);
@@ -93,7 +94,7 @@ public class SelectCardPopUp extends PopUp {
 
     public ImageView createCardImage(Card card) {
         ImageView cardImage = new ImageView(new Image(card.getCardPicPath()));
-        cardImage.setFitWidth(65);
+        cardImage.setFitWidth(70);
         cardImage.setPreserveRatio(true);
         cardImage.setCursor(Cursor.HAND);
 

@@ -29,7 +29,9 @@ public class MindCrush extends EffectHandler {
 
     @Override
     public void action() {
+
         List<CardTemplate> cards = Controller.getDatabase().getCards();
+
         DuelView.showCardNameListStringView(cards);
         int selected;
         do {
@@ -52,6 +54,7 @@ public class MindCrush extends EffectHandler {
             int random = new Random().nextInt(field.getAttackerMat().getCardCount(Location.HAND) - 1);
             field.getAttackerMat().moveCard(Location.HAND, random, Location.GRAVEYARD);
         }
+
     }
 
     @Override

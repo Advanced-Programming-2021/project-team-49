@@ -231,9 +231,6 @@ public class DuelView extends View {
     public static void showCardNameListStringView(List<CardTemplate> list) {
     }
 
-    public static void askForActivationHeader(String cardName, String nickName) {
-    }
-
     public static int selectNumber(int begin, int end) {
         return 0;
     }

@@ -32,7 +32,8 @@ public class ChangeOfHeart extends EffectHandler {
 
     @Override
     public void action() {
-        enemyCard = selectCardFromList(enemyMonsters);
+        enemyCard = selectCardFromList("Select a monster to be yours for 1 turn:",
+                enemyMonsters, 1).get(0);
 
         field.getDefenderMat().removeCard(enemyCard, Location.MONSTER_ZONE);
         field.getAttackerMat().addCard(enemyCard, Location.MONSTER_ZONE);

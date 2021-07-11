@@ -31,7 +31,8 @@ public class MagnumShield extends EffectHandler {
 
     @Override
     public void action() {
-        Monster monster = (Monster) selectCardFromList(requiredMonsters);
+        Monster monster = (Monster) selectCardFromList("Select a monster:",
+                requiredMonsters, 1).get(0);
 
         if (monster.isAttacker())
             monster.increaseAttack(monster.getBaseDefense());
