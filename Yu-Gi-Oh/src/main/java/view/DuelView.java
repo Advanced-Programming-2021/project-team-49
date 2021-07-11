@@ -9,7 +9,6 @@ import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.css.PseudoClass;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -41,7 +40,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class DuelView extends View {
 
