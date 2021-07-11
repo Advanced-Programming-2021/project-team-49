@@ -8,6 +8,7 @@ import exception.GameErrorException;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -45,20 +46,15 @@ public class DuelView extends View {
     private ImageView image;
     @FXML
     private Text description;
-    @FXML
-    private Text opponentNicknameText;
-    @FXML
-    private Text selfNicknameText;
-    @FXML
-    private Text opponentLifePointsText;
-    @FXML
-    private Text selfLifePointsText;
-    @FXML
-    private ImageView selfProfilePic;
-    @FXML
-    private ImageView opponentProfilePic;
 
-    // TODO public modifier for accessing from another stage
+    // public modifier for accessing from another stage
+    public Text opponentNicknameText;
+    public Text selfNicknameText;
+    public Text opponentLifePointsText;
+    public Text selfLifePointsText;
+    public ImageView selfProfilePic;
+    public ImageView opponentProfilePic;
+
     public Pane fieldPane;
     public GridPane phaseButtonPane;
     public GridPane defenderHand;
@@ -115,15 +111,19 @@ public class DuelView extends View {
             }
         });
 
-        initializePhaseButtons(drawButton, 0);
-        initializePhaseButtons(standbyButton, 1);
-        initializePhaseButtons(main1Button, 2);
-        initializePhaseButtons(battleButton, 3);
-        initializePhaseButtons(main2Button, 4);
-        initializePhaseButtons(endButton, 5);
+        initializePhaseButtons();
     }
 
-    public void initializePhaseButtons(ImageView button, int phaseNumber) {
+    public void initializePhaseButtons() {
+        initializePhaseButton(drawButton, 0);
+        initializePhaseButton(standbyButton, 1);
+        initializePhaseButton(main1Button, 2);
+        initializePhaseButton(battleButton, 3);
+        initializePhaseButton(main2Button, 4);
+        initializePhaseButton(endButton, 5);
+    }
+
+    public void initializePhaseButton(ImageView button, int phaseNumber) {
         button.setOnMouseEntered(event -> {
             if (isOpponentTurn)
                 return;
@@ -279,6 +279,12 @@ public class DuelView extends View {
                             controller.activateSpell();
                         else
                             controller.setSpellOrTrap();
+
+                        attackerHand.getChildren().remove(cardImage);
+                        int columnIndex = GridPane.getColumnIndex(cardImage);
+                        opponentMat.getDuelView().defenderHand.getChildren().remove(columnIndex);
+                        refreshHandAfterRemove(columnIndex);
+
                     } catch (GameErrorException exception) {
                         new DialogPopUp(root, exception.getMessage()).initialize();
                     }
@@ -319,5 +325,20 @@ public class DuelView extends View {
         });
 
         return cardImage;
+    }
+
+    public void refreshHandAfterRemove(int columnIndex) {
+        int columnCounter = columnIndex;
+        for (int i = 0; i < attackerHand.getColumnCount() - columnIndex; i++) {
+            Node node = attackerHand.getChildren().get(columnIndex);
+            attackerHand.getChildren().remove(node);
+
+            attackerHand.add(node, columnCounter, 0);
+
+            node = opponentMat.getDuelView().defenderHand.getChildren().get(columnIndex);
+            opponentMat.getDuelView().defenderHand.getChildren().remove(node);
+
+            opponentMat.getDuelView().defenderHand.add(node, columnCounter++, 0);
+        }
     }
 }
