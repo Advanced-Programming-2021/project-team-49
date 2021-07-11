@@ -5,6 +5,7 @@ import controller.effects.Event;
 import controller.effects.Limit;
 import model.game.card.Card;
 import model.game.card.Monster;
+import view.DuelView;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class GameMat {
     private final List<Card> deck;
     private Card fieldZoneCard = null;
     private EffectHandler fieldZoneEffect = null;
+    private DuelView duelView;
 
     public GameMat(Player player, List<Card> deck) {
         this.player = player;
@@ -39,6 +41,14 @@ public class GameMat {
         locationMap.put(Location.SPELL_AND_TRAP_ZONE, spellAndTrapZone);
 
         return locationMap;
+    }
+
+    public void setDuelView(DuelView duelView) {
+        this.duelView = duelView;
+    }
+
+    public DuelView getDuelView() {
+        return duelView;
     }
 
     public Player getPlayer() {

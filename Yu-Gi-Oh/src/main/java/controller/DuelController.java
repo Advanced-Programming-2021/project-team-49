@@ -64,7 +64,6 @@ public class DuelController extends Controller {
         return field.getAttackerMat().getCardCount(location);
     }
 
-
     public void surrender() {
         endMatch(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
         throw new EndOfMatchException(field.getDefenderMat().getPlayer(), field.getAttackerMat().getPlayer());
@@ -136,26 +135,38 @@ public class DuelController extends Controller {
         selectedCardLocation = location;
     }
 
-    public void changePhase() {
-        phase++;
-        if (firstTurnCounter > 0 && phase == 3)
-            phase++;
+    public void changePhase(int newPhase) {
+        if (newPhase <= phase)
+            throw new GameErrorException("invalid phase");
+
+        if (newPhase == 3 && firstTurnCounter > 0)
+            throw new GameErrorException("You can't attack in first turn");
+
+        phase = newPhase;
+
+        if (phase == 0)
+            field.getDefenderMat().notifyAllEffects(Event.DRAW_PHASE);
+
         if (phase == 1)
             field.getAttackerMat().notifyAllEffects(Event.STANDBY_PHASE);
-        if (phase > phaseNames.length - 1) {
-            phase = 0;
+
+        if (phase == 5) {
+            phase = -1;
+            field.getAttackerMat().notifyAllEffects(Event.END_TURN);
+            field.getAttackerMat().getDuelView().setOpponentTurn(true);
+            field.getDefenderMat().getDuelView().setOpponentTurn(false);
             field.switchTurn();
             selectedCardLocation = null;
             isMonsterAddedToField = false;
             if (firstTurnCounter > 0)
                 firstTurnCounter--;
+
+            field.getAttackerMat().getDuelView().changePhaseAutomatic();
         }
     }
 
-    public Card drawCard() throws EndOfRoundException {
+    public Card drawCard() {
         try {
-            if (phase == 0)
-                field.getDefenderMat().notifyAllEffects(Event.DRAW_PHASE);
             return field.drawCard();
         } catch (EndOfRoundException exception) {
             endRound(exception.getWinner(), exception.getLoser());
@@ -488,13 +499,9 @@ public class DuelController extends Controller {
         callSelectedCardEffect();
     }
 
-    public void summon() {
-        Card card = getSelectedCard();
-        if (card == null)
-            throw new GameErrorException("no card is selected yet");
-        else if (selectedCardLocation != Location.HAND || !(card instanceof Monster))
-            throw new GameErrorException("you can't summon this card");
-        else if (phase != 2 && phase != 4)
+    public void summon(Card card) {
+
+        if (phase != 2 && phase != 4)
             throw new GameErrorException("action not allowed in this phase");
         else if (field.getAttackerMat().getCardCount(Location.MONSTER_ZONE) == 5)
             throw new GameErrorException("monster card zone is full");

@@ -1,7 +1,7 @@
 package model.game;
 
-import controller.effects.Event;
 import exception.EndOfRoundException;
+import exception.GameErrorException;
 import model.game.card.Card;
 import model.game.card.Monster;
 
@@ -35,7 +35,6 @@ public class Field {
             monster.setPositionChanged(false);
             monster.setUsedInAttack(false);
         }
-        attackerMat.notifyAllEffects(Event.END_TURN);
         switchMats();
     }
 
@@ -45,9 +44,9 @@ public class Field {
         defenderMat = tempMat;
     }
 
-    public Card drawCard() throws EndOfRoundException {
+    public Card drawCard() {
         if (attackerMat.getCardCount(Location.HAND) >= 6)
-            return null;
+            throw new GameErrorException("Your hand is full");
         if (attackerMat.getCardCount(Location.DECK) <= 0)
             throw new EndOfRoundException(defenderMat.getPlayer(), attackerMat.getPlayer());
         else {

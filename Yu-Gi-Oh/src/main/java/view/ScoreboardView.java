@@ -23,15 +23,14 @@ public class ScoreboardView extends View{
 
     private final ScoreboardController controller = new ScoreboardController();
 
-
     @FXML
     private VBox root;
     @FXML
     private TableView<ScoreboardData> scoreboard;
 
-
     public void initialize() {
         scoreboard.setRowFactory(tableView -> new TableRow<>());
+
 
         TableColumn<ScoreboardData, ?> rankColumn = column("Rank", ScoreboardData::getRankProperty);
         TableColumn<ScoreboardData, ?> nicknameColumn = column("Name", ScoreboardData::getNicknameProperty);
@@ -52,7 +51,7 @@ public class ScoreboardView extends View{
             for (int j = 0; j < controller.getScoreboard().get(i).size(); j++) {
                 scoreboardData.add(new ScoreboardData(rank, controller.getScoreboard().get(i).get(j).getNickname(),
                         controller.getScoreboard().get(i).get(j).getScore()));
-                counter ++;
+                counter++;
             }
             rank++;
         }

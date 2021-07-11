@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -56,15 +57,22 @@ public class TwoPlayerDuelView extends View {
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            loader.setController(new DuelView(duelController));
+            DuelView fistPlayerDuelView = new DuelView(duelController);
+            loader.setController(fistPlayerDuelView);
             Parent newRoot = loader.load();
+            fistPlayerDuelView.setOpponentTurn(false);
             root.getScene().setRoot(newRoot);
 
             loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            loader.setController(new DuelView(duelController));
+            DuelView secondPlayerDuelView = new DuelView(duelController);
+            loader.setController(secondPlayerDuelView);
             newRoot = loader.load();
+            secondPlayerDuelView.setOpponentTurn(true);
             setUpStage(newRoot);
+
+            fistPlayerDuelView.changePhaseAutomatic();
+
         } catch (GameErrorException exception) {
             errorMessage.setText(exception.getMessage());
         }
@@ -74,7 +82,7 @@ public class TwoPlayerDuelView extends View {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Yu-Gi-Oh!");
+        stage.setTitle("Yu-Gi-Oh! - Second Player");
         stage.setWidth(800);
         stage.setHeight(600);
         stage.setResizable(false);

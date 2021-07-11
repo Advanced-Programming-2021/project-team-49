@@ -1,9 +1,11 @@
 package view;
 
 import controller.DuelController;
-import javafx.beans.property.IntegerProperty;
+import exception.EndOfMatchException;
+import exception.EndOfRoundException;
+import exception.EndPhaseException;
+import exception.GameErrorException;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -11,13 +13,16 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import model.cardtemplate.CardTemplate;
+import model.cardtemplate.SpellTrapType;
 import model.game.GameMat;
 import model.game.Location;
 import model.game.card.Card;
+import model.game.card.Monster;
+import model.game.card.SpellTrap;
+import view.popup.DialogPopUp;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +34,7 @@ public class DuelView extends View {
             View.class.getResource("/cards/Unknown.jpg")).toExternalForm());
 
     private final DuelController controller;
+    private boolean isOpponentTurn;
 
     private GameMat selfMat;
     private GameMat opponentMat;
@@ -84,6 +90,7 @@ public class DuelView extends View {
     }
 
     public void initialize() {
+        controller.getField().getAttackerMat().setDuelView(this);
 
         int culomn = 0;
         selfMat = controller.getField().getAttackerMat();
@@ -108,7 +115,71 @@ public class DuelView extends View {
             }
         });
 
+        initializePhaseButtons(drawButton, 0);
+        initializePhaseButtons(standbyButton, 1);
+        initializePhaseButtons(main1Button, 2);
+        initializePhaseButtons(battleButton, 3);
+        initializePhaseButtons(main2Button, 4);
+        initializePhaseButtons(endButton, 5);
+    }
 
+    public void initializePhaseButtons(ImageView button, int phaseNumber) {
+        button.setOnMouseEntered(event -> {
+            if (isOpponentTurn)
+                return;
+
+            if (phaseNumber <= controller.getPhaseNumber()
+                    || phaseNumber == 0 || phaseNumber == 1)
+                return;
+
+            button.setEffect(new DropShadow());
+            button.setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setEffect(null);
+            button.setCursor(Cursor.DEFAULT);
+        });
+        button.setOnMouseClicked(event -> {
+            if (isOpponentTurn)
+                return;
+
+            if (phaseNumber <= controller.getPhaseNumber()
+                    || phaseNumber == 0 || phaseNumber == 1)
+                return;
+
+            try {
+                controller.changePhase(phaseNumber);
+            } catch (GameErrorException exception) {
+                new DialogPopUp(root, exception.getMessage()).initialize();
+            }
+        });
+    }
+
+    public void changePhaseAutomatic() {
+        try {
+            controller.changePhase(0);
+            Card card = controller.drawCard();
+            attackerHand.add(createCardInHandImage(card, false),
+                    controller.getCardCount(Location.HAND) - 1, 0);
+            attackerDeckCount.setText(String.valueOf(selfMat.getCardCount(Location.DECK)));
+
+            opponentMat.getDuelView().defenderHand.add(createCardInHandImage(card, true),
+                    controller.getCardCount(Location.HAND) - 1, 0);
+            opponentMat.getDuelView().defenderDeckCount.setText(String.valueOf(selfMat.getCardCount(Location.DECK)));
+
+        } catch (EndPhaseException | GameErrorException exception) {
+            new DialogPopUp(root, exception.getMessage()).initialize();
+        } catch (EndOfMatchException endOfMatch) {
+            // TODO close the second player stage and change root to mainmenu
+        } catch (EndOfRoundException endOfRound) {
+            // TODO open deck view on active deck for both players and on the button resume do next round
+        }
+        controller.changePhase(1);
+        controller.changePhase(2);
+    }
+
+    public void setOpponentTurn(boolean opponentTurn) {
+        isOpponentTurn = opponentTurn;
     }
 
     public static void showCardInfoStringView(Card card) {
@@ -195,15 +266,29 @@ public class DuelView extends View {
         if (opponent)
             cardImage.setRotate(180.0);
 
-        cardImage.setOnMouseClicked(mouseEvent -> {
-            // TODO main idea of handling is a bit tricky
-            if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-                //controller.summon();
-                // TODO summon monster, activate spell, set trap
-            } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                // TODO set monster, set spell
-            }
-        });
+        if (!opponent) {
+            cardImage.setOnMouseClicked(mouseEvent -> {
+                if (isOpponentTurn)
+                    return;
+
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    try {
+                        if (card instanceof Monster)
+                            controller.summon(card);
+                        else if (((SpellTrap) card).getType() == SpellTrapType.SPELL)
+                            controller.activateSpell();
+                        else
+                            controller.setSpellOrTrap();
+                    } catch (GameErrorException exception) {
+                        new DialogPopUp(root, exception.getMessage()).initialize();
+                    }
+
+                    // TODO summon monster, activate spell, set trap
+                } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    // TODO set monster, set spell
+                }
+            });
+        }
 
         return cardImage;
     }
