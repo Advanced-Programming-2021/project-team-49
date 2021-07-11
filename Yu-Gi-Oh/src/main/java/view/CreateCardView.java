@@ -1,6 +1,7 @@
 package view;
 
 import controller.CreateCardController;
+import exception.GameErrorException;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -17,6 +18,8 @@ public class CreateCardView extends View{
 
     private final CreateCardController controller = new CreateCardController();
 
+    @FXML
+    private Text result;
     @FXML
     private Text price;
     @FXML
@@ -45,7 +48,11 @@ public class CreateCardView extends View{
     }
 
     public void createCard(MouseEvent mouseEvent) {
-        controller.createCard();
+        try {
+            controller.createCard();
+        } catch (NullPointerException exception) {
+            result.setText("Couldn't create card in this moment");
+        }
     }
 
     public void setMonsterType(MouseEvent mouseEvent) {
@@ -54,15 +61,14 @@ public class CreateCardView extends View{
     }
 
     public void setSpellType(MouseEvent mouseEvent) {
-        controller.cardType("Monster");
+        controller.cardType("Spell");
         price.setText("Final price: " + controller.getPrice());
     }
 
     public void setTrapType(MouseEvent mouseEvent) {
-        controller.cardType("Monster");
+        controller.cardType("Trap");
         price.setText("Final price: " + controller.getPrice());
     }
-
 
     public void setName(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {

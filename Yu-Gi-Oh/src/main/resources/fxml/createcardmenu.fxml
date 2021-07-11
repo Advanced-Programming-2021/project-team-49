@@ -35,6 +35,9 @@
             <Text fx:id="price" styleClass="coin"/>
             <Button text="Create" styleClass="button" onMouseClicked="#createCard"/>
         </HBox>
-        <Button text="Back" styleClass="button" onMouseClicked="#backToMainMenu"/>
+        <VBox spacing="15" alignment="CENTER">
+            <Text fx:id="result" textAlignment="CENTER" styleClass="text"/>
+            <Button text="Back" styleClass="button" onMouseClicked="#backToMainMenu"/>
+        </VBox>
     </VBox>
 </VBox>
