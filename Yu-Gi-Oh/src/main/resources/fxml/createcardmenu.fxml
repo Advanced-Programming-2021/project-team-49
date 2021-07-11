@@ -6,20 +6,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            stylesheets="@../css/menu.css"
-            fx:controller="view.CreateCardView"
-            prefHeight="600.0" prefWidth="800.0" fx:id="root"
-            spacing="30">
-    <HBox alignment="CENTER">
-        <CheckBox fx:id="types" alignment="CENTER_LEFT">
-            <String fx:value="Monster"/>
-            <String fx:value="Spell"/>
-            <String fx:value="Trap"/>
-        </CheckBox>
+      xmlns:fx="http://javafx.com/fxml"
+      stylesheets="@../css/menu.css"
+      fx:controller="view.CreateCardView"
+      prefHeight="600.0" prefWidth="800.0" fx:id="root"
+      spacing="30">
+    <HBox prefWidth="450" maxWidth="450" alignment="TOP_CENTER">
+        <Text text="Create card" styleClass="title" textAlignment="CENTER"/>
     </HBox>
-    <HBox alignment="BOTTOM_CENTER">
+
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <HBox>
+            <Text text="Type: " styleClass="button"/>
+            <RadioButton text="Monster" fx:id="monster" onMouseClicked="#setMonsterType"/>
+            <RadioButton text="Spell" fx:id="spell" onMouseClicked="#setSpellType"/>
+            <RadioButton text="Trap" fx:id="trap" onMouseClicked="#setTrapType"/>
+        </HBox>
+        <HBox>
+            <Text text="Name: " styleClass="button"/>
+            <TextField fx:id="nameField" promptText="Card name" alignment="TOP_CENTER" onKeyPressed="#setName"/>
+        </HBox>
+    </HBox>
+
+    <VBox alignment="BOTTOM_CENTER" spacing="20">
+        <HBox alignment="CENTER" spacing="270">
+            <Text fx:id="price" styleClass="coin"/>
+            <Button text="Create" styleClass="button" onMouseClicked="#createCard"/>
+        </HBox>
         <Button text="Back" styleClass="button" onMouseClicked="#backToMainMenu"/>
-    </HBox>
+    </VBox>
 </VBox>
