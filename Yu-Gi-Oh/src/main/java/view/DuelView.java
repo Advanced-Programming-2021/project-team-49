@@ -51,7 +51,6 @@ public class DuelView extends View {
 
     private final DuelController controller;
     private boolean isOpponentTurn;
-    private boolean isMainStage;
 
     private GameMat selfMat;
     private GameMat opponentMat;
@@ -97,9 +96,8 @@ public class DuelView extends View {
     public Text attackerDeckCount;
     public Button pauseButton;
 
-    public DuelView(DuelController controller, boolean isMainStage) {
+    public DuelView(DuelController controller) {
         this.controller = controller;
-        this.isMainStage = isMainStage;
     }
 
     public void initialize() {

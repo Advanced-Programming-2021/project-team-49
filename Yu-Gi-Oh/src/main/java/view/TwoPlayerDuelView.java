@@ -57,7 +57,7 @@ public class TwoPlayerDuelView extends View {
 
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            DuelView fistPlayerDuelView = new DuelView(duelController, true);
+            DuelView fistPlayerDuelView = new DuelView(duelController);
             loader.setController(fistPlayerDuelView);
             Parent newRoot = loader.load();
             fistPlayerDuelView.setOpponentTurn(false);
@@ -65,7 +65,7 @@ public class TwoPlayerDuelView extends View {
 
             loader = new FXMLLoader(Objects.requireNonNull
                     (getClass().getResource("/fxml/duel.fxml")));
-            DuelView secondPlayerDuelView = new DuelView(duelController, false);
+            DuelView secondPlayerDuelView = new DuelView(duelController);
             loader.setController(secondPlayerDuelView);
             newRoot = loader.load();
             secondPlayerDuelView.setOpponentTurn(true);
@@ -79,17 +79,17 @@ public class TwoPlayerDuelView extends View {
     }
 
     private void setUpStage(Parent root) {
-        Stage stage = new Stage();
+        secondStage = new Stage();
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Yu-Gi-Oh! - Second Player");
-        stage.setWidth(800);
-        stage.setHeight(600);
-        stage.setResizable(false);
+        secondStage.setScene(scene);
+        secondStage.setTitle("Yu-Gi-Oh! - Second Player");
+        secondStage.setWidth(800);
+        secondStage.setHeight(600);
+        secondStage.setResizable(false);
 
-        stage.getIcons().add(new Image(Objects.requireNonNull(
+        secondStage.getIcons().add(new Image(Objects.requireNonNull(
                 getClass().getResource("/image/icon.png")).toExternalForm()));
-        stage.show();
+        secondStage.show();
     }
 
     @FXML

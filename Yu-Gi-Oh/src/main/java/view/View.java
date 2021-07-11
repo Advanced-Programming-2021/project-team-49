@@ -13,6 +13,7 @@ import java.util.Objects;
 public class View {
 
     protected static Stage stage;
+    protected static Stage secondStage;
 
     public void setStage(Stage stage) {
         View.stage = stage;
